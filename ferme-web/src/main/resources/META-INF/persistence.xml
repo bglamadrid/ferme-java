@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="cl.duoc.alumnos.proyectos_ferme-web_war_1PU" transaction-type="JTA">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <jta-data-source>java:app/ferme</jta-data-source>
+    <class>cl.duoc.alumnos.ferme.entities.domain.DetalleVenta</class>
+    <class>cl.duoc.alumnos.ferme.entities.domain.TipoProducto</class>
+    <class>cl.duoc.alumnos.ferme.entities.domain.Proveedor</class>
+    <class>cl.duoc.alumnos.ferme.entities.domain.Empleado</class>
+    <class>cl.duoc.alumnos.ferme.entities.domain.Cliente</class>
+    <class>cl.duoc.alumnos.ferme.entities.domain.FamiliaProducto</class>
+    <class>cl.duoc.alumnos.ferme.entities.domain.Cargo</class>
+    <class>cl.duoc.alumnos.ferme.entities.domain.Persona</class>
+    <class>cl.duoc.alumnos.ferme.entities.domain.Venta</class>
+    <class>cl.duoc.alumnos.ferme.entities.domain.OrdenCompra</class>
+    <class>cl.duoc.alumnos.ferme.entities.domain.Rubro</class>
+    <class>cl.duoc.alumnos.ferme.entities.domain.Producto</class>
+    <class>cl.duoc.alumnos.ferme.entities.domain.Usuario</class>
+    <class>cl.duoc.alumnos.ferme.entities.domain.DetalleOrdenCompra</class>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <properties/>
+  </persistence-unit>
+</persistence>

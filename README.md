@@ -1,7 +1,7 @@
 # ferme-java
 
 -Maven
--OJBC8
+-Oracle JDBC 8 para Oracle 11g
 -Spring Boot
 -Spring Web
 -Spring Data JPA

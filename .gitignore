@@ -1,1 +1,3 @@
-ferme-web/nb-configuration.xml
+*/nb-configuration.xml
+/ferme-ejb/target/
+/ferme-web/target/

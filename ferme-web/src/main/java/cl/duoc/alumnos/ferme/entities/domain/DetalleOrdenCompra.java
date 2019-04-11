@@ -1,7 +1,6 @@
 package cl.duoc.alumnos.ferme.entities.domain;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -26,7 +25,7 @@ public class DetalleOrdenCompra implements Serializable {
     protected DetalleOrdenCompraPK detalleOrdenCompraPK;
     
     @Column(name = "CANTIDAD")
-    private BigInteger cantidad;
+    private int cantidad;
     
     @JoinColumn(name = "ID_ORDEN_COMPRA", referencedColumnName = "ID_ORDEN_COMPRA", insertable = false, updatable = false)
     @ManyToOne(optional = false)
@@ -46,11 +45,11 @@ public class DetalleOrdenCompra implements Serializable {
         this.detalleOrdenCompraPK = detalleOrdenCompraPK;
     }
 
-    public BigInteger getCantidad() {
+    public int getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(BigInteger cantidad) {
+    public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
 

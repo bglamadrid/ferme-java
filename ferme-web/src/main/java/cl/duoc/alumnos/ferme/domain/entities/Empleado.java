@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cl.duoc.alumnos.ferme.entities.domain;
+package cl.duoc.alumnos.ferme.domain.entities;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -29,29 +29,18 @@ public class Empleado implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
-    @Column(name = "ID_PERSONA")
-    private int idPersona;
-    
     @Column(name = "ID_EMPLEADO")
     private int idEmpleado;
-    
-    @JoinColumn(name = "ID_CARGO", referencedColumnName = "ID_CARGO")
-    @ManyToOne(optional = false)
-    private Cargo idCargo;
     
     @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA", insertable = false, updatable = false)
     @OneToOne(optional = false)
     private Persona persona;
+    
+    @JoinColumn(name = "ID_CARGO", referencedColumnName = "ID_CARGO")
+    @ManyToOne(optional = false)
+    private Cargo cargo;
 
     public Empleado() {}
-
-    public int getIdPersona() {
-        return idPersona;
-    }
-
-    public void setIdPersona(int idPersona) {
-        this.idPersona = idPersona;
-    }
 
     public int getIdEmpleado() {
         return idEmpleado;
@@ -61,12 +50,12 @@ public class Empleado implements Serializable {
         this.idEmpleado = idEmpleado;
     }
 
-    public Cargo getIdCargo() {
-        return idCargo;
+    public Cargo getCargo() {
+        return cargo;
     }
 
-    public void setIdCargo(Cargo idCargo) {
-        this.idCargo = idCargo;
+    public void setCargo(Cargo cargo) {
+        this.cargo = cargo;
     }
 
     public Persona getPersona() {
@@ -80,9 +69,8 @@ public class Empleado implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 59 * hash + this.idPersona;
         hash = 59 * hash + this.idEmpleado;
-        hash = 59 * hash + Objects.hashCode(this.idCargo);
+        hash = 59 * hash + Objects.hashCode(this.cargo);
         return hash;
     }
 
@@ -92,14 +80,12 @@ public class Empleado implements Serializable {
             return false;
         }
         final Empleado other = (Empleado) object;
-        return (this.idPersona == other.idPersona || this.idEmpleado == other.idEmpleado);
+        return (this.idEmpleado == other.idEmpleado);
     }
-
-    
 
     @Override
     public String toString() {
-        return "cl.duoc.alumnos.ferme.entities.domain.Empleado[ idPersona=" + idPersona + " ]";
+        return "cl.duoc.alumnos.ferme.entities.domain.Empleado[ idEmpleado=" + idEmpleado + " ]";
     }
     
 }

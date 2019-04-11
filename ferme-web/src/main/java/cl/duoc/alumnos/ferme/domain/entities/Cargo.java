@@ -1,4 +1,4 @@
-package cl.duoc.alumnos.ferme.entities.domain;
+package cl.duoc.alumnos.ferme.domain.entities;
 
 import java.io.Serializable;
 import java.util.List;
@@ -31,7 +31,7 @@ public class Cargo implements Serializable {
     @Column(name = "DESCRIPCION")
     private String descripcion;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCargo")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cargo")
     private List<Empleado> empleados;
 
     public Cargo() {}

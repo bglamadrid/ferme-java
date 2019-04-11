@@ -1,4 +1,4 @@
-package cl.duoc.alumnos.ferme.entities.domain;
+package cl.duoc.alumnos.ferme.domain.entities;
 
 import java.io.Serializable;
 import javax.persistence.Column;
@@ -24,16 +24,16 @@ public class DetalleOrdenCompra implements Serializable {
     @EmbeddedId
     protected DetalleOrdenCompraPK detalleOrdenCompraPK;
     
-    @Column(name = "CANTIDAD")
-    private int cantidad;
-    
     @JoinColumn(name = "ID_ORDEN_COMPRA", referencedColumnName = "ID_ORDEN_COMPRA", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private OrdenCompra ordenCompra;
     
     @JoinColumn(name = "ID_PRODUCTO", referencedColumnName = "ID_PRODUCTO")
     @ManyToOne(optional = false)
-    private Producto idProducto;
+    private Producto producto;
+    
+    @Column(name = "CANTIDAD")
+    private int cantidad;
 
     public DetalleOrdenCompra() {}
 
@@ -61,12 +61,12 @@ public class DetalleOrdenCompra implements Serializable {
         this.ordenCompra = ordenCompra;
     }
 
-    public Producto getIdProducto() {
-        return idProducto;
+    public Producto getProducto() {
+        return producto;
     }
 
-    public void setIdProducto(Producto idProducto) {
-        this.idProducto = idProducto;
+    public void setProducto(Producto producto) {
+        this.producto = producto;
     }
 
     @Override

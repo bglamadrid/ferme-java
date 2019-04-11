@@ -1,4 +1,4 @@
-package cl.duoc.alumnos.ferme.entities.domain;
+package cl.duoc.alumnos.ferme.domain.entities;
 
 import java.io.Serializable;
 import javax.persistence.Column;
@@ -24,11 +24,12 @@ public class Proveedor implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
-    @Column(name = "ID_PERSONA")
-    private int idPersona;
-    
     @Column(name = "ID_PROVEEDOR")
     private int idProveedor;
+    
+    @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA", insertable = false, updatable = false)
+    @OneToOne(optional = false)
+    private Persona persona;
     
     @Size(min = 1, max = 50)
     @Column(name = "RAZON_SOCIAL")
@@ -37,23 +38,11 @@ public class Proveedor implements Serializable {
     @Column(name = "TELEFONO")
     private long telefono;
     
-    @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA", insertable = false, updatable = false)
-    @OneToOne(optional = false)
-    private Persona persona;
-    
     @JoinColumn(name = "ID_RUBRO", referencedColumnName = "ID_RUBRO")
     @ManyToOne(optional = false)
     private Rubro rubro;
 
     public Proveedor() {}
-
-    public int getIdPersona() {
-        return idPersona;
-    }
-
-    public void setIdPersona(int idPersona) {
-        this.idPersona = idPersona;
-    }
 
     public int getIdProveedor() {
         return idProveedor;
@@ -98,7 +87,6 @@ public class Proveedor implements Serializable {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 71 * hash + this.idPersona;
         hash = 71 * hash + this.idProveedor;
         return hash;
     }
@@ -109,14 +97,14 @@ public class Proveedor implements Serializable {
             return false;
         }
         final Proveedor other = (Proveedor) object;
-        return (this.idPersona == other.idPersona || this.idProveedor == other.idProveedor);
+        return (this.idProveedor == other.idProveedor);
     }
     
     
 
     @Override
     public String toString() {
-        return "cl.duoc.alumnos.ferme.entities.domain.Proveedor[ idPersona=" + idPersona + " ]";
+        return "cl.duoc.alumnos.ferme.entities.domain.Proveedor[ idProveedor=" + idProveedor + " ]";
     }
     
 }

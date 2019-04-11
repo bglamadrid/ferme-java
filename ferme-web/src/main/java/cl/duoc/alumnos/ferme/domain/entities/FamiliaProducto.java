@@ -1,4 +1,4 @@
-package cl.duoc.alumnos.ferme.entities.domain;
+package cl.duoc.alumnos.ferme.domain.entities;
 
 import java.io.Serializable;
 import java.util.List;
@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
@@ -34,14 +35,15 @@ public class FamiliaProducto implements Serializable {
     private String descripcion;
     
     @Column(name = "ID_PROVEEDOR")
-    private int idProveedor;
+    @OneToOne(optional = false)
+    private Proveedor proveedor;
     
     @JoinColumn(name = "ID_RUBRO", referencedColumnName = "ID_RUBRO")
     @ManyToOne(optional = false)
-    private Rubro idRubro;
+    private Rubro rubro;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "familiaProducto")
-    private List<TipoProducto> tipoProductoList;
+    private List<TipoProducto> tiposProductos;
 
     public FamiliaProducto() {
     }
@@ -62,28 +64,20 @@ public class FamiliaProducto implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public int getIdProveedor() {
-        return idProveedor;
+    public Rubro getRubro() {
+        return rubro;
     }
 
-    public void setIdProveedor(int idProveedor) {
-        this.idProveedor = idProveedor;
+    public void setRubro(Rubro rubro) {
+        this.rubro = rubro;
     }
 
-    public Rubro getIdRubro() {
-        return idRubro;
+    public List<TipoProducto> getTiposProductos() {
+        return tiposProductos;
     }
 
-    public void setIdRubro(Rubro idRubro) {
-        this.idRubro = idRubro;
-    }
-
-    public List<TipoProducto> getTipoProductoList() {
-        return tipoProductoList;
-    }
-
-    public void setTipoProductoList(List<TipoProducto> tipoProductoList) {
-        this.tipoProductoList = tipoProductoList;
+    public void setTiposProductos(List<TipoProducto> tiposProductos) {
+        this.tiposProductos = tiposProductos;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package cl.duoc.alumnos.ferme.entities.domain;
+package cl.duoc.alumnos.ferme.domain.entities;
 
 import java.io.Serializable;
 import java.util.List;
@@ -34,7 +34,7 @@ public class Rubro implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "rubro")
     private List<Proveedor> proveedores;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idRubro")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rubro")
     private List<FamiliaProducto> familiasProductos;
 
     public Rubro() {}

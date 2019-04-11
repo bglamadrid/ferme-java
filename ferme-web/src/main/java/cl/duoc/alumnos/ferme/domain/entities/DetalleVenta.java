@@ -1,4 +1,4 @@
-package cl.duoc.alumnos.ferme.entities.domain;
+package cl.duoc.alumnos.ferme.domain.entities;
 
 import java.io.Serializable;
 import javax.persistence.Column;
@@ -24,19 +24,19 @@ public class DetalleVenta implements Serializable {
     @EmbeddedId
     protected DetalleVentaPK detalleVentaPK;
     
-    @Column(name = "UNIDADES")
-    private int unidades;
-    
-    @Column(name = "MONTO_DETALLE")
-    private int montoDetalle;
+    @JoinColumn(name = "ID_VENTA", referencedColumnName = "ID_VENTA", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Venta venta;
     
     @JoinColumn(name = "ID_PRODUCTO", referencedColumnName = "ID_PRODUCTO")
     @ManyToOne(optional = false)
     private Producto producto;
     
-    @JoinColumn(name = "ID_VENTA", referencedColumnName = "ID_VENTA", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Venta venta;
+    @Column(name = "UNIDADES")
+    private int unidades;
+    
+    @Column(name = "MONTO_DETALLE")
+    private int montoDetalle;
 
     public DetalleVenta() {}
 

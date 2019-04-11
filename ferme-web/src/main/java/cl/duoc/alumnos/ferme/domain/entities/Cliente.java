@@ -1,4 +1,4 @@
-package cl.duoc.alumnos.ferme.entities.domain;
+package cl.duoc.alumnos.ferme.domain.entities;
 
 import java.io.Serializable;
 import javax.persistence.Column;
@@ -23,11 +23,12 @@ public class Cliente implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
-    @Column(name = "ID_PERSONA")
-    private int idPersona;
-    
     @Column(name = "ID_CLIENTE")
     private int idCliente;
+    
+    @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA", insertable = false, updatable = false)
+    @OneToOne(optional = false)
+    private Persona persona;
     
     @Size(min = 1, max = 200)
     @Column(name = "DIRECCION")
@@ -45,20 +46,8 @@ public class Cliente implements Serializable {
     
     @Column(name = "FONO3")
     private Long fono3;
-    
-    @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA", insertable = false, updatable = false)
-    @OneToOne(optional = false)
-    private Persona persona;
 
     public Cliente() {}
-
-    public int getIdPersona() {
-        return idPersona;
-    }
-
-    public void setIdPersona(int idPersona) {
-        this.idPersona = idPersona;
-    }
 
     public int getIdCliente() {
         return idCliente;
@@ -119,7 +108,6 @@ public class Cliente implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 89 * hash + this.idPersona;
         hash = 89 * hash + this.idCliente;
         return hash;
     }
@@ -130,12 +118,12 @@ public class Cliente implements Serializable {
             return false;
         }
         final Cliente other = (Cliente) object;
-        return (this.idPersona == other.idPersona || this.idCliente == other.idCliente);
+        return (this.idCliente == other.idCliente);
     }
 
     @Override
     public String toString() {
-        return "cl.duoc.alumnos.ferme.entities.domain.Cliente[ idPersona=" + idPersona + " ]";
+        return "cl.duoc.alumnos.ferme.entities.domain.Cliente[ idCliente=" + idCliente + " ]";
     }
     
 }

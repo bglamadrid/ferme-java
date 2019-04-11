@@ -1,4 +1,4 @@
-package cl.duoc.alumnos.ferme.entities.domain;
+package cl.duoc.alumnos.ferme.domain.entities;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -29,6 +29,10 @@ public class Usuario implements Serializable {
     @Column(name = "ID_USUARIO")
     private int idUsuario;
     
+    @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA")
+    @OneToOne(optional = false)
+    private Persona persona;
+    
     @Size(min = 1, max = 100)
     @Column(name = "NOMBRE")
     private String nombre;
@@ -40,10 +44,6 @@ public class Usuario implements Serializable {
     @Column(name = "FECHA_CREACION")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCreacion;
-    
-    @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA")
-    @OneToOne
-    private Persona persona;
 
     public Usuario() {}
 

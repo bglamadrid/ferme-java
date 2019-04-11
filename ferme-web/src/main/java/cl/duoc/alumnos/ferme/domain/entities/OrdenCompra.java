@@ -1,4 +1,4 @@
-package cl.duoc.alumnos.ferme.entities.domain;
+package cl.duoc.alumnos.ferme.domain.entities;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -45,7 +45,7 @@ public class OrdenCompra implements Serializable {
     private Date fechaRecepcion;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ordenCompra")
-    private List<DetalleOrdenCompra> detalleOrdenCompraList;
+    private List<DetalleOrdenCompra> detalles;
 
     public OrdenCompra() {}
     
@@ -89,12 +89,12 @@ public class OrdenCompra implements Serializable {
         this.fechaRecepcion = fechaRecepcion;
     }
 
-    public List<DetalleOrdenCompra> getDetalleOrdenCompraList() {
-        return detalleOrdenCompraList;
+    public List<DetalleOrdenCompra> getDetalles() {
+        return detalles;
     }
 
-    public void setDetalleOrdenCompraList(List<DetalleOrdenCompra> detalleOrdenCompraList) {
-        this.detalleOrdenCompraList = detalleOrdenCompraList;
+    public void setDetalles(List<DetalleOrdenCompra> detalles) {
+        this.detalles = detalles;
     }
 
     @Override

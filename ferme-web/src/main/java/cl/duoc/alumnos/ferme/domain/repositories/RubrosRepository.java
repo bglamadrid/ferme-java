@@ -1,6 +1,6 @@
 package cl.duoc.alumnos.ferme.domain.repositories;
 
-import cl.duoc.alumnos.ferme.domain.entities.Producto;
+import cl.duoc.alumnos.ferme.domain.entities.Rubro;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
  */
 @Component
 @Repository
-public interface ProductosRepository extends JpaRepository<Producto, Integer> {
+public interface RubrosRepository extends JpaRepository<Rubro, Integer> {
     
 }

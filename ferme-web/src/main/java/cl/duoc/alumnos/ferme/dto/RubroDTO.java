@@ -7,7 +7,7 @@ package cl.duoc.alumnos.ferme.dto;
 public class RubroDTO {
     
     private Integer idRubro;
-    private String descripcion;
+    private String descripcionRubro;
 
     public RubroDTO() {}
 
@@ -19,12 +19,12 @@ public class RubroDTO {
         this.idRubro = idRubro;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public String getDescripcionRubro() {
+        return descripcionRubro;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setDescripcionRubro(String descripcionRubro) {
+        this.descripcionRubro = descripcionRubro;
     }
     
 }

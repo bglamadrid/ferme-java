@@ -34,10 +34,6 @@ public class FamiliaProducto implements Serializable {
     @Column(name = "DESCRIPCION")
     private String descripcion;
     
-    @Column(name = "ID_PROVEEDOR")
-    @OneToOne(optional = false)
-    private Proveedor proveedor;
-    
     @JoinColumn(name = "ID_RUBRO", referencedColumnName = "ID_RUBRO")
     @ManyToOne(optional = false)
     private Rubro rubro;

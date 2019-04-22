@@ -7,7 +7,7 @@ package cl.duoc.alumnos.ferme.dto;
 public class CargoDTO {
     
     private Integer idCargo;
-    private String descripcion;
+    private String descripcionCargo;
 
     public CargoDTO() {}
 
@@ -19,12 +19,12 @@ public class CargoDTO {
         this.idCargo = idCargo;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public String getDescripcionCargo() {
+        return descripcionCargo;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setDescripcionCargo(String descripcionCargo) {
+        this.descripcionCargo = descripcionCargo;
     }
     
 }

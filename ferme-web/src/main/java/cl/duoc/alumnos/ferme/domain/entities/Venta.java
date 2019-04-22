@@ -11,7 +11,10 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -35,12 +38,12 @@ public class Venta implements Serializable {
     @Column(name = "ID_VENTA")
     private int idVenta;
     
-    @Column(name = "ID_EMPLEADO")
-    @OneToOne(optional = true)
+    @JoinColumn(name = "ID_EMPLEADO", referencedColumnName = "ID_EMPLEADO", insertable = false, updatable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Empleado empleado;
     
-    @Column(name = "ID_CLIENTE")
-    @OneToOne(optional = false)
+    @JoinColumn(name = "ID_CLIENTE", referencedColumnName = "ID_CLIENTE", insertable = false, updatable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Cliente cliente;
     
     @Column(name = "TIPO_VENTA")
@@ -53,7 +56,7 @@ public class Venta implements Serializable {
     @Column(name = "SUBTOTAL")
     private long subtotal;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "venta")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "venta", fetch = FetchType.LAZY)
     private List<DetalleVenta> detalles;
 
     public Venta() {}

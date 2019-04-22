@@ -7,8 +7,9 @@ package cl.duoc.alumnos.ferme.dto;
 public class FamiliaProductoDTO {
     
     private Integer idFamiliaProducto;
-    private String descripcion;
+    private String descripcionFamiliaProducto;
     private Integer idRubro;
+    private String descripcionRubro;
 
     public FamiliaProductoDTO() {
     }
@@ -21,12 +22,12 @@ public class FamiliaProductoDTO {
         this.idFamiliaProducto = idFamiliaProducto;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public String getDescripcionFamiliaProducto() {
+        return descripcionFamiliaProducto;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setDescripcionFamiliaProducto(String descripcionFamiliaProducto) {
+        this.descripcionFamiliaProducto = descripcionFamiliaProducto;
     }
 
     public Integer getIdRubro() {
@@ -35,6 +36,14 @@ public class FamiliaProductoDTO {
 
     public void setIdRubro(Integer idRubro) {
         this.idRubro = idRubro;
+    }
+
+    public String getDescripcionRubro() {
+        return descripcionRubro;
+    }
+
+    public void setDescripcionRubro(String descripcionRubro) {
+        this.descripcionRubro = descripcionRubro;
     }
     
 }

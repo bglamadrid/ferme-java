@@ -10,8 +10,8 @@ import java.util.Collection;
  */
 public interface IProductosService {
     
-    public Producto toEntity(ProductoDTO dto);
-    public ProductoDTO toDTO(Producto entity);
+    public Producto productoDTOToEntity(ProductoDTO dto);
+    public ProductoDTO productoEntityToDTO(Producto entity);
     
     public Collection<ProductoDTO> getProductos(int pageSize, int pageIndex);
     

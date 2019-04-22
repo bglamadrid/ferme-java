@@ -9,8 +9,8 @@ public class DetalleVentaDTO {
     private Integer idDetalleVenta;
     private Integer idVenta;
     private Integer idProducto;
-    private Integer unidades;
-    private Integer montoDetalle;
+    private Integer unidadesProducto;
+    private Integer montoDetalleVenta;
 
     public DetalleVentaDTO() {}
 
@@ -38,20 +38,20 @@ public class DetalleVentaDTO {
         this.idProducto = idProducto;
     }
 
-    public Integer getUnidades() {
-        return unidades;
+    public Integer getUnidadesProducto() {
+        return unidadesProducto;
     }
 
-    public void setUnidades(Integer unidades) {
-        this.unidades = unidades;
+    public void setUnidadesProducto(Integer unidadesProducto) {
+        this.unidadesProducto = unidadesProducto;
     }
 
-    public Integer getMontoDetalle() {
-        return montoDetalle;
+    public Integer getMontoDetalleVenta() {
+        return montoDetalleVenta;
     }
 
-    public void setMontoDetalle(Integer montoDetalle) {
-        this.montoDetalle = montoDetalle;
+    public void setMontoDetalleVenta(Integer montoDetalleVenta) {
+        this.montoDetalleVenta = montoDetalleVenta;
     }
     
 }

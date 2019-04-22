@@ -1,62 +1,46 @@
-/*
- * Copyright (C) 2019 Benjamin Guillermo La Madrid <got12g at gmail.com>
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- */
 package cl.duoc.alumnos.ferme.services.imp;
 
+import cl.duoc.alumnos.ferme.domain.entities.FamiliaProducto;
 import cl.duoc.alumnos.ferme.domain.entities.Producto;
+import cl.duoc.alumnos.ferme.domain.entities.Rubro;
+import cl.duoc.alumnos.ferme.domain.entities.TipoProducto;
+import cl.duoc.alumnos.ferme.domain.repositories.FamiliasProductosRepository;
 import cl.duoc.alumnos.ferme.domain.repositories.ProductosRepository;
+import cl.duoc.alumnos.ferme.domain.repositories.RubrosRepository;
+import cl.duoc.alumnos.ferme.domain.repositories.TiposProductosRepository;
+import cl.duoc.alumnos.ferme.dto.FamiliaProductoDTO;
 import cl.duoc.alumnos.ferme.dto.ProductoDTO;
+import cl.duoc.alumnos.ferme.dto.TipoProductoDTO;
+import cl.duoc.alumnos.ferme.services.IFamiliasProductoService;
 import cl.duoc.alumnos.ferme.services.IProductosService;
+import cl.duoc.alumnos.ferme.services.ITiposProductoService;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Benjamin Guillermo La Madrid <got12g at gmail.com>
  */
-public class ProductosService implements IProductosService {
+@Service
+public class ProductosService implements IProductosService, IFamiliasProductoService, ITiposProductoService {
     
     @Autowired private ProductosRepository productoRepo;
+    @Autowired private FamiliasProductosRepository fmlProductoRepo;
+    @Autowired private TiposProductosRepository tpProductoRepo;
+    @Autowired private RubrosRepository rubroRepo;
 
     @Override
-    public Collection<ProductoDTO> getProductos(int pageSize, int pageIndex) {
-        
-        Pageable pgbl = PageRequest.of(pageIndex, pageSize);
-        
-        List<ProductoDTO> pagina = new ArrayList<>();
-        this.productoRepo.findAll(pgbl).forEach((entity) -> {
-            ProductoDTO dto = this.toDTO(entity);
-            pagina.add(dto);
-        });
-        
-        return pagina;
-    }
-
-    @Override
-    public Producto toEntity(ProductoDTO dto) {
+    public Producto productoDTOToEntity(ProductoDTO dto) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public ProductoDTO toDTO(Producto entity) {
+    public ProductoDTO productoEntityToDTO(Producto entity) {
         ProductoDTO dto = new ProductoDTO();
         
         dto.setIdProducto(entity.getIdProducto());
@@ -70,7 +54,74 @@ public class ProductosService implements IProductosService {
         
         return dto;
     }
+
+    @Override
+    public FamiliaProducto familiaProductoDTOToEntity(FamiliaProductoDTO dto) {
+        FamiliaProducto entity = new FamiliaProducto();
+        Rubro rubroEntity = this.rubroRepo.getOne(dto.getIdFamiliaProducto());
+        
+        entity.setIdFamiliaProducto(dto.getIdFamiliaProducto());
+        entity.setRubro(rubroEntity);
+        entity.setDescripcion(dto.getDescripcionFamiliaProducto());
+        
+        return entity;
+    }
+
+    @Override
+    public FamiliaProductoDTO familiaProductoEntityToDTO(FamiliaProducto entity) {
+        FamiliaProductoDTO dto = new FamiliaProductoDTO();
+        
+        dto.setIdFamiliaProducto(entity.getIdFamiliaProducto());
+        dto.setIdRubro(entity.getRubro().getIdRubro());
+        dto.setDescripcionFamiliaProducto(entity.getDescripcion());
+        
+        return dto;
+    }
+
+    @Override
+    public TipoProducto tipoProductoDTOToEntity(TipoProductoDTO dto) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public TipoProductoDTO tipoProductoEntityToDTO(TipoProducto entity) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
-    
+    @Override
+    public Collection<ProductoDTO> getProductos(int pageSize, int pageIndex) {
+        
+        Pageable pgbl = PageRequest.of(pageIndex, pageSize);
+        
+        List<ProductoDTO> pagina = new ArrayList<>();
+        this.productoRepo.findAll(pgbl).forEach((entity) -> {
+            ProductoDTO dto = this.productoEntityToDTO(entity);
+            pagina.add(dto);
+        });
+        
+        return pagina;
+    }
+
+    @Override
+    public Collection<FamiliaProductoDTO> getFamiliasProductos() {
+        List<FamiliaProductoDTO> lista = new ArrayList<>();
+        this.fmlProductoRepo.findAll().forEach((entity) -> {
+            FamiliaProductoDTO dto = this.familiaProductoEntityToDTO(entity);
+            lista.add(dto);
+        });
+        
+        return lista;
+    }
+
+    @Override
+    public Collection<TipoProductoDTO> getTiposProductos() {
+        List<TipoProductoDTO> lista = new ArrayList<>();
+        this.tpProductoRepo.findAll().forEach((entity) -> {
+            TipoProductoDTO dto = this.tipoProductoEntityToDTO(entity);
+            lista.add(dto);
+        });
+        
+        return lista;
+    }
     
 }

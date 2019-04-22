@@ -8,7 +8,8 @@ public class DetalleOrdenCompraDTO {
     
     private Integer idDetalleOrdenCompra;
     private Integer idOrdenCompra;
-    private Integer cantidad;
+    private Integer idProducto;
+    private Integer cantidadProducto;
 
     public DetalleOrdenCompraDTO() {}
 
@@ -28,12 +29,20 @@ public class DetalleOrdenCompraDTO {
         this.idOrdenCompra = idOrdenCompra;
     }
 
-    public Integer getCantidad() {
-        return cantidad;
+    public Integer getIdProducto() {
+        return idProducto;
     }
 
-    public void setCantidad(Integer cantidad) {
-        this.cantidad = cantidad;
+    public void setIdProducto(Integer idProducto) {
+        this.idProducto = idProducto;
+    }
+
+    public Integer getCantidadProducto() {
+        return cantidadProducto;
+    }
+
+    public void setCantidadProducto(Integer cantidadProducto) {
+        this.cantidadProducto = cantidadProducto;
     }
     
 }

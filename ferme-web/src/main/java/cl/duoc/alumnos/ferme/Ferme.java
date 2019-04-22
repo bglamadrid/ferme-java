@@ -1,21 +1,21 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cl.duoc.alumnos.ferme;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  *
  * @author Benjamin Guillermo
  */
 @SpringBootApplication
+@ComponentScan("cl.duoc.alumnos.ferme.*")
+@EntityScan("cl.duoc.alumnos.ferme.domain.entities")
 public class Ferme {
-    
+        
     public static void main(String[] args) {
-        SpringApplication.run(Ferme.class, args);
+        SpringApplication.run(FermeConfig.class, args);
     }
+    
 }

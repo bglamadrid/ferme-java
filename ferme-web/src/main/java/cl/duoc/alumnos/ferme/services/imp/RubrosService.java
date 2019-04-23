@@ -29,7 +29,7 @@ public class RubrosService implements IRubrosService {
         RubroDTO dto = new RubroDTO();
         
         dto.setIdRubro(entity.getIdRubro());
-        dto.setDescripcion(entity.getDescripcion());
+        dto.setDescripcionRubro(entity.getDescripcion());
         
         return dto;
     }

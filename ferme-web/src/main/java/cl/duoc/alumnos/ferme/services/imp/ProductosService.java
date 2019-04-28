@@ -4,10 +4,6 @@ import cl.duoc.alumnos.ferme.domain.entities.FamiliaProducto;
 import cl.duoc.alumnos.ferme.domain.entities.Producto;
 import cl.duoc.alumnos.ferme.domain.entities.Rubro;
 import cl.duoc.alumnos.ferme.domain.entities.TipoProducto;
-import cl.duoc.alumnos.ferme.domain.repositories.FamiliasProductosRepository;
-import cl.duoc.alumnos.ferme.domain.repositories.ProductosRepository;
-import cl.duoc.alumnos.ferme.domain.repositories.RubrosRepository;
-import cl.duoc.alumnos.ferme.domain.repositories.TiposProductosRepository;
 import cl.duoc.alumnos.ferme.dto.FamiliaProductoDTO;
 import cl.duoc.alumnos.ferme.dto.ProductoDTO;
 import cl.duoc.alumnos.ferme.dto.TipoProductoDTO;
@@ -21,6 +17,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import cl.duoc.alumnos.ferme.domain.repositories.IFamiliasProductosRepository;
+import cl.duoc.alumnos.ferme.domain.repositories.IProductosRepository;
+import cl.duoc.alumnos.ferme.domain.repositories.IRubrosRepository;
+import cl.duoc.alumnos.ferme.domain.repositories.ITiposProductosRepository;
 
 /**
  *
@@ -29,10 +29,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProductosService implements IProductosService, IFamiliasProductoService, ITiposProductoService {
     
-    @Autowired private ProductosRepository productoRepo;
-    @Autowired private FamiliasProductosRepository fmlProductoRepo;
-    @Autowired private TiposProductosRepository tpProductoRepo;
-    @Autowired private RubrosRepository rubroRepo;
+    @Autowired private IProductosRepository productoRepo;
+    @Autowired private IFamiliasProductosRepository fmlProductoRepo;
+    @Autowired private ITiposProductosRepository tpProductoRepo;
+    @Autowired private IRubrosRepository rubroRepo;
 
     @Override
     public Producto productoDTOToEntity(ProductoDTO dto) {

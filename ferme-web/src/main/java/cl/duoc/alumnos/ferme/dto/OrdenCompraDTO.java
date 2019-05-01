@@ -10,12 +10,14 @@ public class OrdenCompraDTO {
     
     private Integer idOrdenCompra;
     private Integer idEmpleado;
-    private String estado;
-    private String fechaSolicitud;
-    private String fechaRecepcion;
-    private List<DetalleOrdenCompraDTO> detalles;
+    private String estadoOrdenCompra;
+    private String fechaSolicitudOrdenCompra;
+    private String fechaRecepcionOrdenCompra;
+    private List<DetalleOrdenCompraDTO> detallesOrdenCompra;
 
-    public OrdenCompraDTO() {}
+    public OrdenCompraDTO() {
+        super();
+    }
     
     public Integer getIdOrdenCompra() {
         return idOrdenCompra;
@@ -33,36 +35,36 @@ public class OrdenCompraDTO {
         this.idEmpleado = idEmpleado;
     }
 
-    public String getEstado() {
-        return estado;
+    public String getEstadoOrdenCompra() {
+        return estadoOrdenCompra;
     }
 
-    public void setEstado(String estado) {
-        this.estado = estado;
+    public void setEstadoOrdenCompra(String estadoOrdenCompra) {
+        this.estadoOrdenCompra = estadoOrdenCompra;
     }
 
-    public String getFechaSolicitud() {
-        return fechaSolicitud;
+    public String getFechaSolicitudOrdenCompra() {
+        return fechaSolicitudOrdenCompra;
     }
 
-    public void setFechaSolicitud(String fechaSolicitud) {
-        this.fechaSolicitud = fechaSolicitud;
+    public void setFechaSolicitudOrdenCompra(String fechaSolicitudOrdenCompra) {
+        this.fechaSolicitudOrdenCompra = fechaSolicitudOrdenCompra;
     }
 
-    public String getFechaRecepcion() {
-        return fechaRecepcion;
+    public String getFechaRecepcionOrdenCompra() {
+        return fechaRecepcionOrdenCompra;
     }
 
-    public void setFechaRecepcion(String fechaRecepcion) {
-        this.fechaRecepcion = fechaRecepcion;
+    public void setFechaRecepcionOrdenCompra(String fechaRecepcionOrdenCompra) {
+        this.fechaRecepcionOrdenCompra = fechaRecepcionOrdenCompra;
     }
 
-    public List<DetalleOrdenCompraDTO> getDetalles() {
-        return detalles;
+    public List<DetalleOrdenCompraDTO> getDetallesOrdenCompra() {
+        return detallesOrdenCompra;
     }
 
-    public void setDetalles(List<DetalleOrdenCompraDTO> detalles) {
-        this.detalles = detalles;
+    public void setDetallesOrdenCompra(List<DetalleOrdenCompraDTO> detallesOrdenCompra) {
+        this.detallesOrdenCompra = detallesOrdenCompra;
     }
     
 }

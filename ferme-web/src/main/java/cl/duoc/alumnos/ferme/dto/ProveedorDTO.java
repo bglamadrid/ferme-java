@@ -7,12 +7,14 @@ package cl.duoc.alumnos.ferme.dto;
 public class ProveedorDTO {
     
     private Integer idProveedor;
-    private Integer idPersona;
-    private String razonSocial;
-    private long telefono;
+    private PersonaDTO persona;
+    private String razonSocialProveedor;
+    private Long telefonoProveedor;
     private Integer idRubro;
 
-    public ProveedorDTO() {}
+    public ProveedorDTO() {
+        super();
+    }
 
     public Integer getIdProveedor() {
         return idProveedor;
@@ -22,28 +24,28 @@ public class ProveedorDTO {
         this.idProveedor = idProveedor;
     }
 
-    public String getRazonSocial() {
-        return razonSocial;
+    public PersonaDTO getPersona() {
+        return persona;
     }
 
-    public void setRazonSocial(String razonSocial) {
-        this.razonSocial = razonSocial;
+    public void setPersona(PersonaDTO persona) {
+        this.persona = persona;
     }
 
-    public long getTelefono() {
-        return telefono;
+    public String getRazonSocialProveedor() {
+        return razonSocialProveedor;
     }
 
-    public void setTelefono(long telefono) {
-        this.telefono = telefono;
+    public void setRazonSocialProveedor(String razonSocialProveedor) {
+        this.razonSocialProveedor = razonSocialProveedor;
     }
 
-    public Integer getIdPersona() {
-        return idPersona;
+    public Long getTelefonoProveedor() {
+        return telefonoProveedor;
     }
 
-    public void setIdPersona(Integer idPersona) {
-        this.idPersona = idPersona;
+    public void setTelefonoProveedor(Long telefonoProveedor) {
+        this.telefonoProveedor = telefonoProveedor;
     }
 
     public Integer getIdRubro() {

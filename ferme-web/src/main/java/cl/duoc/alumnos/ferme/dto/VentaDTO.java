@@ -9,17 +9,53 @@ import java.util.List;
 public class VentaDTO {
     
     private Integer idVenta;
+    private String tipoVenta;
+    private String fechaVenta;
+    private long subtotalVenta;
+    private List<DetalleVentaDTO> detallesVenta;
     private Integer idEmpleado;
     private Integer idCliente;
-    private String tipoVenta;
-    private String fecha;
-    private long subtotal;
-    private List<DetalleVentaDTO> detalles;
 
     public VentaDTO() {}
 
+    public Integer getIdVenta() {
+        return idVenta;
+    }
+
     public void setIdVenta(Integer idVenta) {
         this.idVenta = idVenta;
+    }
+
+    public String getTipoVenta() {
+        return tipoVenta;
+    }
+
+    public void setTipoVenta(String tipoVenta) {
+        this.tipoVenta = tipoVenta;
+    }
+
+    public String getFechaVenta() {
+        return fechaVenta;
+    }
+
+    public void setFechaVenta(String fechaVenta) {
+        this.fechaVenta = fechaVenta;
+    }
+
+    public long getSubtotalVenta() {
+        return subtotalVenta;
+    }
+
+    public void setSubtotalVenta(long subtotalVenta) {
+        this.subtotalVenta = subtotalVenta;
+    }
+
+    public List<DetalleVentaDTO> getDetallesVenta() {
+        return detallesVenta;
+    }
+
+    public void setDetallesVenta(List<DetalleVentaDTO> detallesVenta) {
+        this.detallesVenta = detallesVenta;
     }
 
     public Integer getIdEmpleado() {
@@ -36,38 +72,6 @@ public class VentaDTO {
 
     public void setIdCliente(Integer idCliente) {
         this.idCliente = idCliente;
-    }
-
-    public String getTipoVenta() {
-        return tipoVenta;
-    }
-
-    public void setTipoVenta(String tipoVenta) {
-        this.tipoVenta = tipoVenta;
-    }
-
-    public String getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
-    }
-
-    public long getSubtotal() {
-        return subtotal;
-    }
-
-    public void setSubtotal(long subtotal) {
-        this.subtotal = subtotal;
-    }
-
-    public List<DetalleVentaDTO> getDetalles() {
-        return detalles;
-    }
-
-    public void setDetalles(List<DetalleVentaDTO> detalles) {
-        this.detalles = detalles;
     }
     
 }

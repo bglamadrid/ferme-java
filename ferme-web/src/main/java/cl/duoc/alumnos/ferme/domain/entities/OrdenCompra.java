@@ -7,10 +7,13 @@ import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -28,10 +31,7 @@ public class OrdenCompra implements Serializable {
     
     @Id
     @Column(name = "ID_ORDEN_COMPRA")
-    private int idOrdenCompra;
-    
-    @Column(name = "ID_EMPLEADO")
-    private int idEmpleado;
+    private int id;
     
     @Column(name = "ESTADO")
     private Character estado;
@@ -44,25 +44,21 @@ public class OrdenCompra implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaRecepcion;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ordenCompra")
+    @JoinColumn(name = "ID_EMPLEADO", referencedColumnName = "ID_EMPLEADO")
+    @OneToOne
+    private Empleado empleado;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ordenCompra", fetch = FetchType.LAZY)
     private List<DetalleOrdenCompra> detalles;
 
     public OrdenCompra() {}
     
-    public int getIdOrdenCompra() {
-        return idOrdenCompra;
+    public int getId() {
+        return id;
     }
 
-    public void setIdOrdenCompra(int idOrdenCompra) {
-        this.idOrdenCompra = idOrdenCompra;
-    }
-
-    public int getIdEmpleado() {
-        return idEmpleado;
-    }
-
-    public void setIdEmpleado(int idEmpleado) {
-        this.idEmpleado = idEmpleado;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Character getEstado() {
@@ -89,6 +85,14 @@ public class OrdenCompra implements Serializable {
         this.fechaRecepcion = fechaRecepcion;
     }
 
+    public Empleado getEmpleado() {
+        return empleado;
+    }
+
+    public void setEmpleado(Empleado empleado) {
+        this.empleado = empleado;
+    }
+
     public List<DetalleOrdenCompra> getDetalles() {
         return detalles;
     }
@@ -100,7 +104,7 @@ public class OrdenCompra implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 47 * hash + this.idOrdenCompra;
+        hash = 47 * hash + this.id;
         hash = 47 * hash + Objects.hashCode(this.fechaSolicitud);
         return hash;
     }
@@ -111,14 +115,14 @@ public class OrdenCompra implements Serializable {
             return false;
         }
         final OrdenCompra other = (OrdenCompra) object;
-        return (this.idOrdenCompra != other.idOrdenCompra);
+        return (this.id != other.id);
     }
 
     
 
     @Override
     public String toString() {
-        return "cl.duoc.alumnos.ferme.entities.domain.OrdenCompra[ idOrdenCompra=" + idOrdenCompra + " ]";
+        return "cl.duoc.alumnos.ferme.entities.domain.OrdenCompra[ idOrdenCompra=" + id + " ]";
     }
     
 }

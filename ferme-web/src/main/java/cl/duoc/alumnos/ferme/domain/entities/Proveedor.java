@@ -3,6 +3,7 @@ package cl.duoc.alumnos.ferme.domain.entities;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -25,10 +26,10 @@ public class Proveedor implements Serializable {
     
     @Id
     @Column(name = "ID_PROVEEDOR")
-    private int idProveedor;
+    private int id;
     
     @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA", insertable = false, updatable = false)
-    @OneToOne(optional = false)
+    @OneToOne(optional = false, fetch = FetchType.EAGER)
     private Persona persona;
     
     @Size(min = 1, max = 50)
@@ -39,17 +40,17 @@ public class Proveedor implements Serializable {
     private long telefono;
     
     @JoinColumn(name = "ID_RUBRO", referencedColumnName = "ID_RUBRO")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Rubro rubro;
 
     public Proveedor() {}
 
-    public int getIdProveedor() {
-        return idProveedor;
+    public int getId() {
+        return id;
     }
 
-    public void setIdProveedor(int idProveedor) {
-        this.idProveedor = idProveedor;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getRazonSocial() {
@@ -87,7 +88,7 @@ public class Proveedor implements Serializable {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 71 * hash + this.idProveedor;
+        hash = 71 * hash + this.id;
         return hash;
     }
 
@@ -97,14 +98,14 @@ public class Proveedor implements Serializable {
             return false;
         }
         final Proveedor other = (Proveedor) object;
-        return (this.idProveedor == other.idProveedor);
+        return (this.id == other.id);
     }
     
     
 
     @Override
     public String toString() {
-        return "cl.duoc.alumnos.ferme.entities.domain.Proveedor[ idProveedor=" + idProveedor + " ]";
+        return "cl.duoc.alumnos.ferme.entities.domain.Proveedor[ idProveedor=" + id + " ]";
     }
     
 }

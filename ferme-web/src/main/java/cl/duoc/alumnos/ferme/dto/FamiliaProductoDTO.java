@@ -12,6 +12,7 @@ public class FamiliaProductoDTO {
     private String descripcionRubro;
 
     public FamiliaProductoDTO() {
+        super();
     }
 
     public Integer getIdFamiliaProducto() {

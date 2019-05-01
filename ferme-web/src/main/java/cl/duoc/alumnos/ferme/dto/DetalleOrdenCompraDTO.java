@@ -11,7 +11,9 @@ public class DetalleOrdenCompraDTO {
     private Integer idProducto;
     private Integer cantidadProducto;
 
-    public DetalleOrdenCompraDTO() {}
+    public DetalleOrdenCompraDTO() {
+        super();
+    }
 
     public Integer getIdDetalleOrdenCompra() {
         return idDetalleOrdenCompra;

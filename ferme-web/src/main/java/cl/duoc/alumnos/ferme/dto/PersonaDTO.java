@@ -7,14 +7,12 @@ package cl.duoc.alumnos.ferme.dto;
 public class PersonaDTO {
     
     private Integer idPersona;
-    private String nombreCompleto;
-    private String rut;
-    private Integer idProveedor;
-    private Integer idEmpleado;
-    private Integer idCliente;
-    private Integer idUsuario;
+    private String nombreCompletoPersona;
+    private String rutPersona;
 
-    public PersonaDTO() {}
+    public PersonaDTO() {
+        super();
+    }
 
     public Integer getIdPersona() {
         return idPersona;
@@ -24,52 +22,20 @@ public class PersonaDTO {
         this.idPersona = idPersona;
     }
 
-    public String getNombreCompleto() {
-        return nombreCompleto;
+    public String getNombreCompletoPersona() {
+        return nombreCompletoPersona;
     }
 
-    public void setNombreCompleto(String nombreCompleto) {
-        this.nombreCompleto = nombreCompleto;
+    public void setNombreCompletoPersona(String nombreCompletoPersona) {
+        this.nombreCompletoPersona = nombreCompletoPersona;
     }
 
-    public String getRut() {
-        return rut;
+    public String getRutPersona() {
+        return rutPersona;
     }
 
-    public void setRut(String rut) {
-        this.rut = rut;
-    }
-
-    public Integer getIdProveedor() {
-        return idProveedor;
-    }
-
-    public void setIdProveedor(Integer proveedor) {
-        this.idProveedor = proveedor;
-    }
-
-    public Integer getIdEmpleado() {
-        return idEmpleado;
-    }
-
-    public void setIdEmpleado(Integer idEmpleado) {
-        this.idEmpleado = idEmpleado;
-    }
-
-    public Integer getIdCliente() {
-        return idCliente;
-    }
-
-    public void setIdCliente(Integer idCliente) {
-        this.idCliente = idCliente;
-    }
-
-    public Integer getIdUsuario() {
-        return idUsuario;
-    }
-
-    public void setIdUsuario(Integer idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setRutPersona(String rutPersona) {
+        this.rutPersona = rutPersona;
     }
     
 }

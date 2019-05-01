@@ -9,7 +9,9 @@ public class CargoDTO {
     private Integer idCargo;
     private String descripcionCargo;
 
-    public CargoDTO() {}
+    public CargoDTO() {
+        super();
+    }
 
     public Integer getIdCargo() {
         return idCargo;

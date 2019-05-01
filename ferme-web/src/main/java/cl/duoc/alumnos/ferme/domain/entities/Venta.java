@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cl.duoc.alumnos.ferme.domain.entities;
 
 import java.io.Serializable;
@@ -18,7 +13,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -36,7 +30,7 @@ public class Venta implements Serializable {
     
     @Id
     @Column(name = "ID_VENTA")
-    private int idVenta;
+    private int id;
     
     @JoinColumn(name = "ID_EMPLEADO", referencedColumnName = "ID_EMPLEADO", insertable = false, updatable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -61,8 +55,8 @@ public class Venta implements Serializable {
 
     public Venta() {}
 
-    public void setIdVenta(int idVenta) {
-        this.idVenta = idVenta;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Empleado getEmpleado() {
@@ -116,7 +110,7 @@ public class Venta implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 37 * hash + this.idVenta;
+        hash = 37 * hash + this.id;
         return hash;
     }
 
@@ -126,14 +120,14 @@ public class Venta implements Serializable {
             return false;
         }
         final Venta other = (Venta) object;
-        return (this.idVenta != other.idVenta);
+        return (this.id != other.id);
     }
     
     
 
     @Override
     public String toString() {
-        return "cl.duoc.alumnos.ferme.entities.domain.Venta[ idVenta=" + idVenta + " ]";
+        return "cl.duoc.alumnos.ferme.entities.domain.Venta[ idVenta=" + id + " ]";
     }
     
 }

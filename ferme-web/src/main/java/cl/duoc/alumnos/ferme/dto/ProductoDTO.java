@@ -7,15 +7,18 @@ package cl.duoc.alumnos.ferme.dto;
 public class ProductoDTO {
     
     private Integer idProducto;
+    private String codigoProducto;
+    private String nombreProducto;
+    private String descripcionProducto;
+    private Long precioProducto;
+    private Integer stockActualProducto;
+    private Integer stockCriticoProducto;
     private Integer idTipoProducto;
-    private String codigo;
-    private String nombre;
-    private String descripcion;
-    private Long precio;
-    private Integer stockActual;
-    private Integer stockCritico;
+    private String nombreTipoProducto;
 
-    public ProductoDTO() {}
+    public ProductoDTO() {
+        super();
+    }
 
     public Integer getIdProducto() {
         return idProducto;
@@ -25,52 +28,52 @@ public class ProductoDTO {
         this.idProducto = idProducto;
     }
 
-    public String getCodigo() {
-        return codigo;
+    public String getCodigoProducto() {
+        return codigoProducto;
     }
 
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
+    public void setCodigoProducto(String codigoProducto) {
+        this.codigoProducto = codigoProducto;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getNombreProducto() {
+        return nombreProducto;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombreProducto(String nombreProducto) {
+        this.nombreProducto = nombreProducto;
     }
 
-    public Integer getStockActual() {
-        return stockActual;
+    public Integer getStockActualProducto() {
+        return stockActualProducto;
     }
 
-    public void setStockActual(Integer stockActual) {
-        this.stockActual = stockActual;
+    public void setStockActualProducto(Integer stockActualProducto) {
+        this.stockActualProducto = stockActualProducto;
     }
 
-    public Integer getStockCritico() {
-        return stockCritico;
+    public Integer getStockCriticoProducto() {
+        return stockCriticoProducto;
     }
 
-    public void setStockCritico(Integer stockCritico) {
-        this.stockCritico = stockCritico;
+    public void setStockCriticoProducto(Integer stockCriticoProducto) {
+        this.stockCriticoProducto = stockCriticoProducto;
     }
 
     public long getPrecio() {
-        return precio;
+        return precioProducto;
     }
 
-    public void setPrecio(Long precio) {
-        this.precio = precio;
+    public void setPrecioProducto(Long precioProducto) {
+        this.precioProducto = precioProducto;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public String getDescripcionProducto() {
+        return descripcionProducto;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setDescripcionProducto(String descripcionProducto) {
+        this.descripcionProducto = descripcionProducto;
     }
 
     public Integer getIdTipoProducto() {
@@ -79,6 +82,14 @@ public class ProductoDTO {
 
     public void setIdTipoProducto(Integer idTipoProducto) {
         this.idTipoProducto = idTipoProducto;
+    }
+
+    public String getNombreTipoProducto() {
+        return nombreTipoProducto;
+    }
+
+    public void setNombreTipoProducto(String nombreTipoProducto) {
+        this.nombreTipoProducto = nombreTipoProducto;
     }
 
 }

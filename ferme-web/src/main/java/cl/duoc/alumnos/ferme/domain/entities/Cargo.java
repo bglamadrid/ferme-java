@@ -1,14 +1,11 @@
 package cl.duoc.alumnos.ferme.domain.entities;
 
 import java.io.Serializable;
-import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
@@ -25,23 +22,22 @@ public class Cargo implements Serializable {
     
     @Id
     @Column(name = "ID_CARGO")
-    private int idCargo;
+    private int id;
     
     @Size(min = 1, max = 100)
     @Column(name = "DESCRIPCION")
     private String descripcion;
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cargo")
-    private List<Empleado> empleados;
 
-    public Cargo() {}
-
-    public int getIdCargo() {
-        return idCargo;
+    public Cargo() {
+        super();
     }
 
-    public void setIdCargo(int idCargo) {
-        this.idCargo = idCargo;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getDescripcion() {
@@ -52,14 +48,10 @@ public class Cargo implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public List<Empleado> getEmpleados() {
-        return empleados;
-    }
-
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 83 * hash + this.idCargo;
+        hash = 83 * hash + this.id;
         return hash;
     }
 
@@ -69,12 +61,12 @@ public class Cargo implements Serializable {
             return false;
         }
         Cargo other = (Cargo) object;
-        return (this.idCargo == other.idCargo);
+        return (this.id == other.id);
     }
 
     @Override
     public String toString() {
-        return "cl.duoc.alumnos.ferme.entities.domain.Cargo[ idCargo=" + idCargo + " ]";
+        return "cl.duoc.alumnos.ferme.entities.domain.Cargo[ idCargo=" + id + " ]";
     }
     
 }

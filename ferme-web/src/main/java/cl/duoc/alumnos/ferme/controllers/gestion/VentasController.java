@@ -1,15 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cl.duoc.alumnos.ferme.controllers.gestion;
 
 import cl.duoc.alumnos.ferme.FermeParams;
-import cl.duoc.alumnos.ferme.dto.FamiliaProductoDTO;
-import cl.duoc.alumnos.ferme.dto.ProductoDTO;
-import cl.duoc.alumnos.ferme.dto.RubroDTO;
-import cl.duoc.alumnos.ferme.dto.TipoProductoDTO;
+import cl.duoc.alumnos.ferme.dto.VentaDTO;
 import cl.duoc.alumnos.ferme.services.IFamiliasProductoService;
 import cl.duoc.alumnos.ferme.services.IProductosService;
 import cl.duoc.alumnos.ferme.services.IRubrosService;
@@ -34,16 +26,16 @@ public class VentasController {
     @Autowired private IProductosService productoSvc;
     @Autowired private IRubrosService rubroSvc;
     
-    @GetMapping("/productos/")
-    public Collection<ProductoDTO> getVentas() {
-        return this.productoSvc.getProductos(FermeParams.DEFAULT_PAGE_SIZE, FermeParams.DEFAULT_PAGE_INDEX);
+    @GetMapping("/ventas/")
+    public Collection<VentaDTO> getVentas() {
+        throw new UnsupportedOperationException(); //TODO
     }
     
-    @GetMapping("/productos/{pageSize}/{pageIndex}")
-    public Collection<ProductoDTO> getProductos(
+    @GetMapping("/ventas/{pageSize}/{pageIndex}")
+    public Collection<VentaDTO> getProductos(
         @RequestParam Integer pageSize,
         @RequestParam Integer pageIndex
     ) {
-        return this.productoSvc.getProductos(pageSize, pageIndex);
+        throw new UnsupportedOperationException(); //TODO
     }
 }

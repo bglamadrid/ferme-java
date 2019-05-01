@@ -1,8 +1,6 @@
 package cl.duoc.alumnos.ferme.domain.entities;
 
 import java.io.Serializable;
-import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -10,8 +8,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
@@ -28,7 +24,7 @@ public class FamiliaProducto implements Serializable {
     
     @Id
     @Column(name = "ID_FAMILIA_PRODUCTO")
-    private int idFamiliaProducto;
+    private int id;
     
     @Size(min = 1, max = 100)
     @Column(name = "DESCRIPCION")
@@ -37,19 +33,17 @@ public class FamiliaProducto implements Serializable {
     @JoinColumn(name = "ID_RUBRO", referencedColumnName = "ID_RUBRO")
     @ManyToOne(optional = false)
     private Rubro rubro;
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "familiaProducto")
-    private List<TipoProducto> tiposProductos;
 
     public FamiliaProducto() {
+        super();
     }
 
-    public int getIdFamiliaProducto() {
-        return idFamiliaProducto;
+    public int getId() {
+        return id;
     }
 
-    public void setIdFamiliaProducto(int idFamiliaProducto) {
-        this.idFamiliaProducto = idFamiliaProducto;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getDescripcion() {
@@ -68,18 +62,10 @@ public class FamiliaProducto implements Serializable {
         this.rubro = rubro;
     }
 
-    public List<TipoProducto> getTiposProductos() {
-        return tiposProductos;
-    }
-
-    public void setTiposProductos(List<TipoProducto> tiposProductos) {
-        this.tiposProductos = tiposProductos;
-    }
-
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 79 * hash + this.idFamiliaProducto;
+        hash = 79 * hash + this.id;
         return hash;
     }
 
@@ -89,14 +75,12 @@ public class FamiliaProducto implements Serializable {
             return false;
         }
         final FamiliaProducto other = (FamiliaProducto) object;
-        return (this.idFamiliaProducto == other.idFamiliaProducto);
+        return (this.id == other.id);
     }
-
-    
 
     @Override
     public String toString() {
-        return "cl.duoc.alumnos.ferme.entities.domain.FamiliaProducto[ idFamiliaProducto=" + idFamiliaProducto + " ]";
+        return "cl.duoc.alumnos.ferme.entities.domain.FamiliaProducto[ idFamiliaProducto=" + id + " ]";
     }
     
 }

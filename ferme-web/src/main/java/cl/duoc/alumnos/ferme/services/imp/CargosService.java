@@ -1,10 +1,9 @@
 package cl.duoc.alumnos.ferme.services.imp;
 
-import cl.duoc.alumnos.ferme.domain.entities.QRubro;
-import cl.duoc.alumnos.ferme.domain.entities.Rubro;
-import cl.duoc.alumnos.ferme.dto.RubroDTO;
-import cl.duoc.alumnos.ferme.services.IRubrosService;
-import com.querydsl.core.BooleanBuilder;
+import cl.duoc.alumnos.ferme.domain.entities.Cargo;
+import cl.duoc.alumnos.ferme.domain.entities.QCargo;
+import cl.duoc.alumnos.ferme.domain.repositories.ICargosRepository;
+import cl.duoc.alumnos.ferme.dto.CargoDTO;
 import com.querydsl.core.types.Predicate;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,7 +11,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import cl.duoc.alumnos.ferme.domain.repositories.IRubrosRepository;
+import cl.duoc.alumnos.ferme.services.ICargosService;
+import com.querydsl.core.BooleanBuilder;
 import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,58 +22,58 @@ import org.slf4j.LoggerFactory;
  * @author got12
  */
 @Service
-public class RubrosService implements IRubrosService {
+public class CargosService implements ICargosService {
     
-    @Autowired IRubrosRepository rubroRepo;
+    @Autowired ICargosRepository cargoRepo;
     @Autowired EntityManager em;
     private final static Logger LOG = LoggerFactory.getLogger(ProductosService.class);
 
     @Override
-    public Rubro rubroDTOToEntity(RubroDTO dto) {
-        Rubro entity = new Rubro();
+    public Cargo cargoDTOToEntity(CargoDTO dto) {
+        Cargo entity = new Cargo();
         
-        if (dto.getIdRubro() != null && dto.getIdRubro() != 0) {
-            entity.setId(dto.getIdRubro());
+        if (dto.getIdCargo()!= null && dto.getIdCargo() != 0) {
+            entity.setId(dto.getIdCargo());
         }
-        entity.setDescripcion(dto.getDescripcionRubro());
+        entity.setDescripcion(dto.getDescripcionCargo());
         
         return entity;
     }
 
     @Override
-    public RubroDTO rubroEntityToDTO(Rubro entity) {
-        RubroDTO dto = new RubroDTO();
+    public CargoDTO cargoEntityToDTO(Cargo entity) {
+        CargoDTO dto = new CargoDTO();
         
-        dto.setIdRubro(entity.getId());
-        dto.setDescripcionRubro(entity.getDescripcion());
+        dto.setIdCargo(entity.getId());
+        dto.setDescripcionCargo(entity.getDescripcion());
         
         return dto;
     }
 
     @Override
-    public Collection<RubroDTO> getRubros(Predicate condicion) {
+    public Collection<CargoDTO> getCargos(Predicate condicion) {
         
-        List<RubroDTO> pagina = new ArrayList<>();
+        List<CargoDTO> pagina = new ArrayList<>();
         
-        Iterable<Rubro> rubros;
+        Iterable<Cargo> cargos;
         if (condicion == null) {
-            rubros = rubroRepo.findAll();
+            cargos = cargoRepo.findAll();
         } else {
-            rubros = rubroRepo.findAll(condicion);
+            cargos = cargoRepo.findAll(condicion);
         }
         
-        rubros.forEach((entity) -> {
-            RubroDTO dto = this.rubroEntityToDTO(entity);
+        cargos.forEach((entity) -> {
+            CargoDTO dto = this.cargoEntityToDTO(entity);
             pagina.add(dto);
         });
         
         return pagina;
     }
-    
+
     @Override
-    public Predicate queryParamsMapToRubrosFilteringPredicate(Map<String,String> queryParamsMap){
+    public Predicate queryParamsMapToCargosFilteringPredicate(Map<String, String> queryParamsMap) {
         
-        QRubro qRubro = QRubro.rubro;
+        QCargo qCargo = QCargo.cargo;
         BooleanBuilder bb = new BooleanBuilder();
         for (String paramName : queryParamsMap.keySet()) {
             String paramValue = queryParamsMap.get(paramName);
@@ -83,11 +83,11 @@ public class RubrosService implements IRubrosService {
                 switch (paramName) {
                     case "id":
                         parsedValueI = Integer.valueOf(paramValue);
-                        bb.and(qRubro.id.eq(parsedValueI));
+                        bb.and(qCargo.id.eq(parsedValueI));
                         return bb; //match por id es único
                     case "descripcion":
                         paramValue = "%" + paramValue.toUpperCase() + "%";
-                        bb.and(qRubro.descripcion.upper().like(paramValue));
+                        bb.and(qCargo.descripcion.upper().like(paramValue));
                         break;
                     default: break;
                 }
@@ -98,5 +98,7 @@ public class RubrosService implements IRubrosService {
         
         return bb;
     }
+
+    
     
 }

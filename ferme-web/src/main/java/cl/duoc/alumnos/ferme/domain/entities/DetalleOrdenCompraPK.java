@@ -17,7 +17,13 @@ public class DetalleOrdenCompraPK implements Serializable {
     @Column(name = "ID_ORDEN_COMPRA")
     private int idOrdenCompra;
 
-    public DetalleOrdenCompraPK() {}
+    public DetalleOrdenCompraPK() {
+        super();
+    }
+
+    public int getIdDetalleOrdenCompra() {
+        return idDetalleOrdenCompra;
+    }
 
     public void setIdDetalleOrdenCompra(int idDetalleOrdenCompra) {
         this.idDetalleOrdenCompra = idDetalleOrdenCompra;

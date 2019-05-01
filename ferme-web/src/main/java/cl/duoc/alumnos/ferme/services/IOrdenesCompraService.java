@@ -1,7 +1,7 @@
 package cl.duoc.alumnos.ferme.services;
 
-import cl.duoc.alumnos.ferme.domain.entities.Rubro;
-import cl.duoc.alumnos.ferme.dto.RubroDTO;
+import cl.duoc.alumnos.ferme.domain.entities.OrdenCompra;
+import cl.duoc.alumnos.ferme.dto.OrdenCompraDTO;
 import com.querydsl.core.types.Predicate;
 import java.util.Collection;
 import java.util.Map;
@@ -10,22 +10,22 @@ import java.util.Map;
  *
  * @author Benjamin Guillermo La Madrid <got12g at gmail.com>
  */
-public interface IRubrosService {
+public interface IOrdenesCompraService {
     
-    public Rubro rubroDTOToEntity(RubroDTO dto);
-    public RubroDTO rubroEntityToDTO(Rubro entity);
+    public OrdenCompra ordenCompraDTOToEntity(OrdenCompraDTO dto);
+    public OrdenCompraDTO ordenCompraEntityToDTO(OrdenCompra entity);
     
     /**
-     * Obtiene todos los rubros a partir de un filtro determinado y los 
-     * transforma a DTO.
+     * Obtiene todas las órdenes de compra a partir de un filtro determinado y 
+     * las transforma a DTO.
      * @param condicion El objeto Predicate con los filtros. Puede ser null.
      * @return Una colección de objetos DTO.
      */
-    public Collection<RubroDTO> getRubros(Predicate condicion);
+    public Collection<OrdenCompraDTO> getOrdenCompras(Predicate condicion);
     
     /**
      * Genera una o varias condiciones como un objeto Predicate para filtrar 
-     * rubros, tomando un Map de parámetros como base.
+     * ordenCompras, tomando un Map de parámetros como base.
      * <br><br>
      * Los parámetros soportados son:
      * <ul>
@@ -36,6 +36,6 @@ public interface IRubrosService {
      * un query string).
      * @return Un objeto Predicate representando un conjunto de filtros.
      */
-    public Predicate queryParamsMapToRubrosFilteringPredicate(Map<String,String> queryParamsMap);
+    public Predicate queryParamsMapToOrdenComprasFilteringPredicate(Map<String,String> queryParamsMap);
     
 }

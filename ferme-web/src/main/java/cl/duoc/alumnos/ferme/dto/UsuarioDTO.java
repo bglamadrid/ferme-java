@@ -7,9 +7,9 @@ package cl.duoc.alumnos.ferme.dto;
 public class UsuarioDTO {
     
     private Integer idUsuario;
-    private String nombre;
-    private String clave;
-    private String fechaCreacion;
+    private String nombreUsuario;
+    private String claveUsuario;
+    private String fechaCreacionUsuario;
     private PersonaDTO persona;
 
     public UsuarioDTO() {}
@@ -22,28 +22,28 @@ public class UsuarioDTO {
         this.idUsuario = idUsuario;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getNombreUsuario() {
+        return nombreUsuario;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
     }
 
-    public String getClave() {
-        return clave;
+    public String getClaveUsuario() {
+        return claveUsuario;
     }
 
-    public void setClave(String clave) {
-        this.clave = clave;
+    public void setClaveUsuario(String claveUsuario) {
+        this.claveUsuario = claveUsuario;
     }
 
-    public String getFechaCreacion() {
-        return fechaCreacion;
+    public String getFechaCreacionUsuario() {
+        return fechaCreacionUsuario;
     }
 
-    public void setFechaCreacion(String fechaCreacion) {
-        this.fechaCreacion = fechaCreacion;
+    public void setFechaCreacionUsuario(String fechaCreacionUsuario) {
+        this.fechaCreacionUsuario = fechaCreacionUsuario;
     }
 
     public PersonaDTO getPersona() {

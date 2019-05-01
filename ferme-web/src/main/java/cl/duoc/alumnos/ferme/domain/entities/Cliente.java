@@ -3,6 +3,7 @@ package cl.duoc.alumnos.ferme.domain.entities;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
@@ -24,10 +25,10 @@ public class Cliente implements Serializable {
     
     @Id
     @Column(name = "ID_CLIENTE")
-    private int idCliente;
+    private int id;
     
     @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA", insertable = false, updatable = false)
-    @OneToOne(optional = false)
+    @OneToOne(optional = false, fetch = FetchType.EAGER)
     private Persona persona;
     
     @Size(min = 1, max = 200)
@@ -47,14 +48,16 @@ public class Cliente implements Serializable {
     @Column(name = "FONO3")
     private Long fono3;
 
-    public Cliente() {}
-
-    public int getIdCliente() {
-        return idCliente;
+    public Cliente() {
+        super();
     }
 
-    public void setIdCliente(int idCliente) {
-        this.idCliente = idCliente;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getDireccion() {
@@ -108,7 +111,7 @@ public class Cliente implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 89 * hash + this.idCliente;
+        hash = 89 * hash + this.id;
         return hash;
     }
 
@@ -118,12 +121,12 @@ public class Cliente implements Serializable {
             return false;
         }
         final Cliente other = (Cliente) object;
-        return (this.idCliente == other.idCliente);
+        return (this.id == other.id);
     }
 
     @Override
     public String toString() {
-        return "cl.duoc.alumnos.ferme.entities.domain.Cliente[ idCliente=" + idCliente + " ]";
+        return "cl.duoc.alumnos.ferme.entities.domain.Cliente[ idCliente=" + id + " ]";
     }
     
 }

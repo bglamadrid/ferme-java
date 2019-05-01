@@ -27,7 +27,7 @@ public class Usuario implements Serializable {
     
     @Id
     @Column(name = "ID_USUARIO")
-    private int idUsuario;
+    private int id;
     
     @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA")
     @OneToOne(optional = false)
@@ -39,6 +39,7 @@ public class Usuario implements Serializable {
     
     @Size(min = 1, max = 20)
     @Column(name = "CLAVE")
+    
     private String clave;
     
     @Column(name = "FECHA_CREACION")
@@ -47,12 +48,12 @@ public class Usuario implements Serializable {
 
     public Usuario() {}
 
-    public int getIdUsuario() {
-        return idUsuario;
+    public int getId() {
+        return id;
     }
 
-    public void setIdUsuario(int idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNombre() {
@@ -90,7 +91,7 @@ public class Usuario implements Serializable {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 37 * hash + this.idUsuario;
+        hash = 37 * hash + this.id;
         return hash;
     }
 
@@ -100,14 +101,12 @@ public class Usuario implements Serializable {
             return false;
         }
         final Usuario other = (Usuario) object;
-        return (this.idUsuario != other.idUsuario);
+        return (this.id != other.id);
     }
-    
-    
 
     @Override
     public String toString() {
-        return "cl.duoc.alumnos.ferme.entities.domain.Usuario[ idUsuario=" + idUsuario + " ]";
+        return "cl.duoc.alumnos.ferme.entities.domain.Usuario[ idUsuario=" + id + " ]";
     }
     
 }

@@ -7,12 +7,14 @@ package cl.duoc.alumnos.ferme.dto;
 public class DetalleVentaDTO {
     
     private Integer idDetalleVenta;
-    private Integer idVenta;
     private Integer idProducto;
     private Integer unidadesProducto;
     private Integer montoDetalleVenta;
+    private Integer idVenta;
 
-    public DetalleVentaDTO() {}
+    public DetalleVentaDTO() {
+        super();
+    }
 
     public Integer getIdDetalleVenta() {
         return idDetalleVenta;
@@ -20,14 +22,6 @@ public class DetalleVentaDTO {
 
     public void setIdDetalleVenta(Integer idDetalleVenta) {
         this.idDetalleVenta = idDetalleVenta;
-    }
-
-    public Integer getIdVenta() {
-        return idVenta;
-    }
-
-    public void setIdVenta(Integer idVenta) {
-        this.idVenta = idVenta;
     }
 
     public Integer getIdProducto() {
@@ -52,6 +46,14 @@ public class DetalleVentaDTO {
 
     public void setMontoDetalleVenta(Integer montoDetalleVenta) {
         this.montoDetalleVenta = montoDetalleVenta;
+    }
+
+    public Integer getIdVenta() {
+        return idVenta;
+    }
+
+    public void setIdVenta(Integer idVenta) {
+        this.idVenta = idVenta;
     }
     
 }

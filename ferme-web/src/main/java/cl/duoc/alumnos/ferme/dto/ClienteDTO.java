@@ -14,7 +14,9 @@ public class ClienteDTO {
     private Long fonoCliente2;
     private Long fonoCliente3;
 
-    public ClienteDTO() {}
+    public ClienteDTO() {
+        super();
+    }
 
     public Integer getIdPersona() {
         return idPersona;

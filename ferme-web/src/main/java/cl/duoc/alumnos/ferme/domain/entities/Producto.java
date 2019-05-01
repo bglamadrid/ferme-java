@@ -24,7 +24,7 @@ public class Producto implements Serializable {
     
     @Id
     @Column(name = "ID_PRODUCTO")
-    private int idProducto;
+    private int id;
     
     @Size(min = 1, max = 100)
     @Column(name = "CODIGO")
@@ -49,16 +49,18 @@ public class Producto implements Serializable {
     
     @JoinColumn(name = "ID_TIPO_PRODUCTO", referencedColumnName = "ID_TIPO_PRODUCTO")
     @ManyToOne(optional = false)
-    private TipoProducto tipoProducto;
+    private TipoProducto tipo;
 
-    public Producto() {}
-
-    public int getIdProducto() {
-        return idProducto;
+    public Producto() {
+        super();
     }
 
-    public void setIdProducto(int idProducto) {
-        this.idProducto = idProducto;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getCodigo() {
@@ -109,18 +111,18 @@ public class Producto implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public TipoProducto getTipoProducto() {
-        return tipoProducto;
+    public TipoProducto getTipo() {
+        return tipo;
     }
 
-    public void setTipoProducto(TipoProducto tipoProducto) {
-        this.tipoProducto = tipoProducto;
+    public void setTipo(TipoProducto tipo) {
+        this.tipo = tipo;
     }
 
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 97 * hash + this.idProducto;
+        hash = 97 * hash + this.id;
         return hash;
     }
 
@@ -130,14 +132,14 @@ public class Producto implements Serializable {
             return false;
         }
         final Producto other = (Producto) object;
-        return (this.idProducto == other.idProducto);
+        return (this.id == other.id);
     }
     
     
 
     @Override
     public String toString() {
-        return "cl.duoc.alumnos.ferme.entities.domain.Producto[ idProducto=" + idProducto + " ]";
+        return "cl.duoc.alumnos.ferme.entities.domain.Producto[ idProducto=" + id + " ]";
     }
     
 }

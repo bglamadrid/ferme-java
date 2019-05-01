@@ -1,7 +1,6 @@
 package cl.duoc.alumnos.ferme.domain.entities;
 
 import java.io.Serializable;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -24,7 +23,7 @@ public class Persona implements Serializable {
     
     @Id
     @Column(name = "ID_PERSONA")
-    private int idPersona;
+    private int id;
     
     @Size(min = 1, max = 100)
     @Column(name = "NOMBRE_COMPLETO")
@@ -34,26 +33,19 @@ public class Persona implements Serializable {
     @Column(name = "RUT")
     private String rut;
     
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "persona")
-    private Proveedor proveedor;
-    
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "persona")
-    private Empleado empleado;
-    
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "persona")
-    private Cliente cliente;
-    
     @OneToOne(mappedBy = "persona")
     private Usuario usuario;
 
-    public Persona() {}
-
-    public int getIdPersona() {
-        return idPersona;
+    public Persona() {
+        super();
     }
 
-    public void setIdPersona(int idPersona) {
-        this.idPersona = idPersona;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNombreCompleto() {
@@ -72,18 +64,6 @@ public class Persona implements Serializable {
         this.rut = rut;
     }
 
-    public Proveedor getProveedor() {
-        return proveedor;
-    }
-
-    public Empleado getEmpleado() {
-        return empleado;
-    }
-
-    public Cliente getCliente() {
-        return cliente;
-    }
-
     public Usuario getUsuario() {
         return usuario;
     }
@@ -95,7 +75,7 @@ public class Persona implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 59 * hash + this.idPersona;
+        hash = 59 * hash + this.id;
         return hash;
     }
 
@@ -105,12 +85,12 @@ public class Persona implements Serializable {
             return false;
         }
         final Persona other = (Persona) object;
-        return (this.idPersona == other.idPersona);
+        return (this.id == other.id);
     }
 
     @Override
     public String toString() {
-        return "cl.duoc.alumnos.ferme.entities.domain.Persona[ idPersona=" + idPersona + " ]";
+        return "cl.duoc.alumnos.ferme.entities.domain.Persona[ idPersona=" + id + " ]";
     }
     
 }

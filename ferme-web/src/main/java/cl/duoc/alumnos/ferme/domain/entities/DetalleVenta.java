@@ -4,6 +4,7 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -22,30 +23,32 @@ public class DetalleVenta implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @EmbeddedId
-    protected DetalleVentaPK detalleVentaPK;
-    
-    @JoinColumn(name = "ID_VENTA", referencedColumnName = "ID_VENTA", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Venta venta;
+    protected DetalleVentaPK pk;
     
     @JoinColumn(name = "ID_PRODUCTO", referencedColumnName = "ID_PRODUCTO")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Producto producto;
     
     @Column(name = "UNIDADES")
     private int unidades;
     
     @Column(name = "MONTO_DETALLE")
-    private int montoDetalle;
+    private int monto;
+    
+    @JoinColumn(name = "ID_VENTA", referencedColumnName = "ID_VENTA", insertable = false, updatable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Venta venta;
 
-    public DetalleVenta() {}
-
-    public DetalleVentaPK getDetalleVentaPK() {
-        return detalleVentaPK;
+    public DetalleVenta() {
+        super();
     }
 
-    public void setDetalleVentaPK(DetalleVentaPK detalleVentaPK) {
-        this.detalleVentaPK = detalleVentaPK;
+    public DetalleVentaPK getPk() {
+        return pk;
+    }
+
+    public void setPk(DetalleVentaPK pk) {
+        this.pk = pk;
     }
 
     public int getUnidades() {
@@ -56,12 +59,12 @@ public class DetalleVenta implements Serializable {
         this.unidades = unidades;
     }
 
-    public int getMontoDetalle() {
-        return montoDetalle;
+    public int getMonto() {
+        return monto;
     }
 
-    public void setMontoDetalle(int montoDetalle) {
-        this.montoDetalle = montoDetalle;
+    public void setMonto(int monto) {
+        this.monto = monto;
     }
 
     public Producto getProducto() {
@@ -83,7 +86,7 @@ public class DetalleVenta implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (detalleVentaPK != null ? detalleVentaPK.hashCode() : 0);
+        hash += (pk != null ? pk.hashCode() : 0);
         return hash;
     }
 
@@ -93,12 +96,12 @@ public class DetalleVenta implements Serializable {
             return false;
         }
         DetalleVenta other = (DetalleVenta) object;
-        return this.detalleVentaPK.equals(other.detalleVentaPK);
+        return this.pk.equals(other.pk);
     }
 
     @Override
     public String toString() {
-        return "cl.duoc.alumnos.ferme.entities.domain.DetalleVenta[ detalleVentaPK=" + detalleVentaPK + " ]";
+        return "cl.duoc.alumnos.ferme.entities.domain.DetalleVenta[ detalleVentaPK=" + pk + " ]";
     }
     
 }

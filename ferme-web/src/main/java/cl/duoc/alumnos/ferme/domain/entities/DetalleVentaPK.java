@@ -17,7 +17,9 @@ public class DetalleVentaPK implements Serializable {
     @Column(name = "ID_VENTA")
     private int idVenta;
 
-    public DetalleVentaPK() {}
+    public DetalleVentaPK() {
+        super();
+    }
 
     public int getIdDetalleVenta() {
         return idDetalleVenta;

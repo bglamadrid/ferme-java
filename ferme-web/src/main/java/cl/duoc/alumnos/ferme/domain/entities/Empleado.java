@@ -1,14 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cl.duoc.alumnos.ferme.domain.entities;
 
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -30,24 +26,26 @@ public class Empleado implements Serializable {
     
     @Id
     @Column(name = "ID_EMPLEADO")
-    private int idEmpleado;
+    private int id;
     
-    @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA", insertable = false, updatable = false)
-    @OneToOne(optional = false)
+    @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA")
+    @OneToOne(optional = false, fetch = FetchType.EAGER)
     private Persona persona;
     
     @JoinColumn(name = "ID_CARGO", referencedColumnName = "ID_CARGO")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Cargo cargo;
 
-    public Empleado() {}
-
-    public int getIdEmpleado() {
-        return idEmpleado;
+    public Empleado() {
+        super();
     }
 
-    public void setIdEmpleado(int idEmpleado) {
-        this.idEmpleado = idEmpleado;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Cargo getCargo() {
@@ -69,7 +67,7 @@ public class Empleado implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 59 * hash + this.idEmpleado;
+        hash = 59 * hash + this.id;
         hash = 59 * hash + Objects.hashCode(this.cargo);
         return hash;
     }
@@ -80,12 +78,12 @@ public class Empleado implements Serializable {
             return false;
         }
         final Empleado other = (Empleado) object;
-        return (this.idEmpleado == other.idEmpleado);
+        return (this.id == other.id && this.persona.getId()== other.getPersona().getId());
     }
 
     @Override
     public String toString() {
-        return "cl.duoc.alumnos.ferme.entities.domain.Empleado[ idEmpleado=" + idEmpleado + " ]";
+        return "cl.duoc.alumnos.ferme.entities.domain.Empleado[ idEmpleado=" + id + " ]";
     }
     
 }

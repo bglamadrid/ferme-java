@@ -11,6 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +28,7 @@ public class ComunController {
     
     @Autowired private IRubrosService rubroSvc;
     @Autowired private ICargosService cargoSvc;
-    //@Autowired private final static Logger LOG = LoggerFactory.getLogger(ProductosService.class);
+    //private final static Logger LOG = LoggerFactory.getLogger(ProductosService.class);
     
     
     /**
@@ -46,6 +48,20 @@ public class ComunController {
             filtros = this.rubroSvc.queryParamsMapToRubrosFilteringPredicate(allRequestParams);
         }
         return this.rubroSvc.getRubros(filtros);
+    }
+    
+    @PostMapping({"/rubros/guardar", "/rubros/guardar/"})
+    public Integer saveRubro(@RequestBody RubroDTO dto) {
+        return 0;
+    }
+    
+    @PostMapping({"/rubros/borrar", "/rubros/borrar/"})
+    public boolean deleteRubro(@RequestParam("id") Integer rubroId) {
+        
+        if (rubroId != null && rubroId != 0) {
+            return rubroSvc.deleteRubro(rubroId);
+        }
+        return false;
     }
     
     

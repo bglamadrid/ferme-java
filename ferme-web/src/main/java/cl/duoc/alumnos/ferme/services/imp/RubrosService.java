@@ -30,6 +30,7 @@ public class RubrosService implements IRubrosService {
 
     @Override
     public Rubro rubroDTOToEntity(RubroDTO dto) {
+        
         Rubro entity = new Rubro();
         
         if (dto.getIdRubro() != null && dto.getIdRubro() != 0) {
@@ -42,6 +43,7 @@ public class RubrosService implements IRubrosService {
 
     @Override
     public RubroDTO rubroEntityToDTO(Rubro entity) {
+        
         RubroDTO dto = new RubroDTO();
         
         dto.setIdRubro(entity.getId());
@@ -97,6 +99,26 @@ public class RubrosService implements IRubrosService {
         }
         
         return bb;
+    }
+
+    @Override
+    public int saveRubro(RubroDTO dto) {
+        
+        Rubro entity = this.rubroDTOToEntity(dto);
+        entity = rubroRepo.saveAndFlush(entity);
+        return entity.getId();
+    }
+
+    @Override
+    public boolean deleteRubro(Integer rubroId) {
+        
+        try {
+            rubroRepo.deleteById(rubroId);
+            return true;
+        } catch (IllegalArgumentException exc) {
+            LOG.error("Error al borrar Rubro con id " +rubroId, exc);
+            return false;
+        }
     }
     
 }

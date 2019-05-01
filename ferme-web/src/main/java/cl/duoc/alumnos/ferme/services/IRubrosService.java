@@ -38,4 +38,8 @@ public interface IRubrosService {
      */
     public Predicate queryParamsMapToRubrosFilteringPredicate(Map<String,String> queryParamsMap);
     
+    public int saveRubro(RubroDTO dto);
+    
+    public boolean deleteRubro(Integer rubroId);
+    
 }

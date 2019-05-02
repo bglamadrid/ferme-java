@@ -50,10 +50,7 @@ public class ProductosController {
     public Collection<ProductoDTO> getProductos(
             @RequestParam Map<String, String> allRequestParams
     ) {
-        return this.getProductos(
-                FermeParams.DEFAULT_PAGE_SIZE, 
-                FermeParams.DEFAULT_PAGE_INDEX, 
-                null);
+        return this.getProductos(null, null,  allRequestParams);
     }
 
     
@@ -62,10 +59,7 @@ public class ProductosController {
             @PathVariable Integer pageSize,
             @RequestParam Map<String, String> allRequestParams
     ) {
-        return this.getProductos(
-                pageSize, 
-                FermeParams.DEFAULT_PAGE_INDEX, 
-                allRequestParams);
+        return this.getProductos(pageSize, null, allRequestParams);
     }
     
     @GetMapping({"/productos/{pageSize}/{pageIndex}"})
@@ -88,7 +82,6 @@ public class ProductosController {
             condiciones = productoSvc.queryParamsMapToProductosFilteringPredicate(allRequestParams);
         }
         
-        LOG.info("finalPageIndex: " + finalPageIndex);
         return this.productoSvc.getProductos(finalPageSize, finalPageIndex, condiciones);
     }
 }

@@ -6,8 +6,8 @@ package cl.duoc.alumnos.ferme.dto;
  */
 public class ClienteDTO {
 
-    private Integer idPersona;
     private Integer idCliente;
+    private PersonaDTO persona;
     private String direccionCliente;
     private String emailCliente;
     private Long fonoCliente1;
@@ -18,20 +18,20 @@ public class ClienteDTO {
         super();
     }
 
-    public Integer getIdPersona() {
-        return idPersona;
-    }
-
-    public void setIdPersona(Integer idPersona) {
-        this.idPersona = idPersona;
-    }
-
     public Integer getIdCliente() {
         return idCliente;
     }
 
     public void setIdCliente(Integer idCliente) {
         this.idCliente = idCliente;
+    }
+
+    public PersonaDTO getPersona() {
+        return persona;
+    }
+
+    public void setPersona(PersonaDTO persona) {
+        this.persona = persona;
     }
 
     public String getDireccionCliente() {

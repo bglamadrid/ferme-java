@@ -1,4 +1,4 @@
-package cl.duoc.alumnos.ferme.controllers.gestion;
+package cl.duoc.alumnos.ferme.controllers;
 
 import cl.duoc.alumnos.ferme.dto.CargoDTO;
 import cl.duoc.alumnos.ferme.dto.RubroDTO;
@@ -50,11 +50,25 @@ public class ComunController {
         return this.rubroSvc.getRubros(filtros);
     }
     
+    /**
+     * Almacena un Rubro nuevo o actualiza uno existente.
+     * @param dto Un objeto DTO representando el Rubro a almacenar/actualizar.
+     * @return El ID del rubro.
+     */
     @PostMapping({"/rubros/guardar", "/rubros/guardar/"})
     public Integer saveRubro(@RequestBody RubroDTO dto) {
-        return 0;
+        
+        if (dto != null) {
+            return rubroSvc.saveRubro(dto);
+        }
+        return null;
     }
     
+    /**
+     * Elimina un Rubro de la base de datos.
+     * @param rubroId El ID del Rubro a eliminar.
+     * @return true si la operación fue exitosa, false si no lo fue.
+     */
     @PostMapping({"/rubros/borrar", "/rubros/borrar/"})
     public boolean deleteRubro(@RequestParam("id") Integer rubroId) {
         
@@ -82,5 +96,33 @@ public class ComunController {
             filtros = this.cargoSvc.queryParamsMapToCargosFilteringPredicate(allRequestParams);
         }
         return this.cargoSvc.getCargos(filtros);
+    }
+    
+    /**
+     * Almacena un Cargo nuevo o actualiza uno existente.
+     * @param dto Un objeto DTO representando el Rubro a almacenar/actualizar.
+     * @return El ID del rubro.
+     */
+    @PostMapping({"/cargos/guardar", "/cargos/guardar/"})
+    public Integer saveCargo(@RequestBody CargoDTO dto) {
+        
+        if (dto != null) {
+            return cargoSvc.saveCargo(dto);
+        }
+        return null;
+    }
+    
+    /**
+     * Elimina un Rubro de la base de datos.
+     * @param cargoId El ID del Rubro a eliminar.
+     * @return true si la operación fue exitosa, false si no lo fue.
+     */
+    @PostMapping({"/cargos/borrar", "/cargos/borrar/"})
+    public boolean deleteCargo(@RequestParam("id") Integer cargoId) {
+        
+        if (cargoId != null && cargoId != 0) {
+            return cargoSvc.deleteCargo(cargoId);
+        }
+        return false;
     }
 }

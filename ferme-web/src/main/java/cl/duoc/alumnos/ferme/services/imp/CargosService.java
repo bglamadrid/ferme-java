@@ -99,6 +99,26 @@ public class CargosService implements ICargosService {
         return bb;
     }
 
+    @Override
+    public int saveCargo(CargoDTO dto) {
+        
+        Cargo entity = this.cargoDTOToEntity(dto);
+        entity = cargoRepo.saveAndFlush(entity);
+        return entity.getId();
+    }
+
+    @Override
+    public boolean deleteCargo(Integer cargoId) {
+        
+        try {
+            cargoRepo.deleteById(cargoId);
+            return true;
+        } catch (IllegalArgumentException exc) {
+            LOG.error("Error al borrar Cargo con id " +cargoId, exc);
+        }
+        return false;
+    }
+
     
     
 }

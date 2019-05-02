@@ -19,4 +19,8 @@ public interface ICargosService {
     
     public Predicate queryParamsMapToCargosFilteringPredicate(Map<String,String> queryParamsMap);
     
+    public int saveCargo(CargoDTO dto);
+    
+    public boolean deleteCargo(Integer cargoId);
+    
 }

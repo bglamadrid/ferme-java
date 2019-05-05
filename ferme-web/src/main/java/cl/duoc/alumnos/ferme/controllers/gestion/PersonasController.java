@@ -1,6 +1,6 @@
 package cl.duoc.alumnos.ferme.controllers.gestion;
 
-import cl.duoc.alumnos.ferme.FermeParams;
+import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.dto.ClienteDTO;
 import cl.duoc.alumnos.ferme.services.interfaces.IClientesService;
 import cl.duoc.alumnos.ferme.services.interfaces.IEmpleadosService;
@@ -61,8 +61,8 @@ public class PersonasController {
         @PathVariable Integer pageIndex,
         @RequestParam Map<String,String> allRequestParams) {
         
-        Integer finalPageSize = FermeParams.DEFAULT_PAGE_SIZE;
-        Integer finalPageIndex = FermeParams.DEFAULT_PAGE_INDEX;
+        Integer finalPageSize = Ferme.DEFAULT_PAGE_SIZE;
+        Integer finalPageIndex = Ferme.DEFAULT_PAGE_INDEX;
         Predicate filtros = null;
         
         if (pageSize != null && pageSize > 0) {

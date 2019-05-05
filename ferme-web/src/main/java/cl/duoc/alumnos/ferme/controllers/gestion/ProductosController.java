@@ -1,6 +1,6 @@
 package cl.duoc.alumnos.ferme.controllers.gestion;
 
-import cl.duoc.alumnos.ferme.FermeParams;
+import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.dto.FamiliaProductoDTO;
 import cl.duoc.alumnos.ferme.dto.ProductoDTO;
 import cl.duoc.alumnos.ferme.dto.TipoProductoDTO;
@@ -68,8 +68,8 @@ public class ProductosController {
             @PathVariable Integer pageIndex,
             @RequestParam Map<String, String> allRequestParams
     ) {
-        Integer finalPageSize = FermeParams.DEFAULT_PAGE_SIZE;
-        Integer finalPageIndex = FermeParams.DEFAULT_PAGE_INDEX;
+        Integer finalPageSize = Ferme.DEFAULT_PAGE_SIZE;
+        Integer finalPageIndex = Ferme.DEFAULT_PAGE_INDEX;
         Predicate condiciones = null;
         
         if (pageSize != null && pageSize > 0) {

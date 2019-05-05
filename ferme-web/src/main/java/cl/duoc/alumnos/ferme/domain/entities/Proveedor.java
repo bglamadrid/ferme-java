@@ -38,10 +38,6 @@ public class Proveedor implements Serializable {
     
     @Column(name = "TELEFONO")
     private long telefono;
-    
-    @JoinColumn(name = "ID_RUBRO", referencedColumnName = "ID_RUBRO")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Rubro rubro;
 
     public Proveedor() {}
 
@@ -75,14 +71,6 @@ public class Proveedor implements Serializable {
 
     public void setPersona(Persona persona) {
         this.persona = persona;
-    }
-
-    public Rubro getRubro() {
-        return rubro;
-    }
-
-    public void setRubro(Rubro rubro) {
-        this.rubro = rubro;
     }
 
     @Override

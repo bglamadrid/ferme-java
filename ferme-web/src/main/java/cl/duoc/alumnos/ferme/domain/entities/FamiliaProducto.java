@@ -3,6 +3,7 @@ package cl.duoc.alumnos.ferme.domain.entities;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -33,6 +34,10 @@ public class FamiliaProducto implements Serializable {
     @JoinColumn(name = "ID_RUBRO", referencedColumnName = "ID_RUBRO")
     @ManyToOne(optional = false)
     private Rubro rubro;
+    
+    @JoinColumn(name = "ID_PROVEEDOR", referencedColumnName = "ID_PROVEEDOR")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Proveedor proveedor;
 
     public FamiliaProducto() {
         super();
@@ -61,6 +66,15 @@ public class FamiliaProducto implements Serializable {
     public void setRubro(Rubro rubro) {
         this.rubro = rubro;
     }
+
+    public Proveedor getProveedor() {
+        return proveedor;
+    }
+
+    public void setProveedor(Proveedor proveedor) {
+        this.proveedor = proveedor;
+    }
+    
 
     @Override
     public int hashCode() {

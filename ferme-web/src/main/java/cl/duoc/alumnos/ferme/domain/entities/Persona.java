@@ -32,9 +32,6 @@ public class Persona implements Serializable {
     @Size(min = 1, max = 20)
     @Column(name = "RUT")
     private String rut;
-    
-    @OneToOne(mappedBy = "persona")
-    private Usuario usuario;
 
     public Persona() {
         super();
@@ -62,14 +59,6 @@ public class Persona implements Serializable {
 
     public void setRut(String rut) {
         this.rut = rut;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
     }
 
     @Override

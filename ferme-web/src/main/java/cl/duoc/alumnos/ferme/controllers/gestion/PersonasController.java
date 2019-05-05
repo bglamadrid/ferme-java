@@ -2,9 +2,9 @@ package cl.duoc.alumnos.ferme.controllers.gestion;
 
 import cl.duoc.alumnos.ferme.FermeParams;
 import cl.duoc.alumnos.ferme.dto.ClienteDTO;
-import cl.duoc.alumnos.ferme.services.IClientesService;
-import cl.duoc.alumnos.ferme.services.IEmpleadosService;
-import cl.duoc.alumnos.ferme.services.IProveedoresService;
+import cl.duoc.alumnos.ferme.services.interfaces.IClientesService;
+import cl.duoc.alumnos.ferme.services.interfaces.IEmpleadosService;
+import cl.duoc.alumnos.ferme.services.interfaces.IProveedoresService;
 import com.querydsl.core.types.Predicate;
 import java.util.Collection;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package cl.duoc.alumnos.ferme.services;
+package cl.duoc.alumnos.ferme.services.interfaces;
 
 import cl.duoc.alumnos.ferme.domain.entities.OrdenCompra;
 import cl.duoc.alumnos.ferme.dto.OrdenCompraDTO;

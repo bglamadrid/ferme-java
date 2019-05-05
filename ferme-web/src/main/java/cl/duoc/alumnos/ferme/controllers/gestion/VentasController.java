@@ -2,10 +2,10 @@ package cl.duoc.alumnos.ferme.controllers.gestion;
 
 import cl.duoc.alumnos.ferme.FermeParams;
 import cl.duoc.alumnos.ferme.dto.VentaDTO;
-import cl.duoc.alumnos.ferme.services.IFamiliasProductoService;
-import cl.duoc.alumnos.ferme.services.IProductosService;
-import cl.duoc.alumnos.ferme.services.IRubrosService;
-import cl.duoc.alumnos.ferme.services.ITiposProductoService;
+import cl.duoc.alumnos.ferme.services.interfaces.IFamiliasProductoService;
+import cl.duoc.alumnos.ferme.services.interfaces.IProductosService;
+import cl.duoc.alumnos.ferme.services.interfaces.IRubrosService;
+import cl.duoc.alumnos.ferme.services.interfaces.ITiposProductoService;
 import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

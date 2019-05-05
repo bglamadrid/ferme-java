@@ -61,7 +61,7 @@ public class Rubro implements Serializable {
             return false;
         }
         final Rubro other = (Rubro) object;
-        return (this.id == other.id);
+        return (this.id == other.getId());
     }
     
     

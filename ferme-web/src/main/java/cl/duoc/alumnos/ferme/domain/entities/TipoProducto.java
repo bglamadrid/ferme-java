@@ -73,7 +73,7 @@ public class TipoProducto implements Serializable {
             return false;
         }
         final TipoProducto other = (TipoProducto) object;
-        return (this.id == other.id);
+        return (this.id == other.getId());
     }
     
     

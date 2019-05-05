@@ -89,7 +89,7 @@ public class FamiliaProducto implements Serializable {
             return false;
         }
         final FamiliaProducto other = (FamiliaProducto) object;
-        return (this.id == other.id);
+        return (this.id == other.getId());
     }
 
     @Override

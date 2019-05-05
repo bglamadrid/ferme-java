@@ -137,7 +137,7 @@ public class Persona implements Serializable {
             return false;
         }
         final Persona other = (Persona) object;
-        return (this.id == other.id);
+        return (this.id == other.getId());
     }
 
     @Override

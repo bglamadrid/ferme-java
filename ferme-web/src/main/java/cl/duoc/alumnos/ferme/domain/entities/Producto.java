@@ -120,7 +120,7 @@ public class Producto implements Serializable {
             return false;
         }
         final Producto other = (Producto) object;
-        return (this.id == other.id);
+        return (this.id == other.getId());
     }
     
     

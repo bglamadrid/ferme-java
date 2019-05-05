@@ -75,7 +75,7 @@ public class Proveedor implements Serializable {
             return false;
         }
         final Proveedor other = (Proveedor) object;
-        return (this.id == other.id);
+        return (this.id == other.getId());
     }
     
     

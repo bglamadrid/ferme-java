@@ -61,7 +61,7 @@ public class Cargo implements Serializable {
             return false;
         }
         Cargo other = (Cargo) object;
-        return (this.id == other.id);
+        return (this.id == other.getId());
     }
 
     @Override

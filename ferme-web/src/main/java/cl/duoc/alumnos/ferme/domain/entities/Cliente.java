@@ -64,7 +64,7 @@ public class Cliente implements Serializable {
             return false;
         }
         final Cliente other = (Cliente) object;
-        return (this.id == other.id);
+        return (this.id == other.getId());
     }
 
     @Override

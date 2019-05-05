@@ -21,11 +21,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import cl.duoc.alumnos.ferme.domain.repositories.IFamiliasProductosRepository;
+import cl.duoc.alumnos.ferme.domain.repositories.IFunctionsRepository;
 import cl.duoc.alumnos.ferme.domain.repositories.IProductosRepository;
 import cl.duoc.alumnos.ferme.domain.repositories.IRubrosRepository;
 import cl.duoc.alumnos.ferme.domain.repositories.ITiposProductosRepository;
-import cl.duoc.alumnos.ferme.services.exceptions.FamiliaProductoNotFoundException;
-import cl.duoc.alumnos.ferme.services.exceptions.RubroNotFoundException;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import java.util.Map;
@@ -40,6 +39,7 @@ import org.slf4j.LoggerFactory;
 @Service
 public class ProductosService implements IProductosService, IFamiliasProductoService, ITiposProductoService {
     
+    @Autowired private IFunctionsRepository funcRepo;
     @Autowired private IProductosRepository productoRepo;
     @Autowired private IFamiliasProductosRepository fmlProductoRepo;
     @Autowired private ITiposProductosRepository tpProductoRepo;
@@ -54,7 +54,6 @@ public class ProductosService implements IProductosService, IFamiliasProductoSer
         if (productoId != null && productoId != 0) {
             entity.setId(dto.getIdProducto());
         }
-        entity.setCodigo(dto.getCodigoProducto());
         entity.setNombre(dto.getNombreProducto());
         entity.setDescripcion(dto.getDescripcionProducto());
         
@@ -64,9 +63,11 @@ public class ProductosService implements IProductosService, IFamiliasProductoSer
     @Override
     public ProductoDTO productoEntityToDTO(Producto entity) {
         ProductoDTO dto = new ProductoDTO();
+        Integer productoId = entity.getId();
+        String codigo = funcRepo.getProductoCodigo(productoId);
         
-        dto.setIdProducto(entity.getId());
-        dto.setCodigoProducto(entity.getCodigo());
+        dto.setIdProducto(productoId);
+        dto.setCodigoProducto(codigo);
         dto.setDescripcionProducto(entity.getDescripcion());
         dto.setNombreProducto(entity.getNombre());
         dto.setPrecioProducto(entity.getPrecio());
@@ -79,15 +80,10 @@ public class ProductosService implements IProductosService, IFamiliasProductoSer
     }
 
     @Override
-    public FamiliaProducto familiaProductoDTOToEntity(FamiliaProductoDTO dto) throws RubroNotFoundException {
+    public FamiliaProducto familiaProductoDTOToEntity(FamiliaProductoDTO dto) throws EntityNotFoundException {
         FamiliaProducto entity = new FamiliaProducto();
         Integer familiaProductoId = dto.getIdFamiliaProducto();
-        Rubro rubroEntity;
-        try {
-            rubroEntity = this.rubroRepo.getOne(dto.getIdFamiliaProducto());
-        } catch (EntityNotFoundException exc) { 
-            throw new RubroNotFoundException();
-        }
+        Rubro rubroEntity = this.rubroRepo.getOne(dto.getIdFamiliaProducto());
         
         if (familiaProductoId != null && familiaProductoId != 0) {
             entity.setId(dto.getIdFamiliaProducto());
@@ -112,15 +108,10 @@ public class ProductosService implements IProductosService, IFamiliasProductoSer
     }
 
     @Override
-    public TipoProducto tipoProductoDTOToEntity(TipoProductoDTO dto) throws FamiliaProductoNotFoundException {
+    public TipoProducto tipoProductoDTOToEntity(TipoProductoDTO dto) throws EntityNotFoundException {
         TipoProducto entity = new TipoProducto();
         Integer tipoProductoId = dto.getIdFamiliaProducto();
-        FamiliaProducto familiaEntity;
-        try {
-            familiaEntity = this.fmlProductoRepo.getOne(dto.getIdFamiliaProducto());
-        } catch (EntityNotFoundException exc) {
-            throw new FamiliaProductoNotFoundException();
-        }
+        FamiliaProducto familiaEntity = this.fmlProductoRepo.getOne(dto.getIdFamiliaProducto());
         
         if (tipoProductoId != null && tipoProductoId != 0) {
             entity.setId(tipoProductoId);
@@ -202,10 +193,6 @@ public class ProductosService implements IProductosService, IFamiliasProductoSer
                         parsedValueI = Integer.valueOf(paramValue);
                         bb.and(qProducto.id.eq(parsedValueI));
                         return bb; //match por id es único
-                    case "codigo":
-                        paramValue = "%" + paramValue.toUpperCase() + "%";
-                        bb.and(qProducto.codigo.upper().like(paramValue));
-                        break;
                     case "nombre":
                         paramValue = "%" + paramValue.toUpperCase() + "%";
                         bb.and(qProducto.nombre.upper().like(paramValue.toUpperCase()));

@@ -27,10 +27,6 @@ public class Producto implements Serializable {
     private int id;
     
     @Size(min = 1, max = 100)
-    @Column(name = "CODIGO")
-    private String codigo;
-    
-    @Size(min = 1, max = 100)
     @Column(name = "NOMBRE")
     private String nombre;
     
@@ -61,14 +57,6 @@ public class Producto implements Serializable {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
     }
 
     public String getNombre() {

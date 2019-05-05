@@ -42,52 +42,41 @@ public class ClientesService implements IClientesService {
     public Cliente clienteDTOToEntity(ClienteDTO dto) throws NullPointerException {
         Cliente entity = new Cliente();
         
-        // Persona es la representación de la información personal de un Cliente
-        PersonaDTO persona = dto.getPersona(); 
-        if (persona == null) {
-            throw new NullPointerException("El Cliente recibido posee una Persona con valor null.");
-        } else {
-        
             if (dto.getIdCliente()!= null && dto.getIdCliente() != 0) {
                 entity.setId(dto.getIdCliente());
             }
             
-            Persona personaEntity;
-            if (persona.getIdPersona() == null || persona.getIdPersona() == 0) { // si la persona es 'nueva', sólo hace conversión a Entity
-                personaEntity = personaSvc.personaDTOToEntity(persona);
-            } else { // de lo contrario, buscamos al Cliente en base a la Persona
-                BooleanExpression wherePersonaIdIsThisPersonasId = QCliente.cliente.persona.id.eq(persona.getIdPersona());
-                try {
-                    Optional<Cliente> realCliente = clienteRepo.findOne(wherePersonaIdIsThisPersonasId);
-                    personaEntity = realCliente.get().getPersona();
-                } catch (NoSuchElementException exc) {
-                    personaEntity = personaSvc.personaDTOToEntity(persona);
-                    LOG.info("No se encontró un Cliente asociado a Persona[ idPersona="+persona.getIdPersona()+"], se realizó una conversión manual.", exc);
-                } catch (IncorrectResultSizeDataAccessException exc) {
-                    List<Cliente> realClientes = new ArrayList<>();
-                    clienteRepo.findAll(wherePersonaIdIsThisPersonasId).forEach(realClientes::add);
-                    entity = realClientes.get(realClientes.size()-1);
-                    personaEntity = entity.getPersona();
-                    LOG.info("Muchos Cliente asociados a Persona[ idPersona="+persona.getIdPersona()+"], el Cliente elegido es el último creado ", exc);
-                }
+        // Persona es la representación de la información personal de un Cliente
+        Integer personaId = dto.getIdPersona(); 
+        Persona personaEntity;
+        if (personaId == null || personaId == 0) { // si la persona es 'nueva', sólo reamos manualmente el Entity
+            personaEntity = new Persona();
+        } else { // de lo contrario, buscamos al Cliente en base a la Persona
+            BooleanExpression wherePersonaIdIsThisPersonasId = QCliente.cliente.persona.id.eq(personaId);
+            try {
+                Optional<Cliente> realCliente = clienteRepo.findOne(wherePersonaIdIsThisPersonasId);
+                personaEntity = realCliente.get().getPersona();
+            } catch (NoSuchElementException exc) {
+                personaEntity = new Persona();
+                LOG.info("No se encontró un Cliente asociado a Persona[ idPersona="+personaId+"], se realizó una conversión manual.", exc);
+            } catch (IncorrectResultSizeDataAccessException exc) {
+                List<Cliente> realClientes = new ArrayList<>();
+                clienteRepo.findAll(wherePersonaIdIsThisPersonasId).forEach(realClientes::add);
+                entity = realClientes.get(realClientes.size()-1);
+                personaEntity = entity.getPersona();
+                LOG.info("Muchos Cliente asociados a Persona[ idPersona="+personaId+"], el Cliente elegido es el último creado ", exc);
             }
-            personaEntity.setNombreCompleto(persona.getNombreCompletoPersona());
-            personaEntity.setRut(persona.getRutPersona());
-            
-            entity.setPersona(personaEntity);
         }
         
-        entity.setDireccion(dto.getDireccionCliente());
-        entity.setEmail(dto.getEmailCliente());
-        if (dto.getFonoCliente1() != null && dto.getFonoCliente1() != 0) {
-            entity.setFono1(dto.getFonoCliente1());
-        }
-        if (dto.getFonoCliente2() != null && dto.getFonoCliente2() != 0) {
-            entity.setFono2(dto.getFonoCliente2());
-        }
-        if (dto.getFonoCliente3() != null && dto.getFonoCliente3() != 0) {
-            entity.setFono3(dto.getFonoCliente3());
-        }
+        personaEntity.setNombreCompleto(dto.getNombreCompletoPersona());
+        personaEntity.setRut(dto.getRutPersona());
+        personaEntity.setDireccion(dto.getDireccionPersona());
+        personaEntity.setEmail(dto.getEmailPersona());
+        personaEntity.setFono1(dto.getFonoPersona1());
+        personaEntity.setFono2(dto.getFonoPersona2());
+        personaEntity.setFono3(dto.getFonoPersona3());
+
+        entity.setPersona(personaEntity);
         
         return entity;
     }
@@ -95,17 +84,19 @@ public class ClientesService implements IClientesService {
     @Override
     public ClienteDTO clienteEntityToDTO(Cliente entity) {
         ClienteDTO dto = new ClienteDTO();
+        Persona personaEntity = entity.getPersona();
         
         dto.setIdCliente(entity.getId());
-        dto.setDireccionCliente(entity.getDireccion());
-        dto.setEmailCliente(entity.getEmail());
-        dto.setFonoCliente1(entity.getFono1());
-        dto.setFonoCliente2(entity.getFono2());
-        dto.setFonoCliente3(entity.getFono3());
+        dto.setNombreCompletoPersona(personaEntity.getNombreCompleto());
+        dto.setRutPersona(personaEntity.getRut());
+        dto.setDireccionPersona(personaEntity.getDireccion());
+        dto.setEmailPersona(personaEntity.getEmail());
+        dto.setFonoPersona1(personaEntity.getFono1());
+        dto.setFonoPersona2(personaEntity.getFono2());
+        dto.setFonoPersona3(personaEntity.getFono3());
         
         Persona entityPersona = entity.getPersona();
         PersonaDTO persona = personaSvc.personaEntityToDTO(entityPersona);
-        dto.setPersona(persona);
         
         return dto;
     }
@@ -146,9 +137,9 @@ public class ClientesService implements IClientesService {
                         parsedValueI = Integer.valueOf(paramValue);
                         bb.and(qCliente.id.eq(parsedValueI));
                         return bb; //match por id es único
-                    case "direccion":
+                    case "nombre":
                         paramValue = "%" + paramValue.toUpperCase() + "%";
-                        bb.and(qCliente.direccion.upper().like(paramValue));
+                        bb.and(qCliente.persona.nombreCompleto.upper().like(paramValue));
                         break;
                     default: break;
                 }

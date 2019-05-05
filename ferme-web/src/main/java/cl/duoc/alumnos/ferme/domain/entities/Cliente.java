@@ -30,23 +30,6 @@ public class Cliente implements Serializable {
     @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA", insertable = false, updatable = false)
     @OneToOne(optional = false, fetch = FetchType.EAGER)
     private Persona persona;
-    
-    @Size(min = 1, max = 200)
-    @Column(name = "DIRECCION")
-    private String direccion;
-    
-    @Size(min = 1, max = 100)
-    @Column(name = "EMAIL")
-    private String email;
-    
-    @Column(name = "FONO1")
-    private Long fono1;
-    
-    @Column(name = "FONO2")
-    private Long fono2;
-    
-    @Column(name = "FONO3")
-    private Long fono3;
 
     public Cliente() {
         super();
@@ -58,46 +41,6 @@ public class Cliente implements Serializable {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Long getFono1() {
-        return fono1;
-    }
-
-    public void setFono1(Long fono1) {
-        this.fono1 = fono1;
-    }
-
-    public Long getFono2() {
-        return fono2;
-    }
-
-    public void setFono2(Long fono2) {
-        this.fono2 = fono2;
-    }
-
-    public Long getFono3() {
-        return fono3;
-    }
-
-    public void setFono3(Long fono3) {
-        this.fono3 = fono3;
     }
 
     public Persona getPersona() {

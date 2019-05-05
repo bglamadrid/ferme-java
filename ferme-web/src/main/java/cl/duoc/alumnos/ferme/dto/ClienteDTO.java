@@ -4,15 +4,9 @@ package cl.duoc.alumnos.ferme.dto;
  *
  * @author Benjamin Guillermo
  */
-public class ClienteDTO {
+public class ClienteDTO extends PersonaDTO {
 
     private Integer idCliente;
-    private PersonaDTO persona;
-    private String direccionCliente;
-    private String emailCliente;
-    private Long fonoCliente1;
-    private Long fonoCliente2;
-    private Long fonoCliente3;
 
     public ClienteDTO() {
         super();
@@ -24,54 +18,6 @@ public class ClienteDTO {
 
     public void setIdCliente(Integer idCliente) {
         this.idCliente = idCliente;
-    }
-
-    public PersonaDTO getPersona() {
-        return persona;
-    }
-
-    public void setPersona(PersonaDTO persona) {
-        this.persona = persona;
-    }
-
-    public String getDireccionCliente() {
-        return direccionCliente;
-    }
-
-    public void setDireccionCliente(String direccionCliente) {
-        this.direccionCliente = direccionCliente;
-    }
-
-    public String getEmailCliente() {
-        return emailCliente;
-    }
-
-    public void setEmailCliente(String emailCliente) {
-        this.emailCliente = emailCliente;
-    }
-
-    public Long getFonoCliente1() {
-        return fonoCliente1;
-    }
-
-    public void setFonoCliente1(Long fonoCliente1) {
-        this.fonoCliente1 = fonoCliente1;
-    }
-
-    public Long getFonoCliente2() {
-        return fonoCliente2;
-    }
-
-    public void setFonoCliente2(Long fonoCliente2) {
-        this.fonoCliente2 = fonoCliente2;
-    }
-
-    public Long getFonoCliente3() {
-        return fonoCliente3;
-    }
-
-    public void setFonoCliente3(Long fonoCliente3) {
-        this.fonoCliente3 = fonoCliente3;
     }
     
 }

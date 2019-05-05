@@ -35,9 +35,6 @@ public class Proveedor implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "RAZON_SOCIAL")
     private String razonSocial;
-    
-    @Column(name = "TELEFONO")
-    private long telefono;
 
     public Proveedor() {}
 
@@ -55,14 +52,6 @@ public class Proveedor implements Serializable {
 
     public void setRazonSocial(String razonSocial) {
         this.razonSocial = razonSocial;
-    }
-
-    public long getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(long telefono) {
-        this.telefono = telefono;
     }
 
     public Persona getPersona() {

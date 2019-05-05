@@ -4,10 +4,9 @@ package cl.duoc.alumnos.ferme.dto;
  *
  * @author Benjamin Guillermo
  */
-public class EmpleadoDTO {
+public class EmpleadoDTO extends PersonaDTO {
     
     private Integer idEmpleado;
-    private PersonaDTO persona;
     private Integer idCargo;
 
     public EmpleadoDTO() {
@@ -20,14 +19,6 @@ public class EmpleadoDTO {
 
     public void setIdEmpleado(Integer idEmpleado) {
         this.idEmpleado = idEmpleado;
-    }
-
-    public PersonaDTO getPersona() {
-        return persona;
-    }
-
-    public void setPersona(PersonaDTO idPersona) {
-        this.persona = idPersona;
     }
 
     public Integer getIdCargo() {

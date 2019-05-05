@@ -4,7 +4,7 @@ package cl.duoc.alumnos.ferme.dto;
  *
  * @author Benjamin Guillermo
  */
-public class ProveedorDTO {
+public class ProveedorDTO extends PersonaDTO {
     
     private Integer idProveedor;
     private PersonaDTO persona;

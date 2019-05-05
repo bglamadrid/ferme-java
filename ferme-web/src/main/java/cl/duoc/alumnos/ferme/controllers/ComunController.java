@@ -28,7 +28,7 @@ public class ComunController {
     
     @Autowired private IRubrosService rubroSvc;
     @Autowired private ICargosService cargoSvc;
-    //private final static Logger LOG = LoggerFactory.getLogger(ProductosService.class);
+    private final static Logger LOG = LoggerFactory.getLogger(ComunController.class);
     
     
     /**

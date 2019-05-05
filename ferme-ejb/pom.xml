@@ -4,12 +4,12 @@
     <parent>
         <artifactId>ferme</artifactId>
         <groupId>cl.duoc.alumnos</groupId>
-        <version>1</version>
+        <version>1.0</version>
     </parent>
 
     <groupId>cl.duoc.alumnos.proyectos</groupId>
     <artifactId>ferme-ejb</artifactId>
-    <version>1</version>
+    <version>1.0</version>
     <packaging>ejb</packaging>
 
     <name>ferme-ejb</name>

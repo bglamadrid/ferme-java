@@ -8,8 +8,6 @@ import cl.duoc.alumnos.ferme.dto.ClienteDTO;
 import cl.duoc.alumnos.ferme.dto.PersonaDTO;
 import cl.duoc.alumnos.ferme.services.IClientesService;
 import cl.duoc.alumnos.ferme.services.IPersonasService;
-import cl.duoc.alumnos.ferme.services.exceptions.PersonaMissingException;
-import cl.duoc.alumnos.ferme.services.exceptions.PersonaNotFoundException;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -41,18 +39,18 @@ public class ClientesService implements IClientesService {
     private final static Logger LOG = LoggerFactory.getLogger(ProductosService.class);
 
     @Override
-    public Cliente clienteDTOToEntity(ClienteDTO dto) throws PersonaNotFoundException, PersonaMissingException {
+    public Cliente clienteDTOToEntity(ClienteDTO dto) throws NullPointerException {
         Cliente entity = new Cliente();
-        
-        if (dto.getIdCliente()!= null && dto.getIdCliente() != 0) {
-            entity.setId(dto.getIdCliente());
-        }
         
         // Persona es la representación de la información personal de un Cliente
         PersonaDTO persona = dto.getPersona(); 
         if (persona == null) {
-            throw new PersonaMissingException();
+            throw new NullPointerException("El Cliente recibido posee una Persona con valor null.");
         } else {
+        
+            if (dto.getIdCliente()!= null && dto.getIdCliente() != 0) {
+                entity.setId(dto.getIdCliente());
+            }
             
             Persona personaEntity;
             if (persona.getIdPersona() == null || persona.getIdPersona() == 0) { // si la persona es 'nueva', sólo hace conversión a Entity

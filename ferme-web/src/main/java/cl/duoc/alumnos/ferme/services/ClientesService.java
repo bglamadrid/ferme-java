@@ -58,13 +58,13 @@ public class ClientesService implements IClientesService {
                 personaEntity = realCliente.get().getPersona();
             } catch (NoSuchElementException exc) {
                 personaEntity = new Persona();
-                LOG.info("No se encontró un Cliente asociado a Persona[ idPersona="+personaId+"], se realizó una conversión manual.", exc);
+                LOG.warn("No se encontró un Cliente asociado a Persona[ idPersona="+personaId+"], se realizó una conversión manual.", exc);
             } catch (IncorrectResultSizeDataAccessException exc) {
                 List<Cliente> realClientes = new ArrayList<>();
                 clienteRepo.findAll(wherePersonaIdIsThisPersonasId).forEach(realClientes::add);
                 entity = realClientes.get(realClientes.size()-1);
                 personaEntity = entity.getPersona();
-                LOG.info("Muchos Cliente asociados a Persona[ idPersona="+personaId+"], el Cliente elegido es el último creado ", exc);
+                LOG.warn("Muchos Cliente asociados a Persona[ idPersona="+personaId+"], el Cliente elegido es el último creado.", exc);
             }
         }
         

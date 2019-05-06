@@ -35,6 +35,6 @@ public interface IClientesService {
     public Predicate queryParamsMapToClientesFilteringPredicate(Map<String,String> queryParamsMap);
     
     public int saveCliente(ClienteDTO dto);
-    public boolean deleteCliente(Integer cargoId);
+    public boolean deleteCliente(Integer clienteId);
     
 }

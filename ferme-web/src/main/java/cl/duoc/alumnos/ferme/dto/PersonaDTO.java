@@ -4,7 +4,7 @@ package cl.duoc.alumnos.ferme.dto;
  *
  * @author Benjamin Guillermo
  */
-public class PersonaDTO {
+public abstract class PersonaDTO {
     
     private Integer idPersona;
     private String nombreCompletoPersona;

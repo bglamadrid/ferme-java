@@ -12,11 +12,29 @@ import java.util.Map;
  */
 public interface IEmpleadosService {
     
-    public Empleado proveedorDTOToEntity(EmpleadoDTO dto);
-    public EmpleadoDTO proveedorEntityToDTO(Empleado entity);
+    public Empleado empleadoDTOToEntity(EmpleadoDTO dto);
+    public EmpleadoDTO empleadoEntityToDTO(Empleado entity);
     
-    public Collection<EmpleadoDTO> getEmpleados();
+    /**
+     * Obtiene una página (colección) de empleados, con un tamaño determinado 
+     * (pudiendo filtrarlos) y los transforma a objetos DTO.
+     * @param pageSize El número de resultados que la página mostrará.
+     * @param pageIndex El número de página (la primera es 0).
+     * @param condicion El objeto Predicate con los filtros a aplicar. Nulable.
+     * @return Una colección de objetos DTO.
+     */
+    public Collection<EmpleadoDTO> getEmpleados(int pageSize, int pageIndex, Predicate condicion);
     
+    /**
+     * Genera una o varias condiciones como un objeto Predicate para filtrar 
+     * empleados, tomando un Map de parámetros como base.
+     * @param queryParamsMap Un Map de parámetros (presumiblemente proveído por 
+     * un query string).
+     * @return Un objeto Predicate representando un conjunto de filtros.
+     */
     public Predicate queryParamsMapToEmpleadosFilteringPredicate(Map<String,String> queryParamsMap);
+    
+    public int saveEmpleado(EmpleadoDTO dto);
+    public boolean deleteEmpleado(Integer empleadoId);
     
 }

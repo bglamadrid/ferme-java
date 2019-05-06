@@ -1,11 +1,11 @@
 package cl.duoc.alumnos.ferme.services;
 
-import cl.duoc.alumnos.ferme.domain.entities.Cliente;
+import cl.duoc.alumnos.ferme.domain.entities.Empleado;
 import cl.duoc.alumnos.ferme.domain.entities.Persona;
-import cl.duoc.alumnos.ferme.domain.entities.QCliente;
-import cl.duoc.alumnos.ferme.domain.repositories.IClientesRepository;
-import cl.duoc.alumnos.ferme.dto.ClienteDTO;
-import cl.duoc.alumnos.ferme.services.interfaces.IClientesService;
+import cl.duoc.alumnos.ferme.domain.entities.QEmpleado;
+import cl.duoc.alumnos.ferme.domain.repositories.IEmpleadosRepository;
+import cl.duoc.alumnos.ferme.dto.EmpleadoDTO;
+import cl.duoc.alumnos.ferme.services.interfaces.IEmpleadosService;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -29,39 +29,39 @@ import org.springframework.stereotype.Service;
  * @author got12
  */
 @Service
-public class ClientesService implements IClientesService {
+public class EmpleadosService implements IEmpleadosService {
     
-    @Autowired IClientesRepository clienteRepo;
+    @Autowired IEmpleadosRepository empleadoRepo;
     @Autowired EntityManager em;
     private final static Logger LOG = LoggerFactory.getLogger(ProductosService.class);
 
     @Override
-    public Cliente clienteDTOToEntity(ClienteDTO dto) throws NullPointerException {
-        Cliente entity = new Cliente();
+    public Empleado empleadoDTOToEntity(EmpleadoDTO dto) throws NullPointerException {
+        Empleado entity = new Empleado();
         
-            if (dto.getIdCliente()!= null && dto.getIdCliente() != 0) {
-                entity.setId(dto.getIdCliente());
+            if (dto.getIdEmpleado()!= null && dto.getIdEmpleado() != 0) {
+                entity.setId(dto.getIdEmpleado());
             }
             
-        // Persona es la representación de la información personal de un Cliente
+        // Persona es la representación de la información personal de un Empleado
         Integer personaId = dto.getIdPersona(); 
         Persona personaEntity;
         if (personaId == null || personaId == 0) { // si la persona es 'nueva', sólo reamos manualmente el Entity
             personaEntity = new Persona();
-        } else { // de lo contrario, buscamos al Cliente en base a la Persona
-            BooleanExpression wherePersonaIdIsThisPersonasId = QCliente.cliente.persona.id.eq(personaId);
+        } else { // de lo contrario, buscamos al Empleado en base a la Persona
+            BooleanExpression wherePersonaIdIsThisPersonasId = QEmpleado.empleado.persona.id.eq(personaId);
             try {
-                Optional<Cliente> realCliente = clienteRepo.findOne(wherePersonaIdIsThisPersonasId);
-                personaEntity = realCliente.get().getPersona();
+                Optional<Empleado> realEmpleado = empleadoRepo.findOne(wherePersonaIdIsThisPersonasId);
+                personaEntity = realEmpleado.get().getPersona();
             } catch (NoSuchElementException exc) {
                 personaEntity = new Persona();
-                LOG.warn("No se encontró un Cliente asociado a Persona[ idPersona="+personaId+"], se realizó una conversión manual.", exc);
+                LOG.warn("No se encontró un Empleado asociado a Persona[ idPersona="+personaId+"], se realizó una conversión manual.", exc);
             } catch (IncorrectResultSizeDataAccessException exc) {
-                List<Cliente> realClientes = new ArrayList<>();
-                clienteRepo.findAll(wherePersonaIdIsThisPersonasId).forEach(realClientes::add);
-                entity = realClientes.get(realClientes.size()-1);
+                List<Empleado> realEmpleados = new ArrayList<>();
+                empleadoRepo.findAll(wherePersonaIdIsThisPersonasId).forEach(realEmpleados::add);
+                entity = realEmpleados.get(realEmpleados.size()-1);
                 personaEntity = entity.getPersona();
-                LOG.warn("Muchos Cliente asociados a Persona[ idPersona="+personaId+"], el Cliente elegido es el último creado.", exc);
+                LOG.warn("Muchos Empleado asociados a Persona[ idPersona="+personaId+"], el Empleado elegido es el último creado.", exc);
             }
         }
         
@@ -79,11 +79,11 @@ public class ClientesService implements IClientesService {
     }
 
     @Override
-    public ClienteDTO clienteEntityToDTO(Cliente entity) {
-        ClienteDTO dto = new ClienteDTO();
+    public EmpleadoDTO empleadoEntityToDTO(Empleado entity) {
+        EmpleadoDTO dto = new EmpleadoDTO();
         Persona personaEntity = entity.getPersona();
         
-        dto.setIdCliente(entity.getId());
+        dto.setIdEmpleado(entity.getId());
         dto.setNombreCompletoPersona(personaEntity.getNombreCompleto());
         dto.setRutPersona(personaEntity.getRut());
         dto.setDireccionPersona(personaEntity.getDireccion());
@@ -96,20 +96,20 @@ public class ClientesService implements IClientesService {
     }
 
     @Override
-    public Collection<ClienteDTO> getClientes(int pageSize, int pageIndex, Predicate condicion) {
+    public Collection<EmpleadoDTO> getEmpleados(int pageSize, int pageIndex, Predicate condicion) {
         Pageable pgbl = PageRequest.of(pageIndex, pageSize);
         
-        List<ClienteDTO> pagina = new ArrayList<>();
-        Iterable<Cliente> clientes;
+        List<EmpleadoDTO> pagina = new ArrayList<>();
+        Iterable<Empleado> empleados;
         
         if (condicion == null) {
-            clientes = clienteRepo.findAll(pgbl);
+            empleados = empleadoRepo.findAll(pgbl);
         } else {
-            clientes = clienteRepo.findAll(condicion, pgbl);
+            empleados = empleadoRepo.findAll(condicion, pgbl);
         }
         
-        clientes.forEach((entity) -> {
-            ClienteDTO dto = this.clienteEntityToDTO(entity);
+        empleados.forEach((entity) -> {
+            EmpleadoDTO dto = this.empleadoEntityToDTO(entity);
             pagina.add(dto);
         });
         
@@ -117,9 +117,9 @@ public class ClientesService implements IClientesService {
     }
 
     @Override
-    public Predicate queryParamsMapToClientesFilteringPredicate(Map<String, String> queryParamsMap) {
+    public Predicate queryParamsMapToEmpleadosFilteringPredicate(Map<String, String> queryParamsMap) {
         
-        QCliente qCliente = QCliente.cliente;
+        QEmpleado qEmpleado = QEmpleado.empleado;
         BooleanBuilder bb = new BooleanBuilder();
         for (String paramName : queryParamsMap.keySet()) {
             String paramValue = queryParamsMap.get(paramName);
@@ -129,11 +129,11 @@ public class ClientesService implements IClientesService {
                 switch (paramName) {
                     case "id":
                         parsedValueI = Integer.valueOf(paramValue);
-                        bb.and(qCliente.id.eq(parsedValueI));
+                        bb.and(qEmpleado.id.eq(parsedValueI));
                         return bb; //match por id es único
                     case "nombre":
                         paramValue = "%" + paramValue.toUpperCase() + "%";
-                        bb.and(qCliente.persona.nombreCompleto.upper().like(paramValue));
+                        bb.and(qEmpleado.persona.nombreCompleto.upper().like(paramValue));
                         break;
                     default: break;
                 }
@@ -146,21 +146,21 @@ public class ClientesService implements IClientesService {
     }
 
     @Override
-    public int saveCliente(ClienteDTO dto) {
+    public int saveEmpleado(EmpleadoDTO dto) {
         
-        Cliente entity = this.clienteDTOToEntity(dto);
-        entity = clienteRepo.saveAndFlush(entity);
+        Empleado entity = this.empleadoDTOToEntity(dto);
+        entity = empleadoRepo.saveAndFlush(entity);
         return entity.getId();
     }
 
     @Override
-    public boolean deleteCliente(Integer cargoId) {
+    public boolean deleteEmpleado(Integer empleadoId) {
         
         try {
-            clienteRepo.deleteById(cargoId);
+            empleadoRepo.deleteById(empleadoId);
             return true;
         } catch (IllegalArgumentException exc) {
-            LOG.error("Error al borrar Cliente con id " +cargoId, exc);
+            LOG.error("Error al borrar Empleado con id " +empleadoId, exc);
         }
         return false;
     }

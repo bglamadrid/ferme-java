@@ -16,6 +16,7 @@ import cl.duoc.alumnos.ferme.domain.repositories.IRubrosRepository;
 import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 /**
  *
@@ -115,7 +116,7 @@ public class RubrosService implements IRubrosService {
         try {
             rubroRepo.deleteById(rubroId);
             return true;
-        } catch (IllegalArgumentException exc) {
+        } catch (EmptyResultDataAccessException exc) {
             LOG.error("Error al borrar Rubro con id " +rubroId, exc);
             return false;
         }

@@ -19,6 +19,7 @@ import javax.persistence.EntityManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -159,7 +160,7 @@ public class EmpleadosService implements IEmpleadosService {
         try {
             empleadoRepo.deleteById(empleadoId);
             return true;
-        } catch (IllegalArgumentException exc) {
+        } catch (EmptyResultDataAccessException exc) {
             LOG.error("Error al borrar Empleado con id " +empleadoId, exc);
         }
         return false;

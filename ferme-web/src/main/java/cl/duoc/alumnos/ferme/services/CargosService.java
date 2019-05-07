@@ -16,6 +16,7 @@ import com.querydsl.core.BooleanBuilder;
 import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 /**
  *
@@ -113,7 +114,7 @@ public class CargosService implements ICargosService {
         try {
             cargoRepo.deleteById(cargoId);
             return true;
-        } catch (IllegalArgumentException exc) {
+        } catch (EmptyResultDataAccessException exc) {
             LOG.error("Error al borrar Cargo con id " +cargoId, exc);
         }
         return false;

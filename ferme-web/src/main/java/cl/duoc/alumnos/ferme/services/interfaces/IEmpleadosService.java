@@ -34,7 +34,21 @@ public interface IEmpleadosService {
      */
     public Predicate queryParamsMapToEmpleadosFilteringPredicate(Map<String,String> queryParamsMap);
     
+    /**
+     * 
+     * Guarda (inserta o actualiza) el empleado.
+     * @param dto El objeto DTO de empleado con la información respectiva a guardar.
+     * @return El ID del registro guardado.
+     */
     public int saveEmpleado(EmpleadoDTO dto);
+    
+    /**
+     * 
+     * Elimina el registro (y la información) del empleado especificado.
+     * @param empleadoId El ID del empleado a eliminar.
+     * @return true si es exitoso, false si falla.
+     */
+    
     public boolean deleteEmpleado(Integer empleadoId);
     
 }

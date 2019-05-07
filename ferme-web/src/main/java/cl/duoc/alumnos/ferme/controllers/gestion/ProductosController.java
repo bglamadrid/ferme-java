@@ -33,18 +33,24 @@ public class ProductosController {
     private final static Logger LOG = LoggerFactory.getLogger(ProductosController.class);
 
     
-    
     @GetMapping({"/tipos_producto", "/tipos_producto/"})
-    public Collection<TipoProductoDTO> getTiposProducto() {
-        return this.tpProductoSvc.getTiposProductos();
+    public Collection<TipoProductoDTO> getTiposProducto(@RequestParam Map<String,String> allRequestParams) {
+        Predicate filtros = null;
+        if (allRequestParams != null && !allRequestParams.isEmpty()) {
+            filtros = this.fmlProductoSvc.queryParamsMapToFamiliasProductosFilteringPredicate(allRequestParams);
+        }
+        return this.tpProductoSvc.getTiposProductos(filtros);
     }
-
     
     @GetMapping({"/familias_producto", "/familias_producto/"})
-    public Collection<FamiliaProductoDTO> getFamiliasProducto() {
-        return this.fmlProductoSvc.getFamiliasProductos();
+    public Collection<FamiliaProductoDTO> getFamiliasProducto(@RequestParam Map<String,String> allRequestParams) {
+        
+        Predicate filtros = null;
+        if (allRequestParams != null && !allRequestParams.isEmpty()) {
+            filtros = this.fmlProductoSvc.queryParamsMapToFamiliasProductosFilteringPredicate(allRequestParams);
+        }
+        return this.fmlProductoSvc.getFamiliasProductos(filtros);
     }
-
     
     @GetMapping({"/productos"})
     public Collection<ProductoDTO> getProductos(
@@ -52,7 +58,6 @@ public class ProductosController {
     ) {
         return this.getProductos(null, null,  allRequestParams);
     }
-
     
     @GetMapping({"/productos/{pageSize}"})
     public Collection<ProductoDTO> getProductos(

@@ -33,4 +33,20 @@ public interface IProductosService {
      * @return Un objeto Predicate representando un conjunto de filtros.
      */
     public Predicate queryParamsMapToProductosFilteringPredicate(Map<String,String> queryParamsMap);
+    
+    /**
+     * 
+     * Guarda (inserta o actualiza) el producto.
+     * @param dto El objeto DTO de producto con la información respectiva a guardar.
+     * @return El ID del registro guardado.
+     */
+    public int saveProducto(ProductoDTO dto);
+    
+    /**
+     * 
+     * Elimina el registro (y la información) del producto especificada.
+     * @param productoId El ID del producto a eliminar.
+     * @return true si es exitoso, false si falla.
+     */
+    public boolean deleteProducto(Integer productoId);
 }

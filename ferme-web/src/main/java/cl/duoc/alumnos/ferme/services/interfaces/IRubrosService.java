@@ -38,8 +38,20 @@ public interface IRubrosService {
      */
     public Predicate queryParamsMapToRubrosFilteringPredicate(Map<String,String> queryParamsMap);
     
+    /**
+     * 
+     * Guarda (inserta o actualiza) el rubro.
+     * @param dto El objeto DTO de rubro con la información respectiva a guardar.
+     * @return El ID del registro guardado.
+     */
     public int saveRubro(RubroDTO dto);
     
+    /**
+     * 
+     * Elimina el registro (y la información) del rubro especificada.
+     * @param rubroId El ID del rubro a eliminar.
+     * @return true si es exitoso, false si falla.
+     */
     public boolean deleteRubro(Integer rubroId);
     
 }

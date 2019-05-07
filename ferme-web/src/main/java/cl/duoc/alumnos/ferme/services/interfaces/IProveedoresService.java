@@ -34,6 +34,19 @@ public interface IProveedoresService {
      */
     public Predicate queryParamsMapToProveedoresFilteringPredicate(Map<String,String> queryParamsMap);
     
+    /**
+     * 
+     * Guarda (inserta o actualiza) el proveedor.
+     * @param dto El objeto DTO de proveedor con la información respectiva a guardar.
+     * @return El ID del registro guardado.
+     */
     public int saveProveedor(ProveedorDTO dto);
+    
+    /**
+     * 
+     * Elimina el registro (y la información) del proveedor especificada.
+     * @param proveedorId El ID del proveedor a eliminar.
+     * @return true si es exitoso, false si falla.
+     */
     public boolean deleteProveedor(Integer proveedorId);
 }

@@ -16,12 +16,14 @@ public interface IOrdenesCompraService {
     public OrdenCompraDTO ordenCompraEntityToDTO(OrdenCompra entity);
     
     /**
-     * Obtiene todas las órdenes de compra a partir de un filtro determinado y 
-     * las transforma a DTO.
-     * @param condicion El objeto Predicate con los filtros. Puede ser null.
+     * Obtiene una página (colección) de orden de compras, con un tamaño determinado 
+     * (pudiendo filtrarlos) y los transforma a objetos DTO.
+     * @param pageSize El número de resultados que la página mostrará.
+     * @param pageIndex El número de página (la primera es 0).
+     * @param condicion El objeto Predicate con los filtros a aplicar. Nulable.
      * @return Una colección de objetos DTO.
      */
-    public Collection<OrdenCompraDTO> getOrdenCompras(Predicate condicion);
+    public Collection<OrdenCompraDTO> getOrdenCompras(int pageSize, int pageIndex, Predicate condicion);
     
     /**
      * Genera una o varias condiciones como un objeto Predicate para filtrar 
@@ -37,5 +39,21 @@ public interface IOrdenesCompraService {
      * @return Un objeto Predicate representando un conjunto de filtros.
      */
     public Predicate queryParamsMapToOrdenComprasFilteringPredicate(Map<String,String> queryParamsMap);
+    
+    /**
+     * 
+     * Guarda (inserta o actualiza) la orden de compra.
+     * @param dto El objeto DTO de orden de compra con la información respectiva a guardar.
+     * @return El ID del registro guardado.
+     */
+    public int saveOrdenCompra(OrdenCompraDTO dto);
+    
+    /**
+     * 
+     * Elimina el registro (y la información) de la orden de compra especificada.
+     * @param ordenCompraId El ID de la orden de compra a eliminar.
+     * @return true si es exitoso, false si falla.
+     */
+    public boolean deleteOrdenCompra(Integer ordenCompraId);
     
 }

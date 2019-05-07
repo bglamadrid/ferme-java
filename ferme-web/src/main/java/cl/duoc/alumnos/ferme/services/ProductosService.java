@@ -157,9 +157,17 @@ public class ProductosService implements IProductosService, IFamiliasProductoSer
     }
 
     @Override
-    public Collection<FamiliaProductoDTO> getFamiliasProductos() {
+    public Collection<FamiliaProductoDTO> getFamiliasProductos(Predicate condicion) {
         List<FamiliaProductoDTO> lista = new ArrayList<>();
-        this.fmlProductoRepo.findAll().forEach((entity) -> {
+        Iterable<FamiliaProducto> productos;
+        
+        if (condicion == null) {
+            productos = this.fmlProductoRepo.findAll();
+        } else {
+            productos = this.fmlProductoRepo.findAll(condicion);
+        }
+        
+        productos.forEach((entity) -> {
             FamiliaProductoDTO dto = this.familiaProductoEntityToDTO(entity);
             lista.add(dto);
         });
@@ -168,9 +176,17 @@ public class ProductosService implements IProductosService, IFamiliasProductoSer
     }
 
     @Override
-    public Collection<TipoProductoDTO> getTiposProductos() {
+    public Collection<TipoProductoDTO> getTiposProductos(Predicate condicion) {
         List<TipoProductoDTO> lista = new ArrayList<>();
-        this.tpProductoRepo.findAll().forEach((entity) -> {
+        Iterable<TipoProducto> productos;
+        
+        if (condicion == null) {
+            productos = this.tpProductoRepo.findAll();
+        } else {
+            productos = this.tpProductoRepo.findAll(condicion);
+        }
+        
+        productos.forEach((entity) -> {
             TipoProductoDTO dto = this.tipoProductoEntityToDTO(entity);
             lista.add(dto);
         });
@@ -275,6 +291,36 @@ public class ProductosService implements IProductosService, IFamiliasProductoSer
         }
         
         return bb;
+    }
+
+    @Override
+    public int saveProducto(ProductoDTO dto) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean deleteProducto(Integer productoId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int saveFamiliaProducto(FamiliaProductoDTO dto) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean deleteFamiliaProducto(Integer familiaId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int saveTipoProducto(TipoProductoDTO dto) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean deleteTipoProducto(Integer tipoProductoId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

@@ -36,11 +36,18 @@ public interface IClientesService {
     
     /**
      * 
-     * Transforma el Inserta o actualiza el cliente.
-     * @param dto 
-     * @return 
+     * Guarda (inserta o actualiza) el cliente.
+     * @param dto El objeto DTO de cliente con la información respectiva a guardar.
+     * @return El ID del registro guardado.
      */
     public int saveCliente(ClienteDTO dto);
+    
+    /**
+     * 
+     * Elimina el registro (y la información) del cliente especificado.
+     * @param clienteId El ID del cliente a eliminar.
+     * @return true si es exitoso, false si falla.
+     */
     public boolean deleteCliente(Integer clienteId);
     
 }

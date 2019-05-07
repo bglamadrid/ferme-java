@@ -31,6 +31,7 @@ import java.util.Map;
 import javax.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 /**
  *
@@ -47,6 +48,36 @@ public class ProductosService implements IProductosService, IFamiliasProductoSer
     private final static Logger LOG = LoggerFactory.getLogger(ProductosService.class);
 
     @Override
+    public FamiliaProducto familiaProductoDTOToEntity(FamiliaProductoDTO dto) throws EntityNotFoundException {
+        FamiliaProducto entity = new FamiliaProducto();
+        Integer familiaProductoId = dto.getIdFamiliaProducto();
+        Rubro rubroEntity = this.rubroRepo.getOne(dto.getIdFamiliaProducto());
+        
+        if (familiaProductoId != null && familiaProductoId != 0) {
+            entity.setId(dto.getIdFamiliaProducto());
+        }
+        entity.setRubro(rubroEntity);
+        entity.setDescripcion(dto.getDescripcionFamiliaProducto());
+        
+        return entity;
+    }
+
+    @Override
+    public TipoProducto tipoProductoDTOToEntity(TipoProductoDTO dto) throws EntityNotFoundException {
+        TipoProducto entity = new TipoProducto();
+        Integer tipoProductoId = dto.getIdFamiliaProducto();
+        FamiliaProducto familiaEntity = this.fmlProductoRepo.getOne(dto.getIdFamiliaProducto());
+        
+        if (tipoProductoId != null && tipoProductoId != 0) {
+            entity.setId(tipoProductoId);
+        }
+        entity.setFamilia(familiaEntity);
+        entity.setNombre(dto.getNombreFamiliaProducto());
+        
+        return entity;
+    }
+
+    @Override
     public Producto productoDTOToEntity(ProductoDTO dto) {
         Producto entity = new Producto();
         Integer productoId = dto.getIdProducto();
@@ -58,6 +89,32 @@ public class ProductosService implements IProductosService, IFamiliasProductoSer
         entity.setDescripcion(dto.getDescripcionProducto());
         
         return entity;
+    }
+
+    @Override
+    public FamiliaProductoDTO familiaProductoEntityToDTO(FamiliaProducto entity) {
+        Rubro rubroEntity = entity.getRubro();
+        FamiliaProductoDTO dto = new FamiliaProductoDTO();
+        
+        dto.setIdFamiliaProducto(entity.getId());
+        dto.setDescripcionFamiliaProducto(entity.getDescripcion());
+        dto.setIdRubro(rubroEntity.getId());
+        dto.setDescripcionRubro(rubroEntity.getDescripcion());
+        
+        return dto;
+    }
+
+    @Override
+    public TipoProductoDTO tipoProductoEntityToDTO(TipoProducto entity) {
+        FamiliaProducto familiaProductoEntity = entity.getFamilia();
+        TipoProductoDTO dto = new TipoProductoDTO();
+        
+        dto.setIdTipoProducto(entity.getId());
+        dto.setNombreTipoProducto(entity.getNombre());
+        dto.setIdFamiliaProducto(familiaProductoEntity.getId());
+        dto.setNombreFamiliaProducto(familiaProductoEntity.getDescripcion());
+        
+        return dto;
     }
 
     @Override
@@ -77,83 +134,6 @@ public class ProductosService implements IProductosService, IFamiliasProductoSer
         dto.setNombreTipoProducto(entity.getTipo().getNombre());
         
         return dto;
-    }
-
-    @Override
-    public FamiliaProducto familiaProductoDTOToEntity(FamiliaProductoDTO dto) throws EntityNotFoundException {
-        FamiliaProducto entity = new FamiliaProducto();
-        Integer familiaProductoId = dto.getIdFamiliaProducto();
-        Rubro rubroEntity = this.rubroRepo.getOne(dto.getIdFamiliaProducto());
-        
-        if (familiaProductoId != null && familiaProductoId != 0) {
-            entity.setId(dto.getIdFamiliaProducto());
-        }
-        entity.setRubro(rubroEntity);
-        entity.setDescripcion(dto.getDescripcionFamiliaProducto());
-        
-        return entity;
-    }
-
-    @Override
-    public FamiliaProductoDTO familiaProductoEntityToDTO(FamiliaProducto entity) {
-        Rubro rubroEntity = entity.getRubro();
-        FamiliaProductoDTO dto = new FamiliaProductoDTO();
-        
-        dto.setIdFamiliaProducto(entity.getId());
-        dto.setDescripcionFamiliaProducto(entity.getDescripcion());
-        dto.setIdRubro(rubroEntity.getId());
-        dto.setDescripcionRubro(rubroEntity.getDescripcion());
-        
-        return dto;
-    }
-
-    @Override
-    public TipoProducto tipoProductoDTOToEntity(TipoProductoDTO dto) throws EntityNotFoundException {
-        TipoProducto entity = new TipoProducto();
-        Integer tipoProductoId = dto.getIdFamiliaProducto();
-        FamiliaProducto familiaEntity = this.fmlProductoRepo.getOne(dto.getIdFamiliaProducto());
-        
-        if (tipoProductoId != null && tipoProductoId != 0) {
-            entity.setId(tipoProductoId);
-        }
-        entity.setFamilia(familiaEntity);
-        entity.setNombre(dto.getNombreFamiliaProducto());
-        
-        return entity;
-    }
-
-    @Override
-    public TipoProductoDTO tipoProductoEntityToDTO(TipoProducto entity) {
-        FamiliaProducto familiaProductoEntity = entity.getFamilia();
-        TipoProductoDTO dto = new TipoProductoDTO();
-        
-        dto.setIdTipoProducto(entity.getId());
-        dto.setNombreTipoProducto(entity.getNombre());
-        dto.setIdFamiliaProducto(familiaProductoEntity.getId());
-        dto.setNombreFamiliaProducto(familiaProductoEntity.getDescripcion());
-        
-        return dto;
-    }
-    
-    @Override
-    public Collection<ProductoDTO> getProductos(int pageSize, int pageIndex, Predicate condicion) {
-        Pageable pgbl = PageRequest.of(pageIndex, pageSize);
-        
-        List<ProductoDTO> pagina = new ArrayList<>();
-        Iterable<Producto> productos;
-        
-        if (condicion == null) {
-            productos = this.productoRepo.findAll(pgbl);
-        } else {
-            productos = this.productoRepo.findAll(condicion, pgbl);
-        }
-        
-        productos.forEach((entity) -> {
-            ProductoDTO dto = this.productoEntityToDTO(entity);
-            pagina.add(dto);
-        });
-        
-        return pagina;
     }
 
     @Override
@@ -193,46 +173,26 @@ public class ProductosService implements IProductosService, IFamiliasProductoSer
         
         return lista;
     }
-
+    
     @Override
-    public Predicate queryParamsMapToProductosFilteringPredicate(Map<String, String> queryParamsMap) {
-        QProducto qProducto = QProducto.producto;
-        BooleanBuilder bb = new BooleanBuilder();
-        for (String paramName : queryParamsMap.keySet()) {
-            String paramValue = queryParamsMap.get(paramName);
-            LOG.debug(paramName+"="+paramValue);
-            try {
-                Integer parsedValueI;
-                Long parsedValueL;
-                switch (paramName) {
-                    case "id":
-                        parsedValueI = Integer.valueOf(paramValue);
-                        bb.and(qProducto.id.eq(parsedValueI));
-                        return bb; //match por id es único
-                    case "nombre":
-                        paramValue = "%" + paramValue.toUpperCase() + "%";
-                        bb.and(qProducto.nombre.upper().like(paramValue.toUpperCase()));
-                        break;
-                    case "descripcion":
-                        paramValue = "%" + paramValue.toUpperCase() + "%";
-                        bb.and(qProducto.descripcion.upper().like(paramValue.toUpperCase()));
-                        break;
-                    case "precio":
-                        parsedValueL = Long.valueOf(paramValue);
-                        bb.and(qProducto.precio.eq(parsedValueL));
-                        break;
-                    case "stock":
-                        parsedValueI = Integer.valueOf(paramValue);
-                        bb.and(qProducto.stockActual.eq(parsedValueI));
-                        break;
-                    default: break;
-                }
-            } catch (NumberFormatException exc) {
-                LOG.error("No se pudo traducir el parámetro '" + paramName + "' a un número (su valor era '" + paramValue + "').", exc);
-            }
+    public Collection<ProductoDTO> getProductos(int pageSize, int pageIndex, Predicate condicion) {
+        Pageable pgbl = PageRequest.of(pageIndex, pageSize);
+        
+        List<ProductoDTO> pagina = new ArrayList<>();
+        Iterable<Producto> productos;
+        
+        if (condicion == null) {
+            productos = this.productoRepo.findAll(pgbl);
+        } else {
+            productos = this.productoRepo.findAll(condicion, pgbl);
         }
         
-        return bb;
+        productos.forEach((entity) -> {
+            ProductoDTO dto = this.productoEntityToDTO(entity);
+            pagina.add(dto);
+        });
+        
+        return pagina;
     }
 
     @Override
@@ -294,33 +254,104 @@ public class ProductosService implements IProductosService, IFamiliasProductoSer
     }
 
     @Override
-    public int saveProducto(ProductoDTO dto) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean deleteProducto(Integer productoId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Predicate queryParamsMapToProductosFilteringPredicate(Map<String, String> queryParamsMap) {
+        QProducto qProducto = QProducto.producto;
+        BooleanBuilder bb = new BooleanBuilder();
+        for (String paramName : queryParamsMap.keySet()) {
+            String paramValue = queryParamsMap.get(paramName);
+            LOG.debug(paramName+"="+paramValue);
+            try {
+                Integer parsedValueI;
+                Long parsedValueL;
+                switch (paramName) {
+                    case "id":
+                        parsedValueI = Integer.valueOf(paramValue);
+                        bb.and(qProducto.id.eq(parsedValueI));
+                        return bb; //match por id es único
+                    case "nombre":
+                        paramValue = "%" + paramValue.toUpperCase() + "%";
+                        bb.and(qProducto.nombre.upper().like(paramValue.toUpperCase()));
+                        break;
+                    case "descripcion":
+                        paramValue = "%" + paramValue.toUpperCase() + "%";
+                        bb.and(qProducto.descripcion.upper().like(paramValue.toUpperCase()));
+                        break;
+                    case "precio":
+                        parsedValueL = Long.valueOf(paramValue);
+                        bb.and(qProducto.precio.eq(parsedValueL));
+                        break;
+                    case "stock":
+                        parsedValueI = Integer.valueOf(paramValue);
+                        bb.and(qProducto.stockActual.eq(parsedValueI));
+                        break;
+                    default: break;
+                }
+            } catch (NumberFormatException exc) {
+                LOG.error("No se pudo traducir el parámetro '" + paramName + "' a un número (su valor era '" + paramValue + "').", exc);
+            }
+        }
+        
+        return bb;
     }
 
     @Override
     public int saveFamiliaProducto(FamiliaProductoDTO dto) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean deleteFamiliaProducto(Integer familiaId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        FamiliaProducto entity = this.familiaProductoDTOToEntity(dto);
+        entity = fmlProductoRepo.saveAndFlush(entity);
+        return entity.getId();
     }
 
     @Override
     public int saveTipoProducto(TipoProductoDTO dto) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        TipoProducto entity = this.tipoProductoDTOToEntity(dto);
+        entity = tpProductoRepo.saveAndFlush(entity);
+        return entity.getId();
+    }
+
+    @Override
+    public int saveProducto(ProductoDTO dto) {
+        
+        Producto entity = this.productoDTOToEntity(dto);
+        entity = productoRepo.saveAndFlush(entity);
+        return entity.getId();
+    }
+
+    @Override
+    public boolean deleteFamiliaProducto(Integer familiaId) {
+        
+        try {
+            productoRepo.deleteById(familiaId);
+            return true;
+        } catch (EmptyResultDataAccessException exc) {
+            LOG.error("Error al borrar FamiliaProducto con id " +familiaId, exc);
+        }
+        return false;
     }
 
     @Override
     public boolean deleteTipoProducto(Integer tipoProductoId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            tpProductoRepo.deleteById(tipoProductoId);
+            return true;
+        } catch (EmptyResultDataAccessException exc) {
+            LOG.error("Error al borrar TipoProducto con id " +tipoProductoId, exc);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deleteProducto(Integer productoId) {
+        
+        try {
+            productoRepo.deleteById(productoId);
+            return true;
+        } catch (EmptyResultDataAccessException exc) {
+            LOG.error("Error al borrar Producto con id " +productoId, exc);
+        }
+        return false;
     }
     
 }

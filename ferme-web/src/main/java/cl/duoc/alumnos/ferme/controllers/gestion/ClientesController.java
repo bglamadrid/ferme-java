@@ -3,8 +3,6 @@ package cl.duoc.alumnos.ferme.controllers.gestion;
 import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.dto.ClienteDTO;
 import cl.duoc.alumnos.ferme.services.interfaces.IClientesService;
-import cl.duoc.alumnos.ferme.services.interfaces.IEmpleadosService;
-import cl.duoc.alumnos.ferme.services.interfaces.IProveedoresService;
 import com.querydsl.core.types.Predicate;
 import java.util.Collection;
 import java.util.Map;
@@ -81,7 +79,7 @@ public class ClientesController {
      * @return El ID del rubro.
      */
     @PostMapping({"/clientes/guardar", "/clientes/guardar/"})
-    public Integer saveRubro(@RequestBody ClienteDTO dto) {
+    public Integer saveCliente(@RequestBody ClienteDTO dto) {
         
         if (dto != null) {
             return clienteSvc.saveCliente(dto);
@@ -95,7 +93,7 @@ public class ClientesController {
      * @return true si la operación fue exitosa, false si no lo fue.
      */
     @PostMapping({"/clientes/borrar", "/clientes/borrar/"})
-    public boolean deleteRubro(@RequestParam("id") Integer clienteId) {
+    public boolean deleteCliente(@RequestParam("id") Integer clienteId) {
         
         if (clienteId != null && clienteId != 0) {
             return clienteSvc.deleteCliente(clienteId);

@@ -34,6 +34,12 @@ public interface IClientesService {
      */
     public Predicate queryParamsMapToClientesFilteringPredicate(Map<String,String> queryParamsMap);
     
+    /**
+     * 
+     * Transforma el Inserta o actualiza el cliente.
+     * @param dto 
+     * @return 
+     */
     public int saveCliente(ClienteDTO dto);
     public boolean deleteCliente(Integer clienteId);
     

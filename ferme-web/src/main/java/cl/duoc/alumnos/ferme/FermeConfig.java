@@ -19,7 +19,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @ImportResource("beans.xml")
 public class FermeConfig { 
     
-    @Autowired
-    private DataSource ds;
+    @Autowired private DataSource ds;
     
 }

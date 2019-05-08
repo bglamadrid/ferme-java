@@ -1,8 +1,8 @@
-package cl.duoc.alumnos.ferme.controllers.gestion;
+package cl.duoc.alumnos.ferme.controllers;
 
 import cl.duoc.alumnos.ferme.Ferme;
-import cl.duoc.alumnos.ferme.dto.ClienteDTO;
-import cl.duoc.alumnos.ferme.services.interfaces.IClientesService;
+import cl.duoc.alumnos.ferme.dto.ProveedorDTO;
+import cl.duoc.alumnos.ferme.services.interfaces.IProveedoresService;
 import com.querydsl.core.types.Predicate;
 import java.util.Collection;
 import java.util.Map;
@@ -21,27 +21,27 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/api/gestion")
-public class ClientesController {
+public class ProveedoresController {
     
-    @Autowired private IClientesService clienteSvc;    
+    @Autowired private IProveedoresService proveedorSvc;
     
-    @GetMapping({"/clientes", "/clientes/"})
-    public Collection<ClienteDTO> getClientes(@RequestParam Map<String,String> allRequestParams) {
+    @GetMapping({"/proveedores", "/proveedores/"})
+    public Collection<ProveedorDTO> getProveedores(@RequestParam Map<String,String> allRequestParams) {
         
-        return this.getClientes(null, null, allRequestParams);
+        return this.getProveedores(null, null, allRequestParams);
     }
     
-    @GetMapping("/clientes/{pageSize}")
-    public Collection<ClienteDTO> getClientes(
+    @GetMapping("/proveedores/{pageSize}")
+    public Collection<ProveedorDTO> getProveedores(
             @PathVariable Integer pageSize,
             @RequestParam Map<String,String> allRequestParams
     ) {
         
-        return this.getClientes(pageSize, null, allRequestParams);
+        return this.getProveedores(pageSize, null, allRequestParams);
     }
     
     /**
-     * Busca todos los clientes. 
+     * Busca todos los proveedores. 
      * Si el URL tenía un query string (RequestParam, lo transforma a un Map, genera un Predicate a partir
      * de él y filtra la búsqueda con este Predicate.
      * @param pageSize
@@ -49,10 +49,10 @@ public class ClientesController {
      * @param allRequestParams Un Map conteniendo una colección pares nombre/valor.
      * @see RequestParam
      * @see Predicate
-     * @return Una colección de objetos ClienteDTO
+     * @return Una colección de objetos ProveedorDTO
      */
-    @GetMapping("/clientes/{pageSize}/{pageIndex}")
-    public Collection<ClienteDTO> getClientes(
+    @GetMapping("/proveedores/{pageSize}/{pageIndex}")
+    public Collection<ProveedorDTO> getProveedores(
         @PathVariable Integer pageSize,
         @PathVariable Integer pageIndex,
         @RequestParam Map<String,String> allRequestParams) {
@@ -68,9 +68,9 @@ public class ClientesController {
             finalPageIndex = pageIndex-1;
         }
         if (allRequestParams != null && !allRequestParams.isEmpty()) {
-            filtros = this.clienteSvc.queryParamsMapToClientesFilteringPredicate(allRequestParams);
+            filtros = this.proveedorSvc.queryParamsMapToProveedoresFilteringPredicate(allRequestParams);
         }
-        return this.clienteSvc.getClientes(finalPageSize, finalPageIndex, filtros);
+        return this.proveedorSvc.getProveedores(finalPageSize, finalPageIndex, filtros);
     }
     
     /**
@@ -78,25 +78,25 @@ public class ClientesController {
      * @param dto Un objeto DTO representando el Rubro a almacenar/actualizar.
      * @return El ID del rubro.
      */
-    @PostMapping({"/clientes/guardar", "/clientes/guardar/"})
-    public Integer saveCliente(@RequestBody ClienteDTO dto) {
+    @PostMapping({"/proveedores/guardar", "/proveedores/guardar/"})
+    public Integer saveRubro(@RequestBody ProveedorDTO dto) {
         
         if (dto != null) {
-            return clienteSvc.saveCliente(dto);
+            return proveedorSvc.saveProveedor(dto);
         }
         return null;
     }
     
     /**
      * Elimina un Rubro de la base de datos.
-     * @param clienteId El ID del Rubro a eliminar.
+     * @param proveedorId El ID del Rubro a eliminar.
      * @return true si la operación fue exitosa, false si no lo fue.
      */
-    @PostMapping({"/clientes/borrar", "/clientes/borrar/"})
-    public boolean deleteCliente(@RequestParam("id") Integer clienteId) {
+    @PostMapping({"/proveedores/borrar", "/proveedores/borrar/"})
+    public boolean deleteRubro(@RequestParam("id") Integer proveedorId) {
         
-        if (clienteId != null && clienteId != 0) {
-            return clienteSvc.deleteCliente(clienteId);
+        if (proveedorId != null && proveedorId != 0) {
+            return proveedorSvc.deleteProveedor(proveedorId);
         }
         return false;
     }

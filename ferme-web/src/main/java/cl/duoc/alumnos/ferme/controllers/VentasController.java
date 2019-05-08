@@ -1,4 +1,4 @@
-package cl.duoc.alumnos.ferme.controllers.gestion;
+package cl.duoc.alumnos.ferme.controllers;
 
 import cl.duoc.alumnos.ferme.dto.VentaDTO;
 import cl.duoc.alumnos.ferme.services.interfaces.IFamiliasProductoService;

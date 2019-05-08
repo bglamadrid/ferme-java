@@ -1,19 +1,21 @@
 package cl.duoc.alumnos.ferme.dto;
 
+import cl.duoc.alumnos.ferme.domain.entities.Persona;
+
 /**
  *
  * @author Benjamin Guillermo
  */
 public abstract class PersonaDTO {
     
-    private Integer idPersona;
-    private String nombreCompletoPersona;
-    private String rutPersona;
-    private String direccionPersona;
-    private String emailPersona;
-    private Long fonoPersona1;
-    private Long fonoPersona2;
-    private Long fonoPersona3;
+    protected Integer idPersona;
+    protected String nombreCompletoPersona;
+    protected String rutPersona;
+    protected String direccionPersona;
+    protected String emailPersona;
+    protected Long fonoPersona1;
+    protected Long fonoPersona2;
+    protected Long fonoPersona3;
 
     public PersonaDTO() {
         super();
@@ -83,6 +85,33 @@ public abstract class PersonaDTO {
         this.fonoPersona3 = fonoPersona3;
     }
     
+    public Persona personaToEntity() {
+        Persona personaEntity = new Persona();
+        if (idPersona != null) {
+            personaEntity.setId(idPersona);
+        }
+        
+        personaEntity.setNombreCompleto(nombreCompletoPersona);
+        personaEntity.setRut(rutPersona);
+        
+        if (direccionPersona != null) {
+            personaEntity.setDireccion(direccionPersona);
+        }
+        if (emailPersona != null) {
+            personaEntity.setEmail(emailPersona);
+        }
+        if (fonoPersona1 != null) {
+            personaEntity.setFono1(fonoPersona1);
+        }
+        if (fonoPersona2 != null) {
+            personaEntity.setFono2(fonoPersona2);
+        }
+        if (fonoPersona3 != null) {
+            personaEntity.setFono3(fonoPersona3);
+        }
+        
+        return personaEntity;
+    }
     
     
 }

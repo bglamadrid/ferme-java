@@ -1,5 +1,8 @@
 package cl.duoc.alumnos.ferme.dto;
 
+import cl.duoc.alumnos.ferme.domain.entities.FamiliaProducto;
+import cl.duoc.alumnos.ferme.domain.entities.TipoProducto;
+
 /**
  *
  * @author Benjamin Guillermo
@@ -43,6 +46,19 @@ public class TipoProductoDTO {
 
     public void setNombreFamiliaProducto(String nombreFamiliaProducto) {
         this.nombreFamiliaProducto = nombreFamiliaProducto;
+    }
+    
+    public TipoProducto toEntity() {
+        TipoProducto entity = new TipoProducto();
+        if (idTipoProducto != null) {
+            entity.setId(idTipoProducto);
+        }
+        
+        entity.setNombre(nombreTipoProducto);
+        
+        entity.setFamilia(new FamiliaProducto(idFamiliaProducto));
+        
+        return entity;
     }
     
 }

@@ -1,6 +1,5 @@
 package cl.duoc.alumnos.ferme.services.interfaces;
 
-import cl.duoc.alumnos.ferme.domain.entities.Cargo;
 import cl.duoc.alumnos.ferme.dto.CargoDTO;
 import com.querydsl.core.types.Predicate;
 import java.util.Collection;
@@ -11,9 +10,6 @@ import java.util.Map;
  * @author Benjamin Guillermo La Madrid <got12g at gmail.com>
  */
 public interface ICargosService {
-    
-    public Cargo cargoDTOToEntity(CargoDTO dto);
-    public CargoDTO cargoEntityToDTO(Cargo entity);
     
     /**
      * Obtiene todos los rubros a partir de un filtro determinado y los 

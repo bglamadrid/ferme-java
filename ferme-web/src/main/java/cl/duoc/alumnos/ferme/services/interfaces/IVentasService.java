@@ -12,9 +12,6 @@ import java.util.Map;
  */
 public interface IVentasService {
     
-    public Venta ventaDTOToEntity(VentaDTO dto);
-    public VentaDTO ventaEntityToDTO(Venta entity);
-    
     /**
      * Obtiene una página (colección) de ventas, con un tamaño determinado 
      * (pudiendo filtrarlos) y los transforma a objetos DTO.

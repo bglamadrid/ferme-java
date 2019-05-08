@@ -12,9 +12,6 @@ import java.util.Map;
  */
 public interface IProveedoresService {
     
-    public Proveedor proveedorDTOToEntity(ProveedorDTO dto);
-    public ProveedorDTO proveedorEntityToDTO(Proveedor entity);
-    
     /**
      * Obtiene una página (colección) de proveedores, con un tamaño determinado 
      * (pudiendo filtrarlos) y los transforma a objetos DTO.

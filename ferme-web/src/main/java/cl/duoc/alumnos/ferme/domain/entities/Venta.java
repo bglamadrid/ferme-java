@@ -1,7 +1,11 @@
 package cl.duoc.alumnos.ferme.domain.entities;
 
+import cl.duoc.alumnos.ferme.dto.DetalleVentaDTO;
+import cl.duoc.alumnos.ferme.dto.VentaDTO;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -53,7 +57,18 @@ public class Venta implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "venta", fetch = FetchType.LAZY)
     private List<DetalleVenta> detalles;
 
-    public Venta() {}
+    public Venta() {
+        super();
+    }
+
+    public Venta(int id) {
+        super();
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
 
     public void setId(int id) {
         this.id = id;
@@ -106,6 +121,23 @@ public class Venta implements Serializable {
     public void setDetalles(List<DetalleVenta> detalles) {
         this.detalles = detalles;
     }
+    
+    public VentaDTO toDTO() {
+        VentaDTO dto = new VentaDTO();
+        
+        dto.setIdVenta(id);
+        dto.setIdCliente(cliente.getId());
+        dto.setIdEmpleado(empleado.getId());
+        
+        List<DetalleVentaDTO> detallesDTO = new ArrayList<>();
+        for (DetalleVenta dtl : detalles) {
+            detallesDTO.add(dtl.toEntity());
+        }
+        
+        dto.setDetallesVenta(detallesDTO);
+        
+        return dto;
+    }
 
     @Override
     public int hashCode() {
@@ -120,7 +152,7 @@ public class Venta implements Serializable {
             return false;
         }
         final Venta other = (Venta) object;
-        return (this.id != other.id);
+        return (this.id != other.getId());
     }
     
     

@@ -1,5 +1,7 @@
 package cl.duoc.alumnos.ferme.dto;
 
+import cl.duoc.alumnos.ferme.domain.entities.Rubro;
+
 /**
  *
  * @author Benjamin Guillermo
@@ -25,6 +27,17 @@ public class RubroDTO {
 
     public void setDescripcionRubro(String descripcionRubro) {
         this.descripcionRubro = descripcionRubro;
+    }
+    
+    public Rubro toEntity() {
+        Rubro entity = new Rubro();
+        if (idRubro != null) {
+            entity.setId(idRubro);
+        }
+        
+        entity.setDescripcion(descripcionRubro);
+        
+        return entity;
     }
     
 }

@@ -1,5 +1,10 @@
 package cl.duoc.alumnos.ferme.dto;
 
+import cl.duoc.alumnos.ferme.domain.entities.Usuario;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 /**
  *
  * @author Benjamin Guillermo
@@ -52,6 +57,20 @@ public class UsuarioDTO {
 
     public void setPersona(PersonaDTO persona) {
         this.persona = persona;
+    }
+    
+    public Usuario toEntity() throws ParseException {
+        Usuario entity = new Usuario();
+        if (idUsuario != null) {
+            entity.setId(idUsuario);
+        }
+        
+        entity.setNombre(nombreUsuario);
+        
+        DateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
+        entity.setFechaCreacion(formateador.parse(fechaCreacionUsuario));
+        
+        return entity;
     }
     
 }

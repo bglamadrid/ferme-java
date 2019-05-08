@@ -1,5 +1,6 @@
 package cl.duoc.alumnos.ferme.domain.entities;
 
+import cl.duoc.alumnos.ferme.dto.ProveedorDTO;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,7 +36,14 @@ public class Proveedor implements Serializable {
     @Column(name = "RAZON_SOCIAL")
     private String razonSocial;
 
-    public Proveedor() {}
+    public Proveedor() {
+        super();
+    }
+
+    public Proveedor(int id) {
+        super();
+        this.id = id;
+    }
 
     public int getId() {
         return id;
@@ -59,6 +67,22 @@ public class Proveedor implements Serializable {
 
     public void setPersona(Persona persona) {
         this.persona = persona;
+    }
+
+    public ProveedorDTO toDTO() {
+        ProveedorDTO dto = new ProveedorDTO();
+        
+        dto.setIdProveedor(id);
+        dto.setIdPersona(persona.getId());
+        dto.setRutPersona(persona.getRut());
+        dto.setNombreCompletoPersona(persona.getNombreCompleto());
+        dto.setDireccionPersona(persona.getDireccion());
+        dto.setEmailPersona(persona.getEmail());
+        dto.setFonoPersona1(persona.getFono1());
+        dto.setFonoPersona2(persona.getFono2());
+        dto.setFonoPersona3(persona.getFono3());
+        
+        return dto;
     }
 
     @Override

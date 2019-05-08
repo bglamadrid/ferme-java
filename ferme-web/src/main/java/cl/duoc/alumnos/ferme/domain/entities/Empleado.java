@@ -1,5 +1,6 @@
 package cl.duoc.alumnos.ferme.domain.entities;
 
+import cl.duoc.alumnos.ferme.dto.EmpleadoDTO;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -40,6 +41,11 @@ public class Empleado implements Serializable {
         super();
     }
 
+    public Empleado(int id) {
+        super();
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }
@@ -62,6 +68,23 @@ public class Empleado implements Serializable {
 
     public void setPersona(Persona persona) {
         this.persona = persona;
+    }
+
+    public EmpleadoDTO toDTO() {
+        EmpleadoDTO dto = new EmpleadoDTO();
+        
+        dto.setIdEmpleado(id);
+        dto.setIdPersona(persona.getId());
+        dto.setIdCargo(cargo.getId());
+        dto.setRutPersona(persona.getRut());
+        dto.setNombreCompletoPersona(persona.getNombreCompleto());
+        dto.setDireccionPersona(persona.getDireccion());
+        dto.setEmailPersona(persona.getEmail());
+        dto.setFonoPersona1(persona.getFono1());
+        dto.setFonoPersona2(persona.getFono2());
+        dto.setFonoPersona3(persona.getFono3());
+        
+        return dto;
     }
 
     @Override

@@ -12,9 +12,6 @@ import java.util.Map;
  */
 public interface IOrdenesCompraService {
     
-    public OrdenCompra ordenCompraDTOToEntity(OrdenCompraDTO dto);
-    public OrdenCompraDTO ordenCompraEntityToDTO(OrdenCompra entity);
-    
     /**
      * Obtiene una página (colección) de orden de compras, con un tamaño determinado 
      * (pudiendo filtrarlos) y los transforma a objetos DTO.

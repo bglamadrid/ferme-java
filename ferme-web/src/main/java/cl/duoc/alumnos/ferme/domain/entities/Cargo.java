@@ -1,5 +1,6 @@
 package cl.duoc.alumnos.ferme.domain.entities;
 
+import cl.duoc.alumnos.ferme.dto.CargoDTO;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,6 +33,11 @@ public class Cargo implements Serializable {
         super();
     }
 
+    public Cargo(int id) {
+        super();
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }
@@ -46,6 +52,15 @@ public class Cargo implements Serializable {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+    
+    public CargoDTO toDTO() {
+        CargoDTO dto = new CargoDTO();
+        
+        dto.setIdCargo(id);
+        dto.setDescripcionCargo(descripcion);
+        
+        return dto;
     }
 
     @Override

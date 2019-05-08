@@ -1,5 +1,6 @@
 package cl.duoc.alumnos.ferme.domain.entities;
 
+import cl.duoc.alumnos.ferme.dto.ClienteDTO;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,6 +35,11 @@ public class Cliente implements Serializable {
         super();
     }
 
+    public Cliente(int id) {
+        super();
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }
@@ -48,6 +54,20 @@ public class Cliente implements Serializable {
 
     public void setPersona(Persona persona) {
         this.persona = persona;
+    }
+    
+    public ClienteDTO toDTO() {
+        ClienteDTO dto = new ClienteDTO();
+        dto.setIdCliente(persona.getId());
+        dto.setNombreCompletoPersona(persona.getNombreCompleto());
+        dto.setRutPersona(persona.getRut());
+        dto.setDireccionPersona(persona.getDireccion());
+        dto.setEmailPersona(persona.getEmail());
+        dto.setFonoPersona1(persona.getFono1());
+        dto.setFonoPersona2(persona.getFono2());
+        dto.setFonoPersona3(persona.getFono3());
+        
+        return dto;
     }
 
     @Override

@@ -30,28 +30,6 @@ public class CargosService implements ICargosService {
     private final static Logger LOG = LoggerFactory.getLogger(ProductosService.class);
 
     @Override
-    public Cargo cargoDTOToEntity(CargoDTO dto) {
-        Cargo entity = new Cargo();
-        
-        if (dto.getIdCargo()!= null && dto.getIdCargo() != 0) {
-            entity.setId(dto.getIdCargo());
-        }
-        entity.setDescripcion(dto.getDescripcionCargo());
-        
-        return entity;
-    }
-
-    @Override
-    public CargoDTO cargoEntityToDTO(Cargo entity) {
-        CargoDTO dto = new CargoDTO();
-        
-        dto.setIdCargo(entity.getId());
-        dto.setDescripcionCargo(entity.getDescripcion());
-        
-        return dto;
-    }
-
-    @Override
     public Collection<CargoDTO> getCargos(Predicate condicion) {
         
         List<CargoDTO> pagina = new ArrayList<>();
@@ -64,7 +42,7 @@ public class CargosService implements ICargosService {
         }
         
         cargos.forEach((entity) -> {
-            CargoDTO dto = this.cargoEntityToDTO(entity);
+            CargoDTO dto = entity.toDTO();
             pagina.add(dto);
         });
         
@@ -103,7 +81,7 @@ public class CargosService implements ICargosService {
     @Override
     public int saveCargo(CargoDTO dto) {
         
-        Cargo entity = this.cargoDTOToEntity(dto);
+        Cargo entity = dto.toEntity();
         entity = cargoRepo.saveAndFlush(entity);
         return entity.getId();
     }

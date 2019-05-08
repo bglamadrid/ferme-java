@@ -1,5 +1,6 @@
 package cl.duoc.alumnos.ferme.domain.entities;
 
+import cl.duoc.alumnos.ferme.dto.TipoProductoDTO;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,7 +35,14 @@ public class TipoProducto implements Serializable {
     @ManyToOne(optional = false)
     private FamiliaProducto familia;
 
-    public TipoProducto() {}
+    public TipoProducto() {
+        super();
+    }
+
+    public TipoProducto(int id) {
+        super();
+        this.id = id;
+    }
 
     public int getId() {
         return id;
@@ -58,6 +66,17 @@ public class TipoProducto implements Serializable {
 
     public void setFamilia(FamiliaProducto familia) {
         this.familia = familia;
+    }
+
+    public TipoProductoDTO toDTO() {
+        TipoProductoDTO dto = new TipoProductoDTO();
+        
+        dto.setIdTipoProducto(id);
+        dto.setIdFamiliaProducto(familia.getId());
+        dto.setNombreTipoProducto(nombre);
+        dto.setNombreFamiliaProducto(familia.getDescripcion());
+        
+        return dto;
     }
 
     @Override

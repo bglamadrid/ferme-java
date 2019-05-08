@@ -12,9 +12,6 @@ import java.util.Map;
  */
 public interface IFamiliasProductoService {
     
-    public FamiliaProducto familiaProductoDTOToEntity(FamiliaProductoDTO dto);
-    public FamiliaProductoDTO familiaProductoEntityToDTO(FamiliaProducto entity);
-    
     /**
      * Obtiene una página (colección) de familias, con filtro opcional, y 
      * los transforma a objetos DTO.

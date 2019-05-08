@@ -1,5 +1,7 @@
 package cl.duoc.alumnos.ferme.dto;
 
+import cl.duoc.alumnos.ferme.domain.entities.Producto;
+
 /**
  *
  * @author Benjamin Guillermo
@@ -90,6 +92,21 @@ public class ProductoDTO {
 
     public void setNombreTipoProducto(String nombreTipoProducto) {
         this.nombreTipoProducto = nombreTipoProducto;
+    }
+    
+    public Producto toEntity() {
+        Producto entity = new Producto();
+        if (idProducto != null) {
+            entity.setId(idProducto);
+        }
+        
+        entity.setNombre(nombreProducto);
+        entity.setDescripcion(descripcionProducto);
+        entity.setPrecio(precioProducto);
+        entity.setStockActual(stockActualProducto);
+        entity.setStockCritico(stockCriticoProducto);
+        
+        return entity;
     }
 
 }

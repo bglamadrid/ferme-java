@@ -12,9 +12,6 @@ import java.util.Map;
  */
 public interface IUsuariosService {
     
-    public Usuario usuarioDTOToEntity(UsuarioDTO dto);
-    public UsuarioDTO usuarioEntityToDTO(Usuario entity);
-    
     /**
      * Obtiene una página (colección) de usuarios, con un tamaño determinado 
      * (pudiendo filtrarlos) y los transforma a objetos DTO.

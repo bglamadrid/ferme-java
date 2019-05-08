@@ -1,5 +1,6 @@
 package cl.duoc.alumnos.ferme.domain.entities;
 
+import cl.duoc.alumnos.ferme.dto.RubroDTO;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,6 +33,11 @@ public class Rubro implements Serializable {
         super();
     }
 
+    public Rubro(int id) {
+        super();
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }
@@ -46,6 +52,15 @@ public class Rubro implements Serializable {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+    
+    public RubroDTO toDTO() {
+        RubroDTO dto = new RubroDTO();
+        
+        dto.setIdRubro(id);
+        dto.setDescripcionRubro(descripcion);
+        
+        return dto;
     }
 
     @Override
@@ -70,5 +85,6 @@ public class Rubro implements Serializable {
     public String toString() {
         return "cl.duoc.alumnos.ferme.entities.domain.Rubro[ idRubro=" + id + " ]";
     }
+
     
 }

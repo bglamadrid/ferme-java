@@ -30,30 +30,6 @@ public class RubrosService implements IRubrosService {
     private final static Logger LOG = LoggerFactory.getLogger(ProductosService.class);
 
     @Override
-    public Rubro rubroDTOToEntity(RubroDTO dto) {
-        
-        Rubro entity = new Rubro();
-        
-        if (dto.getIdRubro() != null && dto.getIdRubro() != 0) {
-            entity.setId(dto.getIdRubro());
-        }
-        entity.setDescripcion(dto.getDescripcionRubro());
-        
-        return entity;
-    }
-
-    @Override
-    public RubroDTO rubroEntityToDTO(Rubro entity) {
-        
-        RubroDTO dto = new RubroDTO();
-        
-        dto.setIdRubro(entity.getId());
-        dto.setDescripcionRubro(entity.getDescripcion());
-        
-        return dto;
-    }
-
-    @Override
     public Collection<RubroDTO> getRubros(Predicate condicion) {
         
         List<RubroDTO> pagina = new ArrayList<>();
@@ -66,7 +42,7 @@ public class RubrosService implements IRubrosService {
         }
         
         rubros.forEach((entity) -> {
-            RubroDTO dto = this.rubroEntityToDTO(entity);
+            RubroDTO dto = entity.toDTO();
             pagina.add(dto);
         });
         
@@ -105,7 +81,7 @@ public class RubrosService implements IRubrosService {
     @Override
     public int saveRubro(RubroDTO dto) {
         
-        Rubro entity = this.rubroDTOToEntity(dto);
+        Rubro entity = dto.toEntity();
         entity = rubroRepo.saveAndFlush(entity);
         return entity.getId();
     }

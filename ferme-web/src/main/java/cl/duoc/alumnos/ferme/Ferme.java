@@ -27,7 +27,7 @@ public class Ferme {
     public final static char TIPO_VENTA_BOLETA = 'B';
     public final static char TIPO_VENTA_FACTURA = 'F';
     
-    public final static char ORDEN_COMPRA_ESTADO_SOLICITADO = 'B';
+    public final static char ORDEN_COMPRA_ESTADO_SOLICITADO = 'S';
     public final static char ORDEN_COMPRA_ESTADO_RECEPCIONADO = 'R';
         
     public static void main(String[] args) {

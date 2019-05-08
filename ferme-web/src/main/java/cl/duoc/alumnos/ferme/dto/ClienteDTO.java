@@ -1,5 +1,7 @@
 package cl.duoc.alumnos.ferme.dto;
 
+import cl.duoc.alumnos.ferme.domain.entities.Cliente;
+
 /**
  *
  * @author Benjamin Guillermo
@@ -18,6 +20,17 @@ public class ClienteDTO extends PersonaDTO {
 
     public void setIdCliente(Integer idCliente) {
         this.idCliente = idCliente;
+    }
+    
+    public Cliente toEntity() {
+        Cliente entity = new Cliente();
+        if (idCliente != null) {
+            entity.setId(idCliente);
+        }
+        
+        entity.setPersona(this.personaToEntity());
+        
+        return entity;
     }
     
 }

@@ -1,5 +1,12 @@
 package cl.duoc.alumnos.ferme.dto;
 
+import cl.duoc.alumnos.ferme.Ferme;
+import cl.duoc.alumnos.ferme.domain.entities.Empleado;
+import cl.duoc.alumnos.ferme.domain.entities.OrdenCompra;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -65,6 +72,25 @@ public class OrdenCompraDTO {
 
     public void setDetallesOrdenCompra(List<DetalleOrdenCompraDTO> detallesOrdenCompra) {
         this.detallesOrdenCompra = detallesOrdenCompra;
+    }
+    
+    public OrdenCompra toEntity() throws ParseException {
+        OrdenCompra entity = new OrdenCompra();
+        if (idOrdenCompra != null) {
+            entity.setId(idOrdenCompra);
+        }
+        
+        entity.setEmpleado(new Empleado(idEmpleado));
+        entity.setEstado(estadoOrdenCompra.charAt(0));
+        
+        DateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
+        entity.setFechaSolicitud(formateador.parse(fechaSolicitudOrdenCompra));
+        if (fechaRecepcionOrdenCompra != null && !fechaRecepcionOrdenCompra.isEmpty()) {
+            entity.setFechaRecepcion(formateador.parse(fechaRecepcionOrdenCompra));
+        }
+        
+        
+        return entity;
     }
     
 }

@@ -5,7 +5,6 @@ import cl.duoc.alumnos.ferme.domain.entities.Producto;
 import cl.duoc.alumnos.ferme.domain.entities.QFamiliaProducto;
 import cl.duoc.alumnos.ferme.domain.entities.QProducto;
 import cl.duoc.alumnos.ferme.domain.entities.QTipoProducto;
-import cl.duoc.alumnos.ferme.domain.entities.Rubro;
 import cl.duoc.alumnos.ferme.domain.entities.TipoProducto;
 import cl.duoc.alumnos.ferme.domain.repositories.IFamiliasProductosRepository;
 import cl.duoc.alumnos.ferme.domain.repositories.IFunctionsRepository;
@@ -24,7 +23,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import javax.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,97 +42,7 @@ public class ProductosService implements IProductosService, IFamiliasProductoSer
     @Autowired private IProductosRepository productoRepo;
     @Autowired private IFamiliasProductosRepository fmlProductoRepo;
     @Autowired private ITiposProductosRepository tpProductoRepo;
-    @Autowired private IRubrosRepository rubroRepo;
     private final static Logger LOG = LoggerFactory.getLogger(ProductosService.class);
-
-    @Override
-    public FamiliaProducto familiaProductoDTOToEntity(FamiliaProductoDTO dto) throws EntityNotFoundException {
-        FamiliaProducto entity = new FamiliaProducto();
-        Integer familiaProductoId = dto.getIdFamiliaProducto();
-        Rubro rubroEntity = this.rubroRepo.getOne(dto.getIdFamiliaProducto());
-        
-        if (familiaProductoId != null && familiaProductoId != 0) {
-            entity.setId(dto.getIdFamiliaProducto());
-        }
-        entity.setRubro(rubroEntity);
-        entity.setDescripcion(dto.getDescripcionFamiliaProducto());
-        
-        return entity;
-    }
-
-    @Override
-    public TipoProducto tipoProductoDTOToEntity(TipoProductoDTO dto) throws EntityNotFoundException {
-        TipoProducto entity = new TipoProducto();
-        Integer tipoProductoId = dto.getIdFamiliaProducto();
-        FamiliaProducto familiaEntity = this.fmlProductoRepo.getOne(dto.getIdFamiliaProducto());
-        
-        if (tipoProductoId != null && tipoProductoId != 0) {
-            entity.setId(tipoProductoId);
-        }
-        entity.setFamilia(familiaEntity);
-        entity.setNombre(dto.getNombreFamiliaProducto());
-        
-        return entity;
-    }
-
-    @Override
-    public Producto productoDTOToEntity(ProductoDTO dto) {
-        Producto entity = new Producto();
-        Integer productoId = dto.getIdProducto();
-        
-        if (productoId != null && productoId != 0) {
-            entity.setId(dto.getIdProducto());
-        }
-        entity.setNombre(dto.getNombreProducto());
-        entity.setDescripcion(dto.getDescripcionProducto());
-        
-        return entity;
-    }
-
-    @Override
-    public FamiliaProductoDTO familiaProductoEntityToDTO(FamiliaProducto entity) {
-        Rubro rubroEntity = entity.getRubro();
-        FamiliaProductoDTO dto = new FamiliaProductoDTO();
-        
-        dto.setIdFamiliaProducto(entity.getId());
-        dto.setDescripcionFamiliaProducto(entity.getDescripcion());
-        dto.setIdRubro(rubroEntity.getId());
-        dto.setDescripcionRubro(rubroEntity.getDescripcion());
-        
-        return dto;
-    }
-
-    @Override
-    public TipoProductoDTO tipoProductoEntityToDTO(TipoProducto entity) {
-        FamiliaProducto familiaProductoEntity = entity.getFamilia();
-        TipoProductoDTO dto = new TipoProductoDTO();
-        
-        dto.setIdTipoProducto(entity.getId());
-        dto.setNombreTipoProducto(entity.getNombre());
-        dto.setIdFamiliaProducto(familiaProductoEntity.getId());
-        dto.setNombreFamiliaProducto(familiaProductoEntity.getDescripcion());
-        
-        return dto;
-    }
-
-    @Override
-    public ProductoDTO productoEntityToDTO(Producto entity) {
-        ProductoDTO dto = new ProductoDTO();
-        Integer productoId = entity.getId();
-        String codigo = funcRepo.getProductoCodigo(productoId);
-        
-        dto.setIdProducto(productoId);
-        dto.setCodigoProducto(codigo);
-        dto.setDescripcionProducto(entity.getDescripcion());
-        dto.setNombreProducto(entity.getNombre());
-        dto.setPrecioProducto(entity.getPrecio());
-        dto.setStockActualProducto(entity.getStockActual());
-        dto.setStockCriticoProducto(entity.getStockCritico());
-        dto.setIdTipoProducto(entity.getTipo().getId());
-        dto.setNombreTipoProducto(entity.getTipo().getNombre());
-        
-        return dto;
-    }
 
     @Override
     public Collection<FamiliaProductoDTO> getFamiliasProductos(Predicate condicion) {
@@ -148,7 +56,7 @@ public class ProductosService implements IProductosService, IFamiliasProductoSer
         }
         
         productos.forEach((entity) -> {
-            FamiliaProductoDTO dto = this.familiaProductoEntityToDTO(entity);
+            FamiliaProductoDTO dto = entity.toDTO();
             lista.add(dto);
         });
         
@@ -167,7 +75,7 @@ public class ProductosService implements IProductosService, IFamiliasProductoSer
         }
         
         productos.forEach((entity) -> {
-            TipoProductoDTO dto = this.tipoProductoEntityToDTO(entity);
+            TipoProductoDTO dto = entity.toDTO();
             lista.add(dto);
         });
         
@@ -188,7 +96,8 @@ public class ProductosService implements IProductosService, IFamiliasProductoSer
         }
         
         productos.forEach((entity) -> {
-            ProductoDTO dto = this.productoEntityToDTO(entity);
+            ProductoDTO dto = entity.toDTO();
+            dto.setCodigoProducto(funcRepo.getProductoCodigo(dto.getIdProducto()));
             pagina.add(dto);
         });
         
@@ -297,7 +206,7 @@ public class ProductosService implements IProductosService, IFamiliasProductoSer
     @Override
     public int saveFamiliaProducto(FamiliaProductoDTO dto) {
         
-        FamiliaProducto entity = this.familiaProductoDTOToEntity(dto);
+        FamiliaProducto entity = dto.toEntity();
         entity = fmlProductoRepo.saveAndFlush(entity);
         return entity.getId();
     }
@@ -305,7 +214,7 @@ public class ProductosService implements IProductosService, IFamiliasProductoSer
     @Override
     public int saveTipoProducto(TipoProductoDTO dto) {
         
-        TipoProducto entity = this.tipoProductoDTOToEntity(dto);
+        TipoProducto entity = dto.toEntity();
         entity = tpProductoRepo.saveAndFlush(entity);
         return entity.getId();
     }
@@ -313,7 +222,7 @@ public class ProductosService implements IProductosService, IFamiliasProductoSer
     @Override
     public int saveProducto(ProductoDTO dto) {
         
-        Producto entity = this.productoDTOToEntity(dto);
+        Producto entity = dto.toEntity();
         entity = productoRepo.saveAndFlush(entity);
         return entity.getId();
     }

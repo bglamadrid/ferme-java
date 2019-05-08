@@ -37,66 +37,6 @@ public class ProveedoresService implements IProveedoresService {
     private final static Logger LOG = LoggerFactory.getLogger(ProductosService.class);
 
     @Override
-    public Proveedor proveedorDTOToEntity(ProveedorDTO dto) throws NullPointerException {
-        Proveedor entity = new Proveedor();
-        
-            if (dto.getIdProveedor()!= null && dto.getIdProveedor() != 0) {
-                entity.setId(dto.getIdProveedor());
-            }
-            
-        // Persona es la representación de la información personal de un Proveedor
-        Integer personaId = dto.getIdPersona(); 
-        Persona personaEntity;
-        if (personaId == null || personaId == 0) { // si la persona es 'nueva', sólo reamos manualmente el Entity
-            personaEntity = new Persona();
-        } else { // de lo contrario, buscamos al Proveedor en base a la Persona
-            BooleanExpression wherePersonaIdIsThisPersonasId = QProveedor.proveedor.persona.id.eq(personaId);
-            try {
-                Optional<Proveedor> realProveedor = proveedorRepo.findOne(wherePersonaIdIsThisPersonasId);
-                personaEntity = realProveedor.get().getPersona();
-            } catch (NoSuchElementException exc) {
-                personaEntity = new Persona();
-                LOG.warn("No se encontró un Proveedor asociado a Persona[ idPersona="+personaId+"], se realizó una conversión manual.", exc);
-            } catch (IncorrectResultSizeDataAccessException exc) {
-                List<Proveedor> realProveedores = new ArrayList<>();
-                proveedorRepo.findAll(wherePersonaIdIsThisPersonasId).forEach(realProveedores::add);
-                entity = realProveedores.get(realProveedores.size()-1);
-                personaEntity = entity.getPersona();
-                LOG.warn("Muchos Proveedor asociados a Persona[ idPersona="+personaId+"], el Proveedor elegido es el último creado.", exc);
-            }
-        }
-        
-        personaEntity.setNombreCompleto(dto.getNombreCompletoPersona());
-        personaEntity.setRut(dto.getRutPersona());
-        personaEntity.setDireccion(dto.getDireccionPersona());
-        personaEntity.setEmail(dto.getEmailPersona());
-        personaEntity.setFono1(dto.getFonoPersona1());
-        personaEntity.setFono2(dto.getFonoPersona2());
-        personaEntity.setFono3(dto.getFonoPersona3());
-
-        entity.setPersona(personaEntity);
-        
-        return entity;
-    }
-
-    @Override
-    public ProveedorDTO proveedorEntityToDTO(Proveedor entity) {
-        ProveedorDTO dto = new ProveedorDTO();
-        Persona personaEntity = entity.getPersona();
-        
-        dto.setIdProveedor(entity.getId());
-        dto.setNombreCompletoPersona(personaEntity.getNombreCompleto());
-        dto.setRutPersona(personaEntity.getRut());
-        dto.setDireccionPersona(personaEntity.getDireccion());
-        dto.setEmailPersona(personaEntity.getEmail());
-        dto.setFonoPersona1(personaEntity.getFono1());
-        dto.setFonoPersona2(personaEntity.getFono2());
-        dto.setFonoPersona3(personaEntity.getFono3());
-        
-        return dto;
-    }
-
-    @Override
     public Collection<ProveedorDTO> getProveedores(int pageSize, int pageIndex, Predicate condicion) {
         Pageable pgbl = PageRequest.of(pageIndex, pageSize);
         
@@ -110,7 +50,7 @@ public class ProveedoresService implements IProveedoresService {
         }
         
         proveedores.forEach((entity) -> {
-            ProveedorDTO dto = this.proveedorEntityToDTO(entity);
+            ProveedorDTO dto = entity.toDTO();
             pagina.add(dto);
         });
         
@@ -153,7 +93,7 @@ public class ProveedoresService implements IProveedoresService {
     @Override
     public int saveProveedor(ProveedorDTO dto) {
         
-        Proveedor entity = this.proveedorDTOToEntity(dto);
+        Proveedor entity = dto.toEntity();
         entity = proveedorRepo.saveAndFlush(entity);
         return entity.getId();
     }

@@ -1,5 +1,6 @@
 package cl.duoc.alumnos.ferme.domain.entities;
 
+import cl.duoc.alumnos.ferme.dto.DetalleVentaDTO;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -43,6 +44,13 @@ public class DetalleVenta implements Serializable {
         super();
     }
 
+    public DetalleVenta(int idVenta, int idDetalleVenta) {
+        super();
+        pk = new DetalleVentaPK();
+        pk.setIdVenta(idVenta);
+        pk.setIdDetalleVenta(idDetalleVenta);
+    }
+
     public DetalleVentaPK getPk() {
         return pk;
     }
@@ -81,6 +89,15 @@ public class DetalleVenta implements Serializable {
 
     public void setVenta(Venta venta) {
         this.venta = venta;
+    }
+
+    public DetalleVentaDTO toEntity() {
+        DetalleVentaDTO dto = new DetalleVentaDTO();
+        dto.setIdVenta(pk.getIdVenta());
+        dto.setIdDetalleVenta(pk.getIdDetalleVenta());
+        dto.setMontoDetalleVenta(monto);
+        dto.setUnidadesProducto(unidades);
+        return dto;
     }
 
     @Override

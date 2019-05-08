@@ -1,5 +1,7 @@
 package cl.duoc.alumnos.ferme.dto;
 
+import cl.duoc.alumnos.ferme.domain.entities.Cargo;
+
 /**
  *
  * @author Benjamin Guillermo
@@ -27,6 +29,17 @@ public class CargoDTO {
 
     public void setDescripcionCargo(String descripcionCargo) {
         this.descripcionCargo = descripcionCargo;
+    }
+    
+    public Cargo toEntity() {
+        Cargo entity = new Cargo();
+        if (idCargo != null) {
+            entity.setId(idCargo);
+        }
+        
+        entity.setDescripcion(descripcionCargo);
+        
+        return entity;
     }
     
 }

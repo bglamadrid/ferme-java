@@ -50,10 +50,14 @@ public class Persona implements Serializable {
     
     @Column(name = "FONO3")
     private Long fono3;
-    
 
     public Persona() {
         super();
+    }
+
+    public Persona(int id) {
+        super();
+        this.id = id;
     }
 
     public int getId() {

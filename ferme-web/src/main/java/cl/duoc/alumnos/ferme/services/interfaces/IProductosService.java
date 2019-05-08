@@ -12,9 +12,6 @@ import java.util.Map;
  */
 public interface IProductosService {
     
-    public Producto productoDTOToEntity(ProductoDTO dto);
-    public ProductoDTO productoEntityToDTO(Producto entity);
-    
     /**
      * Obtiene una página (colección) de productos, con un tamaño determinado 
      * (pudiendo filtrarlos) y los transforma a objetos DTO.

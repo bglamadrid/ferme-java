@@ -12,9 +12,6 @@ import java.util.Map;
  */
 public interface IEmpleadosService {
     
-    public Empleado empleadoDTOToEntity(EmpleadoDTO dto);
-    public EmpleadoDTO empleadoEntityToDTO(Empleado entity);
-    
     /**
      * Obtiene una página (colección) de empleados, con un tamaño determinado 
      * (pudiendo filtrarlos) y los transforma a objetos DTO.

@@ -46,7 +46,14 @@ public class Usuario implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCreacion;
 
-    public Usuario() {}
+    public Usuario() {
+        super();
+    }
+
+    public Usuario(int id) {
+        super();
+        this.id = id;
+    }
 
     public int getId() {
         return id;
@@ -101,7 +108,7 @@ public class Usuario implements Serializable {
             return false;
         }
         final Usuario other = (Usuario) object;
-        return (this.id != other.id);
+        return (this.id != other.getId());
     }
 
     @Override

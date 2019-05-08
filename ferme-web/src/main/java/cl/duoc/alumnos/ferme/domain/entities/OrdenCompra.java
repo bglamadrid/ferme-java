@@ -51,7 +51,14 @@ public class OrdenCompra implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ordenCompra", fetch = FetchType.LAZY)
     private List<DetalleOrdenCompra> detalles;
 
-    public OrdenCompra() {}
+    public OrdenCompra() {
+        super();
+    }
+
+    public OrdenCompra(int id) {
+        super();
+        this.id = id;
+    }
     
     public int getId() {
         return id;
@@ -115,7 +122,7 @@ public class OrdenCompra implements Serializable {
             return false;
         }
         final OrdenCompra other = (OrdenCompra) object;
-        return (this.id != other.id);
+        return (this.id != other.getId());
     }
 
     

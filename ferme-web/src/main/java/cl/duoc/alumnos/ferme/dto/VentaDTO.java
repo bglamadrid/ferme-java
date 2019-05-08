@@ -1,5 +1,14 @@
 package cl.duoc.alumnos.ferme.dto;
 
+import cl.duoc.alumnos.ferme.domain.entities.Cliente;
+import cl.duoc.alumnos.ferme.domain.entities.DetalleVenta;
+import cl.duoc.alumnos.ferme.domain.entities.Empleado;
+import cl.duoc.alumnos.ferme.domain.entities.Venta;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -72,6 +81,25 @@ public class VentaDTO {
 
     public void setIdCliente(Integer idCliente) {
         this.idCliente = idCliente;
+    }
+    
+    public Venta toEntity() throws ParseException {
+        Venta entity = new Venta();
+        entity.setId(idVenta);
+        
+        entity.setCliente(new Cliente(idCliente));
+        entity.setEmpleado(new Empleado(idEmpleado));
+        
+        DateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
+        entity.setFecha(formateador.parse(fechaVenta));
+        
+        List<DetalleVenta> detallesEntities = new ArrayList<>();
+        for (DetalleVentaDTO detalle : detallesVenta) {
+            detallesEntities.add(detalle.toEntity());
+        }
+        entity.setDetalles(detallesEntities);
+        
+        return entity;
     }
     
 }

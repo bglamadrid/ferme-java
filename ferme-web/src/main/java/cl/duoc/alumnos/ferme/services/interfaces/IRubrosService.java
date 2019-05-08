@@ -12,9 +12,6 @@ import java.util.Map;
  */
 public interface IRubrosService {
     
-    public Rubro rubroDTOToEntity(RubroDTO dto);
-    public RubroDTO rubroEntityToDTO(Rubro entity);
-    
     /**
      * Obtiene todos los rubros a partir de un filtro determinado y los 
      * transforma a DTO.

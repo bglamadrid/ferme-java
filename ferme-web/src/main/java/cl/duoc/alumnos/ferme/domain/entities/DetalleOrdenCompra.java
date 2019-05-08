@@ -40,6 +40,13 @@ public class DetalleOrdenCompra implements Serializable {
         super();
     }
 
+    public DetalleOrdenCompra(int idOrdenCompra, int idDetalleOrdenCompra) {
+        super();
+        pk = new DetalleOrdenCompraPK();
+        pk.setIdOrdenCompra(idOrdenCompra);
+        pk.setIdDetalleOrdenCompra(idDetalleOrdenCompra);
+    }
+
     public DetalleOrdenCompraPK getPk() {
         return pk;
     }

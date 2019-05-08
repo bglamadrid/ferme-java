@@ -1,5 +1,9 @@
 package cl.duoc.alumnos.ferme.dto;
 
+import cl.duoc.alumnos.ferme.domain.entities.DetalleVenta;
+import cl.duoc.alumnos.ferme.domain.entities.DetalleVentaPK;
+import cl.duoc.alumnos.ferme.domain.entities.Producto;
+
 /**
  *
  * @author Benjamin Guillermo
@@ -54,6 +58,20 @@ public class DetalleVentaDTO {
 
     public void setIdVenta(Integer idVenta) {
         this.idVenta = idVenta;
+    }
+
+    public DetalleVenta toEntity() {
+        DetalleVenta entity = new DetalleVenta();
+        DetalleVentaPK entityPK = new DetalleVentaPK();
+        if (idVenta != null) { entityPK.setIdVenta(idVenta); }
+        if (idDetalleVenta != null) { entityPK.setIdDetalleVenta(idDetalleVenta); }
+        
+        entity.setMonto(montoDetalleVenta);
+        entity.setUnidades(unidadesProducto);
+        
+        entity.setProducto(new Producto(idProducto));
+        
+        return entity;
     }
     
 }

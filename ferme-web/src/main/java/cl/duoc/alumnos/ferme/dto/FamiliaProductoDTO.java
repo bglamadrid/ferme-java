@@ -1,5 +1,9 @@
 package cl.duoc.alumnos.ferme.dto;
 
+import cl.duoc.alumnos.ferme.domain.entities.FamiliaProducto;
+import cl.duoc.alumnos.ferme.domain.entities.Proveedor;
+import cl.duoc.alumnos.ferme.domain.entities.Rubro;
+
 /**
  *
  * @author Benjamin Guillermo
@@ -10,6 +14,7 @@ public class FamiliaProductoDTO {
     private String descripcionFamiliaProducto;
     private Integer idRubro;
     private String descripcionRubro;
+    private Integer idProveedor;
 
     public FamiliaProductoDTO() {
         super();
@@ -45,6 +50,28 @@ public class FamiliaProductoDTO {
 
     public void setDescripcionRubro(String descripcionRubro) {
         this.descripcionRubro = descripcionRubro;
+    }
+
+    public Integer getIdProveedor() {
+        return idProveedor;
+    }
+
+    public void setIdProveedor(Integer idProveedor) {
+        this.idProveedor = idProveedor;
+    }
+    
+    public FamiliaProducto toEntity() {
+        FamiliaProducto entity = new FamiliaProducto();
+        if (idFamiliaProducto != null) {
+            entity.setId(idFamiliaProducto);
+        }
+        
+        entity.setDescripcion(descripcionFamiliaProducto);
+        
+        entity.setProveedor(new Proveedor(idProveedor));
+        entity.setRubro(new Rubro(idRubro));
+        
+        return entity;
     }
     
 }

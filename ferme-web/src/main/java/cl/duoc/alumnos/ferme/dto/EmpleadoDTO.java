@@ -1,5 +1,8 @@
 package cl.duoc.alumnos.ferme.dto;
 
+import cl.duoc.alumnos.ferme.domain.entities.Cargo;
+import cl.duoc.alumnos.ferme.domain.entities.Empleado;
+
 /**
  *
  * @author Benjamin Guillermo
@@ -27,6 +30,18 @@ public class EmpleadoDTO extends PersonaDTO {
 
     public void setIdCargo(Integer idCargo) {
         this.idCargo = idCargo;
+    }
+    
+    public Empleado toEntity() {
+        Empleado entity = new Empleado();
+        if (idEmpleado != null) {
+            entity.setId(idEmpleado);
+        }
+        
+        entity.setCargo(new Cargo(idCargo));
+        entity.setPersona(this.personaToEntity());
+        
+        return entity;
     }
     
 }

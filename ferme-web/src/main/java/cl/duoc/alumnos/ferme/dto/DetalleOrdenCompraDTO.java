@@ -1,5 +1,9 @@
 package cl.duoc.alumnos.ferme.dto;
 
+import cl.duoc.alumnos.ferme.domain.entities.DetalleOrdenCompra;
+import cl.duoc.alumnos.ferme.domain.entities.DetalleOrdenCompraPK;
+import cl.duoc.alumnos.ferme.domain.entities.Producto;
+
 /**
  *
  * @author Benjamin Guillermo
@@ -45,6 +49,20 @@ public class DetalleOrdenCompraDTO {
 
     public void setCantidadProducto(Integer cantidadProducto) {
         this.cantidadProducto = cantidadProducto;
+    }
+    
+    public DetalleOrdenCompra toEntity() {
+        DetalleOrdenCompra entity = new DetalleOrdenCompra();
+        DetalleOrdenCompraPK entityPK = new DetalleOrdenCompraPK();
+        if (idOrdenCompra != null) { entityPK.setIdOrdenCompra(idOrdenCompra); }
+        if (idDetalleOrdenCompra != null) { entityPK.setIdDetalleOrdenCompra(idDetalleOrdenCompra); }
+        entity.setPk(entityPK);
+        
+        entity.setCantidad(cantidadProducto);
+        
+        entity.setProducto(new Producto(idProducto));
+        
+        return entity;
     }
     
 }

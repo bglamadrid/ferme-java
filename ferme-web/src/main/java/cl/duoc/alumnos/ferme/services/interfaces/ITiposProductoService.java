@@ -12,9 +12,6 @@ import java.util.Map;
  */
 public interface ITiposProductoService {
     
-    public TipoProducto tipoProductoDTOToEntity(TipoProductoDTO dto);
-    public TipoProductoDTO tipoProductoEntityToDTO(TipoProducto entity);
-    
     /**
      * Obtiene todos los tipos de producto y los transforma a DTO.
      * @param condicion El objeto Predicate con los filtros a aplicar. Nulable.

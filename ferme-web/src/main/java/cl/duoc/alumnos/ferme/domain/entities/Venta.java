@@ -131,7 +131,7 @@ public class Venta implements Serializable {
         
         List<DetalleVentaDTO> detallesDTO = new ArrayList<>();
         for (DetalleVenta dtl : detalles) {
-            detallesDTO.add(dtl.toEntity());
+            detallesDTO.add(dtl.toDTO());
         }
         
         dto.setDetallesVenta(detallesDTO);

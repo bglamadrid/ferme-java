@@ -1,6 +1,11 @@
 package cl.duoc.alumnos.ferme.domain.entities;
 
+import cl.duoc.alumnos.ferme.dto.DetalleOrdenCompraDTO;
+import cl.duoc.alumnos.ferme.dto.OrdenCompraDTO;
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -107,6 +112,27 @@ public class OrdenCompra implements Serializable {
     public void setDetalles(List<DetalleOrdenCompra> detalles) {
         this.detalles = detalles;
     }
+    
+    public OrdenCompraDTO toDTO() {
+        OrdenCompraDTO dto = new OrdenCompraDTO();
+        
+        dto.setIdOrdenCompra(id);
+        dto.setIdEmpleado(empleado.getId());
+        dto.setEstadoOrdenCompra(estado.toString());
+        dto.setFechaSolicitudOrdenCompra(fechaSolicitud.toString());
+        
+        if (fechaRecepcion != null) {
+            DateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
+            dto.setFechaRecepcionOrdenCompra(formateador.format(fechaRecepcion));
+        }
+        List<DetalleOrdenCompraDTO> detallesDTO = new ArrayList<>();
+        for (DetalleOrdenCompra detalle : detalles) {
+            detallesDTO.add(detalle.toDTO());
+        }
+        dto.setDetallesOrdenCompra(detallesDTO);
+        
+        return dto;
+    }
 
     @Override
     public int hashCode() {
@@ -125,8 +151,7 @@ public class OrdenCompra implements Serializable {
         return (this.id != other.getId());
     }
 
-    
-
+   
     @Override
     public String toString() {
         return "cl.duoc.alumnos.ferme.entities.domain.OrdenCompra[ idOrdenCompra=" + id + " ]";

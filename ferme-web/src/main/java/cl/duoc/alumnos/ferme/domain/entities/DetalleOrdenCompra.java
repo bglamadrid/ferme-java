@@ -1,5 +1,6 @@
 package cl.duoc.alumnos.ferme.domain.entities;
 
+import cl.duoc.alumnos.ferme.dto.DetalleOrdenCompraDTO;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -77,6 +78,17 @@ public class DetalleOrdenCompra implements Serializable {
 
     public void setOrdenCompra(OrdenCompra ordenCompra) {
         this.ordenCompra = ordenCompra;
+    }
+    
+    public DetalleOrdenCompraDTO toDTO() {
+        DetalleOrdenCompraDTO dto = new DetalleOrdenCompraDTO();
+        
+        dto.setIdOrdenCompra(pk.getIdOrdenCompra());
+        dto.setIdDetalleOrdenCompra(pk.getIdDetalleOrdenCompra());
+        dto.setIdProducto(producto.getId());
+        dto.setCantidadProducto(cantidad);
+        
+        return dto;
     }
 
     @Override

@@ -91,7 +91,7 @@ public class DetalleVenta implements Serializable {
         this.venta = venta;
     }
 
-    public DetalleVentaDTO toEntity() {
+    public DetalleVentaDTO toDTO() {
         DetalleVentaDTO dto = new DetalleVentaDTO();
         dto.setIdVenta(pk.getIdVenta());
         dto.setIdDetalleVenta(pk.getIdDetalleVenta());

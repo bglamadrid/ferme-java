@@ -1,5 +1,6 @@
 package cl.duoc.alumnos.ferme.domain.entities;
 
+import cl.duoc.alumnos.ferme.dto.PersonaDTO;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -122,6 +123,21 @@ public class Persona implements Serializable {
 
     public void setFono3(Long fono3) {
         this.fono3 = fono3;
+    }
+    
+    public PersonaDTO toDTO() {
+        PersonaDTO dto = new PersonaDTO();
+        
+        dto.setIdPersona(id);
+        dto.setRutPersona(rut);
+        dto.setNombreCompletoPersona(nombreCompleto);
+        dto.setDireccionPersona(direccion);
+        dto.setEmailPersona(email);
+        dto.setFonoPersona1(fono1);
+        dto.setFonoPersona2(fono2);
+        dto.setFonoPersona3(fono3);
+        
+        return dto;
     }
 
 

@@ -1,6 +1,10 @@
 package cl.duoc.alumnos.ferme.domain.entities;
 
+import cl.duoc.alumnos.ferme.Ferme;
+import cl.duoc.alumnos.ferme.dto.UsuarioDTO;
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -93,6 +97,19 @@ public class Usuario implements Serializable {
 
     public void setPersona(Persona persona) {
         this.persona = persona;
+    }
+    
+    public UsuarioDTO toDTO() {
+        UsuarioDTO dto = new UsuarioDTO();
+        
+        dto.setIdUsuario(id);
+        dto.setNombreUsuario(nombre);
+        
+        DateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
+        dto.setFechaCreacionUsuario(formateador.format(fechaCreacion));
+        dto.setPersona(persona.toDTO());
+        
+        return dto;
     }
 
     @Override

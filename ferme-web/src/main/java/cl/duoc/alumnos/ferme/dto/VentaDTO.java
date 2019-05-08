@@ -85,7 +85,9 @@ public class VentaDTO {
     
     public Venta toEntity() throws ParseException {
         Venta entity = new Venta();
-        entity.setId(idVenta);
+        if (idVenta != null) {
+            entity.setId(idVenta);
+        }
         
         entity.setCliente(new Cliente(idCliente));
         entity.setEmpleado(new Empleado(idEmpleado));

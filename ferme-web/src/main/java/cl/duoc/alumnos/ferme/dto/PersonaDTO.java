@@ -6,7 +6,7 @@ import cl.duoc.alumnos.ferme.domain.entities.Persona;
  *
  * @author Benjamin Guillermo
  */
-public abstract class PersonaDTO {
+public class PersonaDTO {
     
     protected Integer idPersona;
     protected String nombreCompletoPersona;

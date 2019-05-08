@@ -136,6 +136,10 @@ public class EmpleadosService implements IEmpleadosService {
                         paramValue = "%" + paramValue.toUpperCase() + "%";
                         bb.and(qEmpleado.persona.nombreCompleto.upper().like(paramValue));
                         break;
+                    case "rut":
+                        paramValue = "%" + paramValue.toUpperCase() + "%";
+                        bb.and(qEmpleado.persona.rut.upper().like(paramValue));
+                        break;
                     default: break;
                 }
             } catch (NumberFormatException exc) {

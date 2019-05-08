@@ -136,6 +136,10 @@ public class ClientesService implements IClientesService {
                         paramValue = "%" + paramValue.toUpperCase() + "%";
                         bb.and(qCliente.persona.nombreCompleto.upper().like(paramValue));
                         break;
+                    case "rut":
+                        paramValue = "%" + paramValue.toUpperCase() + "%";
+                        bb.and(qCliente.persona.rut.upper().like(paramValue));
+                        break;
                     default: break;
                 }
             } catch (NumberFormatException exc) {

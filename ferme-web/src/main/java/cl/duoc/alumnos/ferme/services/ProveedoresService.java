@@ -136,6 +136,10 @@ public class ProveedoresService implements IProveedoresService {
                         paramValue = "%" + paramValue.toUpperCase() + "%";
                         bb.and(qProveedor.persona.nombreCompleto.upper().like(paramValue));
                         break;
+                    case "rut":
+                        paramValue = "%" + paramValue.toUpperCase() + "%";
+                        bb.and(qProveedor.persona.rut.upper().like(paramValue));
+                        break;
                     default: break;
                 }
             } catch (NumberFormatException exc) {

@@ -1,6 +1,5 @@
 package cl.duoc.alumnos.ferme.services.interfaces;
 
-import cl.duoc.alumnos.ferme.domain.entities.Producto;
 import cl.duoc.alumnos.ferme.dto.ProductoDTO;
 import com.querydsl.core.types.Predicate;
 import java.util.Collection;

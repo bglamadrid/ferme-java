@@ -1,5 +1,6 @@
 package cl.duoc.alumnos.ferme.domain.entities;
 
+import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.dto.DetalleOrdenCompraDTO;
 import cl.duoc.alumnos.ferme.dto.OrdenCompraDTO;
 import java.io.Serializable;
@@ -122,7 +123,7 @@ public class OrdenCompra implements Serializable {
         dto.setFechaSolicitudOrdenCompra(fechaSolicitud.toString());
         
         if (fechaRecepcion != null) {
-            DateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
+            DateFormat formateador = new SimpleDateFormat(Ferme.DEFAULT_DATE_FORMAT);
             dto.setFechaRecepcionOrdenCompra(formateador.format(fechaRecepcion));
         }
         List<DetalleOrdenCompraDTO> detallesDTO = new ArrayList<>();

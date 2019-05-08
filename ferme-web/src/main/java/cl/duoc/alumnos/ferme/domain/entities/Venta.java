@@ -1,8 +1,11 @@
 package cl.duoc.alumnos.ferme.domain.entities;
 
+import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.dto.DetalleVentaDTO;
 import cl.duoc.alumnos.ferme.dto.VentaDTO;
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -129,11 +132,13 @@ public class Venta implements Serializable {
         dto.setIdCliente(cliente.getId());
         dto.setIdEmpleado(empleado.getId());
         
+        DateFormat formateador = new SimpleDateFormat(Ferme.DEFAULT_DATE_FORMAT);
+        dto.setFechaVenta(formateador.format(fecha));
+        
         List<DetalleVentaDTO> detallesDTO = new ArrayList<>();
         for (DetalleVenta dtl : detalles) {
             detallesDTO.add(dtl.toDTO());
         }
-        
         dto.setDetallesVenta(detallesDTO);
         
         return dto;

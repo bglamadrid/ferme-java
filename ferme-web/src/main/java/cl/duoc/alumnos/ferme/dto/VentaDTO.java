@@ -1,5 +1,6 @@
 package cl.duoc.alumnos.ferme.dto;
 
+import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.domain.entities.Cliente;
 import cl.duoc.alumnos.ferme.domain.entities.DetalleVenta;
 import cl.duoc.alumnos.ferme.domain.entities.Empleado;
@@ -8,7 +9,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -92,7 +92,7 @@ public class VentaDTO {
         entity.setCliente(new Cliente(idCliente));
         entity.setEmpleado(new Empleado(idEmpleado));
         
-        DateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
+        DateFormat formateador = new SimpleDateFormat(Ferme.DEFAULT_DATE_FORMAT);
         entity.setFecha(formateador.parse(fechaVenta));
         
         List<DetalleVenta> detallesEntities = new ArrayList<>();

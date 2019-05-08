@@ -6,7 +6,6 @@ import cl.duoc.alumnos.ferme.domain.entities.OrdenCompra;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -83,7 +82,7 @@ public class OrdenCompraDTO {
         entity.setEmpleado(new Empleado(idEmpleado));
         entity.setEstado(estadoOrdenCompra.charAt(0));
         
-        DateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
+        DateFormat formateador = new SimpleDateFormat(Ferme.DEFAULT_DATE_FORMAT);
         entity.setFechaSolicitud(formateador.parse(fechaSolicitudOrdenCompra));
         if (fechaRecepcionOrdenCompra != null && !fechaRecepcionOrdenCompra.isEmpty()) {
             entity.setFechaRecepcion(formateador.parse(fechaRecepcionOrdenCompra));

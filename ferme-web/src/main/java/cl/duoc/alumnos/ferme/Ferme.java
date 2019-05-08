@@ -29,6 +29,8 @@ public class Ferme {
     
     public final static char ORDEN_COMPRA_ESTADO_SOLICITADO = 'S';
     public final static char ORDEN_COMPRA_ESTADO_RECEPCIONADO = 'R';
+    
+    public final static String DEFAULT_DATE_FORMAT = "dd/MM/yyyy";
         
     public static void main(String[] args) {
         SpringApplication.run(FermeConfig.class, args);

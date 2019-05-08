@@ -1,5 +1,6 @@
 package cl.duoc.alumnos.ferme.dto;
 
+import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.domain.entities.Usuario;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -67,7 +68,7 @@ public class UsuarioDTO {
         
         entity.setNombre(nombreUsuario);
         
-        DateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
+        DateFormat formateador = new SimpleDateFormat(Ferme.DEFAULT_DATE_FORMAT);
         entity.setFechaCreacion(formateador.parse(fechaCreacionUsuario));
         
         return entity;

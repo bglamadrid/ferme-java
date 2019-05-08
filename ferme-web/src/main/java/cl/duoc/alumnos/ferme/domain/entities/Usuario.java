@@ -105,7 +105,7 @@ public class Usuario implements Serializable {
         dto.setIdUsuario(id);
         dto.setNombreUsuario(nombre);
         
-        DateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
+        DateFormat formateador = new SimpleDateFormat(Ferme.DEFAULT_DATE_FORMAT);
         dto.setFechaCreacionUsuario(formateador.format(fechaCreacion));
         dto.setPersona(persona.toDTO());
         

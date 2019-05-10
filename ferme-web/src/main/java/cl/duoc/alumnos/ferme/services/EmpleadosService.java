@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import javax.persistence.EntityManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +27,6 @@ import org.springframework.stereotype.Service;
 public class EmpleadosService implements IEmpleadosService {
     
     @Autowired IEmpleadosRepository empleadoRepo;
-    @Autowired EntityManager em;
     private final static Logger LOG = LoggerFactory.getLogger(ProductosService.class);
 
     @Override

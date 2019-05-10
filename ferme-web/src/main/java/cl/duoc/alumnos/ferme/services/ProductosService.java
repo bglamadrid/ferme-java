@@ -9,7 +9,6 @@ import cl.duoc.alumnos.ferme.domain.entities.TipoProducto;
 import cl.duoc.alumnos.ferme.domain.repositories.IFamiliasProductosRepository;
 import cl.duoc.alumnos.ferme.domain.repositories.IFunctionsRepository;
 import cl.duoc.alumnos.ferme.domain.repositories.IProductosRepository;
-import cl.duoc.alumnos.ferme.domain.repositories.IRubrosRepository;
 import cl.duoc.alumnos.ferme.domain.repositories.ITiposProductosRepository;
 import cl.duoc.alumnos.ferme.dto.FamiliaProductoDTO;
 import cl.duoc.alumnos.ferme.dto.ProductoDTO;

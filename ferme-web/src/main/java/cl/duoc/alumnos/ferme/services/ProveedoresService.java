@@ -1,6 +1,5 @@
 package cl.duoc.alumnos.ferme.services;
 
-import cl.duoc.alumnos.ferme.domain.entities.Persona;
 import cl.duoc.alumnos.ferme.domain.entities.Proveedor;
 import cl.duoc.alumnos.ferme.domain.entities.QProveedor;
 import cl.duoc.alumnos.ferme.domain.repositories.IProveedoresRepository;
@@ -8,19 +7,14 @@ import cl.duoc.alumnos.ferme.dto.ProveedorDTO;
 import cl.duoc.alumnos.ferme.services.interfaces.IProveedoresService;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
-import com.querydsl.core.types.dsl.BooleanExpression;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-import javax.persistence.EntityManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -33,7 +27,6 @@ import org.springframework.stereotype.Service;
 public class ProveedoresService implements IProveedoresService {
     
     @Autowired IProveedoresRepository proveedorRepo;
-    @Autowired EntityManager em;
     private final static Logger LOG = LoggerFactory.getLogger(ProductosService.class);
 
     @Override

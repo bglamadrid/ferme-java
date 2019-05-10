@@ -121,6 +121,7 @@ public class Producto implements Serializable {
         dto.setDescripcionProducto(descripcion);
         dto.setNombreProducto(nombre);
         dto.setPrecioProducto(precio);
+        dto.setNombreTipoProducto(tipo.getNombre());
         dto.setStockActualProducto(stockActual);
         dto.setStockCriticoProducto(stockCritico);
         

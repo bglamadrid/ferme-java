@@ -128,20 +128,37 @@ public class Venta implements Serializable {
     public VentaDTO toDTO() {
         VentaDTO dto = new VentaDTO();
         
-        dto.setIdVenta(id);
-        dto.setIdCliente(cliente.getId());
-        dto.setIdEmpleado(empleado.getId());
+        final int _id = id;
+        final int _clienteId = cliente.getId();
+        final int _empleadoId = empleado.getId();
+        final String _tipoVenta = tipoVenta.toString();
+        final long _subtotal = subtotal;
+        final List<DetalleVentaDTO> _detalles = this.detallesToDTO();
+        final String _fechaVenta = fechaToDTO();
         
+        dto.setIdVenta(_id);
+        dto.setIdCliente(_clienteId);
+        dto.setIdEmpleado(_empleadoId);
+        dto.setTipoVenta(_tipoVenta);
+        dto.setSubtotalVenta(_subtotal);
+        dto.setDetallesVenta(_detalles);
+        dto.setFechaVenta(_fechaVenta);
+        
+        return dto;
+    }
+
+    private String fechaToDTO() {
         DateFormat formateador = new SimpleDateFormat(Ferme.DEFAULT_DATE_FORMAT);
-        dto.setFechaVenta(formateador.format(fecha));
-        
+        final String _fechaVenta = formateador.format(fecha);
+        return _fechaVenta;
+    }
+
+    private List<DetalleVentaDTO> detallesToDTO() {
         List<DetalleVentaDTO> detallesDTO = new ArrayList<>();
         for (DetalleVenta dtl : detalles) {
             detallesDTO.add(dtl.toDTO());
         }
-        dto.setDetallesVenta(detallesDTO);
-        
-        return dto;
+        return detallesDTO;
     }
 
     @Override

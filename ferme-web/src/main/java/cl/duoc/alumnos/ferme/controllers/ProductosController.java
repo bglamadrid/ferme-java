@@ -90,7 +90,7 @@ public class ProductosController {
             condiciones = productoSvc.queryParamsMapToProductosFilteringPredicate(allRequestParams);
         }
         
-        return this.productoSvc.getProductos(finalPageSize, finalPageIndex, condiciones);
+        return productoSvc.getProductos(finalPageSize, finalPageIndex, condiciones);
     }
     
     
@@ -166,11 +166,11 @@ public class ProductosController {
     
     /**
      * Elimina un Producto de la base de datos.
-     * @param productoId El ID de la Producto a eliminar.
+     * @param productoId El ID del Producto a eliminar.
      * @return true si la operación fue exitosa, false si no lo fue.
      */
-    @DeleteMapping("/productos/borrar")
-    public boolean deleteProducto(@RequestParam("id") Integer productoId) {
+    @PostMapping("/productos/borrar")
+    public boolean deleteProducto(@RequestBody Integer productoId) {
         
         if (productoId != null && productoId != 0) {
             return productoSvc.deleteProducto(productoId);

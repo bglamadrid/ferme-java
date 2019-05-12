@@ -1,5 +1,6 @@
 package cl.duoc.alumnos.ferme.services.interfaces;
 
+import cl.duoc.alumnos.ferme.dto.DetalleOrdenCompraDTO;
 import cl.duoc.alumnos.ferme.dto.OrdenCompraDTO;
 import com.querydsl.core.types.Predicate;
 import java.util.Collection;
@@ -20,6 +21,13 @@ public interface IOrdenesCompraService {
      * @return Una colección de objetos DTO.
      */
     public Collection<OrdenCompraDTO> getOrdenCompras(int pageSize, int pageIndex, Predicate condicion);
+    
+    /**
+     * Obtiene los detalles de la orden de compra ingresada.
+     * @param ordenCompraId El ID de la orden de compra de la que se traerán sus detalles.
+     * @return Una colección de objetos DTO.
+     */
+    public Collection<DetalleOrdenCompraDTO> getDetallesOrdenCompra(Integer ordenCompraId);
     
     /**
      * Genera una o varias condiciones como un objeto Predicate para filtrar 

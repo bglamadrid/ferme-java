@@ -3,6 +3,7 @@ package cl.duoc.alumnos.ferme.services;
 import cl.duoc.alumnos.ferme.domain.entities.OrdenCompra;
 import cl.duoc.alumnos.ferme.domain.entities.QOrdenCompra;
 import cl.duoc.alumnos.ferme.domain.repositories.IOrdenesCompraRepository;
+import cl.duoc.alumnos.ferme.dto.DetalleOrdenCompraDTO;
 import cl.duoc.alumnos.ferme.dto.OrdenCompraDTO;
 import cl.duoc.alumnos.ferme.services.interfaces.IOrdenesCompraService;
 import cl.duoc.alumnos.ferme.util.FermeDates;
@@ -57,6 +58,24 @@ public class OrdenesCompraService implements IOrdenesCompraService {
         
         
         return pagina;
+    }
+
+    @Override
+    public Collection<DetalleOrdenCompraDTO> getDetallesOrdenCompra(Integer ordenCompraId) {
+        
+        OrdenCompra entity = null;
+        try {
+            entity = ordenCompraRepo.getOne(ordenCompraId);
+        } catch (Exception e) {
+            LOG.error("No se pudo obtener la orden de compra con el ID " + ordenCompraId, e);
+        }
+        
+        if (entity == null) {
+            return null;
+        } else {
+            OrdenCompraDTO dtoReal = entity.toDTO(false);
+            return dtoReal.getDetallesOrdenCompra();
+        }
     }
 
     @Override

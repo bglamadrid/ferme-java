@@ -20,7 +20,7 @@ public interface IOrdenesCompraService {
      * @param condicion El objeto Predicate con los filtros a aplicar. Nulable.
      * @return Una colección de objetos DTO.
      */
-    public Collection<OrdenCompraDTO> getOrdenCompras(int pageSize, int pageIndex, Predicate condicion);
+    public Collection<OrdenCompraDTO> getOrdenesCompra(int pageSize, int pageIndex, Predicate condicion);
     
     /**
      * Obtiene los detalles de la orden de compra ingresada.
@@ -42,7 +42,7 @@ public interface IOrdenesCompraService {
      * un query string).
      * @return Un objeto Predicate representando un conjunto de filtros.
      */
-    public Predicate queryParamsMapToOrdenComprasFilteringPredicate(Map<String,String> queryParamsMap);
+    public Predicate queryParamsMapToOrdenesCompraFilteringPredicate(Map<String,String> queryParamsMap);
     
     /**
      * 

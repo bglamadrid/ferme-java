@@ -32,7 +32,7 @@ public class OrdenesCompraService implements IOrdenesCompraService {
     private static final Logger LOG = LoggerFactory.getLogger(OrdenesCompraService.class);
 
     @Override
-    public Collection<OrdenCompraDTO> getOrdenCompras(int pageSize, int pageIndex, Predicate condicion) {
+    public Collection<OrdenCompraDTO> getOrdenesCompra(int pageSize, int pageIndex, Predicate condicion) {
         Pageable pgbl = PageRequest.of(pageIndex, pageSize);
         
         List<OrdenCompraDTO> pagina = new ArrayList<>();
@@ -79,7 +79,7 @@ public class OrdenesCompraService implements IOrdenesCompraService {
     }
 
     @Override
-    public Predicate queryParamsMapToOrdenComprasFilteringPredicate(Map<String, String> queryParamsMap) {
+    public Predicate queryParamsMapToOrdenesCompraFilteringPredicate(Map<String, String> queryParamsMap) {
         
         QOrdenCompra qOrdenCompra = QOrdenCompra.ordenCompra;
         BooleanBuilder bb = new BooleanBuilder();
@@ -143,11 +143,14 @@ public class OrdenesCompraService implements IOrdenesCompraService {
         } catch (ParseException ex) {
             LOG.error("Una de las fechas ingresadas tiene un formato incorrecto, deben ser: DD/MM/YYYY", ex);
         }
-        if (entity != null) {
+        
+        if (entity == null) {
+            return 0;
+        } else if (entity.getDetalles() == null || entity.getDetalles().isEmpty()) {
+            return 0;
+        } else {
             entity = ordenCompraRepo.saveAndFlush(entity);
             return entity.getId();
-        } else {
-            return 0;
         }
     }
 

@@ -45,8 +45,9 @@ public class VentasService implements IVentasService {
             ventas = ventaRepo.findAll(condicion, pgbl);
         }
         
+        
         ventas.forEach((entity) -> {
-            VentaDTO dto = entity.toDTO();
+            VentaDTO dto = entity.toDTO(true);
             pagina.add(dto);
         });
         

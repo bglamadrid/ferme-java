@@ -93,13 +93,14 @@ public class VentaDTO {
         final Cliente _cliente = new Cliente(idCliente);
         final Empleado _empleado = new Empleado(idEmpleado);
         Date _fechaVenta = FermeDates.fechaStringToDate(fechaVenta);
-        List<DetalleVenta> _detallesEntities = this.detallesToEntity();
         
         Venta entity = new Venta();
         entity.setId(_idVenta);
         entity.setCliente(_cliente);
         entity.setEmpleado(_empleado);
         entity.setFecha(_fechaVenta);
+        
+        List<DetalleVenta> _detallesEntities = this.detallesToEntity();
         entity.setDetalles(_detallesEntities);
         
         return entity;
@@ -107,8 +108,10 @@ public class VentaDTO {
 
     private List<DetalleVenta> detallesToEntity() {
         List<DetalleVenta> detallesEntities = new ArrayList<>();
-        for (DetalleVentaDTO detalle : detallesVenta) {
-            detallesEntities.add(detalle.toEntity());
+        if (detallesVenta != null && !detallesVenta.isEmpty()) {
+            for (DetalleVentaDTO detalle : detallesVenta) {
+                detallesEntities.add(detalle.toEntity());
+            }
         }
         return detallesEntities;
     }

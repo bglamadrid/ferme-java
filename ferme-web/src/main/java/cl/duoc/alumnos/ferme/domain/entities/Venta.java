@@ -122,7 +122,7 @@ public class Venta implements Serializable {
         this.detalles = detalles;
     }
     
-    public VentaDTO toDTO() {
+    public VentaDTO toDTO(boolean simple) {
         VentaDTO dto = new VentaDTO();
         
         final int _id = id;
@@ -130,7 +130,6 @@ public class Venta implements Serializable {
         final int _empleadoId = empleado.getId();
         final String _tipoVenta = tipoVenta.toString();
         final long _subtotal = subtotal;
-        final List<DetalleVentaDTO> _detalles = this.detallesToDTO();
         final String _fechaVenta = FermeDates.fechaToString(fecha);
         
         dto.setIdVenta(_id);
@@ -138,8 +137,12 @@ public class Venta implements Serializable {
         dto.setIdEmpleado(_empleadoId);
         dto.setTipoVenta(_tipoVenta);
         dto.setSubtotalVenta(_subtotal);
-        dto.setDetallesVenta(_detalles);
         dto.setFechaVenta(_fechaVenta);
+        
+        if (!simple) {
+            final List<DetalleVentaDTO> _detalles = this.detallesToDTO();
+            dto.setDetallesVenta(_detalles);
+        }
         
         return dto;
     }

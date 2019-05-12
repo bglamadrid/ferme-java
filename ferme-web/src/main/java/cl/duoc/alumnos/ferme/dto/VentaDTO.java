@@ -5,6 +5,7 @@ import cl.duoc.alumnos.ferme.domain.entities.Cliente;
 import cl.duoc.alumnos.ferme.domain.entities.DetalleVenta;
 import cl.duoc.alumnos.ferme.domain.entities.Empleado;
 import cl.duoc.alumnos.ferme.domain.entities.Venta;
+import cl.duoc.alumnos.ferme.util.FermeDates;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -91,34 +92,17 @@ public class VentaDTO {
         final Integer _idVenta = idVenta;
         final Cliente _cliente = new Cliente(idCliente);
         final Empleado _empleado = new Empleado(idEmpleado);
-        Date _fechaVenta = this.fechaStringToDate();
-        List<DetalleVenta> detallesEntities = this.detallesToEntity();
+        Date _fechaVenta = FermeDates.fechaStringToDate(fechaVenta);
+        List<DetalleVenta> _detallesEntities = this.detallesToEntity();
         
         Venta entity = new Venta();
         entity.setId(_idVenta);
         entity.setCliente(_cliente);
         entity.setEmpleado(_empleado);
         entity.setFecha(_fechaVenta);
-        entity.setDetalles(detallesEntities);
+        entity.setDetalles(_detallesEntities);
         
         return entity;
-    }
-
-    private Date fechaStringToDate() {
-        
-        Date _fechaVenta; 
-        
-        try {
-            DateFormat formateador = new SimpleDateFormat(Ferme.DEFAULT_DATE_FORMAT);
-            _fechaVenta = formateador.parse(fechaVenta);
-        } catch (ParseException exc) {
-            final Logger LOG = LoggerFactory.getLogger(VentaDTO.class);
-            LOG.warn("VentaDTO.fechaStringToDate(): La fecha de venta tiene un formato inválido, no se pudo convertir y es null.", exc);
-            _fechaVenta = null;
-        }
-        
-        return _fechaVenta;
-        
     }
 
     private List<DetalleVenta> detallesToEntity() {

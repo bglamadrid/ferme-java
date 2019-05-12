@@ -106,11 +106,14 @@ public class VentasService implements IVentasService {
         } catch (ParseException ex) {
             LOG.error("La fecha de la venta ingresada tiene un formato incorrecto, debe ser: DD/MM/YYYY", ex);
         }
-        if (entity != null) {
+        
+        if (entity == null) {
+            return 0;
+        } else if (entity.getDetalles() == null || entity.getDetalles().isEmpty()) {
+            return 0;
+        } else {
             entity = ventaRepo.saveAndFlush(entity);
             return entity.getId();
-        } else {
-            return 0;
         }
     }
 

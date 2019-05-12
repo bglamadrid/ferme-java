@@ -21,11 +21,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author got12
  */
+@Service
 public class OrdenesCompraService implements IOrdenesCompraService {
     
     @Autowired private IOrdenesCompraRepository ordenCompraRepo;

@@ -40,9 +40,9 @@ public class VentasService implements IVentasService {
         Iterable<Venta> ventas;
         
         if (condicion == null) {
-            ventas = this.ventaRepo.findAll(pgbl);
+            ventas = ventaRepo.findAll(pgbl);
         } else {
-            ventas = this.ventaRepo.findAll(condicion, pgbl);
+            ventas = ventaRepo.findAll(condicion, pgbl);
         }
         
         ventas.forEach((entity) -> {
@@ -103,7 +103,7 @@ public class VentasService implements IVentasService {
         try {
             entity = dto.toEntity();
         } catch (ParseException ex) {
-            LOG.error("La fecha de la venta ingresada tiene un formato incorrecto, debe ser: DD/MM/YYYY");
+            LOG.error("La fecha de la venta ingresada tiene un formato incorrecto, debe ser: DD/MM/YYYY", ex);
         }
         if (entity != null) {
             entity = ventaRepo.saveAndFlush(entity);

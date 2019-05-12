@@ -25,7 +25,7 @@ public class OrdenesCompraController {
     
     @Autowired private IOrdenesCompraService ordenCompraSvc;
     
-    @GetMapping("/ordenes_compra/")
+    @GetMapping("/ordenes_compra")
     public Collection<OrdenCompraDTO> getOrdenesCompra(
         @RequestParam Map<String,String> allRequestParams
     ) {
@@ -96,7 +96,7 @@ public class OrdenesCompraController {
      * @param ventaId El ID de la Orden de Compra a eliminar.
      * @return true si la operación fue exitosa, false si no lo fue.
      */
-    @PostMapping("/ordenes_compra/guardar")
+    @PostMapping("/ordenes_compra/borrar")
     public boolean deleteOrdenCompra(@RequestBody Integer ventaId) {
         
         if (ventaId != null && ventaId != 0) {

@@ -24,7 +24,7 @@ public class VentasController {
     
     @Autowired private IVentasService ventaSvc;
     
-    @GetMapping("/ventas/")
+    @GetMapping("/ventas")
     public Collection<VentaDTO> getVentas(
         @RequestParam Map<String,String> allRequestParams
     ) {
@@ -81,7 +81,7 @@ public class VentasController {
      * @param ventaId El ID de la Venta a eliminar.
      * @return true si la operación fue exitosa, false si no lo fue.
      */
-    @PostMapping("/ventas/guardar")
+    @PostMapping("/ventas/borrar")
     public boolean deleteVenta(@RequestBody Integer ventaId) {
         
         if (ventaId != null && ventaId != 0) {

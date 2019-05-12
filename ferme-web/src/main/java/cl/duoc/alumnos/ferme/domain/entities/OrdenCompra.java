@@ -114,7 +114,7 @@ public class OrdenCompra implements Serializable {
         this.detalles = detalles;
     }
     
-    public OrdenCompraDTO toDTO() {
+    public OrdenCompraDTO toDTO(boolean simple) {
         OrdenCompraDTO dto = new OrdenCompraDTO();
         
         dto.setIdOrdenCompra(id);
@@ -126,11 +126,14 @@ public class OrdenCompra implements Serializable {
             DateFormat formateador = new SimpleDateFormat(Ferme.DEFAULT_DATE_FORMAT);
             dto.setFechaRecepcionOrdenCompra(formateador.format(fechaRecepcion));
         }
-        List<DetalleOrdenCompraDTO> detallesDTO = new ArrayList<>();
-        for (DetalleOrdenCompra detalle : detalles) {
-            detallesDTO.add(detalle.toDTO());
+        
+        if (!simple) {
+            List<DetalleOrdenCompraDTO> detallesDTO = new ArrayList<>();
+            for (DetalleOrdenCompra detalle : detalles) {
+                detallesDTO.add(detalle.toDTO());
+            }
+            dto.setDetallesOrdenCompra(detallesDTO);
         }
-        dto.setDetallesOrdenCompra(detallesDTO);
         
         return dto;
     }

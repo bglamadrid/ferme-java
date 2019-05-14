@@ -1,8 +1,10 @@
 package cl.duoc.alumnos.ferme.services;
 
 import cl.duoc.alumnos.ferme.domain.entities.Cliente;
+import cl.duoc.alumnos.ferme.domain.entities.Persona;
 import cl.duoc.alumnos.ferme.domain.entities.QCliente;
 import cl.duoc.alumnos.ferme.domain.repositories.IClientesRepository;
+import cl.duoc.alumnos.ferme.domain.repositories.IPersonasRepository;
 import cl.duoc.alumnos.ferme.dto.ClienteDTO;
 import cl.duoc.alumnos.ferme.services.interfaces.IClientesService;
 import com.querydsl.core.BooleanBuilder;
@@ -27,6 +29,7 @@ import org.springframework.stereotype.Service;
 public class ClientesService implements IClientesService {
     
     @Autowired IClientesRepository clienteRepo;
+    @Autowired IPersonasRepository personaRepo;
     private final static Logger LOG = LoggerFactory.getLogger(ProductosService.class);
 
     @Override
@@ -87,6 +90,8 @@ public class ClientesService implements IClientesService {
     public int saveCliente(ClienteDTO dto) {
         
         Cliente entity = dto.toEntity();
+        Persona personaEntity = entity.getPersona();
+        personaEntity = personaRepo.saveAndFlush(personaEntity);
         entity = clienteRepo.saveAndFlush(entity);
         return entity.getId();
     }

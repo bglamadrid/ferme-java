@@ -4,9 +4,12 @@ import cl.duoc.alumnos.ferme.dto.PersonaDTO;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -23,6 +26,8 @@ public class Persona implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
+    @SequenceGenerator( sequenceName = "SEQ_PERSONA", name = "PersonaIDGenerator" )
+    @GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "PersonaIDGenerator" )
     @Column(name = "ID_PERSONA")
     private int id;
 

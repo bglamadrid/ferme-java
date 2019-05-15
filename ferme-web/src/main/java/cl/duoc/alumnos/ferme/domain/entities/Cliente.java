@@ -14,6 +14,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
 /**
  *
@@ -28,7 +30,7 @@ public class Cliente implements Serializable {
     
     @Id
     @GeneratedValue( strategy = GenerationType.AUTO, generator = "ClienteIDGenerator" )
-    @SequenceGenerator( name = "ClienteIDGenerator", sequenceName = "SEQ_CLIENTE", allocationSize = 1, initialValue = 1 )
+    @GenericGenerator(name="ClienteIDGenerator", strategy = "sequence", parameters = { @Parameter(name="sequence", value="SEQ_CLIENTE") } )
     @Column(name = "ID_CLIENTE")
     private int id;
     

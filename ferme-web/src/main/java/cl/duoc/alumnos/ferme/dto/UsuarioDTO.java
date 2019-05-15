@@ -62,9 +62,7 @@ public class UsuarioDTO {
     
     public Usuario toEntity() throws ParseException {
         Usuario entity = new Usuario();
-        if (idUsuario != 0) {
-            entity.setId(idUsuario);
-        }
+        entity.setId(idUsuario);
         
         entity.setNombre(nombreUsuario);
         

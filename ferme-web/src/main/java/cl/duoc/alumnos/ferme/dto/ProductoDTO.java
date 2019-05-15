@@ -96,9 +96,7 @@ public class ProductoDTO {
     
     public Producto toEntity() {
         Producto entity = new Producto();
-        if (idProducto != 0) {
-            entity.setId(idProducto);
-        }
+        entity.setId(idProducto);
         
         entity.setNombre(nombreProducto);
         entity.setDescripcion(descripcionProducto);

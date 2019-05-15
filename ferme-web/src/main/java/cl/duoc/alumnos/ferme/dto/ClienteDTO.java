@@ -24,9 +24,7 @@ public class ClienteDTO extends PersonaDTO {
     
     public Cliente toEntity() {
         Cliente entity = new Cliente();
-        if (idCliente != 0) {
-            entity.setId(idCliente);
-        }
+        entity.setId(idCliente);
         
         entity.setPersona(this.personaToEntity());
         

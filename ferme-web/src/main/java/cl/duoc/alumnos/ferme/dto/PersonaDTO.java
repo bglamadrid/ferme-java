@@ -87,9 +87,7 @@ public class PersonaDTO {
     
     public Persona personaToEntity() {
         Persona personaEntity = new Persona();
-        if (idPersona != 0) {
-            personaEntity.setId(idPersona);
-        }
+        personaEntity.setId(idPersona);
         
         personaEntity.setNombreCompleto(nombreCompletoPersona);
         personaEntity.setRut(rutPersona);

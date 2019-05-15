@@ -34,9 +34,7 @@ public class EmpleadoDTO extends PersonaDTO {
     
     public Empleado toEntity() {
         Empleado entity = new Empleado();
-        if (idEmpleado != 0) {
-            entity.setId(idEmpleado);
-        }
+        entity.setId(idEmpleado);
         
         entity.setCargo(new Cargo(idCargo));
         entity.setPersona(this.personaToEntity());

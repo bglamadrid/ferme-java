@@ -1,8 +1,10 @@
 package cl.duoc.alumnos.ferme.services;
 
 import cl.duoc.alumnos.ferme.domain.entities.Empleado;
+import cl.duoc.alumnos.ferme.domain.entities.Persona;
 import cl.duoc.alumnos.ferme.domain.entities.QEmpleado;
 import cl.duoc.alumnos.ferme.domain.repositories.IEmpleadosRepository;
+import cl.duoc.alumnos.ferme.domain.repositories.IPersonasRepository;
 import cl.duoc.alumnos.ferme.dto.EmpleadoDTO;
 import cl.duoc.alumnos.ferme.services.interfaces.IEmpleadosService;
 import com.querydsl.core.BooleanBuilder;
@@ -27,6 +29,7 @@ import org.springframework.stereotype.Service;
 public class EmpleadosService implements IEmpleadosService {
     
     @Autowired IEmpleadosRepository empleadoRepo;
+    @Autowired IPersonasRepository personaRepo;
     private final static Logger LOG = LoggerFactory.getLogger(ProductosService.class);
 
     @Override
@@ -87,6 +90,9 @@ public class EmpleadosService implements IEmpleadosService {
     public int saveEmpleado(EmpleadoDTO dto) {
         
         Empleado entity = dto.toEntity();
+        Persona personaEntity = entity.getPersona();
+        personaEntity = personaRepo.saveAndFlush(personaEntity);
+        entity.setPersona(personaEntity);
         entity = empleadoRepo.saveAndFlush(entity);
         return entity.getId();
     }

@@ -1,7 +1,9 @@
 package cl.duoc.alumnos.ferme.services;
 
+import cl.duoc.alumnos.ferme.domain.entities.Persona;
 import cl.duoc.alumnos.ferme.domain.entities.Proveedor;
 import cl.duoc.alumnos.ferme.domain.entities.QProveedor;
+import cl.duoc.alumnos.ferme.domain.repositories.IPersonasRepository;
 import cl.duoc.alumnos.ferme.domain.repositories.IProveedoresRepository;
 import cl.duoc.alumnos.ferme.dto.ProveedorDTO;
 import cl.duoc.alumnos.ferme.services.interfaces.IProveedoresService;
@@ -27,6 +29,7 @@ import org.springframework.stereotype.Service;
 public class ProveedoresService implements IProveedoresService {
     
     @Autowired IProveedoresRepository proveedorRepo;
+    @Autowired IPersonasRepository personaRepo;
     private final static Logger LOG = LoggerFactory.getLogger(ProductosService.class);
 
     @Override
@@ -87,6 +90,9 @@ public class ProveedoresService implements IProveedoresService {
     public int saveProveedor(ProveedorDTO dto) {
         
         Proveedor entity = dto.toEntity();
+        Persona personaEntity = entity.getPersona();
+        personaEntity = personaRepo.saveAndFlush(personaEntity);
+        entity.setPersona(personaEntity);
         entity = proveedorRepo.saveAndFlush(entity);
         return entity.getId();
     }

@@ -21,13 +21,13 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "CLIENTE")
+@SequenceGenerator( sequenceName = "SEQ_CLIENTE", name = "ClienteIDGenerator" )
 @NamedQueries({
     @NamedQuery(name = "Cliente.findAll", query = "SELECT c FROM Cliente c")})
 public class Cliente implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
-    @SequenceGenerator( sequenceName = "SEQ_CLIENTE", name = "ClienteIDGenerator" )
     @GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "ClienteIDGenerator" )
     @Column(name = "ID_CLIENTE")
     private int id;

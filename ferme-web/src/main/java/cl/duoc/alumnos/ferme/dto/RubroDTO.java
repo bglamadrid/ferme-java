@@ -31,7 +31,9 @@ public class RubroDTO {
     
     public Rubro toEntity() {
         Rubro entity = new Rubro();
-        entity.setId(idRubro);
+        if (idRubro != null) {
+            entity.setId(idRubro);
+        }
         
         entity.setDescripcion(descripcionRubro);
         

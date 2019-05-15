@@ -42,7 +42,9 @@ public class ProveedorDTO extends PersonaDTO {
     
     public Proveedor toEntity() {
         Proveedor entity = new Proveedor();
-        entity.setId(idProveedor);
+        if (idProveedor != null) {
+            entity.setId(idProveedor);
+        }
         
         entity.setRazonSocial(razonSocialProveedor);
         

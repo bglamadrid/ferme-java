@@ -77,7 +77,9 @@ public class OrdenCompraDTO {
     
     public OrdenCompra toEntity() throws ParseException {
         OrdenCompra entity = new OrdenCompra();
-        entity.setId(idOrdenCompra);
+        if (idOrdenCompra != null) {
+            entity.setId(idOrdenCompra);
+        }
         
         entity.setEmpleado(new Empleado(idEmpleado));
         entity.setEstado(estadoOrdenCompra.charAt(0));

@@ -33,7 +33,9 @@ public class CargoDTO {
     
     public Cargo toEntity() {
         Cargo entity = new Cargo();
-        entity.setId(idCargo);
+        if (idCargo != null) {
+            entity.setId(idCargo);
+        }
         
         entity.setDescripcion(descripcionCargo);
         

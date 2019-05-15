@@ -13,8 +13,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
 
 /**
  *
@@ -28,8 +26,8 @@ public class Persona implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
+    @SequenceGenerator( name = "PersonaIDGenerator", sequenceName = "SEQ_PERSONA" )
     @GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "PersonaIDGenerator" )
-    @GenericGenerator(name="PersonaIDGenerator", strategy = "sequence", parameters = { @Parameter(name="sequence", value="SEQ_PERSONA") } )
     @Column(name = "ID_PERSONA")
     private int id;
 

@@ -92,6 +92,7 @@ public class ClientesService implements IClientesService {
         Cliente entity = dto.toEntity();
         Persona personaEntity = entity.getPersona();
         personaEntity = personaRepo.saveAndFlush(personaEntity);
+        LOG.info(personaEntity.toString());
         entity.setPersona(personaEntity);
         entity = clienteRepo.saveAndFlush(entity);
         return entity.getId();

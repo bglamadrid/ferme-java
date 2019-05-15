@@ -50,7 +50,7 @@ public class TipoProductoDTO {
     
     public TipoProducto toEntity() {
         TipoProducto entity = new TipoProducto();
-        if (idTipoProducto != null) {
+        if (idTipoProducto != 0) {
             entity.setId(idTipoProducto);
         }
         

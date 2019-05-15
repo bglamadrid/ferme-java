@@ -62,7 +62,7 @@ public class FamiliaProductoDTO {
     
     public FamiliaProducto toEntity() {
         FamiliaProducto entity = new FamiliaProducto();
-        if (idFamiliaProducto != null) {
+        if (idFamiliaProducto != 0) {
             entity.setId(idFamiliaProducto);
         }
         

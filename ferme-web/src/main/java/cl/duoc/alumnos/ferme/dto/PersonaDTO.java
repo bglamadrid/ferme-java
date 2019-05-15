@@ -87,7 +87,7 @@ public class PersonaDTO {
     
     public Persona personaToEntity() {
         Persona personaEntity = new Persona();
-        if (idPersona != null) {
+        if (idPersona != 0) {
             personaEntity.setId(idPersona);
         }
         

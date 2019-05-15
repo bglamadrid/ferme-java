@@ -63,8 +63,8 @@ public class DetalleVentaDTO {
     public DetalleVenta toEntity() {
         DetalleVenta entity = new DetalleVenta();
         DetalleVentaPK entityPK = new DetalleVentaPK();
-        if (idVenta != null) { entityPK.setIdVenta(idVenta); }
-        if (idDetalleVenta != null) { entityPK.setIdDetalleVenta(idDetalleVenta); }
+        if (idVenta != 0) { entityPK.setIdVenta(idVenta); }
+        if (idDetalleVenta != 0) { entityPK.setIdDetalleVenta(idDetalleVenta); }
         
         entity.setMonto(montoDetalleVenta);
         entity.setUnidades(unidadesProducto);

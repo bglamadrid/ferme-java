@@ -54,8 +54,8 @@ public class DetalleOrdenCompraDTO {
     public DetalleOrdenCompra toEntity() {
         DetalleOrdenCompra entity = new DetalleOrdenCompra();
         DetalleOrdenCompraPK entityPK = new DetalleOrdenCompraPK();
-        if (idOrdenCompra != null) { entityPK.setIdOrdenCompra(idOrdenCompra); }
-        if (idDetalleOrdenCompra != null) { entityPK.setIdDetalleOrdenCompra(idDetalleOrdenCompra); }
+        if (idOrdenCompra != 0) { entityPK.setIdOrdenCompra(idOrdenCompra); }
+        if (idDetalleOrdenCompra != 0) { entityPK.setIdDetalleOrdenCompra(idDetalleOrdenCompra); }
         entity.setPk(entityPK);
         
         entity.setCantidad(cantidadProducto);

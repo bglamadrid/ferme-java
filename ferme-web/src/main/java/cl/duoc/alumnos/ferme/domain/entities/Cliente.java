@@ -21,7 +21,6 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "CLIENTE")
-@SequenceGenerator( sequenceName = "SEQ_CLIENTE", name = "ClienteIDGenerator" )
 @NamedQueries({
     @NamedQuery(name = "Cliente.findAll", query = "SELECT c FROM Cliente c")})
 public class Cliente implements Serializable {
@@ -29,6 +28,7 @@ public class Cliente implements Serializable {
     
     @Id
     @GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "ClienteIDGenerator" )
+    @SequenceGenerator( name = "ClienteIDGenerator", sequenceName = "SEQ_CLIENTE", allocationSize = 1, initialValue = 1 )
     @Column(name = "ID_CLIENTE")
     private int id;
     

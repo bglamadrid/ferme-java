@@ -20,7 +20,6 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "PERSONA")
-@SequenceGenerator( sequenceName = "SEQ_PERSONA", name = "PersonaIDGenerator" )
 @NamedQueries({
     @NamedQuery(name = "Persona.findAll", query = "SELECT p FROM Persona p")})
 public class Persona implements Serializable {
@@ -28,6 +27,7 @@ public class Persona implements Serializable {
     
     @Id
     @GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "PersonaIDGenerator" )
+    @SequenceGenerator( name = "PersonaIDGenerator", sequenceName = "SEQ_PERSONA", allocationSize = 1, initialValue = 1 )
     @Column(name = "ID_PERSONA")
     private int id;
 

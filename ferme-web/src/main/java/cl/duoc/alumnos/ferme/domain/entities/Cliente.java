@@ -32,7 +32,7 @@ public class Cliente implements Serializable {
     @Column(name = "ID_CLIENTE")
     private int id;
     
-    @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA", insertable = false, updatable = false)
+    @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA", insertable = true, updatable = true)
     @OneToOne(optional = false, fetch = FetchType.EAGER)
     private Persona persona;
 

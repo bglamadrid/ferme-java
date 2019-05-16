@@ -29,7 +29,7 @@ public class Empleado implements Serializable {
     @Column(name = "ID_EMPLEADO")
     private int id;
     
-    @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA")
+    @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA", insertable = true, updatable = true)
     @OneToOne(optional = false, fetch = FetchType.EAGER)
     private Persona persona;
     

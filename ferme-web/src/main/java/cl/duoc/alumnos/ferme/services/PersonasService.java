@@ -1,10 +1,8 @@
 package cl.duoc.alumnos.ferme.services;
 
-import cl.duoc.alumnos.ferme.domain.entities.Cliente;
 import cl.duoc.alumnos.ferme.domain.entities.Persona;
 import cl.duoc.alumnos.ferme.domain.entities.QPersona;
 import cl.duoc.alumnos.ferme.domain.repositories.IPersonasRepository;
-import cl.duoc.alumnos.ferme.dto.ClienteDTO;
 import cl.duoc.alumnos.ferme.dto.PersonaDTO;
 import cl.duoc.alumnos.ferme.services.interfaces.IPersonasService;
 import com.querydsl.core.BooleanBuilder;
@@ -18,11 +16,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Benjamin Guillermo <got12g at gmail.com>
  */
+@Service
 public class PersonasService implements IPersonasService {
     private final static Logger LOG = LoggerFactory.getLogger(PersonasService.class);
     

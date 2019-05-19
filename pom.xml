@@ -7,7 +7,7 @@
   <packaging>pom</packaging>
   <name>ferme-rest</name>
   <modules>
-    <module>ferme-api</module>
+    <module>ferme-rest-api</module>
     <module>ferme-rest-ear</module>
     <module>ferme-rest-ejb</module>
   </modules>

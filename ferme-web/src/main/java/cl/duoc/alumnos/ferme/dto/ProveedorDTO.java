@@ -1,12 +1,15 @@
 package cl.duoc.alumnos.ferme.dto;
 
 import cl.duoc.alumnos.ferme.domain.entities.Proveedor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author Benjamin Guillermo
  */
 public class ProveedorDTO extends PersonaDTO {
+    private final static Logger LOG = LoggerFactory.getLogger(ProveedorDTO.class);
     
     private Integer idProveedor;
     private String razonSocialProveedor;
@@ -42,8 +45,12 @@ public class ProveedorDTO extends PersonaDTO {
     
     public Proveedor toEntity() {
         Proveedor entity = new Proveedor();
-        if (idProveedor != null) {
-            entity.setId(idProveedor);
+        try {
+            if (idProveedor != 0) {
+                entity.setId(idProveedor);
+            }
+        } catch (NullPointerException exc) {
+            LOG.info("toEntity() - idProveedor es null");
         }
         
         entity.setRazonSocial(razonSocialProveedor);

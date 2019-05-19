@@ -50,7 +50,7 @@ public class OrdenCompra implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaRecepcion;
     
-    @JoinColumn(name = "ID_EMPLEADO", referencedColumnName = "ID_EMPLEADO")
+    @JoinColumn(name = "ID_EMPLEADO", referencedColumnName = "ID_EMPLEADO", insertable = false, updatable = false)
     @OneToOne
     private Empleado empleado;
     

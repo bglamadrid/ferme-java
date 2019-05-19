@@ -13,6 +13,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import org.hibernate.annotations.Cascade;
 
 /**
  *
@@ -29,11 +30,12 @@ public class Empleado implements Serializable {
     @Column(name = "ID_EMPLEADO")
     private int id;
     
-    @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA", insertable = true, updatable = true)
     @OneToOne(optional = false, fetch = FetchType.EAGER)
+    @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA", insertable = true, updatable = true)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Persona persona;
     
-    @JoinColumn(name = "ID_CARGO", referencedColumnName = "ID_CARGO")
+    @JoinColumn(name = "ID_CARGO", referencedColumnName = "ID_CARGO", insertable = false, updatable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Cargo cargo;
 

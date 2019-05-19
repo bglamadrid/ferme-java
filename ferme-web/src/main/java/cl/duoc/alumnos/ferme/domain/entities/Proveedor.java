@@ -12,6 +12,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
+import org.hibernate.annotations.Cascade;
 
 /**
  *
@@ -28,8 +29,9 @@ public class Proveedor implements Serializable {
     @Column(name = "ID_PROVEEDOR")
     private int id;
     
-    @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA", insertable = true, updatable = true)
     @OneToOne(optional = false, fetch = FetchType.EAGER)
+    @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA", insertable = true, updatable = true)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Persona persona;
     
     @Size(min = 1, max = 50)

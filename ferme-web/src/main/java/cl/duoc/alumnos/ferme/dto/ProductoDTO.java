@@ -1,12 +1,15 @@
 package cl.duoc.alumnos.ferme.dto;
 
 import cl.duoc.alumnos.ferme.domain.entities.Producto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author Benjamin Guillermo
  */
 public class ProductoDTO {
+    private final static Logger LOG = LoggerFactory.getLogger(ProductoDTO.class);
     
     private Integer idProducto;
     private String codigoProducto;
@@ -96,8 +99,12 @@ public class ProductoDTO {
     
     public Producto toEntity() {
         Producto entity = new Producto();
-        if (idProducto != null) {
-            entity.setId(idProducto);
+        try {
+            if (idProducto != 0) {
+                entity.setId(idProducto);
+            }
+        } catch (NullPointerException exc) {
+            LOG.info("toEntity() - idProducto es null");
         }
         
         entity.setNombre(nombreProducto);

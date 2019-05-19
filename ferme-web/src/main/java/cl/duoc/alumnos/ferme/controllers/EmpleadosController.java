@@ -6,6 +6,8 @@ import cl.duoc.alumnos.ferme.services.interfaces.IEmpleadosService;
 import com.querydsl.core.types.Predicate;
 import java.util.Collection;
 import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/gestion")
 public class EmpleadosController {
+    private final static Logger LOG = LoggerFactory.getLogger(EmpleadosController.class);
     
     @Autowired private IEmpleadosService empleadoSvc;    
     
@@ -70,6 +73,8 @@ public class EmpleadosController {
         if (allRequestParams != null && !allRequestParams.isEmpty()) {
             filtros = this.empleadoSvc.queryParamsMapToEmpleadosFilteringPredicate(allRequestParams);
         }
+        
+        LOG.debug("getEmpleados - finalPageSize="+finalPageSize+"; finalPageIndex="+finalPageIndex+"; filtros="+filtros);
         return this.empleadoSvc.getEmpleados(finalPageSize, finalPageIndex, filtros);
     }
     
@@ -82,7 +87,10 @@ public class EmpleadosController {
     public Integer saveEmpleado(@RequestBody EmpleadoDTO dto) {
         
         if (dto != null) {
-            return empleadoSvc.saveEmpleado(dto);
+            LOG.debug("saveEmpleado - dto="+dto);
+            Integer empleadoId = empleadoSvc.saveEmpleado(dto);
+            LOG.debug("saveEmpleado - empleadoId="+empleadoId);
+            return empleadoId;
         }
         return null;
     }
@@ -96,6 +104,7 @@ public class EmpleadosController {
     public boolean deleteEmpleado(@RequestParam("id") Integer empleadoId) {
         
         if (empleadoId != null && empleadoId != 0) {
+            LOG.debug("deleteEmpleado - empleadoId="+empleadoId);
             return empleadoSvc.deleteEmpleado(empleadoId);
         }
         return false;

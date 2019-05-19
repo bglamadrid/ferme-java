@@ -9,12 +9,15 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author Benjamin Guillermo
  */
 public class OrdenCompraDTO {
+    private final static Logger LOG = LoggerFactory.getLogger(OrdenCompraDTO.class);
     
     private Integer idOrdenCompra;
     private Integer idEmpleado;
@@ -77,8 +80,12 @@ public class OrdenCompraDTO {
     
     public OrdenCompra toEntity() throws ParseException {
         OrdenCompra entity = new OrdenCompra();
-        if (idOrdenCompra != null) {
-            entity.setId(idOrdenCompra);
+        try {
+            if (idOrdenCompra != 0) {
+                entity.setId(idOrdenCompra);
+            }
+        } catch (NullPointerException exc) {
+            LOG.info("toEntity() - idOrdenCompra es null");
         }
         
         entity.setEmpleado(new Empleado(idEmpleado));

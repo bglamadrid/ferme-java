@@ -1,12 +1,15 @@
 package cl.duoc.alumnos.ferme.dto;
 
 import cl.duoc.alumnos.ferme.domain.entities.Rubro;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author Benjamin Guillermo
  */
 public class RubroDTO {
+    private final static Logger LOG = LoggerFactory.getLogger(RubroDTO.class);
     
     private Integer idRubro;
     private String descripcionRubro;
@@ -31,8 +34,12 @@ public class RubroDTO {
     
     public Rubro toEntity() {
         Rubro entity = new Rubro();
-        if (idRubro != null) {
-            entity.setId(idRubro);
+        try {
+            if (idRubro != 0) {
+                entity.setId(idRubro);
+            }
+        } catch (NullPointerException exc) {
+            LOG.info("toEntity() - idRubro es null");
         }
         
         entity.setDescripcion(descripcionRubro);

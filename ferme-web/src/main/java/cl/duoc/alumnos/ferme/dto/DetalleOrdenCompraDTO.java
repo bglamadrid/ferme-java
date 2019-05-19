@@ -3,12 +3,15 @@ package cl.duoc.alumnos.ferme.dto;
 import cl.duoc.alumnos.ferme.domain.entities.DetalleOrdenCompra;
 import cl.duoc.alumnos.ferme.domain.entities.DetalleOrdenCompraPK;
 import cl.duoc.alumnos.ferme.domain.entities.Producto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author Benjamin Guillermo
  */
 public class DetalleOrdenCompraDTO {
+    private final static Logger LOG = LoggerFactory.getLogger(DetalleOrdenCompraDTO.class);
     
     private Integer idDetalleOrdenCompra;
     private Integer idOrdenCompra;
@@ -54,8 +57,22 @@ public class DetalleOrdenCompraDTO {
     public DetalleOrdenCompra toEntity() {
         DetalleOrdenCompra entity = new DetalleOrdenCompra();
         DetalleOrdenCompraPK entityPK = new DetalleOrdenCompraPK();
-        if (idOrdenCompra != null) { entityPK.setIdOrdenCompra(idOrdenCompra); }
-        if (idDetalleOrdenCompra != null) { entityPK.setIdDetalleOrdenCompra(idDetalleOrdenCompra); }
+        
+        try {
+            if (idOrdenCompra != 0) { 
+                entityPK.setIdOrdenCompra(idOrdenCompra); 
+            }
+        } catch (NullPointerException exc) {
+            LOG.info("toEntity() - idOrdenCompra es null");
+        }
+        
+        try {
+            if (idDetalleOrdenCompra != 0) { 
+                entityPK.setIdDetalleOrdenCompra(idDetalleOrdenCompra); 
+            }
+        } catch (NullPointerException exc) {
+            LOG.info("toEntity() - idDetalleOrdenCompra es null");
+        }
         entity.setPk(entityPK);
         
         entity.setCantidad(cantidadProducto);

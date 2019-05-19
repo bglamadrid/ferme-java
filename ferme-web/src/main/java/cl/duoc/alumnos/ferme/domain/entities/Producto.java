@@ -44,7 +44,7 @@ public class Producto implements Serializable {
     @Column(name = "DESCRIPCION")
     private String descripcion;
     
-    @JoinColumn(name = "ID_TIPO_PRODUCTO", referencedColumnName = "ID_TIPO_PRODUCTO")
+    @JoinColumn(name = "ID_TIPO_PRODUCTO", referencedColumnName = "ID_TIPO_PRODUCTO", insertable = true, updatable = true)
     @ManyToOne(optional = false)
     private TipoProducto tipo;
 

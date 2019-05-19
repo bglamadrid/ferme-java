@@ -1,5 +1,6 @@
 package cl.duoc.alumnos.ferme.domain.entities;
 
+import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.dto.ClienteDTO;
 import java.io.Serializable;
 import javax.persistence.Column;
@@ -14,6 +15,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import org.hibernate.annotations.Cascade;
 
 /**
  *
@@ -27,13 +29,14 @@ public class Cliente implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
-    @GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "ClienteIDGenerator" )
-    @SequenceGenerator( name = "ClienteIDGenerator", sequenceName = "SEQ_CLIENTE", allocationSize = 1, initialValue = 1 )
     @Column(name = "ID_CLIENTE")
-    private int id;
+    @SequenceGenerator(name = "cliente_seq", sequenceName = "SEQ_CLIENTE", initialValue = 1, allocationSize = Ferme.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
+    @GeneratedValue(generator = "cliente_seq", strategy = GenerationType.AUTO)
+    private Integer id;
     
+    @OneToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA", insertable = true, updatable = true)
-    @OneToOne(optional = false, fetch = FetchType.EAGER)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Persona persona;
 
     public Cliente() {
@@ -45,11 +48,11 @@ public class Cliente implements Serializable {
         this.id = id;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

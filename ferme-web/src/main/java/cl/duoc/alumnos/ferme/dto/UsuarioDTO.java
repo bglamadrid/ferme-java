@@ -5,12 +5,15 @@ import cl.duoc.alumnos.ferme.domain.entities.Usuario;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author Benjamin Guillermo
  */
 public class UsuarioDTO {
+    private final static Logger LOG = LoggerFactory.getLogger(UsuarioDTO.class);
     
     private Integer idUsuario;
     private String nombreUsuario;
@@ -62,8 +65,12 @@ public class UsuarioDTO {
     
     public Usuario toEntity() throws ParseException {
         Usuario entity = new Usuario();
-        if (idUsuario != null) {
-            entity.setId(idUsuario);
+        try {
+            if (idUsuario != 0) {
+                entity.setId(idUsuario);
+            }
+        } catch (NullPointerException exc) {
+            LOG.info("toEntity() - idUsuario es null");
         }
         
         entity.setNombre(nombreUsuario);

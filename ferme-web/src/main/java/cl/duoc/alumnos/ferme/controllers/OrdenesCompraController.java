@@ -7,6 +7,8 @@ import cl.duoc.alumnos.ferme.services.interfaces.IOrdenesCompraService;
 import com.querydsl.core.types.Predicate;
 import java.util.Collection;
 import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/gestion")
 public class OrdenesCompraController {
+    private final static Logger LOG = LoggerFactory.getLogger(OrdenesCompraController.class);
     
     @Autowired private IOrdenesCompraService ordenCompraSvc;
     
@@ -48,7 +51,7 @@ public class OrdenesCompraController {
     ) {
         Integer finalPageSize = Ferme.DEFAULT_PAGE_SIZE;
         Integer finalPageIndex = Ferme.DEFAULT_PAGE_INDEX;
-        Predicate condiciones = null;
+        Predicate filtros = null;
         
         if (pageSize != null && pageSize > 0) {
             finalPageSize = pageSize;
@@ -57,10 +60,11 @@ public class OrdenesCompraController {
             finalPageIndex = pageIndex-1;
         }
         if (allRequestParams != null && !allRequestParams.isEmpty()) {
-            condiciones = ordenCompraSvc.queryParamsMapToOrdenesCompraFilteringPredicate(allRequestParams);
+            filtros = ordenCompraSvc.queryParamsMapToOrdenesCompraFilteringPredicate(allRequestParams);
         }
         
-        return ordenCompraSvc.getOrdenesCompra(finalPageSize, finalPageIndex, condiciones);
+        LOG.debug("getOrdenesCompra - finalPageSize="+finalPageSize+"; finalPageIndex="+finalPageIndex+"; filtros="+filtros);
+        return ordenCompraSvc.getOrdenesCompra(finalPageSize, finalPageIndex, filtros);
     }
     
     /**
@@ -72,6 +76,7 @@ public class OrdenesCompraController {
     public Collection<DetalleOrdenCompraDTO> getDetallesOrdenCompra(@RequestBody OrdenCompraDTO dto) {
         
         if (dto != null && dto.getIdOrdenCompra() != null && dto.getIdOrdenCompra() != 0) {
+            LOG.debug("getDetallesOrdenCompra - dto="+dto);
             return ordenCompraSvc.getDetallesOrdenCompra(dto.getIdOrdenCompra());
         }
         return null;
@@ -86,21 +91,25 @@ public class OrdenesCompraController {
     public Integer saveOrdenCompra(@RequestBody OrdenCompraDTO dto) {
         
         if (dto != null) {
-            return ordenCompraSvc.saveOrdenCompra(dto);
+            LOG.debug("saveEmpleado - dto="+dto);
+            Integer ordenCompraId = ordenCompraSvc.saveOrdenCompra(dto);
+            LOG.debug("saveEmpleado - ordenCompraId="+ordenCompraId);
+            return ordenCompraId;
         }
         return null;
     }
     
     /**
      * Elimina una Orden de Compra de la base de datos.
-     * @param ventaId El ID de la Orden de Compra a eliminar.
+     * @param ordenCompraId El ID de la Orden de Compra a eliminar.
      * @return true si la operación fue exitosa, false si no lo fue.
      */
     @PostMapping("/ordenes_compra/borrar")
-    public boolean deleteOrdenCompra(@RequestBody Integer ventaId) {
+    public boolean deleteOrdenCompra(@RequestBody Integer ordenCompraId) {
         
-        if (ventaId != null && ventaId != 0) {
-            return ordenCompraSvc.deleteOrdenCompra(ventaId);
+        if (ordenCompraId != null && ordenCompraId != 0) {
+            LOG.debug("deleteOrdenCompra - clienteId="+ordenCompraId);
+            return ordenCompraSvc.deleteOrdenCompra(ordenCompraId);
         }
         return false;
     }

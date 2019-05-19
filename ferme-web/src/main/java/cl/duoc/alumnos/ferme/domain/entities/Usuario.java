@@ -33,7 +33,7 @@ public class Usuario implements Serializable {
     @Column(name = "ID_USUARIO")
     private int id;
     
-    @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA", insertable = true, updatable = true)
+    @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA", insertable = false, updatable = false)
     @OneToOne(optional = false)
     private Persona persona;
     

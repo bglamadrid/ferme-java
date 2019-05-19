@@ -26,7 +26,7 @@ public class DetalleVenta implements Serializable {
     @EmbeddedId
     protected DetalleVentaPK pk;
     
-    @JoinColumn(name = "ID_PRODUCTO", referencedColumnName = "ID_PRODUCTO")
+    @JoinColumn(name = "ID_PRODUCTO", referencedColumnName = "ID_PRODUCTO", insertable = false, updatable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Producto producto;
     

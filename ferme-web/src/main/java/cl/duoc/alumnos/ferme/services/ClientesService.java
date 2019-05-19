@@ -27,10 +27,10 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ClientesService implements IClientesService {
+    private final static Logger LOG = LoggerFactory.getLogger(ClientesService.class);
     
     @Autowired IClientesRepository clienteRepo;
     @Autowired IPersonasRepository personaRepo;
-    private final static Logger LOG = LoggerFactory.getLogger(ProductosService.class);
 
     @Override
     public Collection<ClienteDTO> getClientes(int pageSize, int pageIndex, Predicate condicion) {
@@ -90,11 +90,12 @@ public class ClientesService implements IClientesService {
     public int saveCliente(ClienteDTO dto) {
         
         Cliente entity = dto.toEntity();
-        Persona personaEntity = entity.getPersona();
-        personaEntity = personaRepo.saveAndFlush(personaEntity);
-        LOG.info(personaEntity.toString());
-        entity.setPersona(personaEntity);
-        entity = clienteRepo.saveAndFlush(entity);
+        try {
+            entity = clienteRepo.saveAndFlush(entity);
+        } catch (Exception exc) {
+            LOG.error("No se pudo guardar el cliente", exc);
+            return 0;
+        }
         return entity.getId();
     }
 

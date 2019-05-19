@@ -1,12 +1,15 @@
 package cl.duoc.alumnos.ferme.dto;
 
 import cl.duoc.alumnos.ferme.domain.entities.Cargo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author Benjamin Guillermo
  */
 public class CargoDTO {
+    private final static Logger LOG = LoggerFactory.getLogger(CargoDTO.class);
     
     private Integer idCargo;
     private String descripcionCargo;
@@ -33,8 +36,12 @@ public class CargoDTO {
     
     public Cargo toEntity() {
         Cargo entity = new Cargo();
-        if (idCargo != null) {
-            entity.setId(idCargo);
+        try {
+            if (idCargo != 0) {
+                entity.setId(idCargo);
+            }
+        } catch (NullPointerException exc) {
+            LOG.info("toEntity() - idCliente es null");
         }
         
         entity.setDescripcion(descripcionCargo);

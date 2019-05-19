@@ -1,12 +1,15 @@
 package cl.duoc.alumnos.ferme.dto;
 
 import cl.duoc.alumnos.ferme.domain.entities.Persona;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author Benjamin Guillermo
  */
 public class PersonaDTO {
+    private final static Logger LOG = LoggerFactory.getLogger(PersonaDTO.class);
     
     protected Integer idPersona;
     protected String nombreCompletoPersona;
@@ -87,8 +90,12 @@ public class PersonaDTO {
     
     public Persona personaToEntity() {
         Persona personaEntity = new Persona();
-        if (idPersona != null) {
-            personaEntity.setId(idPersona);
+        try {
+            if (idPersona != 0) {
+                personaEntity.setId(idPersona);
+            }
+        } catch (NullPointerException exc) {
+            LOG.info("personaToEntity() - idPersona es null");
         }
         
         personaEntity.setNombreCompleto(nombreCompletoPersona);

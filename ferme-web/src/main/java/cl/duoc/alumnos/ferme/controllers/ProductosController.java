@@ -29,11 +29,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/gestion")
 public class ProductosController {
+    private final static Logger LOG = LoggerFactory.getLogger(ProductosController.class);
 
     @Autowired private ITiposProductoService tpProductoSvc;
     @Autowired private IFamiliasProductoService fmlProductoSvc;
     @Autowired private IProductosService productoSvc;
-    private final static Logger LOG = LoggerFactory.getLogger(ProductosController.class);
 
     
     @GetMapping("/familias_producto")
@@ -78,7 +78,7 @@ public class ProductosController {
     ) {
         Integer finalPageSize = Ferme.DEFAULT_PAGE_SIZE;
         Integer finalPageIndex = Ferme.DEFAULT_PAGE_INDEX;
-        Predicate condiciones = null;
+        Predicate filtros = null;
         
         if (pageSize != null && pageSize > 0) {
             finalPageSize = pageSize;
@@ -87,10 +87,11 @@ public class ProductosController {
             finalPageIndex = pageIndex-1;
         }
         if (allRequestParams != null && !allRequestParams.isEmpty()) {
-            condiciones = productoSvc.queryParamsMapToProductosFilteringPredicate(allRequestParams);
+            filtros = productoSvc.queryParamsMapToProductosFilteringPredicate(allRequestParams);
         }
         
-        return productoSvc.getProductos(finalPageSize, finalPageIndex, condiciones);
+        LOG.debug("getProductos - finalPageSize="+finalPageSize+"; finalPageIndex="+finalPageIndex+"; filtros="+filtros);
+        return productoSvc.getProductos(finalPageSize, finalPageIndex, filtros);
     }
     
     
@@ -103,7 +104,10 @@ public class ProductosController {
     public Integer saveFamiliaProducto(@RequestBody FamiliaProductoDTO dto) {
         
         if (dto != null) {
-            return fmlProductoSvc.saveFamiliaProducto(dto);
+            LOG.debug("saveFamiliaProducto - dto="+dto);
+            Integer familiaProductoId = fmlProductoSvc.saveFamiliaProducto(dto);
+            LOG.debug("saveFamiliaProducto - familiaProductoId="+familiaProductoId);
+            return familiaProductoId;
         }
         return null;
     }
@@ -117,7 +121,10 @@ public class ProductosController {
     public Integer saveTipoProducto(@RequestBody TipoProductoDTO dto) {
         
         if (dto != null) {
-            return tpProductoSvc.saveTipoProducto(dto);
+            LOG.debug("saveTipoProducto - dto="+dto);
+            Integer tipoProductoId = tpProductoSvc.saveTipoProducto(dto);
+            LOG.debug("saveFamiliaProducto - tipoProductoId="+tipoProductoId);
+            return tipoProductoId;
         }
         return null;
     }
@@ -131,7 +138,10 @@ public class ProductosController {
     public Integer saveProducto(@RequestBody ProductoDTO dto) {
         
         if (dto != null) {
-            return productoSvc.saveProducto(dto);
+            LOG.debug("saveProducto - dto="+dto);
+            Integer productoId =  productoSvc.saveProducto(dto);
+            LOG.debug("saveFamiliaProducto - productoId="+productoId);
+            return productoId;
         }
         return null;
     }
@@ -145,6 +155,7 @@ public class ProductosController {
     public boolean deleteTipoProducto(@RequestParam("id") Integer tipoProductoId) {
         
         if (tipoProductoId != null && tipoProductoId != 0) {
+            LOG.debug("deleteTipoProducto - clienteId="+tipoProductoId);
             return tpProductoSvc.deleteTipoProducto(tipoProductoId);
         }
         return false;
@@ -159,6 +170,7 @@ public class ProductosController {
     public boolean deleteFamiliaProducto(@RequestParam("id") Integer familiaProductoId) {
         
         if (familiaProductoId != null && familiaProductoId != 0) {
+            LOG.debug("deleteFamiliaProducto - clienteId="+familiaProductoId);
             return tpProductoSvc.deleteTipoProducto(familiaProductoId);
         }
         return false;
@@ -173,6 +185,7 @@ public class ProductosController {
     public boolean deleteProducto(@RequestBody Integer productoId) {
         
         if (productoId != null && productoId != 0) {
+            LOG.debug("deleteProducto - clienteId="+productoId);
             return productoSvc.deleteProducto(productoId);
         }
         return false;

@@ -6,6 +6,8 @@ import cl.duoc.alumnos.ferme.services.interfaces.IVentasService;
 import com.querydsl.core.types.Predicate;
 import java.util.Collection;
 import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/gestion")
 public class VentasController {
+    private final static Logger LOG = LoggerFactory.getLogger(VentasController.class);
     
     @Autowired private IVentasService ventaSvc;
     
@@ -47,7 +50,7 @@ public class VentasController {
     ) {
         Integer finalPageSize = Ferme.DEFAULT_PAGE_SIZE;
         Integer finalPageIndex = Ferme.DEFAULT_PAGE_INDEX;
-        Predicate condiciones = null;
+        Predicate filtros = null;
         
         if (pageSize != null && pageSize > 0) {
             finalPageSize = pageSize;
@@ -56,10 +59,11 @@ public class VentasController {
             finalPageIndex = pageIndex-1;
         }
         if (allRequestParams != null && !allRequestParams.isEmpty()) {
-            condiciones = ventaSvc.queryParamsMapToVentasFilteringPredicate(allRequestParams);
+            filtros = ventaSvc.queryParamsMapToVentasFilteringPredicate(allRequestParams);
         }
         
-        return ventaSvc.getVentas(finalPageSize, finalPageIndex, condiciones);
+        LOG.debug("getProductos - finalPageSize="+finalPageSize+"; finalPageIndex="+finalPageIndex+"; filtros="+filtros);
+        return ventaSvc.getVentas(finalPageSize, finalPageIndex, filtros);
     }
     
     /**
@@ -71,7 +75,10 @@ public class VentasController {
     public Integer saveVenta(@RequestBody VentaDTO dto) {
         
         if (dto != null) {
-            return ventaSvc.saveVenta(dto);
+            LOG.debug("saveVenta - dto="+dto);
+            Integer ventaId = ventaSvc.saveVenta(dto);
+            LOG.debug("saveVenta - ventaId="+ventaId);
+            return ventaId;
         }
         return null;
     }
@@ -85,6 +92,7 @@ public class VentasController {
     public boolean deleteVenta(@RequestBody Integer ventaId) {
         
         if (ventaId != null && ventaId != 0) {
+            LOG.debug("deleteVenta - clienteId="+ventaId);
             return ventaSvc.deleteVenta(ventaId);
         }
         return false;

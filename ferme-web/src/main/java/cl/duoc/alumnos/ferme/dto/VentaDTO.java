@@ -6,9 +6,7 @@ import cl.duoc.alumnos.ferme.domain.entities.DetalleVenta;
 import cl.duoc.alumnos.ferme.domain.entities.Empleado;
 import cl.duoc.alumnos.ferme.domain.entities.Venta;
 import cl.duoc.alumnos.ferme.util.FermeDates;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,6 +18,7 @@ import org.slf4j.LoggerFactory;
  * @author Benjamin Guillermo
  */
 public class VentaDTO {
+    private final static Logger LOG = LoggerFactory.getLogger(VentaDTO.class);
     
     private Integer idVenta;
     private String tipoVenta;
@@ -89,13 +88,29 @@ public class VentaDTO {
     
     public Venta toEntity() throws ParseException {
         
-        final Integer _idVenta = idVenta;
-        final Cliente _cliente = new Cliente(idCliente);
+        Venta entity = new Venta();
+        try {
+            final Integer _id = idVenta;
+            if (_id != 0) {
+                entity.setId(_id);
+            }
+        } catch (NullPointerException exc) {
+            LOG.info("toEntity() - idVenta es null");
+        }
+        
+        final Cliente _cliente = new Cliente();
+        try {
+            final Integer _id = idCliente;
+            if (_id != 0) {
+                entity.setId(_id);
+            }
+        } catch (NullPointerException exc) {
+            LOG.info("toEntity() - idCliente es null");
+        }
+        
         final Empleado _empleado = new Empleado(idEmpleado);
         Date _fechaVenta = FermeDates.fechaStringToDate(fechaVenta);
         
-        Venta entity = new Venta();
-        entity.setId(_idVenta);
         entity.setCliente(_cliente);
         entity.setEmpleado(_empleado);
         entity.setFecha(_fechaVenta);

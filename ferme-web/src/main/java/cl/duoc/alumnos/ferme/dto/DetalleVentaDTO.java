@@ -3,12 +3,15 @@ package cl.duoc.alumnos.ferme.dto;
 import cl.duoc.alumnos.ferme.domain.entities.DetalleVenta;
 import cl.duoc.alumnos.ferme.domain.entities.DetalleVentaPK;
 import cl.duoc.alumnos.ferme.domain.entities.Producto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author Benjamin Guillermo
  */
 public class DetalleVentaDTO {
+    private final static Logger LOG = LoggerFactory.getLogger(DetalleVentaDTO.class);
     
     private Integer idDetalleVenta;
     private Integer idProducto;
@@ -63,8 +66,20 @@ public class DetalleVentaDTO {
     public DetalleVenta toEntity() {
         DetalleVenta entity = new DetalleVenta();
         DetalleVentaPK entityPK = new DetalleVentaPK();
-        if (idVenta != null) { entityPK.setIdVenta(idVenta); }
-        if (idDetalleVenta != null) { entityPK.setIdDetalleVenta(idDetalleVenta); }
+        try {
+            if (idVenta != 0) {
+                entityPK.setIdVenta(idVenta);
+            }
+        } catch (NullPointerException exc) {
+            LOG.info("toEntity() - idVenta es null");
+        }
+        try {
+            if (idDetalleVenta != 0) {
+                entityPK.setIdDetalleVenta(idDetalleVenta);
+            }
+        } catch (NullPointerException exc) {
+            LOG.info("toEntity() - idDetalleVenta es null");
+        }
         
         entity.setMonto(montoDetalleVenta);
         entity.setUnidades(unidadesProducto);

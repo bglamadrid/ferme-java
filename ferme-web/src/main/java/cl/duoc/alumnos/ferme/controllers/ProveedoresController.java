@@ -6,6 +6,8 @@ import cl.duoc.alumnos.ferme.services.interfaces.IProveedoresService;
 import com.querydsl.core.types.Predicate;
 import java.util.Collection;
 import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/gestion")
 public class ProveedoresController {
+    private final static Logger LOG = LoggerFactory.getLogger(ProveedoresController.class);
     
     @Autowired private IProveedoresService proveedorSvc;
     
@@ -70,6 +73,8 @@ public class ProveedoresController {
         if (allRequestParams != null && !allRequestParams.isEmpty()) {
             filtros = this.proveedorSvc.queryParamsMapToProveedoresFilteringPredicate(allRequestParams);
         }
+        
+        LOG.debug("getProductos - finalPageSize="+finalPageSize+"; finalPageIndex="+finalPageIndex+"; filtros="+filtros);
         return this.proveedorSvc.getProveedores(finalPageSize, finalPageIndex, filtros);
     }
     
@@ -79,10 +84,13 @@ public class ProveedoresController {
      * @return El ID del rubro.
      */
     @PostMapping({"/proveedores/guardar", "/proveedores/guardar/"})
-    public Integer saveRubro(@RequestBody ProveedorDTO dto) {
+    public Integer saveProveedor(@RequestBody ProveedorDTO dto) {
         
         if (dto != null) {
-            return proveedorSvc.saveProveedor(dto);
+            LOG.debug("saveProveedor - dto="+dto);
+            Integer proveedorId = proveedorSvc.saveProveedor(dto);
+            LOG.debug("saveProveedor - proveedorId="+proveedorId);
+            return proveedorId;
         }
         return null;
     }
@@ -93,9 +101,10 @@ public class ProveedoresController {
      * @return true si la operación fue exitosa, false si no lo fue.
      */
     @PostMapping({"/proveedores/borrar", "/proveedores/borrar/"})
-    public boolean deleteRubro(@RequestParam("id") Integer proveedorId) {
+    public boolean deleteProveedor(@RequestParam("id") Integer proveedorId) {
         
         if (proveedorId != null && proveedorId != 0) {
+            LOG.debug("deleteProveedor - clienteId="+proveedorId);
             return proveedorSvc.deleteProveedor(proveedorId);
         }
         return false;

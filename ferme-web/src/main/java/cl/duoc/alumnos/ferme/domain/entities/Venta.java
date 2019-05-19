@@ -40,7 +40,7 @@ public class Venta implements Serializable {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Empleado empleado;
     
-    @JoinColumn(name = "ID_CLIENTE", referencedColumnName = "ID_CLIENTE", insertable = false, updatable = false)
+    @JoinColumn(name = "ID_CLIENTE", referencedColumnName = "ID_CLIENTE", insertable = true, updatable = true)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Cliente cliente;
     

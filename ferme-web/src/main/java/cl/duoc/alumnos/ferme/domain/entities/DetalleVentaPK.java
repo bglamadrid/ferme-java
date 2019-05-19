@@ -12,28 +12,28 @@ import javax.persistence.Embeddable;
 public class DetalleVentaPK implements Serializable {
 
     @Column(name = "ID_DETALLE_VENTA")
-    private int idDetalleVenta;
+    private Integer idDetalleVenta;
     
     @Column(name = "ID_VENTA")
-    private int idVenta;
+    private Integer idVenta;
 
     public DetalleVentaPK() {
         super();
     }
 
-    public int getIdDetalleVenta() {
+    public Integer getIdDetalleVenta() {
         return idDetalleVenta;
     }
 
-    public void setIdDetalleVenta(int idDetalleVenta) {
+    public void setIdDetalleVenta(Integer idDetalleVenta) {
         this.idDetalleVenta = idDetalleVenta;
     }
 
-    public int getIdVenta() {
+    public Integer getIdVenta() {
         return idVenta;
     }
 
-    public void setIdVenta(int idVenta) {
+    public void setIdVenta(Integer idVenta) {
         this.idVenta = idVenta;
     }
 
@@ -51,7 +51,7 @@ public class DetalleVentaPK implements Serializable {
             return false;
         }
         final DetalleVentaPK other = (DetalleVentaPK) object;
-        return (this.idDetalleVenta == other.idDetalleVenta);
+        return (this.getIdDetalleVenta() == other.getIdDetalleVenta());
     }
     
     

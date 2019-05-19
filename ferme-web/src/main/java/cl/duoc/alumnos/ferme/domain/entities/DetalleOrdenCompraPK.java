@@ -12,28 +12,28 @@ import javax.persistence.Embeddable;
 public class DetalleOrdenCompraPK implements Serializable {
 
     @Column(name = "ID_DETALLE_ORDEN_COMPRA")
-    private int idDetalleOrdenCompra;
+    private Integer idDetalleOrdenCompra;
     
     @Column(name = "ID_ORDEN_COMPRA")
-    private int idOrdenCompra;
+    private Integer idOrdenCompra;
 
     public DetalleOrdenCompraPK() {
         super();
     }
 
-    public int getIdDetalleOrdenCompra() {
+    public Integer getIdDetalleOrdenCompra() {
         return idDetalleOrdenCompra;
     }
 
-    public void setIdDetalleOrdenCompra(int idDetalleOrdenCompra) {
+    public void setIdDetalleOrdenCompra(Integer idDetalleOrdenCompra) {
         this.idDetalleOrdenCompra = idDetalleOrdenCompra;
     }
 
-    public int getIdOrdenCompra() {
+    public Integer getIdOrdenCompra() {
         return idOrdenCompra;
     }
 
-    public void setIdOrdenCompra(int idOrdenCompra) {
+    public void setIdOrdenCompra(Integer idOrdenCompra) {
         this.idOrdenCompra = idOrdenCompra;
     }
 
@@ -51,7 +51,7 @@ public class DetalleOrdenCompraPK implements Serializable {
             return false;
         }
         final DetalleOrdenCompraPK other = (DetalleOrdenCompraPK) object;
-        return (this.idDetalleOrdenCompra == other.idDetalleOrdenCompra);
+        return (this.getIdDetalleOrdenCompra() == other.getIdDetalleOrdenCompra());
     }
 
     @Override

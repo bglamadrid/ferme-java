@@ -3,9 +3,12 @@ package cl.duoc.alumnos.ferme.controllers;
 import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.dto.ClienteDTO;
 import cl.duoc.alumnos.ferme.services.interfaces.IClientesService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.querydsl.core.types.Predicate;
 import java.util.Collection;
 import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/gestion")
 public class ClientesController {
+    private final static Logger LOG = LoggerFactory.getLogger(ClientesController.class);
     
     @Autowired private IClientesService clienteSvc;    
     
@@ -57,6 +61,7 @@ public class ClientesController {
         @PathVariable Integer pageIndex,
         @RequestParam Map<String,String> allRequestParams) {
         
+        
         Integer finalPageSize = Ferme.DEFAULT_PAGE_SIZE;
         Integer finalPageIndex = Ferme.DEFAULT_PAGE_INDEX;
         Predicate filtros = null;
@@ -70,32 +75,37 @@ public class ClientesController {
         if (allRequestParams != null && !allRequestParams.isEmpty()) {
             filtros = this.clienteSvc.queryParamsMapToClientesFilteringPredicate(allRequestParams);
         }
+        
+        LOG.debug("getClientes - finalPageSize="+finalPageSize+"; finalPageIndex="+finalPageIndex+"; filtros="+filtros);
         return this.clienteSvc.getClientes(finalPageSize, finalPageIndex, filtros);
     }
     
     /**
-     * Almacena un Rubro nuevo o actualiza uno existente.
-     * @param dto Un objeto DTO representando el Rubro a almacenar/actualizar.
-     * @return El ID del rubro.
+     * Almacena un Cliente nuevo o actualiza uno existente.
+     * @param dto Un ClienteDTO representando el Cliente a almacenar/actualizar.
+     * @return El ID del cliente, 0 si falla al insertar, null si el JSON viene incorrecto.
      */
     @PostMapping({"/clientes/guardar", "/clientes/guardar/"})
     public Integer saveCliente(@RequestBody ClienteDTO dto) {
-        
         if (dto != null) {
-            return clienteSvc.saveCliente(dto);
+            LOG.debug("saveCliente - dto="+dto);
+            Integer clienteId = clienteSvc.saveCliente(dto);
+            LOG.debug("saveCliente - clienteId="+clienteId);
+            return clienteId;
         }
         return null;
     }
     
     /**
-     * Elimina un Rubro de la base de datos.
-     * @param clienteId El ID del Rubro a eliminar.
-     * @return true si la operación fue exitosa, false si no lo fue.
+     * Elimina un Cliente de la base de datos.
+     * @param clienteId El ID del Cliente a eliminar.
+     * @return true si la operación fue exitosa, false si no lo fue
      */
     @PostMapping({"/clientes/borrar", "/clientes/borrar/"})
     public boolean deleteCliente(@RequestParam("id") Integer clienteId) {
         
         if (clienteId != null && clienteId != 0) {
+            LOG.debug("deleteCliente - clienteId="+clienteId);
             return clienteSvc.deleteCliente(clienteId);
         }
         return false;

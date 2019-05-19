@@ -8,11 +8,11 @@
     </parent>
 
     <groupId>cl.duoc.alumnos.proyectos</groupId>
-    <artifactId>ferme-ear</artifactId>
+    <artifactId>ferme-rest-ear</artifactId>
     <version>1.0</version>
     <packaging>ear</packaging>
 
-    <name>ferme-ear</name>
+    <name>ferme-rest-ear</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

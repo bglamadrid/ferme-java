@@ -8,11 +8,11 @@
     </parent>
 
     <groupId>cl.duoc.alumnos.proyectos</groupId>
-    <artifactId>ferme-ejb</artifactId>
+    <artifactId>ferme-rest-ejb</artifactId>
     <version>1.0</version>
     <packaging>ejb</packaging>
 
-    <name>ferme-ejb</name>
+    <name>ferme-rest-ejb</name>
 
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>

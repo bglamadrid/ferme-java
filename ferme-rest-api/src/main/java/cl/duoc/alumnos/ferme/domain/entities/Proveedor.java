@@ -75,8 +75,8 @@ public class Proveedor implements Serializable {
 
     public ProveedorDTO toDTO() {
         ProveedorDTO dto = new ProveedorDTO();
-        
         dto.setIdProveedor(id);
+        dto.setRazonSocialProveedor(razonSocial);
         dto.setIdPersona(persona.getId());
         dto.setRutPersona(persona.getRut());
         dto.setNombreCompletoPersona(persona.getNombreCompleto());

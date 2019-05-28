@@ -14,12 +14,15 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -37,7 +40,9 @@ public class OrdenCompra implements Serializable {
     
     @Id
     @Column(name = "ID_ORDEN_COMPRA")
-    private int id;
+    @SequenceGenerator(name = "orden_compra_seq", sequenceName = "SEQ_ORDEN_COMPRA", initialValue = 1, allocationSize = Ferme.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
+    @GeneratedValue(generator = "orden_compra_seq", strategy = GenerationType.AUTO)
+    private Integer id;
     
     @Column(name = "ESTADO")
     private Character estado;
@@ -60,17 +65,12 @@ public class OrdenCompra implements Serializable {
     public OrdenCompra() {
         super();
     }
-
-    public OrdenCompra(int id) {
-        super();
-        this.id = id;
-    }
     
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

@@ -17,7 +17,9 @@ public class TipoProductoDTO {
     private Integer idFamiliaProducto;
     private String nombreFamiliaProducto;
 
-    public TipoProductoDTO() {}
+    public TipoProductoDTO() {
+        super();
+    }
 
     public Integer getIdTipoProducto() {
         return idTipoProducto;
@@ -61,20 +63,14 @@ public class TipoProductoDTO {
             LOG.info("toEntity() - idTipoProducto es null");
         }
         
-        FamiliaProducto _familia = new FamiliaProducto();
-        try {
-            final Integer _id = idFamiliaProducto;
-            if (_id != 0) {
-                _familia.setId(_id);
-            }
-        } catch (NullPointerException exc) {
-            LOG.info("toEntity() - idFamiliaProducto es null");
-        }
-        
-        entity.setFamilia(_familia);
         entity.setNombre(nombreTipoProducto);
         
         return entity;
+    }
+
+    @Override
+    public String toString() {
+        return "TipoProductoDTO{" + "idTipoProducto=" + idTipoProducto + ", nombreTipoProducto=" + nombreTipoProducto + ", idFamiliaProducto=" + idFamiliaProducto + ", nombreFamiliaProducto=" + nombreFamiliaProducto + '}';
     }
     
 }

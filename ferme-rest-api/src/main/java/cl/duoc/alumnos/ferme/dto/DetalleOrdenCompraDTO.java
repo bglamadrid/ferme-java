@@ -1,8 +1,7 @@
 package cl.duoc.alumnos.ferme.dto;
 
 import cl.duoc.alumnos.ferme.domain.entities.DetalleOrdenCompra;
-import cl.duoc.alumnos.ferme.domain.entities.DetalleOrdenCompraPK;
-import cl.duoc.alumnos.ferme.domain.entities.Producto;
+import cl.duoc.alumnos.ferme.domain.entities.OrdenCompra;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,30 +55,23 @@ public class DetalleOrdenCompraDTO {
     
     public DetalleOrdenCompra toEntity() {
         DetalleOrdenCompra entity = new DetalleOrdenCompra();
-        DetalleOrdenCompraPK entityPK = new DetalleOrdenCompraPK();
-        
-        try {
-            if (idOrdenCompra != 0) { 
-                entityPK.setIdOrdenCompra(idOrdenCompra); 
-            }
-        } catch (NullPointerException exc) {
-            LOG.info("toEntity() - idOrdenCompra es null");
-        }
         
         try {
             if (idDetalleOrdenCompra != 0) { 
-                entityPK.setIdDetalleOrdenCompra(idDetalleOrdenCompra); 
+                entity.setId(idDetalleOrdenCompra); 
             }
         } catch (NullPointerException exc) {
-            LOG.info("toEntity() - idDetalleOrdenCompra es null");
+            LOG.warn("toEntity() - idDetalleOrdenCompra es null");
         }
-        entity.setPk(entityPK);
         
         entity.setCantidad(cantidadProducto);
         
-        entity.setProducto(new Producto(idProducto));
-        
         return entity;
+    }
+
+    @Override
+    public String toString() {
+        return "DetalleOrdenCompraDTO{" + "idDetalleOrdenCompra=" + idDetalleOrdenCompra + ", idOrdenCompra=" + idOrdenCompra + ", idProducto=" + idProducto + ", cantidadProducto=" + cantidadProducto + '}';
     }
     
 }

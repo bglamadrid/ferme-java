@@ -1,5 +1,6 @@
 package cl.duoc.alumnos.ferme.services;
 
+import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.domain.entities.Cargo;
 import cl.duoc.alumnos.ferme.domain.entities.QCargo;
 import cl.duoc.alumnos.ferme.domain.repositories.ICargosRepository;
@@ -15,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 /**
@@ -29,20 +31,29 @@ public class CargosService implements ICargosService {
 
     @Override
     public Collection<CargoDTO> getCargos(Predicate condicion) {
-        
         List<CargoDTO> pagina = new ArrayList<>();
-        
         Iterable<Cargo> cargos;
-        if (condicion == null) {
-            cargos = cargoRepo.findAll();
-        } else {
-            cargos = cargoRepo.findAll(condicion);
-        }
+        long cargoCount;
         
+        LOG.info("getCargos - Procesando solicitud...");
+        Sort orden = Sort.by(Ferme.CARGO_DEFAULT_SORT_COLUMN).ascending();
+        
+        LOG.info("getCargos - Llamando queries...");
+        if (condicion == null) {
+            cargos = cargoRepo.findAll(orden);
+            cargoCount = cargoRepo.count();
+        } else {
+            cargos = cargoRepo.findAll(condicion, orden);
+            cargoCount = cargoRepo.count(condicion);
+        }
+        LOG.info("getCargos - Se han encontrado "+cargoCount+" cargos con los filtros ingresados.");
+        
+        LOG.info("getCargos - Procesando resultados...");
         cargos.forEach((entity) -> {
             CargoDTO dto = entity.toDTO();
             pagina.add(dto);
         });
+        LOG.info("getCargos - Resultados procesados con éxito.");
         
         return pagina;
     }

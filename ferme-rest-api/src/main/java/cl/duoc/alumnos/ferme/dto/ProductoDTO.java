@@ -104,7 +104,7 @@ public class ProductoDTO {
                 entity.setId(idProducto);
             }
         } catch (NullPointerException exc) {
-            LOG.info("toEntity() - idProducto es null");
+            LOG.warn("toEntity() - idProducto es null");
         }
         
         entity.setNombre(nombreProducto);
@@ -114,6 +114,11 @@ public class ProductoDTO {
         entity.setStockCritico(stockCriticoProducto);
         
         return entity;
+    }
+
+    @Override
+    public String toString() {
+        return "ProductoDTO{" + "idProducto=" + idProducto + ", codigoProducto=" + codigoProducto + ", nombreProducto=" + nombreProducto + ", descripcionProducto=" + descripcionProducto + ", precioProducto=" + precioProducto + ", stockActualProducto=" + stockActualProducto + ", stockCriticoProducto=" + stockCriticoProducto + ", idTipoProducto=" + idTipoProducto + ", nombreTipoProducto=" + nombreTipoProducto + '}';
     }
 
 }

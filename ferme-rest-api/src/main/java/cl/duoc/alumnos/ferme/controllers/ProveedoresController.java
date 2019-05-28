@@ -74,8 +74,12 @@ public class ProveedoresController {
             filtros = this.proveedorSvc.queryParamsMapToProveedoresFilteringPredicate(allRequestParams);
         }
         
-        LOG.debug("getProductos - finalPageSize="+finalPageSize+"; finalPageIndex="+finalPageIndex+"; filtros="+filtros);
-        return this.proveedorSvc.getProveedores(finalPageSize, finalPageIndex, filtros);
+        LOG.info("getProveedores - "+finalPageSize+" registros; página "+finalPageIndex);
+        LOG.debug("getProveedores - Filtros solicitados: "+filtros);
+        Collection<ProveedorDTO> proveedores = this.proveedorSvc.getProveedores(finalPageSize, finalPageIndex, filtros);
+        LOG.debug("getProveedores - proveedores.size()="+proveedores.size());
+        LOG.info("getProveedores - Solicitud completa. Enviando respuesta al cliente.");
+        return proveedores;
     }
     
     /**

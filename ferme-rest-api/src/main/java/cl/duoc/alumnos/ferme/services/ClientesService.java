@@ -1,5 +1,6 @@
 package cl.duoc.alumnos.ferme.services;
 
+import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.domain.entities.Cliente;
 import cl.duoc.alumnos.ferme.domain.entities.Persona;
 import cl.duoc.alumnos.ferme.domain.entities.QCliente;
@@ -19,13 +20,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author got12
  */
 @Service
+@Transactional
 public class ClientesService implements IClientesService {
     private final static Logger LOG = LoggerFactory.getLogger(ClientesService.class);
     
@@ -34,21 +38,30 @@ public class ClientesService implements IClientesService {
 
     @Override
     public Collection<ClienteDTO> getClientes(int pageSize, int pageIndex, Predicate condicion) {
-        Pageable pgbl = PageRequest.of(pageIndex, pageSize);
-        
         List<ClienteDTO> pagina = new ArrayList<>();
         Iterable<Cliente> clientes;
+        long clienteCount;
         
+        LOG.info("getClientes - Procesando solicitud...");
+        Sort orden = Sort.by(Ferme.CLIENTE_DEFAULT_SORT_COLUMN).ascending();
+        Pageable pgbl = PageRequest.of(pageIndex, pageSize, orden);
+        
+        LOG.info("getClientes - Llamando queries...");
         if (condicion == null) {
             clientes = clienteRepo.findAll(pgbl);
+            clienteCount = clienteRepo.count();
         } else {
             clientes = clienteRepo.findAll(condicion, pgbl);
+            clienteCount = clienteRepo.count(condicion);
         }
+        LOG.info("getClientes - Se han encontrado "+clienteCount+" clientes con los filtros ingresados.");
         
+        LOG.info("getClientes - Procesando resultados...");
         clientes.forEach((entity) -> {
             ClienteDTO dto = entity.toDTO();
             pagina.add(dto);
         });
+        LOG.info("getClientes - Resultados procesados con éxito.");
         
         return pagina;
     }

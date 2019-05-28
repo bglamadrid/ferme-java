@@ -1,7 +1,10 @@
 package cl.duoc.alumnos.ferme.services;
 
+import cl.duoc.alumnos.ferme.Ferme;
+import cl.duoc.alumnos.ferme.domain.entities.Empleado;
 import cl.duoc.alumnos.ferme.domain.entities.OrdenCompra;
 import cl.duoc.alumnos.ferme.domain.entities.QOrdenCompra;
+import cl.duoc.alumnos.ferme.domain.repositories.IEmpleadosRepository;
 import cl.duoc.alumnos.ferme.domain.repositories.IOrdenesCompraRepository;
 import cl.duoc.alumnos.ferme.dto.DetalleOrdenCompraDTO;
 import cl.duoc.alumnos.ferme.dto.OrdenCompraDTO;
@@ -15,49 +18,57 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import javassist.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author got12
  */
 @Service
+@Transactional
 public class OrdenesCompraService implements IOrdenesCompraService {
     
     @Autowired private IOrdenesCompraRepository ordenCompraRepo;
+    @Autowired private IEmpleadosRepository empleadoRepo;
     private static final Logger LOG = LoggerFactory.getLogger(OrdenesCompraService.class);
 
     @Override
     public Collection<OrdenCompraDTO> getOrdenesCompra(int pageSize, int pageIndex, Predicate condicion) {
-        Pageable pgbl = PageRequest.of(pageIndex, pageSize);
-        
         List<OrdenCompraDTO> pagina = new ArrayList<>();
         Iterable<OrdenCompra> ordenesCompra;
+        long ordenCompraCount;
         
+        LOG.info("getOrdenesCompra - Procesando solicitud...");
+        Sort orden = Sort.by(Ferme.ORDEN_COMPRA_DEFAULT_SORT_COLUMN).descending();
+        Pageable pgbl = PageRequest.of(pageIndex, pageSize, orden);
+        
+        LOG.info("getOrdenesCompra - Llamando queries...");
         if (condicion == null) {
             ordenesCompra = ordenCompraRepo.findAll(pgbl);
+            ordenCompraCount = ordenCompraRepo.count();
         } else {
             ordenesCompra = ordenCompraRepo.findAll(condicion, pgbl);
+            ordenCompraCount = ordenCompraRepo.count(condicion);
         }
+        LOG.info("getOrdenesCompra - Se han encontrado "+ordenCompraCount+" órdenes de compra con los filtros ingresados.");
         
-        if (condicion != null && ordenCompraRepo.count(condicion) == 1) {
-            ordenesCompra.forEach((entity) -> {
-                OrdenCompraDTO dto = entity.toDTO(false);
-                pagina.add(dto);
-            });
-        } else {
-            ordenesCompra.forEach((entity) -> {
-                OrdenCompraDTO dto = entity.toDTO(true);
-                pagina.add(dto);
-            });
-        }
-        
+        LOG.info("getOrdenesCompra - Procesando resultados...");
+        boolean conversionCompleta = (condicion != null && ordenCompraCount == 1);
+        ordenesCompra.forEach((entity) -> {
+            OrdenCompraDTO dto = entity.toDTO(conversionCompleta);
+            pagina.add(dto);
+        });
+        LOG.info("getOrdenesCompra - Resultados procesados con éxito.");
         
         return pagina;
     }
@@ -136,19 +147,18 @@ public class OrdenesCompraService implements IOrdenesCompraService {
     }
 
     @Override
-    public int saveOrdenCompra(OrdenCompraDTO dto) {
+    public int saveOrdenCompra(OrdenCompraDTO dto) throws NotFoundException {
         
+        OrdenCompra entity = dto.toEntity();
         
-        OrdenCompra entity = null;
-        try {
-            entity = dto.toEntity();
-        } catch (ParseException ex) {
-            LOG.error("Una de las fechas ingresadas tiene un formato incorrecto, deben ser: DD/MM/YYYY", ex);
+        Optional<Empleado> empleadoEntity = empleadoRepo.findById(dto.getIdEmpleado());
+        if (empleadoEntity.isPresent()) {
+            entity.setEmpleado(empleadoEntity.get());
+        } else {
+            throw new NotFoundException("El empleado de la orden de compra no existe");
         }
         
-        if (entity == null) {
-            return 0;
-        } else if (entity.getDetalles() == null || entity.getDetalles().isEmpty()) {
+        if (entity.getDetalles() == null || entity.getDetalles().isEmpty()) {
             return 0;
         } else {
             entity = ordenCompraRepo.saveAndFlush(entity);

@@ -59,5 +59,10 @@ public class ProveedorDTO extends PersonaDTO {
         
         return entity;
     }
+
+    @Override
+    public String toString() {
+        return "ProveedorDTO{" + "idProveedor=" + idProveedor + ", razonSocialProveedor=" + razonSocialProveedor + ", idRubro=" + idRubro+ ", " + super.toString() + '}';
+    }
     
 }

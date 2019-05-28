@@ -24,6 +24,21 @@ public class Ferme {
     
     public final static String DEFAULT_DATE_FORMAT = "dd/MM/yyyy";
     
+    public final static String DETALLE_ORDEN_COMPRA_DEFAULT_SORT_COLUMN = "id";
+    public final static String DETALLE_VENTA_DEFAULT_SORT_COLUMN = "id";
+    public final static String ORDEN_COMPRA_DEFAULT_SORT_COLUMN = "id";
+    public final static String VENTA_DEFAULT_SORT_COLUMN = "id";
+    public final static String PRODUCTO_DEFAULT_SORT_COLUMN = "id";
+    public final static String USUARIO_DEFAULT_SORT_COLUMN = "id";
+    public final static String CLIENTE_DEFAULT_SORT_COLUMN = "id";
+    public final static String EMPLEADO_DEFAULT_SORT_COLUMN = "id";
+    public final static String TIPO_PRODUCTO_DEFAULT_SORT_COLUMN = "id";
+    public final static String FAMILIA_PRODUCTO_DEFAULT_SORT_COLUMN = "id";
+    public final static String PROVEEDOR_DEFAULT_SORT_COLUMN = "id";
+    public final static String RUBRO_DEFAULT_SORT_COLUMN = "id";
+    public final static String CARGO_DEFAULT_SORT_COLUMN = "descripcion";
+    public final static String PERSONA_DEFAULT_SORT_COLUMN = "id";    
+    
     public final static int CARGO_VENDEDOR_ID = 1;
     public final static int CARGO_ENCARGADO_ID = 2;
     public final static int CARGO_ADMINISTRADOR_ID = 3;

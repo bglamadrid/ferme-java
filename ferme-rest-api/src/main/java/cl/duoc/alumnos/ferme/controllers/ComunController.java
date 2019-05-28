@@ -40,7 +40,7 @@ public class ComunController {
      * @see Predicate
      * @return Una colección de objetos RubroDTO
      */
-    @GetMapping({"/rubros", "/rubros/"})
+    @GetMapping("/rubros")
     public Collection<RubroDTO> getRubros(@RequestParam Map<String,String> allRequestParams) {
         
         Predicate filtros = null;
@@ -55,7 +55,7 @@ public class ComunController {
      * @param dto Un objeto DTO representando el Rubro a almacenar/actualizar.
      * @return El ID del rubro.
      */
-    @PostMapping({"/rubros/guardar", "/rubros/guardar/"})
+    @PostMapping("/rubros/guardar")
     public Integer saveRubro(@RequestBody RubroDTO dto) {
         
         if (dto != null) {
@@ -69,7 +69,7 @@ public class ComunController {
      * @param rubroId El ID del Rubro a eliminar.
      * @return true si la operación fue exitosa, false si no lo fue.
      */
-    @PostMapping({"/rubros/borrar", "/rubros/borrar/"})
+    @PostMapping("/rubros/borrar")
     public boolean deleteRubro(@RequestParam("id") Integer rubroId) {
         
         if (rubroId != null && rubroId != 0) {
@@ -88,7 +88,7 @@ public class ComunController {
      * @see Predicate
      * @return Una colección de objetos CargoDTO
      */
-    @GetMapping({"/cargos", "/cargos/"})
+    @GetMapping("/cargos")
     public Collection<CargoDTO> getCargos(@RequestParam Map<String,String> allRequestParams) {
         
         Predicate filtros = null;
@@ -103,7 +103,7 @@ public class ComunController {
      * @param dto Un objeto DTO representando el Rubro a almacenar/actualizar.
      * @return El ID del rubro.
      */
-    @PostMapping({"/cargos/guardar", "/cargos/guardar/"})
+    @PostMapping("/cargos/guardar")
     public Integer saveCargo(@RequestBody CargoDTO dto) {
         
         if (dto != null) {
@@ -117,7 +117,7 @@ public class ComunController {
      * @param cargoId El ID del Rubro a eliminar.
      * @return true si la operación fue exitosa, false si no lo fue.
      */
-    @PostMapping({"/cargos/borrar", "/cargos/borrar/"})
+    @PostMapping("/cargos/borrar")
     public boolean deleteCargo(@RequestParam("id") Integer cargoId) {
         
         if (cargoId != null && cargoId != 0) {

@@ -6,6 +6,7 @@ import cl.duoc.alumnos.ferme.services.interfaces.IVentasService;
 import com.querydsl.core.types.Predicate;
 import java.util.Collection;
 import java.util.Map;
+import javassist.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,8 +63,12 @@ public class VentasController {
             filtros = ventaSvc.queryParamsMapToVentasFilteringPredicate(allRequestParams);
         }
         
-        LOG.debug("getProductos - finalPageSize="+finalPageSize+"; finalPageIndex="+finalPageIndex+"; filtros="+filtros);
-        return ventaSvc.getVentas(finalPageSize, finalPageIndex, filtros);
+        LOG.info("getVentas - "+finalPageSize+" registros; página "+finalPageIndex);
+        LOG.debug("getVentas - Filtros solicitados: "+filtros);
+        Collection<VentaDTO> ventas = this.ventaSvc.getVentas(finalPageSize, finalPageIndex, filtros);
+        LOG.debug("getVentas - ventas.size()="+ventas.size());
+        LOG.info("getVentas - Solicitud completa. Enviando respuesta al cliente.");
+        return ventas;
     }
     
     /**
@@ -72,7 +77,7 @@ public class VentasController {
      * @return El ID de la venta.
      */
     @PostMapping("/ventas/guardar")
-    public Integer saveVenta(@RequestBody VentaDTO dto) {
+    public Integer saveVenta(@RequestBody VentaDTO dto) throws NotFoundException {
         
         if (dto != null) {
             LOG.debug("saveVenta - dto="+dto);

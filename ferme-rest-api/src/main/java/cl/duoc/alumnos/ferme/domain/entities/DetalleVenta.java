@@ -1,15 +1,20 @@
 package cl.duoc.alumnos.ferme.domain.entities;
 
+import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.dto.DetalleVentaDTO;
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
@@ -23,8 +28,11 @@ import javax.persistence.Table;
 public class DetalleVenta implements Serializable {
     private static final long serialVersionUID = 1L;
     
-    @EmbeddedId
-    protected DetalleVentaPK pk;
+    @Id
+    @Column(name = "ID_DETALLE_VENTA")
+    @SequenceGenerator(name = "detalle_venta_seq", sequenceName = "SEQ_DETALLE_VENTA", initialValue = 1, allocationSize = Ferme.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
+    @GeneratedValue(generator = "detalle_venta_seq", strategy = GenerationType.AUTO)
+    private Integer id;
     
     @JoinColumn(name = "ID_PRODUCTO", referencedColumnName = "ID_PRODUCTO", insertable = false, updatable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -44,19 +52,12 @@ public class DetalleVenta implements Serializable {
         super();
     }
 
-    public DetalleVenta(int idVenta, int idDetalleVenta) {
-        super();
-        pk = new DetalleVentaPK();
-        pk.setIdVenta(idVenta);
-        pk.setIdDetalleVenta(idDetalleVenta);
+    public Integer getId() {
+        return id;
     }
 
-    public DetalleVentaPK getPk() {
-        return pk;
-    }
-
-    public void setPk(DetalleVentaPK pk) {
-        this.pk = pk;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public int getUnidades() {
@@ -93,32 +94,32 @@ public class DetalleVenta implements Serializable {
 
     public DetalleVentaDTO toDTO() {
         DetalleVentaDTO dto = new DetalleVentaDTO();
-        dto.setIdVenta(pk.getIdVenta());
-        dto.setIdDetalleVenta(pk.getIdDetalleVenta());
+        dto.setIdDetalleVenta(id);
         dto.setMontoDetalleVenta(monto);
         dto.setUnidadesProducto(unidades);
+        dto.setIdVenta(venta.getId());
         return dto;
     }
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (pk != null ? pk.hashCode() : 0);
+        int hash = 3;
+        hash = 23 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        if (!(object instanceof DetalleVenta)) {
+    public boolean equals(Object obj) {
+        if (!(obj instanceof DetalleVenta)) {
             return false;
         }
-        DetalleVenta other = (DetalleVenta) object;
-        return this.pk.equals(other.pk);
+        DetalleVenta other = (DetalleVenta) obj;
+        return (Objects.equals(this.id, other.getId()));
     }
 
     @Override
     public String toString() {
-        return "cl.duoc.alumnos.ferme.entities.domain.DetalleVenta[ detalleVentaPK=" + pk + " ]";
+        return "cl.duoc.alumnos.ferme.entities.domain.DetalleVenta[ id=" + id + " ]";
     }
     
 }

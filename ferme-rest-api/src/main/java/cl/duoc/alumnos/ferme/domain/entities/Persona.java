@@ -3,6 +3,7 @@ package cl.duoc.alumnos.ferme.domain.entities;
 import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.dto.PersonaDTO;
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -160,12 +161,12 @@ public class Persona implements Serializable {
             return false;
         }
         final Persona other = (Persona) object;
-        return (this.id == other.getId());
+        return (Objects.equals(this.id, other.getId()));
     }
 
     @Override
     public String toString() {
-        return "cl.duoc.alumnos.ferme.entities.domain.Persona[ idPersona=" + id + " ]";
+        return "cl.duoc.alumnos.ferme.entities.domain.Persona[ id=" + id + " ]";
     }
     
 }

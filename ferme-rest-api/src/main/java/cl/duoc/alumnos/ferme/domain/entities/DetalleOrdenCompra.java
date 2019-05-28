@@ -1,15 +1,21 @@
 package cl.duoc.alumnos.ferme.domain.entities;
 
+import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.dto.DetalleOrdenCompraDTO;
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
@@ -23,8 +29,11 @@ import javax.persistence.Table;
 public class DetalleOrdenCompra implements Serializable {
     private static final long serialVersionUID = 1L;
     
-    @EmbeddedId
-    protected DetalleOrdenCompraPK pk;
+    @Id
+    @Column(name = "ID_DETALLE_ORDEN_COMPRA")
+    @SequenceGenerator(name = "detalle_orden_compra_seq", sequenceName = "SEQ_DETALLE_ORDEN_COMPRA", initialValue = 1, allocationSize = Ferme.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
+    @GeneratedValue(generator = "detalle_orden_compra_seq", strategy = GenerationType.AUTO)
+    protected Integer id;
     
     @JoinColumn(name = "ID_PRODUCTO", referencedColumnName = "ID_PRODUCTO", insertable = false, updatable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -41,19 +50,12 @@ public class DetalleOrdenCompra implements Serializable {
         super();
     }
 
-    public DetalleOrdenCompra(int idOrdenCompra, int idDetalleOrdenCompra) {
-        super();
-        pk = new DetalleOrdenCompraPK();
-        pk.setIdOrdenCompra(idOrdenCompra);
-        pk.setIdDetalleOrdenCompra(idDetalleOrdenCompra);
+    public Integer getId() {
+        return id;
     }
 
-    public DetalleOrdenCompraPK getPk() {
-        return pk;
-    }
-
-    public void setPk(DetalleOrdenCompraPK pk) {
-        this.pk = pk;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public int getCantidad() {
@@ -82,34 +84,32 @@ public class DetalleOrdenCompra implements Serializable {
     
     public DetalleOrdenCompraDTO toDTO() {
         DetalleOrdenCompraDTO dto = new DetalleOrdenCompraDTO();
-        
-        dto.setIdOrdenCompra(pk.getIdOrdenCompra());
-        dto.setIdDetalleOrdenCompra(pk.getIdDetalleOrdenCompra());
-        dto.setIdProducto(producto.getId());
+        dto.setIdDetalleOrdenCompra(id);
         dto.setCantidadProducto(cantidad);
-        
+        dto.setIdProducto(producto.getId());
+        dto.setIdOrdenCompra(ordenCompra.getId());
         return dto;
     }
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (pk != null ? pk.hashCode() : 0);
+        int hash = 7;
+        hash = 17 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        if (!(object instanceof DetalleOrdenCompra)) {
+    public boolean equals(Object obj) {
+        if (!(obj instanceof DetalleOrdenCompra)) {
             return false;
         }
-        DetalleOrdenCompra other = (DetalleOrdenCompra) object;
-        return this.pk.equals(other.pk);
+        final DetalleOrdenCompra other = (DetalleOrdenCompra) obj;
+        return (Objects.equals(this.id, other.getId()));
     }
 
     @Override
     public String toString() {
-        return "cl.duoc.alumnos.ferme.entities.domain.DetalleOrdenCompra[ detalleOrdenCompraPK=" + pk + " ]";
+        return "cl.duoc.alumnos.ferme.entities.domain.DetalleOrdenCompra[ id=" + id + " ]";
     }
     
 }

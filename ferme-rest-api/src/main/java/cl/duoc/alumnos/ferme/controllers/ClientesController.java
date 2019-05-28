@@ -3,7 +3,6 @@ package cl.duoc.alumnos.ferme.controllers;
 import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.dto.ClienteDTO;
 import cl.duoc.alumnos.ferme.services.interfaces.IClientesService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.querydsl.core.types.Predicate;
 import java.util.Collection;
 import java.util.Map;
@@ -76,8 +75,12 @@ public class ClientesController {
             filtros = this.clienteSvc.queryParamsMapToClientesFilteringPredicate(allRequestParams);
         }
         
-        LOG.debug("getClientes - finalPageSize="+finalPageSize+"; finalPageIndex="+finalPageIndex+"; filtros="+filtros);
-        return this.clienteSvc.getClientes(finalPageSize, finalPageIndex, filtros);
+        LOG.info("getClientes - "+finalPageSize+" registros; página "+finalPageIndex);
+        LOG.debug("getClientes - Filtros solicitados: "+filtros);
+        Collection<ClienteDTO> clientes = this.clienteSvc.getClientes(finalPageSize, finalPageIndex, filtros);
+        LOG.debug("getClientes - clientes.size()="+clientes.size());
+        LOG.info("getClientes - Solicitud completa. Enviando respuesta al cliente.");
+        return clientes;
     }
     
     /**

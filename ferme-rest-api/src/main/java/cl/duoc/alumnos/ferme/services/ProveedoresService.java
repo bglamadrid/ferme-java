@@ -1,5 +1,6 @@
 package cl.duoc.alumnos.ferme.services;
 
+import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.domain.entities.Persona;
 import cl.duoc.alumnos.ferme.domain.entities.Proveedor;
 import cl.duoc.alumnos.ferme.domain.entities.QProveedor;
@@ -19,13 +20,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author got12
  */
 @Service
+@Transactional
 public class ProveedoresService implements IProveedoresService {
     
     @Autowired IProveedoresRepository proveedorRepo;
@@ -34,21 +38,30 @@ public class ProveedoresService implements IProveedoresService {
 
     @Override
     public Collection<ProveedorDTO> getProveedores(int pageSize, int pageIndex, Predicate condicion) {
-        Pageable pgbl = PageRequest.of(pageIndex, pageSize);
-        
         List<ProveedorDTO> pagina = new ArrayList<>();
         Iterable<Proveedor> proveedores;
+        long proveedorCount;
         
+        LOG.info("getProveedores - Procesando solicitud...");
+        Sort orden = Sort.by(Ferme.PROVEEDOR_DEFAULT_SORT_COLUMN).ascending();
+        Pageable pgbl = PageRequest.of(pageIndex, pageSize, orden);
+        
+        LOG.info("getProveedores - Llamando queries...");
         if (condicion == null) {
             proveedores = proveedorRepo.findAll(pgbl);
+            proveedorCount = proveedorRepo.count();
         } else {
             proveedores = proveedorRepo.findAll(condicion, pgbl);
+            proveedorCount = proveedorRepo.count(condicion);
         }
+        LOG.info("getProveedores - Se han encontrado "+proveedorCount+" proveedores con los filtros ingresados.");
         
+        LOG.info("getProveedores - Procesando resultados...");
         proveedores.forEach((entity) -> {
             ProveedorDTO dto = entity.toDTO();
             pagina.add(dto);
         });
+        LOG.info("getProveedores - Resultados procesados con éxito.");
         
         return pagina;
     }

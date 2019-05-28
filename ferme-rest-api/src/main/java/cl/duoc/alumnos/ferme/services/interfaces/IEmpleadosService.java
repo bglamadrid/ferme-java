@@ -4,6 +4,7 @@ import cl.duoc.alumnos.ferme.dto.EmpleadoDTO;
 import com.querydsl.core.types.Predicate;
 import java.util.Collection;
 import java.util.Map;
+import javassist.NotFoundException;
 
 /**
  *
@@ -36,7 +37,7 @@ public interface IEmpleadosService {
      * @param dto El objeto DTO de empleado con la información respectiva a guardar.
      * @return El ID del registro guardado.
      */
-    public int saveEmpleado(EmpleadoDTO dto);
+    public int saveEmpleado(EmpleadoDTO dto) throws NotFoundException;
     
     /**
      * 

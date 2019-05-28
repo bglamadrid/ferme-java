@@ -1,15 +1,20 @@
 package cl.duoc.alumnos.ferme.domain.entities;
 
+import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.dto.ProveedorDTO;
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import org.hibernate.annotations.Cascade;
@@ -27,7 +32,9 @@ public class Proveedor implements Serializable {
     
     @Id
     @Column(name = "ID_PROVEEDOR")
-    private int id;
+    @SequenceGenerator(name = "proveedor_seq", sequenceName = "SEQ_PROVEEDOR", initialValue = 1, allocationSize = Ferme.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
+    @GeneratedValue(generator = "proveedor_seq", strategy = GenerationType.AUTO)
+    private Integer id;
     
     @OneToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA", insertable = true, updatable = true)
@@ -42,16 +49,11 @@ public class Proveedor implements Serializable {
         super();
     }
 
-    public Proveedor(int id) {
-        super();
-        this.id = id;
-    }
-
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -100,7 +102,7 @@ public class Proveedor implements Serializable {
             return false;
         }
         final Proveedor other = (Proveedor) object;
-        return (this.id == other.getId());
+        return (Objects.equals(this.id, other.getId()));
     }
     
     

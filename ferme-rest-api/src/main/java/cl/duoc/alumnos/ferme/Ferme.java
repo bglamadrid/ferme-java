@@ -6,6 +6,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  *
@@ -14,7 +16,7 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @ComponentScan("cl.duoc.alumnos.ferme.*")
 @EntityScan("cl.duoc.alumnos.ferme.domain.entities")
-public class Ferme {
+public class Ferme implements WebMvcConfigurer {
     private final static Logger LOG = LoggerFactory.getLogger(Ferme.class);
     
     public final static int DEFAULT_PAGE_INDEX = 0;
@@ -52,6 +54,11 @@ public class Ferme {
     public static void main(String[] args) {
         SpringApplication.run(FermeConfig.class, args);
         LOG.info("Aplicación FERME cargada e iniciada exitosamente.");
+    }
+    
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/api/gestion/*").allowedOrigins("http://localhost:4200");
     }
     
 }

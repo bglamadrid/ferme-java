@@ -1,40 +1,52 @@
 package cl.duoc.alumnos.ferme.services;
 
+import cl.duoc.alumnos.ferme.Ferme;
+import cl.duoc.alumnos.ferme.domain.entities.Cliente;
+import cl.duoc.alumnos.ferme.domain.entities.Empleado;
 import cl.duoc.alumnos.ferme.domain.entities.QVenta;
 import cl.duoc.alumnos.ferme.domain.entities.Venta;
+import cl.duoc.alumnos.ferme.domain.repositories.IClientesRepository;
+import cl.duoc.alumnos.ferme.domain.repositories.IEmpleadosRepository;
 import cl.duoc.alumnos.ferme.domain.repositories.IVentasRepository;
 import cl.duoc.alumnos.ferme.dto.VentaDTO;
 import cl.duoc.alumnos.ferme.services.interfaces.IVentasService;
 import cl.duoc.alumnos.ferme.util.FermeDates;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import javassist.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author got12
  */
 @Service
+@Transactional
 public class VentasService implements IVentasService {
 
     @Autowired private IVentasRepository ventaRepo;
+    @Autowired private IEmpleadosRepository empleadoRepo;
+    @Autowired private IClientesRepository clienteRepo;
     private static final Logger LOG = LoggerFactory.getLogger(VentasService.class);
     
     @Override
     public Collection<VentaDTO> getVentas(int pageSize, int pageIndex, Predicate condicion) {
-        Pageable pgbl = PageRequest.of(pageIndex, pageSize);
+        Sort orden = Sort.by(Ferme.VENTA_DEFAULT_SORT_COLUMN).ascending();
+        Pageable pgbl = PageRequest.of(pageIndex, pageSize, orden);
         
         List<VentaDTO> pagina = new ArrayList<>();
         Iterable<Venta> ventas;
@@ -98,18 +110,23 @@ public class VentasService implements IVentasService {
     }
 
     @Override
-    public int saveVenta(VentaDTO dto) {
+    public int saveVenta(VentaDTO dto) throws NotFoundException {
         
-        Venta entity = null;
-        try {
-            entity = dto.toEntity();
-        } catch (ParseException ex) {
-            LOG.error("La fecha de la venta ingresada tiene un formato incorrecto, debe ser: DD/MM/YYYY", ex);
+        Venta entity = dto.toEntity();
+        
+        Optional<Cliente> clienteEntity = clienteRepo.findById(dto.getIdCliente());
+        if (clienteEntity.isPresent()) {
+            entity.setCliente(clienteEntity.get());
+        } else {
+            throw new NotFoundException("El cliente de la venta no existe");
         }
         
-        if (entity == null) {
-            return 0;
-        } else if (entity.getDetalles() == null || entity.getDetalles().isEmpty()) {
+        Optional<Empleado> empleadoEntity = empleadoRepo.findById(dto.getIdEmpleado());
+        if (empleadoEntity.isPresent()) {
+            entity.setEmpleado(empleadoEntity.get());
+        }
+        
+        if (entity.getDetalles() == null || entity.getDetalles().isEmpty()) {
             return 0;
         } else {
             entity = ventaRepo.saveAndFlush(entity);

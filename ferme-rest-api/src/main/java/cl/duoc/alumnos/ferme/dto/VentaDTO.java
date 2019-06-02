@@ -86,7 +86,7 @@ public class VentaDTO {
         this.idCliente = idCliente;
     }
     
-    public Venta toEntity() throws ParseException {
+    public Venta toEntity() {
         
         Venta entity = new Venta();
         try {
@@ -98,21 +98,8 @@ public class VentaDTO {
             LOG.info("toEntity() - idVenta es null");
         }
         
-        final Cliente _cliente = new Cliente();
-        try {
-            final Integer _id = idCliente;
-            if (_id != 0) {
-                entity.setId(_id);
-            }
-        } catch (NullPointerException exc) {
-            LOG.info("toEntity() - idCliente es null");
-        }
-        
-        final Empleado _empleado = new Empleado(idEmpleado);
         Date _fechaVenta = FermeDates.fechaStringToDate(fechaVenta);
         
-        entity.setCliente(_cliente);
-        entity.setEmpleado(_empleado);
         entity.setFecha(_fechaVenta);
         
         List<DetalleVenta> _detallesEntities = this.detallesToEntity();
@@ -129,6 +116,11 @@ public class VentaDTO {
             }
         }
         return detallesEntities;
+    }
+
+    @Override
+    public String toString() {
+        return "VentaDTO{" + "idVenta=" + idVenta + ", tipoVenta=" + tipoVenta + ", fechaVenta=" + fechaVenta + ", subtotalVenta=" + subtotalVenta + ", detallesVenta=" + detallesVenta + ", idEmpleado=" + idEmpleado + ", idCliente=" + idCliente + '}';
     }
     
 }

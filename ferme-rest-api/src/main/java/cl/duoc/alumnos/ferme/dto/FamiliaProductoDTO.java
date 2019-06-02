@@ -74,11 +74,14 @@ public class FamiliaProductoDTO {
         }
         
         entity.setDescripcion(descripcionFamiliaProducto);
-        
-        entity.setProveedor(new Proveedor(idProveedor));
         entity.setRubro(new Rubro(idRubro));
         
         return entity;
+    }
+
+    @Override
+    public String toString() {
+        return "FamiliaProductoDTO{" + "idFamiliaProducto=" + idFamiliaProducto + ", descripcionFamiliaProducto=" + descripcionFamiliaProducto + ", idRubro=" + idRubro + ", descripcionRubro=" + descripcionRubro + ", idProveedor=" + idProveedor + '}';
     }
     
 }

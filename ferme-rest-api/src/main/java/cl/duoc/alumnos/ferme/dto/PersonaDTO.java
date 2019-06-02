@@ -119,6 +119,10 @@ public class PersonaDTO {
         
         return personaEntity;
     }
-    
+
+    @Override
+    public String toString() {
+        return "PersonaDTO{" + "idPersona=" + idPersona + ", nombreCompletoPersona=" + nombreCompletoPersona + ", rutPersona=" + rutPersona + ", direccionPersona=" + direccionPersona + ", emailPersona=" + emailPersona + ", fonoPersona1=" + fonoPersona1 + ", fonoPersona2=" + fonoPersona2 + ", fonoPersona3=" + fonoPersona3 + '}';
+    }
     
 }

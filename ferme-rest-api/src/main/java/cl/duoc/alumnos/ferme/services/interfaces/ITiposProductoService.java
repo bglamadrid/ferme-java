@@ -4,6 +4,7 @@ import cl.duoc.alumnos.ferme.dto.TipoProductoDTO;
 import com.querydsl.core.types.Predicate;
 import java.util.Collection;
 import java.util.Map;
+import javassist.NotFoundException;
 
 /**
  *
@@ -33,7 +34,7 @@ public interface ITiposProductoService {
      * @param dto El objeto DTO de tipo de producto con la información respectiva a guardar.
      * @return El ID del registro guardado.
      */
-    public int saveTipoProducto(TipoProductoDTO dto);
+    public int saveTipoProducto(TipoProductoDTO dto) throws NotFoundException;
     
     /**
      * 

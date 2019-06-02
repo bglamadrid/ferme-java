@@ -10,6 +10,7 @@ import cl.duoc.alumnos.ferme.services.interfaces.ITiposProductoService;
 import com.querydsl.core.types.Predicate;
 import java.util.Collection;
 import java.util.Map;
+import javassist.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,8 +91,12 @@ public class ProductosController {
             filtros = productoSvc.queryParamsMapToProductosFilteringPredicate(allRequestParams);
         }
         
-        LOG.debug("getProductos - finalPageSize="+finalPageSize+"; finalPageIndex="+finalPageIndex+"; filtros="+filtros);
-        return productoSvc.getProductos(finalPageSize, finalPageIndex, filtros);
+        LOG.info("getProductos - "+finalPageSize+" registros; página "+finalPageIndex);
+        LOG.debug("getProductos - Filtros solicitados: "+filtros);
+        Collection<ProductoDTO> productos = this.productoSvc.getProductos(finalPageSize, finalPageIndex, filtros);
+        LOG.debug("getProductos - productos.size()="+productos.size());
+        LOG.info("getProductos - Solicitud completa. Enviando respuesta al cliente.");
+        return productos;
     }
     
     
@@ -118,7 +123,7 @@ public class ProductosController {
      * @return El ID del tipo de producto.
      */
     @PostMapping("/tipos_producto/guardar")
-    public Integer saveTipoProducto(@RequestBody TipoProductoDTO dto) {
+    public Integer saveTipoProducto(@RequestBody TipoProductoDTO dto) throws NotFoundException {
         
         if (dto != null) {
             LOG.debug("saveTipoProducto - dto="+dto);
@@ -135,7 +140,7 @@ public class ProductosController {
      * @return El ID del producto.
      */
     @PostMapping("/productos/guardar")
-    public Integer saveProducto(@RequestBody ProductoDTO dto) {
+    public Integer saveProducto(@RequestBody ProductoDTO dto) throws NotFoundException {
         
         if (dto != null) {
             LOG.debug("saveProducto - dto="+dto);

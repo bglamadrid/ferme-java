@@ -1,5 +1,6 @@
 package cl.duoc.alumnos.ferme.services;
 
+import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.domain.entities.FamiliaProducto;
 import cl.duoc.alumnos.ferme.domain.entities.Producto;
 import cl.duoc.alumnos.ferme.domain.entities.QFamiliaProducto;
@@ -22,19 +23,24 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import javassist.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author Benjamin Guillermo La Madrid <got12g at gmail.com>
  */
 @Service
+@Transactional
 public class ProductosService implements IProductosService, IFamiliasProductoService, ITiposProductoService {
     
     @Autowired private IFunctionsRepository funcRepo;
@@ -46,18 +52,28 @@ public class ProductosService implements IProductosService, IFamiliasProductoSer
     @Override
     public Collection<FamiliaProductoDTO> getFamiliasProductos(Predicate condicion) {
         List<FamiliaProductoDTO> lista = new ArrayList<>();
-        Iterable<FamiliaProducto> productos;
+        Iterable<FamiliaProducto> familias;
+        long familiaCount;
         
+        LOG.info("getFamiliasProductos - Procesando solicitud...");
+        Sort orden = Sort.by(Ferme.FAMILIA_PRODUCTO_DEFAULT_SORT_COLUMN).ascending();
+        
+        LOG.info("getFamiliasProductos - Llamando queries...");
         if (condicion == null) {
-            productos = this.fmlProductoRepo.findAll();
+            familias = this.fmlProductoRepo.findAll(orden);
+            familiaCount = this.fmlProductoRepo.count();
         } else {
-            productos = this.fmlProductoRepo.findAll(condicion);
+            familias = this.fmlProductoRepo.findAll(condicion, orden);
+            familiaCount = this.fmlProductoRepo.count(condicion);
         }
+        LOG.info("getFamiliasProductos - Se han encontrado "+familiaCount+" familias de productos con los filtros ingresados.");
         
-        productos.forEach((entity) -> {
+        LOG.info("getFamiliasProductos - Procesando resultados...");
+        familias.forEach((entity) -> {
             FamiliaProductoDTO dto = entity.toDTO();
             lista.add(dto);
         });
+        LOG.info("getFamiliasProductos - Resultados procesados con éxito.");
         
         return lista;
     }
@@ -65,40 +81,59 @@ public class ProductosService implements IProductosService, IFamiliasProductoSer
     @Override
     public Collection<TipoProductoDTO> getTiposProductos(Predicate condicion) {
         List<TipoProductoDTO> lista = new ArrayList<>();
-        Iterable<TipoProducto> productos;
+        Iterable<TipoProducto> tipos;
+        Long tipoCount;
         
+        LOG.info("getTiposProductos - Procesando solicitud...");
+        Sort orden = Sort.by(Ferme.TIPO_PRODUCTO_DEFAULT_SORT_COLUMN).descending();
+        
+        LOG.info("getTiposProductos - Llamando queries...");
         if (condicion == null) {
-            productos = this.tpProductoRepo.findAll();
+            tipos = this.tpProductoRepo.findAll(orden);
+            tipoCount = this.tpProductoRepo.count();
         } else {
-            productos = this.tpProductoRepo.findAll(condicion);
+            tipos = this.tpProductoRepo.findAll(condicion, orden);
+            tipoCount = this.tpProductoRepo.count(condicion);
         }
+        LOG.info("getTiposProductos - Se han encontrado "+tipoCount+" tipos de productos con los filtros ingresados.");
         
-        productos.forEach((entity) -> {
+        LOG.info("getTiposProductos - Procesando resultados...");
+        tipos.forEach((entity) -> {
             TipoProductoDTO dto = entity.toDTO();
             lista.add(dto);
         });
+        LOG.info("getTiposProductos - Resultados procesados con éxito.");
         
         return lista;
     }
     
     @Override
     public Collection<ProductoDTO> getProductos(int pageSize, int pageIndex, Predicate condicion) {
-        Pageable pgbl = PageRequest.of(pageIndex, pageSize);
-        
         List<ProductoDTO> pagina = new ArrayList<>();
         Iterable<Producto> productos;
+        Long productoCount;
         
+        LOG.info("getProductos - Procesando solicitud...");
+        Sort orden = Sort.by(Ferme.TIPO_PRODUCTO_DEFAULT_SORT_COLUMN).descending();
+        Pageable pgbl = PageRequest.of(pageIndex, pageSize, orden);
+        
+        LOG.info("getProductos - Llamando queries...");
         if (condicion == null) {
             productos = this.productoRepo.findAll(pgbl);
+            productoCount = this.productoRepo.count();
         } else {
             productos = this.productoRepo.findAll(condicion, pgbl);
+            productoCount = this.productoRepo.count(condicion);
         }
+        LOG.info("getProductos - Se han encontrado "+productoCount+" productos con los filtros ingresados.");
         
+        LOG.info("getProductos - Procesando resultados...");
         productos.forEach((entity) -> {
             ProductoDTO dto = entity.toDTO();
             dto.setCodigoProducto(funcRepo.getProductoCodigo(dto.getIdProducto()));
             pagina.add(dto);
         });
+        LOG.info("getProductos - Resultados procesados con éxito.");
         
         return pagina;
     }
@@ -211,17 +246,29 @@ public class ProductosService implements IProductosService, IFamiliasProductoSer
     }
 
     @Override
-    public int saveTipoProducto(TipoProductoDTO dto) {
+    public int saveTipoProducto(TipoProductoDTO dto) throws NotFoundException {
         
         TipoProducto entity = dto.toEntity();
+        Optional<FamiliaProducto> familiaEntity = fmlProductoRepo.findById(dto.getIdFamiliaProducto());
+        if (familiaEntity.isPresent()) {
+            entity.setFamilia(familiaEntity.get());
+        } else {
+            throw new NotFoundException("La familia asignada a este tipo no existe.");
+        }
         entity = tpProductoRepo.saveAndFlush(entity);
         return entity.getId();
     }
 
     @Override
-    public int saveProducto(ProductoDTO dto) {
+    public int saveProducto(ProductoDTO dto) throws NotFoundException {
         
         Producto entity = dto.toEntity();
+        Optional<TipoProducto> tipoEntity = tpProductoRepo.findById(dto.getIdTipoProducto());
+        if (tipoEntity.isPresent()) {
+            entity.setTipo(tipoEntity.get());
+        } else {
+            throw new NotFoundException("El tipo asignado a este producto no existe.");
+        }
         entity = productoRepo.saveAndFlush(entity);
         return entity.getId();
     }

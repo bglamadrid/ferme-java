@@ -48,5 +48,10 @@ public class CargoDTO {
         
         return entity;
     }
+
+    @Override
+    public String toString() {
+        return "CargoDTO{" + "idCargo=" + idCargo + ", descripcionCargo=" + descripcionCargo + '}';
+    }
     
 }

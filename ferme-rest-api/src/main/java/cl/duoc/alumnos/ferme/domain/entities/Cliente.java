@@ -3,6 +3,7 @@ package cl.duoc.alumnos.ferme.domain.entities;
 import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.dto.ClienteDTO;
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,6 +17,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import org.hibernate.annotations.Cascade;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -27,6 +30,7 @@ import org.hibernate.annotations.Cascade;
     @NamedQuery(name = "Cliente.findAll", query = "SELECT c FROM Cliente c")})
 public class Cliente implements Serializable {
     private static final long serialVersionUID = 1L;
+    private static Logger LOG = LoggerFactory.getLogger(Cliente.class);
     
     @Id
     @Column(name = "ID_CLIENTE")
@@ -41,11 +45,6 @@ public class Cliente implements Serializable {
 
     public Cliente() {
         super();
-    }
-
-    public Cliente(int id) {
-        super();
-        this.id = id;
     }
 
     public Integer getId() {
@@ -65,15 +64,38 @@ public class Cliente implements Serializable {
     }
     
     public ClienteDTO toDTO() {
+        LOG.debug("toDTO");
         ClienteDTO dto = new ClienteDTO();
-        dto.setIdCliente(persona.getId());
+        dto.setIdCliente(id);
+        dto.setIdPersona(persona.getId());
         dto.setNombreCompletoPersona(persona.getNombreCompleto());
         dto.setRutPersona(persona.getRut());
-        dto.setDireccionPersona(persona.getDireccion());
-        dto.setEmailPersona(persona.getEmail());
-        dto.setFonoPersona1(persona.getFono1());
-        dto.setFonoPersona2(persona.getFono2());
-        dto.setFonoPersona3(persona.getFono3());
+        
+        String direccion = persona.getDireccion();
+        String email = persona.getEmail();
+        Long fono1 = persona.getFono1();
+        Long fono2 = persona.getFono2();
+        Long fono3 = persona.getFono3();
+        
+        if (direccion != null) {
+          dto.setDireccionPersona(direccion);
+        }
+        
+        if (email != null) {
+          dto.setEmailPersona(email);
+        }
+        
+        if (fono1 != null) {
+          dto.setFonoPersona1(fono1);
+        }
+        
+        if (fono2 != null) {
+          dto.setFonoPersona2(fono2);
+        }
+        
+        if (fono3 != null) {
+          dto.setFonoPersona3(fono3);
+        }
         
         return dto;
     }
@@ -91,12 +113,12 @@ public class Cliente implements Serializable {
             return false;
         }
         final Cliente other = (Cliente) object;
-        return (this.id == other.getId());
+        return (Objects.equals(this.id, other.getId()));
     }
 
     @Override
     public String toString() {
-        return "cl.duoc.alumnos.ferme.entities.domain.Cliente[ idCliente=" + id + " ]";
+        return "cl.duoc.alumnos.ferme.entities.domain.Cliente[ id=" + id + " ]";
     }
     
 }

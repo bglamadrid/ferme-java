@@ -1,14 +1,19 @@
 package cl.duoc.alumnos.ferme.domain.entities;
 
+import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.dto.ProductoDTO;
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
@@ -25,7 +30,9 @@ public class Producto implements Serializable {
     
     @Id
     @Column(name = "ID_PRODUCTO")
-    private int id;
+    @SequenceGenerator(name = "producto_seq", sequenceName = "SEQ_PRODUCTO", initialValue = 1, allocationSize = Ferme.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
+    @GeneratedValue(generator = "producto_seq", strategy = GenerationType.AUTO)
+    private Integer id;
     
     @Size(min = 1, max = 100)
     @Column(name = "NOMBRE")
@@ -52,12 +59,12 @@ public class Producto implements Serializable {
         super();
     }
 
-    public Producto(int id) {
+    public Producto(Integer id) {
         super();
         this.id = id;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -141,14 +148,14 @@ public class Producto implements Serializable {
             return false;
         }
         final Producto other = (Producto) object;
-        return (this.id == other.getId());
+        return (Objects.equals(this.id, other.getId()));
     }
     
     
 
     @Override
     public String toString() {
-        return "cl.duoc.alumnos.ferme.entities.domain.Producto[ idProducto=" + id + " ]";
+        return "cl.duoc.alumnos.ferme.entities.domain.Producto[ id=" + id + " ]";
     }
     
 }

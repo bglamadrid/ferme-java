@@ -5,6 +5,7 @@ import cl.duoc.alumnos.ferme.dto.OrdenCompraDTO;
 import com.querydsl.core.types.Predicate;
 import java.util.Collection;
 import java.util.Map;
+import javassist.NotFoundException;
 
 /**
  *
@@ -50,7 +51,7 @@ public interface IOrdenesCompraService {
      * @param dto El objeto DTO de orden de compra con la información respectiva a guardar.
      * @return El ID del registro guardado.
      */
-    public int saveOrdenCompra(OrdenCompraDTO dto);
+    public int saveOrdenCompra(OrdenCompraDTO dto) throws NotFoundException;
     
     /**
      * 

@@ -1,12 +1,17 @@
 package cl.duoc.alumnos.ferme.domain.entities;
 
+import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.dto.RubroDTO;
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
@@ -23,6 +28,8 @@ public class Rubro implements Serializable {
     
     @Id
     @Column(name = "ID_RUBRO")
+    @SequenceGenerator(name = "rubro_seq", sequenceName = "SEQ_RUBRO", initialValue = 1, allocationSize = Ferme.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
+    @GeneratedValue(generator = "rubro_seq", strategy = GenerationType.AUTO)
     private Integer id;
     
     @Size(min = 1, max = 50)
@@ -33,7 +40,7 @@ public class Rubro implements Serializable {
         super();
     }
 
-    public Rubro(int id) {
+    public Rubro(Integer id) {
         super();
         this.id = id;
     }
@@ -76,7 +83,7 @@ public class Rubro implements Serializable {
             return false;
         }
         final Rubro other = (Rubro) object;
-        return (this.id == other.getId());
+        return (Objects.equals(this.id, other.getId()));
     }
     
     

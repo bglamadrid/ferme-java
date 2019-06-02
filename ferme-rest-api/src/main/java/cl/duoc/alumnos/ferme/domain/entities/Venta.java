@@ -1,5 +1,6 @@
 package cl.duoc.alumnos.ferme.domain.entities;
 
+import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.dto.DetalleVentaDTO;
 import cl.duoc.alumnos.ferme.dto.VentaDTO;
 import cl.duoc.alumnos.ferme.util.FermeDates;
@@ -7,16 +8,20 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -34,7 +39,9 @@ public class Venta implements Serializable {
     
     @Id
     @Column(name = "ID_VENTA")
-    private int id;
+    @SequenceGenerator(name = "venta_seq", sequenceName = "SEQ_VENTA", initialValue = 1, allocationSize = Ferme.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
+    @GeneratedValue(generator = "venta_seq", strategy = GenerationType.AUTO)
+    private Integer id;
     
     @JoinColumn(name = "ID_EMPLEADO", referencedColumnName = "ID_EMPLEADO", insertable = false, updatable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -61,12 +68,12 @@ public class Venta implements Serializable {
         super();
     }
 
-    public Venta(int id) {
+    public Venta(Integer id) {
         super();
         this.id = id;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -168,7 +175,7 @@ public class Venta implements Serializable {
             return false;
         }
         final Venta other = (Venta) object;
-        return (this.id != other.getId());
+        return (!Objects.equals(this.id, other.getId()));
     }
     
     

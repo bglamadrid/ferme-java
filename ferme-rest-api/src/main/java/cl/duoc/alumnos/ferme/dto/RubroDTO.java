@@ -14,7 +14,9 @@ public class RubroDTO {
     private Integer idRubro;
     private String descripcionRubro;
 
-    public RubroDTO() {}
+    public RubroDTO() {
+        super();
+    }
 
     public Integer getIdRubro() {
         return idRubro;
@@ -45,6 +47,11 @@ public class RubroDTO {
         entity.setDescripcion(descripcionRubro);
         
         return entity;
+    }
+
+    @Override
+    public String toString() {
+        return "RubroDTO{" + "idRubro=" + idRubro + ", descripcionRubro=" + descripcionRubro + '}';
     }
     
 }

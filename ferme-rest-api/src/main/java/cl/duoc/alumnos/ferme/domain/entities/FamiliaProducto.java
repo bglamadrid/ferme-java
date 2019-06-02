@@ -1,15 +1,20 @@
 package cl.duoc.alumnos.ferme.domain.entities;
 
+import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.dto.FamiliaProductoDTO;
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
@@ -26,7 +31,9 @@ public class FamiliaProducto implements Serializable {
     
     @Id
     @Column(name = "ID_FAMILIA_PRODUCTO")
-    private int id;
+    @SequenceGenerator(name = "familia_producto_seq", sequenceName = "SEQ_FAMILIA_PRODUCTO", initialValue = 1, allocationSize = Ferme.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
+    @GeneratedValue(generator = "familia_producto_seq", strategy = GenerationType.AUTO)
+    private Integer id;
     
     @Size(min = 1, max = 100)
     @Column(name = "DESCRIPCION")
@@ -44,16 +51,11 @@ public class FamiliaProducto implements Serializable {
         super();
     }
 
-    public FamiliaProducto(int id) {
-        super();
-        this.id = id;
-    }
-
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -107,12 +109,12 @@ public class FamiliaProducto implements Serializable {
             return false;
         }
         final FamiliaProducto other = (FamiliaProducto) object;
-        return (this.id == other.getId());
+        return (Objects.equals(this.id, other.getId()));
     }
 
     @Override
     public String toString() {
-        return "cl.duoc.alumnos.ferme.entities.domain.FamiliaProducto[ idFamiliaProducto=" + id + " ]";
+        return "cl.duoc.alumnos.ferme.entities.domain.FamiliaProducto[ id=" + id + " ]";
     }
     
 }

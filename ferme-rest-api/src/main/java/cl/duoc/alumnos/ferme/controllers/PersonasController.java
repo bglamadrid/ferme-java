@@ -72,9 +72,13 @@ public class PersonasController {
         }
         if (allRequestParams != null && !allRequestParams.isEmpty()) {
             filtros = this.personaSvc.queryParamsMapToPersonasFilteringPredicate(allRequestParams);
-        }
+        }        
         
-        LOG.debug("getPersonas - finalPageSize="+finalPageSize+"; finalPageIndex="+finalPageIndex+"; filtros="+filtros);
-        return this.personaSvc.getPersonas(finalPageSize, finalPageIndex, filtros);
+        LOG.info("getPersonas - "+finalPageSize+" registros; página "+finalPageIndex);
+        LOG.debug("getPersonas - Filtros solicitados: "+filtros);
+        Collection<PersonaDTO> personas = personaSvc.getPersonas(finalPageSize, finalPageIndex, filtros);
+        LOG.debug("getPersonas - personas.size()="+personas.size());
+        LOG.info("getPersonas - Solicitud completa. Enviando respuesta al cliente.");
+        return personas;
     }
 }

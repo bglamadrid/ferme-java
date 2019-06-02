@@ -7,6 +7,7 @@ import cl.duoc.alumnos.ferme.services.interfaces.IOrdenesCompraService;
 import com.querydsl.core.types.Predicate;
 import java.util.Collection;
 import java.util.Map;
+import javassist.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,8 +64,12 @@ public class OrdenesCompraController {
             filtros = ordenCompraSvc.queryParamsMapToOrdenesCompraFilteringPredicate(allRequestParams);
         }
         
-        LOG.debug("getOrdenesCompra - finalPageSize="+finalPageSize+"; finalPageIndex="+finalPageIndex+"; filtros="+filtros);
-        return ordenCompraSvc.getOrdenesCompra(finalPageSize, finalPageIndex, filtros);
+        LOG.info("getOrdenesCompra - "+finalPageSize+" registros; página "+finalPageIndex);
+        LOG.debug("getOrdenesCompra - Filtros solicitados: "+filtros);
+        Collection<OrdenCompraDTO> ordenesCompra = ordenCompraSvc.getOrdenesCompra(finalPageSize, finalPageIndex, filtros);
+        LOG.debug("getOrdenesCompra - ordenesCompra.size()="+ordenesCompra.size());
+        LOG.info("getOrdenesCompra - Solicitud completa. Enviando respuesta al cliente.");
+        return ordenesCompra;
     }
     
     /**
@@ -88,7 +93,7 @@ public class OrdenesCompraController {
      * @return El ID de la venta.
      */
     @PostMapping("/ordenes_compra/guardar")
-    public Integer saveOrdenCompra(@RequestBody OrdenCompraDTO dto) {
+    public Integer saveOrdenCompra(@RequestBody OrdenCompraDTO dto) throws NotFoundException {
         
         if (dto != null) {
             LOG.debug("saveEmpleado - dto="+dto);

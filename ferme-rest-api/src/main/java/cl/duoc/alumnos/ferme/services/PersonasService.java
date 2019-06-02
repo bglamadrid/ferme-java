@@ -1,5 +1,6 @@
 package cl.duoc.alumnos.ferme.services;
 
+import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.domain.entities.Persona;
 import cl.duoc.alumnos.ferme.domain.entities.QPersona;
 import cl.duoc.alumnos.ferme.domain.repositories.IPersonasRepository;
@@ -16,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 /**
@@ -30,21 +32,30 @@ public class PersonasService implements IPersonasService {
 
     @Override
     public Collection<PersonaDTO> getPersonas(int pageSize, int pageIndex, Predicate condicion) {
-        Pageable pgbl = PageRequest.of(pageIndex, pageSize);
-        
         List<PersonaDTO> pagina = new ArrayList<>();
         Iterable<Persona> pesonas;
+        long pesonaCount;
         
+        LOG.info("getPersonas - Procesando solicitud...");
+        Sort orden = Sort.by(Ferme.PERSONA_DEFAULT_SORT_COLUMN).ascending();
+        Pageable pgbl = PageRequest.of(pageIndex, pageSize, orden);
+        
+        LOG.info("getPersonas - Llamando queries...");
         if (condicion == null) {
             pesonas = personaRepo.findAll(pgbl);
+            pesonaCount = personaRepo.count();
         } else {
             pesonas = personaRepo.findAll(condicion, pgbl);
+            pesonaCount = personaRepo.count(condicion);
         }
+        LOG.info("getPersonas - Se han encontrado "+pesonaCount+" personas con los filtros ingresados.");
         
+        LOG.info("getPersonas - Procesando resultados...");
         pesonas.forEach((entity) -> {
             PersonaDTO dto = entity.toDTO();
             pagina.add(dto);
         });
+        LOG.info("getPersonas - Resultados procesados con éxito.");
         
         return pagina;
     }

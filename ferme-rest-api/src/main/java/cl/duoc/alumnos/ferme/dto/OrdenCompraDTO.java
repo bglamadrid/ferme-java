@@ -8,6 +8,8 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -78,7 +80,7 @@ public class OrdenCompraDTO {
         this.detallesOrdenCompra = detallesOrdenCompra;
     }
     
-    public OrdenCompra toEntity() throws ParseException {
+    public OrdenCompra toEntity() {
         OrdenCompra entity = new OrdenCompra();
         try {
             if (idOrdenCompra != 0) {
@@ -88,16 +90,29 @@ public class OrdenCompraDTO {
             LOG.info("toEntity() - idOrdenCompra es null");
         }
         
-        entity.setEmpleado(new Empleado(idEmpleado));
         entity.setEstado(estadoOrdenCompra.charAt(0));
         
+        
         DateFormat formateador = new SimpleDateFormat(Ferme.DEFAULT_DATE_FORMAT);
-        entity.setFechaSolicitud(formateador.parse(fechaSolicitudOrdenCompra));
-        if (fechaRecepcionOrdenCompra != null && !fechaRecepcionOrdenCompra.isEmpty()) {
-            entity.setFechaRecepcion(formateador.parse(fechaRecepcionOrdenCompra));
+        try {
+            Date fechaSolicitud = formateador.parse(fechaSolicitudOrdenCompra);
+            entity.setFechaSolicitud(fechaSolicitud);
+        } catch (Exception exc) {
+            LOG.warn("toEntity() - 'fechaSolicitudOrdenCompra' es null o posee un valor inválido", exc);
+            Date fechaActual = Calendar.getInstance().getTime();
+            entity.setFechaSolicitud(fechaActual);
+            LOG.info("toEntity() - Se asume fecha y hora actual ("+formateador.format(fechaActual)+") para fecha de solicitud");
+        }
+        
+        try {
+            Date fechaRecepcion = formateador.parse(fechaRecepcionOrdenCompra);
+            entity.setFechaRecepcion(fechaRecepcion);
+        } catch (Exception exc) {
+            LOG.warn("toEntity() - 'fechaRecepcionOrdenCompra' es null o posee formato incorrecto", exc);
         }
         
         List<DetalleOrdenCompra> _detallesEntities = this.detallesToEntity();
+        _detallesEntities.forEach((dtl) -> {dtl.setOrdenCompra(entity);});
         entity.setDetalles(_detallesEntities);
         
         return entity;
@@ -107,10 +122,16 @@ public class OrdenCompraDTO {
         List<DetalleOrdenCompra> detallesEntities = new ArrayList<>();
         if (detallesOrdenCompra != null && !detallesOrdenCompra.isEmpty()) {
             for (DetalleOrdenCompraDTO detalle : detallesOrdenCompra) {
-                detallesEntities.add(detalle.toEntity());
+                DetalleOrdenCompra detalleEntity = detalle.toEntity();
+                detallesEntities.add(detalleEntity);
             }
         }
         return detallesEntities;
+    }
+
+    @Override
+    public String toString() {
+        return "OrdenCompraDTO{" + "idOrdenCompra=" + idOrdenCompra + ", idEmpleado=" + idEmpleado + ", estadoOrdenCompra=" + estadoOrdenCompra + ", fechaSolicitudOrdenCompra=" + fechaSolicitudOrdenCompra + ", fechaRecepcionOrdenCompra=" + fechaRecepcionOrdenCompra + ", detallesOrdenCompra=" + detallesOrdenCompra + '}';
     }
     
 }

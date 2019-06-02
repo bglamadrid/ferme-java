@@ -1,17 +1,21 @@
 package cl.duoc.alumnos.ferme.domain.entities;
 
+import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.dto.EmpleadoDTO;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import org.hibernate.annotations.Cascade;
 
@@ -28,7 +32,9 @@ public class Empleado implements Serializable {
     
     @Id
     @Column(name = "ID_EMPLEADO")
-    private int id;
+    @SequenceGenerator(name = "empleado_seq", sequenceName = "SEQ_EMPLEADO", initialValue = 1, allocationSize = Ferme.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
+    @GeneratedValue(generator = "empleado_seq", strategy = GenerationType.AUTO)
+    private Integer id;
     
     @OneToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA", insertable = true, updatable = true)
@@ -43,16 +49,11 @@ public class Empleado implements Serializable {
         super();
     }
 
-    public Empleado(int id) {
-        super();
-        this.id = id;
-    }
-
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -103,12 +104,12 @@ public class Empleado implements Serializable {
             return false;
         }
         final Empleado other = (Empleado) object;
-        return (this.id == other.id && this.persona.getId()== other.getPersona().getId());
+        return (Objects.equals(this.id, other.id));
     }
 
     @Override
     public String toString() {
-        return "cl.duoc.alumnos.ferme.entities.domain.Empleado[ idEmpleado=" + id + " ]";
+        return "cl.duoc.alumnos.ferme.entities.domain.Empleado[ id=" + id + " ]";
     }
     
 }

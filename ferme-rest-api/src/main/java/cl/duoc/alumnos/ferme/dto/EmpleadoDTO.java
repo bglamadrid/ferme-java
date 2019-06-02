@@ -2,6 +2,7 @@ package cl.duoc.alumnos.ferme.dto;
 
 import cl.duoc.alumnos.ferme.domain.entities.Cargo;
 import cl.duoc.alumnos.ferme.domain.entities.Empleado;
+import javassist.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,13 +43,19 @@ public class EmpleadoDTO extends PersonaDTO {
                 entity.setId(idEmpleado);
             }
         } catch (NullPointerException exc) {
-            LOG.info("toEntity() - idEmpleado es null");
+            LOG.info("toEntity - idEmpleado es null");
         }
         
-        entity.setCargo(new Cargo(idCargo));
         entity.setPersona(this.personaToEntity());
         
         return entity;
     }
+
+    @Override
+    public String toString() {
+        return "EmpleadoDTO{" + "idEmpleado=" + idEmpleado + ", idCargo=" + idCargo + ", " + super.toString() + '}';
+    }
+
+    
     
 }

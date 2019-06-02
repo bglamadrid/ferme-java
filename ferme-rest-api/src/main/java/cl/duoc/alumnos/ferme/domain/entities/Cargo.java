@@ -1,12 +1,17 @@
 package cl.duoc.alumnos.ferme.domain.entities;
 
+import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.dto.CargoDTO;
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
@@ -23,6 +28,8 @@ public class Cargo implements Serializable {
     
     @Id
     @Column(name = "ID_CARGO")
+    @SequenceGenerator(name = "cargo_seq", sequenceName = "SEQ_CARGO", initialValue = 1, allocationSize = Ferme.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
+    @GeneratedValue(generator = "cargo_seq", strategy = GenerationType.AUTO)
     private Integer id;
     
     @Size(min = 1, max = 100)
@@ -31,11 +38,6 @@ public class Cargo implements Serializable {
 
     public Cargo() {
         super();
-    }
-
-    public Cargo(int id) {
-        super();
-        this.id = id;
     }
 
     public Integer getId() {
@@ -56,10 +58,8 @@ public class Cargo implements Serializable {
     
     public CargoDTO toDTO() {
         CargoDTO dto = new CargoDTO();
-        
         dto.setIdCargo(id);
         dto.setDescripcionCargo(descripcion);
-        
         return dto;
     }
 
@@ -76,12 +76,12 @@ public class Cargo implements Serializable {
             return false;
         }
         Cargo other = (Cargo) object;
-        return (this.id == other.getId());
+        return (Objects.equals(this.id, other.getId()));
     }
 
     @Override
     public String toString() {
-        return "cl.duoc.alumnos.ferme.entities.domain.Cargo[ idCargo=" + id + " ]";
+        return "cl.duoc.alumnos.ferme.entities.domain.Cargo[ id=" + id + " ]";
     }
     
 }

@@ -39,7 +39,10 @@ public class ClienteDTO extends PersonaDTO {
         
         return entity;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return "ClienteDTO{" + "idCliente=" + idCliente + ", " + super.toString() + '}';
+    }
     
 }

@@ -21,7 +21,9 @@ public class UsuarioDTO {
     private String fechaCreacionUsuario;
     private PersonaDTO persona;
 
-    public UsuarioDTO() {}
+    public UsuarioDTO() {
+        super();
+    }
 
     public Integer getIdUsuario() {
         return idUsuario;
@@ -79,6 +81,11 @@ public class UsuarioDTO {
         entity.setFechaCreacion(formateador.parse(fechaCreacionUsuario));
         
         return entity;
+    }
+
+    @Override
+    public String toString() {
+        return "UsuarioDTO{" + "idUsuario=" + idUsuario + ", nombreUsuario=" + nombreUsuario + ", claveUsuario=" + claveUsuario + ", fechaCreacionUsuario=" + fechaCreacionUsuario + ", persona=" + persona + '}';
     }
     
 }

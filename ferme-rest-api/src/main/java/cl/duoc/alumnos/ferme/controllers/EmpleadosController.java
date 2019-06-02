@@ -6,6 +6,7 @@ import cl.duoc.alumnos.ferme.services.interfaces.IEmpleadosService;
 import com.querydsl.core.types.Predicate;
 import java.util.Collection;
 import java.util.Map;
+import javassist.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class EmpleadosController {
     
     @Autowired private IEmpleadosService empleadoSvc;    
     
-    @GetMapping({"/empleados", "/empleados/"})
+    @GetMapping("/empleados")
     public Collection<EmpleadoDTO> getEmpleados(@RequestParam Map<String,String> allRequestParams) {
         
         return this.getEmpleados(null, null, allRequestParams);
@@ -74,17 +75,22 @@ public class EmpleadosController {
             filtros = this.empleadoSvc.queryParamsMapToEmpleadosFilteringPredicate(allRequestParams);
         }
         
-        LOG.debug("getEmpleados - finalPageSize="+finalPageSize+"; finalPageIndex="+finalPageIndex+"; filtros="+filtros);
-        return this.empleadoSvc.getEmpleados(finalPageSize, finalPageIndex, filtros);
+        LOG.info("getEmpleados - "+finalPageSize+" registros; página "+finalPageIndex);
+        LOG.debug("getEmpleados - Filtros solicitados: "+filtros);
+        Collection<EmpleadoDTO> empleados = this.empleadoSvc.getEmpleados(finalPageSize, finalPageIndex, filtros);
+        LOG.debug("getEmpleados - empleados.size()="+empleados.size());
+        LOG.info("getEmpleados - Solicitud completa. Enviando respuesta al cliente.");
+        return empleados;
     }
     
     /**
      * Almacena un Rubro nuevo o actualiza uno existente.
      * @param dto Un objeto DTO representando el Rubro a almacenar/actualizar.
      * @return El ID del rubro.
+     * @throws javassist.NotFoundException
      */
-    @PostMapping({"/empleados/guardar", "/empleados/guardar/"})
-    public Integer saveEmpleado(@RequestBody EmpleadoDTO dto) {
+    @PostMapping("/empleados/guardar")
+    public Integer saveEmpleado(@RequestBody EmpleadoDTO dto) throws NotFoundException {
         
         if (dto != null) {
             LOG.debug("saveEmpleado - dto="+dto);
@@ -100,7 +106,7 @@ public class EmpleadosController {
      * @param empleadoId El ID del Rubro a eliminar.
      * @return true si la operación fue exitosa, false si no lo fue.
      */
-    @PostMapping({"/empleados/borrar", "/empleados/borrar/"})
+    @PostMapping("/empleados/borrar")
     public boolean deleteEmpleado(@RequestParam("id") Integer empleadoId) {
         
         if (empleadoId != null && empleadoId != 0) {

@@ -13,7 +13,6 @@ public class ProveedorDTO extends PersonaDTO {
     
     private Integer idProveedor;
     private String razonSocialProveedor;
-    private Integer idRubro;
 
     public ProveedorDTO() {
         super();
@@ -34,14 +33,6 @@ public class ProveedorDTO extends PersonaDTO {
     public void setRazonSocialProveedor(String razonSocialProveedor) {
         this.razonSocialProveedor = razonSocialProveedor;
     }
-
-    public Integer getIdRubro() {
-        return idRubro;
-    }
-
-    public void setIdRubro(Integer idRubro) {
-        this.idRubro = idRubro;
-    }
     
     public Proveedor toEntity() {
         Proveedor entity = new Proveedor();
@@ -58,6 +49,11 @@ public class ProveedorDTO extends PersonaDTO {
         entity.setPersona(this.personaToEntity());
         
         return entity;
+    }
+
+    @Override
+    public String toString() {
+        return "ProveedorDTO{" + "idProveedor=" + idProveedor + ", razonSocialProveedor=" + razonSocialProveedor + ", " + super.toString() + '}';
     }
     
 }

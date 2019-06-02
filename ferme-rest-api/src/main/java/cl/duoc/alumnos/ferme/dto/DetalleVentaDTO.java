@@ -1,7 +1,6 @@
 package cl.duoc.alumnos.ferme.dto;
 
 import cl.duoc.alumnos.ferme.domain.entities.DetalleVenta;
-import cl.duoc.alumnos.ferme.domain.entities.DetalleVentaPK;
 import cl.duoc.alumnos.ferme.domain.entities.Producto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,17 +64,9 @@ public class DetalleVentaDTO {
 
     public DetalleVenta toEntity() {
         DetalleVenta entity = new DetalleVenta();
-        DetalleVentaPK entityPK = new DetalleVentaPK();
-        try {
-            if (idVenta != 0) {
-                entityPK.setIdVenta(idVenta);
-            }
-        } catch (NullPointerException exc) {
-            LOG.info("toEntity() - idVenta es null");
-        }
         try {
             if (idDetalleVenta != 0) {
-                entityPK.setIdDetalleVenta(idDetalleVenta);
+                entity.setId(idDetalleVenta);
             }
         } catch (NullPointerException exc) {
             LOG.info("toEntity() - idDetalleVenta es null");
@@ -87,6 +78,11 @@ public class DetalleVentaDTO {
         entity.setProducto(new Producto(idProducto));
         
         return entity;
+    }
+
+    @Override
+    public String toString() {
+        return "DetalleVentaDTO{" + "idDetalleVenta=" + idDetalleVenta + ", idProducto=" + idProducto + ", unidadesProducto=" + unidadesProducto + ", montoDetalleVenta=" + montoDetalleVenta + ", idVenta=" + idVenta + '}';
     }
     
 }

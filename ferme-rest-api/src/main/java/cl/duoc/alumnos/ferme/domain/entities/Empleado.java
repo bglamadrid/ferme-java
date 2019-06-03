@@ -37,11 +37,11 @@ public class Empleado implements Serializable {
     private Integer id;
     
     @OneToOne(optional = false, fetch = FetchType.EAGER)
-    @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA", insertable = true, updatable = true)
+    @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA")
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Persona persona;
     
-    @JoinColumn(name = "ID_CARGO", referencedColumnName = "ID_CARGO", insertable = false, updatable = false)
+    @JoinColumn(name = "ID_CARGO", referencedColumnName = "ID_CARGO")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Cargo cargo;
 

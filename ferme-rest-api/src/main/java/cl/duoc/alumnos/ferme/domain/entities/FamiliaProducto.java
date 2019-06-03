@@ -39,11 +39,11 @@ public class FamiliaProducto implements Serializable {
     @Column(name = "DESCRIPCION")
     private String descripcion;
     
-    @JoinColumn(name = "ID_RUBRO", referencedColumnName = "ID_RUBRO", insertable = false, updatable = false)
+    @JoinColumn(name = "ID_RUBRO", referencedColumnName = "ID_RUBRO")
     @ManyToOne(optional = false)
     private Rubro rubro;
     
-    @JoinColumn(name = "ID_PROVEEDOR", referencedColumnName = "ID_PROVEEDOR", insertable = false, updatable = false)
+    @JoinColumn(name = "ID_PROVEEDOR", referencedColumnName = "ID_PROVEEDOR")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Proveedor proveedor;
 

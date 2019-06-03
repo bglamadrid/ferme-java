@@ -34,7 +34,7 @@ public class DetalleVenta implements Serializable {
     @GeneratedValue(generator = "detalle_venta_seq", strategy = GenerationType.AUTO)
     private Integer id;
     
-    @JoinColumn(name = "ID_PRODUCTO", referencedColumnName = "ID_PRODUCTO", insertable = false, updatable = false)
+    @JoinColumn(name = "ID_PRODUCTO", referencedColumnName = "ID_PRODUCTO")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Producto producto;
     
@@ -44,7 +44,7 @@ public class DetalleVenta implements Serializable {
     @Column(name = "MONTO_DETALLE")
     private int monto;
     
-    @JoinColumn(name = "ID_VENTA", referencedColumnName = "ID_VENTA", insertable = false, updatable = false)
+    @JoinColumn(name = "ID_VENTA", referencedColumnName = "ID_VENTA")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Venta venta;
 

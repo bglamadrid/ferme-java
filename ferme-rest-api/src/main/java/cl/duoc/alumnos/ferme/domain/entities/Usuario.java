@@ -39,7 +39,7 @@ public class Usuario implements Serializable {
     @GeneratedValue(generator = "usuario_seq", strategy = GenerationType.AUTO)
     private Integer id;
     
-    @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA", insertable = false, updatable = false)
+    @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA")
     @OneToOne(optional = false)
     private Persona persona;
     

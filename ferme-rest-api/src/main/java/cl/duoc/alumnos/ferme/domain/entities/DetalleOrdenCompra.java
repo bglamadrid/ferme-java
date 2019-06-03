@@ -35,14 +35,14 @@ public class DetalleOrdenCompra implements Serializable {
     @GeneratedValue(generator = "detalle_orden_compra_seq", strategy = GenerationType.AUTO)
     protected Integer id;
     
-    @JoinColumn(name = "ID_PRODUCTO", referencedColumnName = "ID_PRODUCTO", insertable = false, updatable = false)
+    @JoinColumn(name = "ID_PRODUCTO", referencedColumnName = "ID_PRODUCTO")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Producto producto;
     
     @Column(name = "CANTIDAD")
     private int cantidad;
     
-    @JoinColumn(name = "ID_ORDEN_COMPRA", referencedColumnName = "ID_ORDEN_COMPRA", insertable = false, updatable = false)
+    @JoinColumn(name = "ID_ORDEN_COMPRA", referencedColumnName = "ID_ORDEN_COMPRA")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private OrdenCompra ordenCompra;
 

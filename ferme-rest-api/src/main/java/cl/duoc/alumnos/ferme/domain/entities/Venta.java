@@ -43,7 +43,7 @@ public class Venta implements Serializable {
     @GeneratedValue(generator = "venta_seq", strategy = GenerationType.AUTO)
     private Integer id;
     
-    @JoinColumn(name = "ID_EMPLEADO", referencedColumnName = "ID_EMPLEADO", insertable = false, updatable = false)
+    @JoinColumn(name = "ID_EMPLEADO", referencedColumnName = "ID_EMPLEADO")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Empleado empleado;
     

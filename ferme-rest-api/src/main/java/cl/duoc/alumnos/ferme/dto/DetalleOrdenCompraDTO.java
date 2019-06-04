@@ -1,7 +1,6 @@
 package cl.duoc.alumnos.ferme.dto;
 
 import cl.duoc.alumnos.ferme.domain.entities.DetalleOrdenCompra;
-import cl.duoc.alumnos.ferme.domain.entities.OrdenCompra;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +15,8 @@ public class DetalleOrdenCompraDTO {
     private Integer idOrdenCompra;
     private Integer idProducto;
     private Integer cantidadProducto;
+    private String nombreProducto;
+    private Integer codigoProducto;
 
     public DetalleOrdenCompraDTO() {
         super();
@@ -51,6 +52,22 @@ public class DetalleOrdenCompraDTO {
 
     public void setCantidadProducto(Integer cantidadProducto) {
         this.cantidadProducto = cantidadProducto;
+    }
+
+    public String getNombreProducto() {
+        return nombreProducto;
+    }
+
+    public void setNombreProducto(String nombreProducto) {
+        this.nombreProducto = nombreProducto;
+    }
+
+    public Integer getCodigoProducto() {
+        return codigoProducto;
+    }
+
+    public void setCodigoProducto(Integer codigoProducto) {
+        this.codigoProducto = codigoProducto;
     }
     
     public DetalleOrdenCompra toEntity() {

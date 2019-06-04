@@ -5,6 +5,7 @@ import cl.duoc.alumnos.ferme.domain.entities.Empleado;
 import cl.duoc.alumnos.ferme.domain.entities.OrdenCompra;
 import cl.duoc.alumnos.ferme.domain.entities.QOrdenCompra;
 import cl.duoc.alumnos.ferme.domain.repositories.IEmpleadosRepository;
+import cl.duoc.alumnos.ferme.domain.repositories.IFunctionsRepository;
 import cl.duoc.alumnos.ferme.domain.repositories.IOrdenesCompraRepository;
 import cl.duoc.alumnos.ferme.dto.DetalleOrdenCompraDTO;
 import cl.duoc.alumnos.ferme.dto.OrdenCompraDTO;
@@ -40,6 +41,7 @@ public class OrdenesCompraService implements IOrdenesCompraService {
     
     @Autowired private IOrdenesCompraRepository ordenCompraRepo;
     @Autowired private IEmpleadosRepository empleadoRepo;
+    @Autowired private IFunctionsRepository funcRepo;
     private static final Logger LOG = LoggerFactory.getLogger(OrdenesCompraService.class);
 
     @Override
@@ -66,6 +68,10 @@ public class OrdenesCompraService implements IOrdenesCompraService {
         boolean conversionCompleta = (condicion != null && ordenCompraCount == 1);
         ordenesCompra.forEach((entity) -> {
             OrdenCompraDTO dto = entity.toDTO(conversionCompleta);
+            for (DetalleOrdenCompraDTO detalle : dto.getDetallesOrdenCompra()) {
+                String codigoProducto = funcRepo.getProductoCodigo(detalle.getIdProducto());
+                detalle.setCodigoProducto(Integer.valueOf(codigoProducto));
+            }
             pagina.add(dto);
         });
         LOG.info("getOrdenesCompra - Resultados procesados con éxito.");

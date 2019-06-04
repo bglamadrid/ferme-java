@@ -13,7 +13,6 @@ import cl.duoc.alumnos.ferme.services.interfaces.IOrdenesCompraService;
 import cl.duoc.alumnos.ferme.util.FermeDates;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -70,7 +69,7 @@ public class OrdenesCompraService implements IOrdenesCompraService {
             OrdenCompraDTO dto = entity.toDTO(conversionCompleta);
             for (DetalleOrdenCompraDTO detalle : dto.getDetallesOrdenCompra()) {
                 String codigoProducto = funcRepo.getProductoCodigo(detalle.getIdProducto());
-                detalle.setCodigoProducto(Integer.valueOf(codigoProducto));
+                detalle.setCodigoProducto(Long.valueOf(codigoProducto));
             }
             pagina.add(dto);
         });

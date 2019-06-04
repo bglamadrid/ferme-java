@@ -16,7 +16,7 @@ public class DetalleOrdenCompraDTO {
     private Integer idProducto;
     private Integer cantidadProducto;
     private String nombreProducto;
-    private Integer codigoProducto;
+    private Long codigoProducto;
 
     public DetalleOrdenCompraDTO() {
         super();
@@ -62,11 +62,11 @@ public class DetalleOrdenCompraDTO {
         this.nombreProducto = nombreProducto;
     }
 
-    public Integer getCodigoProducto() {
+    public Long getCodigoProducto() {
         return codigoProducto;
     }
 
-    public void setCodigoProducto(Integer codigoProducto) {
+    public void setCodigoProducto(Long codigoProducto) {
         this.codigoProducto = codigoProducto;
     }
     

@@ -51,7 +51,7 @@ public class ProductosController {
     public Collection<TipoProductoDTO> getTiposProducto(@RequestParam Map<String,String> allRequestParams) {
         Predicate filtros = null;
         if (allRequestParams != null && !allRequestParams.isEmpty()) {
-            filtros = this.fmlProductoSvc.queryParamsMapToFamiliasProductosFilteringPredicate(allRequestParams);
+            filtros = this.tpProductoSvc.queryParamsMapToTiposProductosFilteringPredicate(allRequestParams);
         }
         return this.tpProductoSvc.getTiposProductos(filtros);
     }

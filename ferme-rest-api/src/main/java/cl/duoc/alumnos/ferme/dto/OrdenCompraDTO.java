@@ -90,7 +90,11 @@ public class OrdenCompraDTO {
             LOG.info("toEntity() - idOrdenCompra es null");
         }
         
-        entity.setEstado(estadoOrdenCompra.charAt(0));
+        if (estadoOrdenCompra != null && !estadoOrdenCompra.isEmpty()) {
+            entity.setEstado(estadoOrdenCompra.charAt(0));
+        } else {
+            entity.setEstado(Ferme.ORDEN_COMPRA_ESTADO_SOLICITADO);
+        }
         
         
         DateFormat formateador = new SimpleDateFormat(Ferme.DEFAULT_DATE_FORMAT);

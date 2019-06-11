@@ -85,10 +85,13 @@ public class DetalleOrdenCompra implements Serializable {
     public DetalleOrdenCompraDTO toDTO() {
         DetalleOrdenCompraDTO dto = new DetalleOrdenCompraDTO();
         dto.setIdDetalleOrdenCompra(id);
-        dto.setCantidadProducto(cantidad);
-        dto.setIdProducto(producto.getId());
         dto.setIdOrdenCompra(ordenCompra.getId());
-        dto.setNombreProducto(producto.getNombre());
+        
+        Producto productoEntity = this.getProducto();
+        dto.setIdProducto(productoEntity.getId());
+        dto.setNombreProducto(productoEntity.getNombre());
+        dto.setCantidadProducto(cantidad);
+        
         return dto;
     }
 

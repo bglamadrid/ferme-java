@@ -63,11 +63,6 @@ public class Producto implements Serializable {
         super();
     }
 
-    public Producto(Integer id) {
-        super();
-        this.id = id;
-    }
-
     public Integer getId() {
         return id;
     }

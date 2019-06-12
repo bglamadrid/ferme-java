@@ -96,9 +96,9 @@ public class OrdenesCompraController {
     public Integer saveOrdenCompra(@RequestBody OrdenCompraDTO dto) throws NotFoundException {
         
         if (dto != null) {
-            LOG.debug("saveEmpleado - dto="+dto);
+            LOG.debug("saveOrdenCompra - dto="+dto);
             Integer ordenCompraId = ordenCompraSvc.saveOrdenCompra(dto);
-            LOG.debug("saveEmpleado - ordenCompraId="+ordenCompraId);
+            LOG.debug("saveOrdenCompra - ordenCompraId="+ordenCompraId);
             return ordenCompraId;
         }
         return null;

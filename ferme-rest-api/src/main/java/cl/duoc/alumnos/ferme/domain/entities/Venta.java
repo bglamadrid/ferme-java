@@ -72,11 +72,6 @@ public class Venta implements Serializable {
         super();
     }
 
-    public Venta(Integer id) {
-        super();
-        this.id = id;
-    }
-
     public Integer getId() {
         return id;
     }

@@ -64,11 +64,6 @@ public class Usuario implements Serializable {
         super();
     }
 
-    public Usuario(Integer id) {
-        super();
-        this.id = id;
-    }
-
     public Integer getId() {
         return id;
     }

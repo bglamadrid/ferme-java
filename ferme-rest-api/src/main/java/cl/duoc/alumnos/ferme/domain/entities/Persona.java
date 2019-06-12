@@ -63,11 +63,6 @@ public class Persona implements Serializable {
         super();
     }
 
-    public Persona(int id) {
-        super();
-        this.id = id;
-    }
-
     public Integer getId() {
         return id;
     }

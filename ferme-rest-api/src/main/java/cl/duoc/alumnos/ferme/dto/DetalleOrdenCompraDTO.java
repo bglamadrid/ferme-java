@@ -1,6 +1,7 @@
 package cl.duoc.alumnos.ferme.dto;
 
 import cl.duoc.alumnos.ferme.domain.entities.DetalleOrdenCompra;
+import cl.duoc.alumnos.ferme.domain.entities.Producto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -80,6 +81,10 @@ public class DetalleOrdenCompraDTO {
         } catch (NullPointerException exc) {
             LOG.warn("toEntity() - idDetalleOrdenCompra es null");
         }
+        
+        Producto productoEntity = new Producto();
+        productoEntity.setId(idProducto);
+        entity.setProducto(productoEntity);
         
         entity.setCantidad(cantidadProducto);
         

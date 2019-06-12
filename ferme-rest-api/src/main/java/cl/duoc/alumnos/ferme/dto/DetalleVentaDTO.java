@@ -99,10 +99,13 @@ public class DetalleVentaDTO {
             LOG.info("toEntity() - idDetalleVenta es null");
         }
         
+        Producto entityProducto = new Producto();
+        entityProducto.setId(idProducto);
+        entity.setProducto(entityProducto);
+        
         entity.setMonto(montoDetalleVenta);
         entity.setUnidades(unidadesProducto);
         
-        entity.setProducto(new Producto(idProducto));
         
         return entity;
     }

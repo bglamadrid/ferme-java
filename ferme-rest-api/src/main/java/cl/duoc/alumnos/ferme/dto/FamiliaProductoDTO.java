@@ -73,8 +73,11 @@ public class FamiliaProductoDTO {
             LOG.info("toEntity() - idFamiliaProducto es null");
         }
         
+        Rubro rubroEntity = new Rubro();
+        rubroEntity.setId(idRubro);
+        entity.setRubro(rubroEntity);
+        
         entity.setDescripcion(descripcionFamiliaProducto);
-        entity.setRubro(new Rubro(idRubro));
         
         return entity;
     }

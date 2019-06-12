@@ -4,8 +4,10 @@ import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.dto.TipoProductoDTO;
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,6 +18,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
+import org.hibernate.annotations.Cascade;
 
 /**
  *
@@ -39,7 +42,8 @@ public class TipoProducto implements Serializable {
     private String nombre;
     
     @JoinColumn(name = "ID_FAMILIA_PRODUCTO", referencedColumnName = "ID_FAMILIA_PRODUCTO")
-    @ManyToOne(optional = false)
+    @ManyToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.LAZY)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private FamiliaProducto familia;
 
     public TipoProducto() {

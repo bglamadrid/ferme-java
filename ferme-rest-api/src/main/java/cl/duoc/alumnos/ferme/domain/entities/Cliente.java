@@ -4,6 +4,7 @@ import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.dto.ClienteDTO;
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -38,8 +39,8 @@ public class Cliente implements Serializable {
     @GeneratedValue(generator = "cliente_seq", strategy = GenerationType.AUTO)
     private Integer id;
     
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA", insertable = true, updatable = true)
+    @OneToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.LAZY)
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Persona persona;
 

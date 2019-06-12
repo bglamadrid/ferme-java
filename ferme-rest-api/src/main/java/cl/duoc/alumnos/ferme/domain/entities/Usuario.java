@@ -7,8 +7,10 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,6 +23,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
+import org.hibernate.annotations.Cascade;
 
 /**
  *
@@ -40,7 +43,8 @@ public class Usuario implements Serializable {
     private Integer id;
     
     @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA")
-    @OneToOne(optional = false)
+    @OneToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.LAZY)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Persona persona;
     
     @Size(min = 1, max = 100)

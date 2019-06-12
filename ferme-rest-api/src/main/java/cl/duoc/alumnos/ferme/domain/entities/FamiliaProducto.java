@@ -4,6 +4,7 @@ import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.dto.FamiliaProductoDTO;
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,6 +18,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
+import org.hibernate.annotations.Cascade;
 
 /**
  *
@@ -40,11 +42,13 @@ public class FamiliaProducto implements Serializable {
     private String descripcion;
     
     @JoinColumn(name = "ID_RUBRO", referencedColumnName = "ID_RUBRO")
-    @ManyToOne(optional = false)
+    @ManyToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.LAZY)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Rubro rubro;
     
     @JoinColumn(name = "ID_PROVEEDOR", referencedColumnName = "ID_PROVEEDOR")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.LAZY)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Proveedor proveedor;
 
     public FamiliaProducto() {

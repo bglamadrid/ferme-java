@@ -4,6 +4,7 @@ import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.dto.ProveedorDTO;
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -36,8 +37,8 @@ public class Proveedor implements Serializable {
     @GeneratedValue(generator = "proveedor_seq", strategy = GenerationType.AUTO)
     private Integer id;
     
-    @OneToOne(optional = false, fetch = FetchType.EAGER)
-    @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA", insertable = true, updatable = true)
+    @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA")
+    @OneToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.EAGER)
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Persona persona;
     

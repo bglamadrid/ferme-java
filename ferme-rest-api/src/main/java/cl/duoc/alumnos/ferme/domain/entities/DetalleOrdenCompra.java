@@ -4,6 +4,7 @@ import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.dto.DetalleOrdenCompraDTO;
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -36,7 +37,7 @@ public class DetalleOrdenCompra implements Serializable {
     protected Integer id;
     
     @JoinColumn(name = "ID_PRODUCTO", referencedColumnName = "ID_PRODUCTO")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Producto producto;
     
     @Column(name = "CANTIDAD")

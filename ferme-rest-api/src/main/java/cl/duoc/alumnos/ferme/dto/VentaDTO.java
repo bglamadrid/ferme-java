@@ -111,9 +111,11 @@ public class VentaDTO {
         entityCliente.setId(idCliente);
         entity.setCliente(entityCliente);
         
-        Empleado entityEmpleado = new Empleado();
-        entityEmpleado.setId(idEmpleado);
-        entity.setEmpleado(entityEmpleado);
+        if (idEmpleado != null && idEmpleado != 0) {
+            Empleado entityEmpleado = new Empleado();
+            entityEmpleado.setId(idEmpleado);
+            entity.setEmpleado(entityEmpleado);
+        }
         
         long subtotal = 0;
         for (DetalleVentaDTO dtl : detallesVenta) {

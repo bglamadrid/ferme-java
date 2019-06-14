@@ -1,10 +1,13 @@
 package cl.duoc.alumnos.ferme.dto;
 
+import cl.duoc.alumnos.ferme.domain.entities.Cliente;
 import cl.duoc.alumnos.ferme.domain.entities.DetalleVenta;
+import cl.duoc.alumnos.ferme.domain.entities.Empleado;
 import cl.duoc.alumnos.ferme.domain.entities.Venta;
 import cl.duoc.alumnos.ferme.util.FermeDates;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -98,8 +101,29 @@ public class VentaDTO {
         
         entity.setFecha(_fechaVenta);
         
-        List<DetalleVenta> _detallesEntities = this.detallesToEntity();
-        entity.setDetalles(_detallesEntities);
+        if (tipoVenta != null && !tipoVenta.isEmpty()) {
+            entity.setTipoVenta(tipoVenta.charAt(0));
+        } else {
+            entity.setTipoVenta('B');
+        }
+        
+        Cliente entityCliente = new Cliente();
+        entityCliente.setId(idCliente);
+        entity.setCliente(entityCliente);
+        
+        Empleado entityEmpleado = new Empleado();
+        entityEmpleado.setId(idEmpleado);
+        entity.setEmpleado(entityEmpleado);
+        
+        long subtotal = 0;
+        for (DetalleVentaDTO dtl : detallesVenta) {
+            long detalleTotal = dtl.getPrecioProducto() * dtl.getUnidadesProducto();
+            subtotal += detalleTotal;
+        }
+        entity.setSubtotal(subtotal);
+        
+        List<DetalleVenta> detallesEntities = this.detallesToEntity();
+        entity.setDetalles(detallesEntities);
         
         return entity;
     }

@@ -4,8 +4,10 @@ import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.dto.ProductoDTO;
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,6 +18,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
+import org.hibernate.annotations.Cascade;
 
 /**
  *
@@ -51,17 +54,13 @@ public class Producto implements Serializable {
     @Column(name = "DESCRIPCION")
     private String descripcion;
     
-    @JoinColumn(name = "ID_TIPO_PRODUCTO", referencedColumnName = "ID_TIPO_PRODUCTO", insertable = true, updatable = true)
-    @ManyToOne(optional = false)
+    @JoinColumn(name = "ID_TIPO_PRODUCTO", referencedColumnName = "ID_TIPO_PRODUCTO")
+    @ManyToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.LAZY)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private TipoProducto tipo;
 
     public Producto() {
         super();
-    }
-
-    public Producto(Integer id) {
-        super();
-        this.id = id;
     }
 
     public Integer getId() {
@@ -122,15 +121,19 @@ public class Producto implements Serializable {
 
     public ProductoDTO toDTO() {
         ProductoDTO dto = new ProductoDTO();
+        TipoProducto esteTipo = this.getTipo();
+        FamiliaProducto estaFamilia = esteTipo.getFamilia();
         
         dto.setIdProducto(id);
-        dto.setIdTipoProducto(tipo.getId());
         dto.setDescripcionProducto(descripcion);
         dto.setNombreProducto(nombre);
         dto.setPrecioProducto(precio);
-        dto.setNombreTipoProducto(tipo.getNombre());
         dto.setStockActualProducto(stockActual);
         dto.setStockCriticoProducto(stockCritico);
+        dto.setIdTipoProducto(esteTipo.getId());
+        dto.setNombreTipoProducto(esteTipo.getNombre());
+        dto.setIdFamiliaProducto(estaFamilia.getId());
+        dto.setDescripcionFamiliaProducto(estaFamilia.getDescripcion());
         
         return dto;
     }

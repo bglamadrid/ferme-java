@@ -2,11 +2,14 @@ package cl.duoc.alumnos.ferme.services;
 
 import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.domain.entities.Cliente;
+import cl.duoc.alumnos.ferme.domain.entities.DetalleVenta;
 import cl.duoc.alumnos.ferme.domain.entities.Empleado;
+import cl.duoc.alumnos.ferme.domain.entities.Producto;
 import cl.duoc.alumnos.ferme.domain.entities.QVenta;
 import cl.duoc.alumnos.ferme.domain.entities.Venta;
 import cl.duoc.alumnos.ferme.domain.repositories.IClientesRepository;
 import cl.duoc.alumnos.ferme.domain.repositories.IEmpleadosRepository;
+import cl.duoc.alumnos.ferme.domain.repositories.IProductosRepository;
 import cl.duoc.alumnos.ferme.domain.repositories.IVentasRepository;
 import cl.duoc.alumnos.ferme.dto.VentaDTO;
 import cl.duoc.alumnos.ferme.services.interfaces.IVentasService;
@@ -16,6 +19,7 @@ import com.querydsl.core.types.Predicate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -41,6 +45,7 @@ public class VentasService implements IVentasService {
     @Autowired private IVentasRepository ventaRepo;
     @Autowired private IEmpleadosRepository empleadoRepo;
     @Autowired private IClientesRepository clienteRepo;
+    @Autowired private IProductosRepository productoRepo;
     private static final Logger LOG = LoggerFactory.getLogger(VentasService.class);
     
     @Override
@@ -129,6 +134,19 @@ public class VentasService implements IVentasService {
         if (entity.getDetalles() == null || entity.getDetalles().isEmpty()) {
             return 0;
         } else {
+            Iterator<DetalleVenta> it = entity.getDetalles().iterator();
+            while (it.hasNext()) {
+                DetalleVenta detalleEntity = it.next();
+                Integer productoId = detalleEntity.getProducto().getId();
+                Optional<Producto> productoEntityFromId = productoRepo.findById(productoId);
+                LOG.debug("saveVenta - productoId="+productoId);
+                if (productoEntityFromId.isPresent()) {
+                    detalleEntity.setProducto(productoEntityFromId.get());
+                } else {
+                    throw new NotFoundException("Un producto listado en la venta no existe");
+                }
+            }
+            
             entity = ventaRepo.saveAndFlush(entity);
             return entity.getId();
         }

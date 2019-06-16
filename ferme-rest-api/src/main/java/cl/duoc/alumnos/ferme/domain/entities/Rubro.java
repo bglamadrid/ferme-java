@@ -40,11 +40,6 @@ public class Rubro implements Serializable {
         super();
     }
 
-    public Rubro(Integer id) {
-        super();
-        this.id = id;
-    }
-
     public Integer getId() {
         return id;
     }

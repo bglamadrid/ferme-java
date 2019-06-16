@@ -2,20 +2,26 @@ package cl.duoc.alumnos.ferme.services;
 
 import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.domain.entities.Empleado;
+import cl.duoc.alumnos.ferme.domain.entities.DetalleOrdenCompra;
 import cl.duoc.alumnos.ferme.domain.entities.OrdenCompra;
+import cl.duoc.alumnos.ferme.domain.entities.Producto;
 import cl.duoc.alumnos.ferme.domain.entities.QOrdenCompra;
+import cl.duoc.alumnos.ferme.domain.entities.QProducto;
+import cl.duoc.alumnos.ferme.domain.repositories.IDetallesOrdenesCompraRepository;
 import cl.duoc.alumnos.ferme.domain.repositories.IEmpleadosRepository;
+import cl.duoc.alumnos.ferme.domain.repositories.IFunctionsRepository;
 import cl.duoc.alumnos.ferme.domain.repositories.IOrdenesCompraRepository;
+import cl.duoc.alumnos.ferme.domain.repositories.IProductosRepository;
 import cl.duoc.alumnos.ferme.dto.DetalleOrdenCompraDTO;
 import cl.duoc.alumnos.ferme.dto.OrdenCompraDTO;
 import cl.duoc.alumnos.ferme.services.interfaces.IOrdenesCompraService;
 import cl.duoc.alumnos.ferme.util.FermeDates;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -39,7 +45,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class OrdenesCompraService implements IOrdenesCompraService {
     
     @Autowired private IOrdenesCompraRepository ordenCompraRepo;
+    //@Autowired private IDetallesOrdenesCompraRepository productoRepo;
     @Autowired private IEmpleadosRepository empleadoRepo;
+    @Autowired private IProductosRepository productoRepo;
+    @Autowired private IFunctionsRepository funcRepo;
     private static final Logger LOG = LoggerFactory.getLogger(OrdenesCompraService.class);
 
     @Override
@@ -66,6 +75,14 @@ public class OrdenesCompraService implements IOrdenesCompraService {
         boolean conversionCompleta = (condicion != null && ordenCompraCount == 1);
         ordenesCompra.forEach((entity) -> {
             OrdenCompraDTO dto = entity.toDTO(conversionCompleta);
+            for (DetalleOrdenCompraDTO detalle : dto.getDetallesOrdenCompra()) {
+                Integer idProducto = detalle.getIdProducto();
+                BooleanBuilder bb = new BooleanBuilder().and(QProducto.producto.id.eq(idProducto));
+                Producto productoEntity = productoRepo.findAll(bb).iterator().next();
+                detalle.setNombreProducto(productoEntity.getNombre());
+                String codigoProducto = funcRepo.getProductoCodigo(idProducto);
+                detalle.setCodigoProducto(Long.valueOf(codigoProducto));
+            }
             pagina.add(dto);
         });
         LOG.info("getOrdenesCompra - Resultados procesados con éxito.");
@@ -161,6 +178,19 @@ public class OrdenesCompraService implements IOrdenesCompraService {
         if (entity.getDetalles() == null || entity.getDetalles().isEmpty()) {
             return 0;
         } else {
+            Iterator<DetalleOrdenCompra> it = entity.getDetalles().iterator();
+            while (it.hasNext()) {
+                DetalleOrdenCompra detalleEntity = it.next();
+                Integer productoId = detalleEntity.getProducto().getId();
+                Optional<Producto> productoEntityFromId = productoRepo.findById(productoId);
+                LOG.debug("saveOrdenCompra - productoId="+productoId);
+                if (productoEntityFromId.isPresent()) {
+                    detalleEntity.setProducto(productoEntityFromId.get());
+                } else {
+                    throw new NotFoundException("Un producto listado en la orden de compra no existe");
+                }
+            }
+            
             entity = ordenCompraRepo.saveAndFlush(entity);
             return entity.getId();
         }

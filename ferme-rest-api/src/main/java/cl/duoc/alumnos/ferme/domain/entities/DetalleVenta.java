@@ -4,6 +4,7 @@ import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.dto.DetalleVentaDTO;
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,6 +17,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import org.hibernate.annotations.Cascade;
 
 /**
  *
@@ -34,8 +36,9 @@ public class DetalleVenta implements Serializable {
     @GeneratedValue(generator = "detalle_venta_seq", strategy = GenerationType.AUTO)
     private Integer id;
     
-    @JoinColumn(name = "ID_PRODUCTO", referencedColumnName = "ID_PRODUCTO", insertable = false, updatable = false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_PRODUCTO", referencedColumnName = "ID_PRODUCTO")
+    @ManyToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.LAZY)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Producto producto;
     
     @Column(name = "UNIDADES")
@@ -44,8 +47,9 @@ public class DetalleVenta implements Serializable {
     @Column(name = "MONTO_DETALLE")
     private int monto;
     
-    @JoinColumn(name = "ID_VENTA", referencedColumnName = "ID_VENTA", insertable = false, updatable = false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_VENTA", referencedColumnName = "ID_VENTA")
+    @ManyToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.LAZY)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Venta venta;
 
     public DetalleVenta() {
@@ -95,9 +99,15 @@ public class DetalleVenta implements Serializable {
     public DetalleVentaDTO toDTO() {
         DetalleVentaDTO dto = new DetalleVentaDTO();
         dto.setIdDetalleVenta(id);
-        dto.setMontoDetalleVenta(monto);
-        dto.setUnidadesProducto(unidades);
         dto.setIdVenta(venta.getId());
+        dto.setMontoDetalleVenta(monto);
+        
+        Producto productoEntity = this.getProducto();
+        dto.setIdProducto(productoEntity.getId());
+        dto.setNombreProducto(productoEntity.getNombre());
+        dto.setPrecioProducto(productoEntity.getPrecio());
+        dto.setUnidadesProducto(unidades);
+        
         return dto;
     }
 

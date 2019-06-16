@@ -4,6 +4,7 @@ import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.dto.DetalleOrdenCompraDTO;
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -17,6 +18,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import org.hibernate.annotations.Cascade;
 
 /**
  *
@@ -35,15 +37,17 @@ public class DetalleOrdenCompra implements Serializable {
     @GeneratedValue(generator = "detalle_orden_compra_seq", strategy = GenerationType.AUTO)
     protected Integer id;
     
-    @JoinColumn(name = "ID_PRODUCTO", referencedColumnName = "ID_PRODUCTO", insertable = false, updatable = false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_PRODUCTO", referencedColumnName = "ID_PRODUCTO")
+    @ManyToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.LAZY)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Producto producto;
     
     @Column(name = "CANTIDAD")
     private int cantidad;
     
-    @JoinColumn(name = "ID_ORDEN_COMPRA", referencedColumnName = "ID_ORDEN_COMPRA", insertable = false, updatable = false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_ORDEN_COMPRA", referencedColumnName = "ID_ORDEN_COMPRA")
+    @ManyToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.LAZY)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private OrdenCompra ordenCompra;
 
     public DetalleOrdenCompra() {
@@ -85,9 +89,13 @@ public class DetalleOrdenCompra implements Serializable {
     public DetalleOrdenCompraDTO toDTO() {
         DetalleOrdenCompraDTO dto = new DetalleOrdenCompraDTO();
         dto.setIdDetalleOrdenCompra(id);
-        dto.setCantidadProducto(cantidad);
-        dto.setIdProducto(producto.getId());
         dto.setIdOrdenCompra(ordenCompra.getId());
+        
+        Producto productoEntity = this.getProducto();
+        dto.setIdProducto(productoEntity.getId());
+        dto.setNombreProducto(productoEntity.getNombre());
+        dto.setCantidadProducto(cantidad);
+        
         return dto;
     }
 

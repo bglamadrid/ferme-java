@@ -21,6 +21,8 @@ public class ProductoDTO {
     private Integer stockCriticoProducto;
     private Integer idTipoProducto;
     private String nombreTipoProducto;
+    private Integer idFamiliaProducto;
+    private String descripcionFamiliaProducto;
 
     public ProductoDTO() {
         super();
@@ -97,6 +99,22 @@ public class ProductoDTO {
     public void setNombreTipoProducto(String nombreTipoProducto) {
         this.nombreTipoProducto = nombreTipoProducto;
     }
+
+    public Integer getIdFamiliaProducto() {
+        return idFamiliaProducto;
+    }
+
+    public void setIdFamiliaProducto(Integer idFamiliaProducto) {
+        this.idFamiliaProducto = idFamiliaProducto;
+    }
+
+    public String getDescripcionFamiliaProducto() {
+        return descripcionFamiliaProducto;
+    }
+
+    public void setDescripcionFamiliaProducto(String descripcionFamiliaProducto) {
+        this.descripcionFamiliaProducto = descripcionFamiliaProducto;
+    }
     
     public Producto toEntity() {
         Producto entity = new Producto();
@@ -123,7 +141,7 @@ public class ProductoDTO {
 
     @Override
     public String toString() {
-        return "ProductoDTO{" + "idProducto=" + idProducto + ", codigoProducto=" + codigoProducto + ", nombreProducto=" + nombreProducto + ", descripcionProducto=" + descripcionProducto + ", precioProducto=" + precioProducto + ", stockActualProducto=" + stockActualProducto + ", stockCriticoProducto=" + stockCriticoProducto + ", idTipoProducto=" + idTipoProducto + ", nombreTipoProducto=" + nombreTipoProducto + '}';
+        return "ProductoDTO{" + "idProducto=" + idProducto + ", codigoProducto=" + codigoProducto + ", nombreProducto=" + nombreProducto + ", descripcionProducto=" + descripcionProducto + ", precioProducto=" + precioProducto + ", stockActualProducto=" + stockActualProducto + ", stockCriticoProducto=" + stockCriticoProducto + ", idTipoProducto=" + idTipoProducto + ", nombreTipoProducto=" + nombreTipoProducto + ", idFamiliaProducto=" + idFamiliaProducto + ", nombreFamiliaProducto=" + descripcionFamiliaProducto + '}';
     }
 
 }

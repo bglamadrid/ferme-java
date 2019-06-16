@@ -154,8 +154,12 @@ public class ProductosService implements IProductosService, IFamiliasProductoSer
                         bb.and(qFamilia.id.eq(parsedValueI));
                         return bb; //match por id es único
                     case "descripcion":
-                        paramValue = "%" + paramValue.toUpperCase() + "%";
-                        bb.and(qFamilia.descripcion.upper().like(paramValue.toUpperCase()));
+                        paramValue = "%" + paramValue + "%";
+                        bb.and(qFamilia.descripcion.likeIgnoreCase(paramValue));
+                        break;
+                    case "proveedor":
+                        parsedValueI = Integer.valueOf(paramValue);
+                        bb.and(qFamilia.proveedor.id.eq(parsedValueI));
                         break;
                     default: break;
                 }
@@ -183,8 +187,16 @@ public class ProductosService implements IProductosService, IFamiliasProductoSer
                         bb.and(qTipo.id.eq(parsedValueI));
                         return bb; //match por id es único
                     case "nombre":
-                        paramValue = "%" + paramValue.toUpperCase() + "%";
-                        bb.and(qTipo.nombre.upper().like(paramValue.toUpperCase()));
+                        paramValue = "%" + paramValue + "%";
+                        bb.and(qTipo.nombre.likeIgnoreCase(paramValue));
+                        break;
+                    case "familia":
+                        parsedValueI = Integer.valueOf(paramValue);
+                        bb.and(qTipo.familia.id.eq(parsedValueI));
+                        break;
+                    case "proveedor":
+                        parsedValueI = Integer.valueOf(paramValue);
+                        bb.and(qTipo.familia.proveedor.id.eq(parsedValueI));
                         break;
                     default: break;
                 }
@@ -212,12 +224,24 @@ public class ProductosService implements IProductosService, IFamiliasProductoSer
                         bb.and(qProducto.id.eq(parsedValueI));
                         return bb; //match por id es único
                     case "nombre":
-                        paramValue = "%" + paramValue.toUpperCase() + "%";
-                        bb.and(qProducto.nombre.upper().like(paramValue.toUpperCase()));
+                        paramValue = "%" + paramValue + "%";
+                        bb.and(qProducto.nombre.likeIgnoreCase(paramValue));
                         break;
                     case "descripcion":
-                        paramValue = "%" + paramValue.toUpperCase() + "%";
-                        bb.and(qProducto.descripcion.upper().like(paramValue.toUpperCase()));
+                        paramValue = "%" + paramValue + "%";
+                        bb.and(qProducto.descripcion.likeIgnoreCase(paramValue));
+                        break;
+                    case "tipo":
+                        parsedValueI = Integer.valueOf(paramValue);
+                        bb.and(qProducto.tipo.id.eq(parsedValueI));
+                        break;
+                    case "familia":
+                        parsedValueI = Integer.valueOf(paramValue);
+                        bb.and(qProducto.tipo.familia.id.eq(parsedValueI));
+                        break;
+                    case "proveedor":
+                        parsedValueI = Integer.valueOf(paramValue);
+                        bb.and(qProducto.tipo.familia.proveedor.id.eq(parsedValueI));
                         break;
                     case "precio":
                         parsedValueL = Long.valueOf(paramValue);

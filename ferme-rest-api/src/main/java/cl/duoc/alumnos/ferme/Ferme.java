@@ -58,7 +58,7 @@ public class Ferme implements WebMvcConfigurer {
     
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/api/gestion/*").allowedOrigins("http://localhost:4200");
+        registry.addMapping("/api/gestion/*").allowedOrigins("http://localhost:4200").allowedMethods("*");
     }
     
 }

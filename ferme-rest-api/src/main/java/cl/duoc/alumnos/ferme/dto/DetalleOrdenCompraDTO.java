@@ -1,7 +1,7 @@
 package cl.duoc.alumnos.ferme.dto;
 
 import cl.duoc.alumnos.ferme.domain.entities.DetalleOrdenCompra;
-import cl.duoc.alumnos.ferme.domain.entities.OrdenCompra;
+import cl.duoc.alumnos.ferme.domain.entities.Producto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +16,8 @@ public class DetalleOrdenCompraDTO {
     private Integer idOrdenCompra;
     private Integer idProducto;
     private Integer cantidadProducto;
+    private String nombreProducto;
+    private Long codigoProducto;
 
     public DetalleOrdenCompraDTO() {
         super();
@@ -52,6 +54,22 @@ public class DetalleOrdenCompraDTO {
     public void setCantidadProducto(Integer cantidadProducto) {
         this.cantidadProducto = cantidadProducto;
     }
+
+    public String getNombreProducto() {
+        return nombreProducto;
+    }
+
+    public void setNombreProducto(String nombreProducto) {
+        this.nombreProducto = nombreProducto;
+    }
+
+    public Long getCodigoProducto() {
+        return codigoProducto;
+    }
+
+    public void setCodigoProducto(Long codigoProducto) {
+        this.codigoProducto = codigoProducto;
+    }
     
     public DetalleOrdenCompra toEntity() {
         DetalleOrdenCompra entity = new DetalleOrdenCompra();
@@ -63,6 +81,10 @@ public class DetalleOrdenCompraDTO {
         } catch (NullPointerException exc) {
             LOG.warn("toEntity() - idDetalleOrdenCompra es null");
         }
+        
+        Producto productoEntity = new Producto();
+        productoEntity.setId(idProducto);
+        entity.setProducto(productoEntity);
         
         entity.setCantidad(cantidadProducto);
         

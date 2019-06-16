@@ -1,6 +1,7 @@
 package cl.duoc.alumnos.ferme.dto;
 
 import cl.duoc.alumnos.ferme.domain.entities.Producto;
+import cl.duoc.alumnos.ferme.domain.entities.TipoProducto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -112,6 +113,10 @@ public class ProductoDTO {
         entity.setPrecio(precioProducto);
         entity.setStockActual(stockActualProducto);
         entity.setStockCritico(stockCriticoProducto);
+        
+        TipoProducto tipoEntity = new TipoProducto();
+        tipoEntity.setId(idTipoProducto);
+        entity.setTipo(tipoEntity);
         
         return entity;
     }

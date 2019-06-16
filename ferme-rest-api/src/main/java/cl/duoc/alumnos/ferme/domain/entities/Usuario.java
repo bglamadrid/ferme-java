@@ -2,6 +2,7 @@ package cl.duoc.alumnos.ferme.domain.entities;
 
 import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.dto.UsuarioDTO;
+import cl.duoc.alumnos.ferme.util.PersonaConverter;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -106,13 +107,13 @@ public class Usuario implements Serializable {
     
     public UsuarioDTO toDTO() {
         UsuarioDTO dto = new UsuarioDTO();
+        dto = PersonaConverter.cargarDatosPersonaEnDTO(persona, dto);
         
         dto.setIdUsuario(id);
         dto.setNombreUsuario(nombre);
         
         DateFormat formateador = new SimpleDateFormat(Ferme.DEFAULT_DATE_FORMAT);
         dto.setFechaCreacionUsuario(formateador.format(fechaCreacion));
-        dto.setPersona(persona.toDTO());
         
         return dto;
     }

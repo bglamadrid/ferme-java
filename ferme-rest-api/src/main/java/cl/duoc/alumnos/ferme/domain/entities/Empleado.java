@@ -2,6 +2,7 @@ package cl.duoc.alumnos.ferme.domain.entities;
 
 import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.dto.EmpleadoDTO;
+import cl.duoc.alumnos.ferme.util.PersonaConverter;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.CascadeType;
@@ -77,17 +78,11 @@ public class Empleado implements Serializable {
 
     public EmpleadoDTO toDTO() {
         EmpleadoDTO dto = new EmpleadoDTO();
+        dto = PersonaConverter.cargarDatosPersonaEnDTO(persona, dto);
         
         dto.setIdEmpleado(id);
         dto.setIdPersona(persona.getId());
         dto.setIdCargo(cargo.getId());
-        dto.setRutPersona(persona.getRut());
-        dto.setNombreCompletoPersona(persona.getNombreCompleto());
-        dto.setDireccionPersona(persona.getDireccion());
-        dto.setEmailPersona(persona.getEmail());
-        dto.setFonoPersona1(persona.getFono1());
-        dto.setFonoPersona2(persona.getFono2());
-        dto.setFonoPersona3(persona.getFono3());
         
         return dto;
     }

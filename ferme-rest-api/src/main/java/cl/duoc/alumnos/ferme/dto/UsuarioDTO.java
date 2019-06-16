@@ -12,14 +12,13 @@ import org.slf4j.LoggerFactory;
  *
  * @author Benjamin Guillermo
  */
-public class UsuarioDTO {
+public class UsuarioDTO extends PersonaDTO {
     private final static Logger LOG = LoggerFactory.getLogger(UsuarioDTO.class);
     
     private Integer idUsuario;
     private String nombreUsuario;
-    private String claveUsuario;
     private String fechaCreacionUsuario;
-    private PersonaDTO persona;
+    private String sesion;
 
     public UsuarioDTO() {
         super();
@@ -41,12 +40,12 @@ public class UsuarioDTO {
         this.nombreUsuario = nombreUsuario;
     }
 
-    public String getClaveUsuario() {
-        return claveUsuario;
+    public String getSesion() {
+        return sesion;
     }
 
-    public void setClaveUsuario(String claveUsuario) {
-        this.claveUsuario = claveUsuario;
+    public void setSesion(String sesion) {
+        this.sesion = sesion;
     }
 
     public String getFechaCreacionUsuario() {
@@ -55,14 +54,6 @@ public class UsuarioDTO {
 
     public void setFechaCreacionUsuario(String fechaCreacionUsuario) {
         this.fechaCreacionUsuario = fechaCreacionUsuario;
-    }
-
-    public PersonaDTO getPersona() {
-        return persona;
-    }
-
-    public void setPersona(PersonaDTO persona) {
-        this.persona = persona;
     }
     
     public Usuario toEntity() throws ParseException {
@@ -85,7 +76,7 @@ public class UsuarioDTO {
 
     @Override
     public String toString() {
-        return "UsuarioDTO{" + "idUsuario=" + idUsuario + ", nombreUsuario=" + nombreUsuario + ", claveUsuario=" + claveUsuario + ", fechaCreacionUsuario=" + fechaCreacionUsuario + ", persona=" + persona + '}';
+        return "UsuarioDTO{" + "idUsuario=" + idUsuario + ", nombreUsuario=" + nombreUsuario + ", fechaCreacionUsuario=" + fechaCreacionUsuario + ", persona=" + super.toString() + '}';
     }
     
 }

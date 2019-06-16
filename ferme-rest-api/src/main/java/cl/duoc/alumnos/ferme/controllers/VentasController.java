@@ -1,6 +1,7 @@
 package cl.duoc.alumnos.ferme.controllers;
 
 import cl.duoc.alumnos.ferme.Ferme;
+import cl.duoc.alumnos.ferme.dto.DetalleVentaDTO;
 import cl.duoc.alumnos.ferme.dto.VentaDTO;
 import cl.duoc.alumnos.ferme.services.interfaces.IVentasService;
 import com.querydsl.core.types.Predicate;
@@ -69,6 +70,21 @@ public class VentasController {
         LOG.debug("getVentas - ventas.size()="+ventas.size());
         LOG.info("getVentas - Solicitud completa. Enviando respuesta al cliente.");
         return ventas;
+    }
+    
+    /**
+     * Obtiene los detalles de una orden de compra.
+     * @param dto Un objeto DTO representando la Orden de Compra a consultar.
+     * @return Una colección de objetos DTO.
+     */
+    @PostMapping("/ventas/detalles")
+    public Collection<DetalleVentaDTO> getDetallesVenta(@RequestBody VentaDTO dto) {
+        
+        if (dto != null && dto.getIdVenta() != null && dto.getIdVenta() != 0) {
+            LOG.debug("getDetallesVenta - dto="+dto.toString());
+            return ventaSvc.getDetallesVenta(dto.getIdVenta());
+        }
+        return null;
     }
     
     /**

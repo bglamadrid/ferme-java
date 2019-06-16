@@ -11,6 +11,7 @@ import cl.duoc.alumnos.ferme.domain.repositories.IClientesRepository;
 import cl.duoc.alumnos.ferme.domain.repositories.IEmpleadosRepository;
 import cl.duoc.alumnos.ferme.domain.repositories.IProductosRepository;
 import cl.duoc.alumnos.ferme.domain.repositories.IVentasRepository;
+import cl.duoc.alumnos.ferme.dto.DetalleVentaDTO;
 import cl.duoc.alumnos.ferme.dto.VentaDTO;
 import cl.duoc.alumnos.ferme.services.interfaces.IVentasService;
 import cl.duoc.alumnos.ferme.util.FermeDates;
@@ -62,7 +63,6 @@ public class VentasService implements IVentasService {
             ventas = ventaRepo.findAll(condicion, pgbl);
         }
         
-        
         ventas.forEach((entity) -> {
             VentaDTO dto = entity.toDTO(true);
             pagina.add(dto);
@@ -91,7 +91,7 @@ public class VentasService implements IVentasService {
                         paramValue = paramValue.trim();
                         Date fecha = FermeDates.fechaStringToDate(paramValue);
                         if (fecha == null) {
-                            LOG.warn("VentasService.queryParamsMapToVentasFilteringPredicate() : El formato de la fecha ingresada no es válida.");
+                            LOG.warn("queryParamsMapToVentasFilteringPredicate - El formato de la fecha ingresada no es válida.");
                         } else {
                             bb.and(qVentas.fecha.eq(fecha));
                         }
@@ -107,11 +107,29 @@ public class VentasService implements IVentasService {
                     default: break;
                 }
             } catch (NumberFormatException exc) {
-                LOG.error("No se pudo traducir el parámetro '" + paramName + "' a un número (su valor era '" + paramValue + "').", exc);
+                LOG.error("queryParamsMapToVentasFilteringPredicate - No se pudo traducir el parámetro '" + paramName + "' a un número (su valor era '" + paramValue + "').", exc);
             }
         }
         
         return bb;
+    }
+
+    @Override
+    public Collection<DetalleVentaDTO> getDetallesVenta(Integer ventaId) {
+        
+        Venta entity = null;
+        try {
+            entity = ventaRepo.getOne(ventaId);
+        } catch (Exception e) {
+            LOG.error("getDetallesVenta - No se encontró una venta con el ID " + ventaId, e);
+        }
+        
+        if (entity == null) {
+            return null;
+        } else {
+            VentaDTO dtoReal = entity.toDTO(false);
+            return dtoReal.getDetallesVenta();
+        }
     }
 
     @Override
@@ -159,7 +177,7 @@ public class VentasService implements IVentasService {
             ventaRepo.deleteById(ventaId);
             return true;
         } catch (EmptyResultDataAccessException exc) {
-            LOG.error("Error al borrar Venta con id " +ventaId, exc);
+            LOG.error("deleteVenta - Error al borrar Venta con id " +ventaId, exc);
         }
         return false;
     }

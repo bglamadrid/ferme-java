@@ -94,7 +94,7 @@ public class VentaDTO {
                 entity.setId(_id);
             }
         } catch (NullPointerException exc) {
-            LOG.info("toEntity() - idVenta es null");
+            LOG.info("toEntity - idVenta es null");
         }
         
         Date _fechaVenta = FermeDates.fechaStringToDate(fechaVenta);
@@ -117,14 +117,8 @@ public class VentaDTO {
             entity.setEmpleado(entityEmpleado);
         }
         
-        long subtotal = 0;
-        for (DetalleVentaDTO dtl : detallesVenta) {
-            long detalleTotal = dtl.getPrecioProducto() * dtl.getUnidadesProducto();
-            subtotal += detalleTotal;
-        }
-        entity.setSubtotal(subtotal);
-        
         List<DetalleVenta> detallesEntities = this.detallesToEntity();
+        detallesEntities.forEach((dtl) -> {dtl.setVenta(entity);});
         entity.setDetalles(detallesEntities);
         
         return entity;

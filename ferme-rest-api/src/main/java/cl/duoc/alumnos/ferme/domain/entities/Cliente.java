@@ -2,6 +2,7 @@ package cl.duoc.alumnos.ferme.domain.entities;
 
 import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.dto.ClienteDTO;
+import cl.duoc.alumnos.ferme.util.PersonaConverter;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.CascadeType;
@@ -65,38 +66,10 @@ public class Cliente implements Serializable {
     }
     
     public ClienteDTO toDTO() {
-        LOG.debug("toDTO");
         ClienteDTO dto = new ClienteDTO();
+        dto = PersonaConverter.cargarDatosPersonaEnDTO(persona, dto);
+        
         dto.setIdCliente(id);
-        dto.setIdPersona(persona.getId());
-        dto.setNombreCompletoPersona(persona.getNombreCompleto());
-        dto.setRutPersona(persona.getRut());
-        
-        String direccion = persona.getDireccion();
-        String email = persona.getEmail();
-        Long fono1 = persona.getFono1();
-        Long fono2 = persona.getFono2();
-        Long fono3 = persona.getFono3();
-        
-        if (direccion != null) {
-          dto.setDireccionPersona(direccion);
-        }
-        
-        if (email != null) {
-          dto.setEmailPersona(email);
-        }
-        
-        if (fono1 != null) {
-          dto.setFonoPersona1(fono1);
-        }
-        
-        if (fono2 != null) {
-          dto.setFonoPersona2(fono2);
-        }
-        
-        if (fono3 != null) {
-          dto.setFonoPersona3(fono3);
-        }
         
         return dto;
     }

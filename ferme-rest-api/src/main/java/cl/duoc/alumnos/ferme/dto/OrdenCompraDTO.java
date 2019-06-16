@@ -87,7 +87,7 @@ public class OrdenCompraDTO {
                 entity.setId(idOrdenCompra);
             }
         } catch (NullPointerException exc) {
-            LOG.info("toEntity() - idOrdenCompra es null");
+            LOG.info("toEntity - idOrdenCompra es null");
         }
         
         if (estadoOrdenCompra != null && !estadoOrdenCompra.isEmpty()) {
@@ -102,17 +102,17 @@ public class OrdenCompraDTO {
             Date fechaSolicitud = formateador.parse(fechaSolicitudOrdenCompra);
             entity.setFechaSolicitud(fechaSolicitud);
         } catch (Exception exc) {
-            LOG.warn("toEntity() - 'fechaSolicitudOrdenCompra' es null o posee un valor inválido", exc);
+            LOG.warn("toEntity - 'fechaSolicitudOrdenCompra' es null o posee un valor inválido", exc);
             Date fechaActual = Calendar.getInstance().getTime();
             entity.setFechaSolicitud(fechaActual);
-            LOG.info("toEntity() - Se asume fecha y hora actual ("+formateador.format(fechaActual)+") para fecha de solicitud");
+            LOG.info("toEntity - Se asume fecha y hora actual ("+formateador.format(fechaActual)+") para fecha de solicitud");
         }
         
         try {
             Date fechaRecepcion = formateador.parse(fechaRecepcionOrdenCompra);
             entity.setFechaRecepcion(fechaRecepcion);
         } catch (Exception exc) {
-            LOG.warn("toEntity() - 'fechaRecepcionOrdenCompra' es null o posee formato incorrecto", exc);
+            LOG.warn("toEntity - 'fechaRecepcionOrdenCompra' es null o posee formato incorrecto", exc);
         }
         
         List<DetalleOrdenCompra> _detallesEntities = this.detallesToEntity();

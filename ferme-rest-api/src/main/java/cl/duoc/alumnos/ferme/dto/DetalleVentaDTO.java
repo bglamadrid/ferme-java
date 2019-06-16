@@ -102,10 +102,7 @@ public class DetalleVentaDTO {
         Producto entityProducto = new Producto();
         entityProducto.setId(idProducto);
         entity.setProducto(entityProducto);
-        
-        entity.setMonto(montoDetalleVenta);
         entity.setUnidades(unidadesProducto);
-        
         
         return entity;
     }

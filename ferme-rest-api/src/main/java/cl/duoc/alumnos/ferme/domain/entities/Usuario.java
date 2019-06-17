@@ -3,6 +3,7 @@ package cl.duoc.alumnos.ferme.domain.entities;
 import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.dto.UsuarioDTO;
 import cl.duoc.alumnos.ferme.util.PersonaConverter;
+import cl.duoc.alumnos.ferme.util.FermeDates;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -104,20 +105,53 @@ public class Usuario implements Serializable {
     public void setPersona(Persona persona) {
         this.persona = persona;
     }
-    
+        
     public UsuarioDTO toDTO() {
         UsuarioDTO dto = new UsuarioDTO();
-        dto = PersonaConverter.cargarDatosPersonaEnDTO(persona, dto);
-        
         dto.setIdUsuario(id);
         dto.setNombreUsuario(nombre);
         
-        DateFormat formateador = new SimpleDateFormat(Ferme.DEFAULT_DATE_FORMAT);
-        dto.setFechaCreacionUsuario(formateador.format(fechaCreacion));
+        //generar string fecha
+        final String _fechaCreacion = FermeDates.fechaToString(fechaCreacion);
+        dto.setFechaCreacionUsuario(_fechaCreacion);
+        
+        dto.setIdPersona(persona.getId());
+        dto.setNombreCompletoPersona(persona.getNombreCompleto());
+        dto.setRutPersona(persona.getRut());
+        
+        String email = persona.getEmail();
+        
+        /*
+        String direccion = persona.getDireccion();
+        Long fono1 = persona.getFono1();
+        Long fono2 = persona.getFono2();
+        Long fono3 = persona.getFono3();
+        
+        if (direccion != null) {
+          dto.setDireccionPersona(direccion);
+        }
+        
+        if (email != null) {
+          dto.setEmailPersona(email);
+        }
+        
+        if (fono1 != null) {
+          dto.setFonoPersona1(fono1);
+        }
+        
+        if (fono2 != null) {
+          dto.setFonoPersona2(fono2);
+        }
+        
+        if (fono3 != null) {
+          dto.setFonoPersona3(fono3);
+        }
+        */
+        
         
         return dto;
     }
-
+    
     @Override
     public int hashCode() {
         int hash = 5;
@@ -138,5 +172,5 @@ public class Usuario implements Serializable {
     public String toString() {
         return "cl.duoc.alumnos.ferme.entities.domain.Usuario[ idUsuario=" + id + " ]";
     }
-    
+
 }

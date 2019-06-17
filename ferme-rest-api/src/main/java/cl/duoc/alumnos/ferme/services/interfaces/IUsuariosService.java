@@ -4,6 +4,7 @@ import cl.duoc.alumnos.ferme.dto.UsuarioDTO;
 import com.querydsl.core.types.Predicate;
 import java.util.Collection;
 import java.util.Map;
+import javassist.NotFoundException;
 
 /**
  *
@@ -36,7 +37,7 @@ public interface IUsuariosService {
      * @param dto El objeto DTO de usuario con la información respectiva a guardar.
      * @return El ID del registro guardado.
      */
-    public int saveUsuario(UsuarioDTO dto);
+    public int saveUsuario(UsuarioDTO dto) throws NotFoundException;
     
     /**
      * 
@@ -45,5 +46,7 @@ public interface IUsuariosService {
      * @return true si es exitoso, false si falla.
      */
     public boolean deleteUsuario(Integer usuarioId);
+
+    public UsuarioDTO getUsuarioFromCredentials(String username, String password);
     
 }

@@ -10,7 +10,7 @@
         <property name="dataSourceName" value="ds"/>
         <property name="URL" value="jdbc:oracle:thin:@localhost:1521:xe"/>
         <property name="user" value="ferme"/>
-        <property name="password" value="ferme2019"/>
+        <property name="password" value="ferme"/>
     </bean>
  
 </beans>

@@ -1,10 +1,9 @@
 package cl.duoc.alumnos.ferme.dto;
 
-import cl.duoc.alumnos.ferme.Ferme;
+import cl.duoc.alumnos.ferme.domain.entities.Persona;
 import cl.duoc.alumnos.ferme.domain.entities.Usuario;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import cl.duoc.alumnos.ferme.util.FermeDates;
+import java.util.Date;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,7 +55,7 @@ public class UsuarioDTO extends PersonaDTO {
         this.fechaCreacionUsuario = fechaCreacionUsuario;
     }
     
-    public Usuario toEntity() throws ParseException {
+    public Usuario toEntity() {
         Usuario entity = new Usuario();
         try {
             if (idUsuario != 0) {
@@ -68,8 +67,13 @@ public class UsuarioDTO extends PersonaDTO {
         
         entity.setNombre(nombreUsuario);
         
-        DateFormat formateador = new SimpleDateFormat(Ferme.DEFAULT_DATE_FORMAT);
-        entity.setFechaCreacion(formateador.parse(fechaCreacionUsuario));
+        Date _fechaCreacion = FermeDates.fechaStringToDate(fechaCreacionUsuario);
+        if (_fechaCreacion != null) {
+            entity.setFechaCreacion(_fechaCreacion);
+        }
+        
+        Persona personaEntity = super.personaToEntity();
+        entity.setPersona(personaEntity);
         
         return entity;
     }

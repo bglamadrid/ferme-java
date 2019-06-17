@@ -44,8 +44,8 @@ public class Venta implements Serializable {
     @GeneratedValue(generator = "venta_seq", strategy = GenerationType.AUTO)
     private Integer id;
     
-    @JoinColumn(name = "ID_EMPLEADO", referencedColumnName = "ID_EMPLEADO")
-    @ManyToOne(cascade = CascadeType.ALL,optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_EMPLEADO", referencedColumnName = "ID_EMPLEADO", insertable = true, updatable = true)
+    @ManyToOne(cascade = CascadeType.ALL,optional = true, fetch = FetchType.LAZY)
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Empleado empleado;
     
@@ -132,15 +132,22 @@ public class Venta implements Serializable {
         VentaDTO dto = new VentaDTO();
         
         final int _id = id;
-        final int _clienteId = cliente.getId();
-        final int _empleadoId = empleado.getId();
         final String _tipoVenta = tipoVenta.toString();
         final long _subtotal = subtotal;
         final String _fechaVenta = FermeDates.fechaToString(fecha);
         
         dto.setIdVenta(_id);
-        dto.setIdCliente(_clienteId);
-        dto.setIdEmpleado(_empleadoId);
+        Cliente clienteEntity = this.getCliente();
+        Persona clientePersonaEntity = clienteEntity.getPersona();
+        dto.setIdCliente(clienteEntity.getId());
+        dto.setNombreCompletoPersonaCliente(clientePersonaEntity.getNombreCompleto());
+        dto.setRutPersonaCliente(clientePersonaEntity.getRut());
+        if (empleado != null) {
+            Empleado empleadoEntity = this.getEmpleado();
+            Persona empleadoPersonaEntity = empleadoEntity.getPersona();
+            dto.setIdEmpleado(empleadoEntity.getId());
+            dto.setNombreCompletoPersonaEmpleado(empleadoPersonaEntity.getNombreCompleto());
+        }   
         dto.setTipoVenta(_tipoVenta);
         dto.setSubtotalVenta(_subtotal);
         dto.setFechaVenta(_fechaVenta);

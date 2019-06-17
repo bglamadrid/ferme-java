@@ -67,7 +67,7 @@ public class ProductoDTO {
         this.stockCriticoProducto = stockCriticoProducto;
     }
 
-    public long getPrecio() {
+    public long getPrecioProducto() {
         return precioProducto;
     }
 

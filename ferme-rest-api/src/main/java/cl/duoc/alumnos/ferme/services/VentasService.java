@@ -136,6 +136,7 @@ public class VentasService implements IVentasService {
     public int saveVenta(VentaDTO dto) throws NotFoundException {
         
         Venta entity = dto.toEntity();
+        LOG.debug("saveVenta - entiy="+entity.toString());
         
         Optional<Cliente> clienteEntity = clienteRepo.findById(dto.getIdCliente());
         if (clienteEntity.isPresent()) {
@@ -144,9 +145,11 @@ public class VentasService implements IVentasService {
             throw new NotFoundException("El cliente de la venta no existe");
         }
         
-        Optional<Empleado> empleadoEntity = empleadoRepo.findById(dto.getIdEmpleado());
-        if (empleadoEntity.isPresent()) {
-            entity.setEmpleado(empleadoEntity.get());
+        if (dto.getIdEmpleado() != null) {
+            Optional<Empleado> empleadoEntity = empleadoRepo.findById(dto.getIdEmpleado());
+            if (empleadoEntity.isPresent()) {
+                entity.setEmpleado(empleadoEntity.get());
+            }
         }
         
         if (entity.getDetalles() == null || entity.getDetalles().isEmpty()) {
@@ -164,6 +167,8 @@ public class VentasService implements IVentasService {
                     throw new NotFoundException("Un producto listado en la venta no existe");
                 }
             }
+            
+            
             
             entity = ventaRepo.saveAndFlush(entity);
             return entity.getId();

@@ -25,7 +25,11 @@ public class VentaDTO {
     private long subtotalVenta;
     private List<DetalleVentaDTO> detallesVenta;
     private Integer idEmpleado;
+    private String nombreCompletoPersonaEmpleado;
+    private String rutPersonaEmpleado;
     private Integer idCliente;
+    private String nombreCompletoPersonaCliente;
+    private String rutPersonaCliente;
 
     public VentaDTO() {}
 
@@ -77,6 +81,22 @@ public class VentaDTO {
         this.idEmpleado = idEmpleado;
     }
 
+    public String getNombreCompletoPersonaEmpleado() {
+        return nombreCompletoPersonaEmpleado;
+    }
+
+    public void setNombreCompletoPersonaEmpleado(String nombreCompletoPersonaEmpleado) {
+        this.nombreCompletoPersonaEmpleado = nombreCompletoPersonaEmpleado;
+    }
+
+    public String getRutPersonaEmpleado() {
+        return rutPersonaEmpleado;
+    }
+
+    public void setRutPersonaEmpleado(String rutPersonaEmpleado) {
+        this.rutPersonaEmpleado = rutPersonaEmpleado;
+    }
+
     public Integer getIdCliente() {
         return idCliente;
     }
@@ -84,6 +104,23 @@ public class VentaDTO {
     public void setIdCliente(Integer idCliente) {
         this.idCliente = idCliente;
     }
+
+    public String getNombreCompletoPersonaCliente() {
+        return nombreCompletoPersonaCliente;
+    }
+
+    public void setNombreCompletoPersonaCliente(String nombreCompletoPersonaCliente) {
+        this.nombreCompletoPersonaCliente = nombreCompletoPersonaCliente;
+    }
+
+    public String getRutPersonaCliente() {
+        return rutPersonaCliente;
+    }
+
+    public void setRutPersonaCliente(String rutPersonaCliente) {
+        this.rutPersonaCliente = rutPersonaCliente;
+    }   
+    
     
     public Venta toEntity() {
         

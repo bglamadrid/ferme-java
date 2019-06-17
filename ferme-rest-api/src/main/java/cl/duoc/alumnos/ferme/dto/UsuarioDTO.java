@@ -16,6 +16,7 @@ public class UsuarioDTO extends PersonaDTO {
     
     private Integer idUsuario;
     private String nombreUsuario;
+    private String claveUsuario;
     private String fechaCreacionUsuario;
     private String sesion;
 
@@ -37,6 +38,14 @@ public class UsuarioDTO extends PersonaDTO {
 
     public void setNombreUsuario(String nombreUsuario) {
         this.nombreUsuario = nombreUsuario;
+    }
+
+    public String getClaveUsuario() {
+        return claveUsuario;
+    }
+
+    public void setClaveUsuario(String claveUsuario) {
+        this.claveUsuario = claveUsuario;
     }
 
     public String getSesion() {
@@ -66,6 +75,10 @@ public class UsuarioDTO extends PersonaDTO {
         }
         
         entity.setNombre(nombreUsuario);
+        
+        if (claveUsuario != null && !claveUsuario.isEmpty()) {
+            entity.setClave(claveUsuario);
+        } 
         
         Date _fechaCreacion = FermeDates.fechaStringToDate(fechaCreacionUsuario);
         if (_fechaCreacion != null) {

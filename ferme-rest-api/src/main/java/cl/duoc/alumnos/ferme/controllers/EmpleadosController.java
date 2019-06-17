@@ -37,8 +37,8 @@ public class EmpleadosController {
     
     @GetMapping("/empleados/{pageSize}")
     public Collection<EmpleadoDTO> getEmpleados(
-            @PathVariable Integer pageSize,
-            @RequestParam Map<String,String> allRequestParams
+        @PathVariable Integer pageSize,
+        @RequestParam Map<String,String> allRequestParams
     ) {
         
         return this.getEmpleados(pageSize, null, allRequestParams);
@@ -107,7 +107,7 @@ public class EmpleadosController {
      * @return true si la operación fue exitosa, false si no lo fue.
      */
     @PostMapping("/empleados/borrar")
-    public boolean deleteEmpleado(@RequestParam("id") Integer empleadoId) {
+    public boolean deleteEmpleado(@RequestBody Integer empleadoId) {
         
         if (empleadoId != null && empleadoId != 0) {
             LOG.debug("deleteEmpleado - empleadoId="+empleadoId);

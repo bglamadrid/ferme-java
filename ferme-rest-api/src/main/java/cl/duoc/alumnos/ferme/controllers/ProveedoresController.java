@@ -28,7 +28,7 @@ public class ProveedoresController {
     
     @Autowired private IProveedoresService proveedorSvc;
     
-    @GetMapping({"/proveedores", "/proveedores/"})
+    @GetMapping("/proveedores")
     public Collection<ProveedorDTO> getProveedores(@RequestParam Map<String,String> allRequestParams) {
         
         return this.getProveedores(null, null, allRequestParams);
@@ -87,7 +87,7 @@ public class ProveedoresController {
      * @param dto Un objeto DTO representando el Rubro a almacenar/actualizar.
      * @return El ID del rubro.
      */
-    @PostMapping({"/proveedores/guardar", "/proveedores/guardar/"})
+    @PostMapping("/proveedores/guardar")
     public Integer saveProveedor(@RequestBody ProveedorDTO dto) {
         
         if (dto != null) {
@@ -104,8 +104,8 @@ public class ProveedoresController {
      * @param proveedorId El ID del Rubro a eliminar.
      * @return true si la operación fue exitosa, false si no lo fue.
      */
-    @PostMapping({"/proveedores/borrar", "/proveedores/borrar/"})
-    public boolean deleteProveedor(@RequestParam("id") Integer proveedorId) {
+    @PostMapping("/proveedores/borrar")
+    public boolean deleteProveedor(@RequestBody Integer proveedorId) {
         
         if (proveedorId != null && proveedorId != 0) {
             LOG.debug("deleteProveedor - clienteId="+proveedorId);

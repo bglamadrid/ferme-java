@@ -12,6 +12,7 @@ import cl.duoc.alumnos.ferme.util.FermeDates;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -105,10 +106,24 @@ public class UsuariosService implements IUsuariosService {
     @Override
     public int saveUsuario(UsuarioDTO dto) throws NotFoundException {
         
-        Usuario entity = dto.toEntity();
+        Usuario entity;
+        if (dto.getIdUsuario()== null || dto.getIdUsuario() == 0) {
+            entity = dto.toEntity();
+            Date fechaAhora = Calendar.getInstance().getTime();
+            entity.setFechaCreacion(fechaAhora);
+        } else {
+            Optional<Usuario> entityQuery = usuarioRepo.findById(dto.getIdUsuario());
+            if (entityQuery.isPresent()) {
+                entity = entityQuery.get();
+                entity.setNombre(dto.getNombreUsuario());
+            } else {
+                throw new NotFoundException("Usuario no encontrado");
+            }
+        }
         
         Optional<Persona> personaEntity = personaRepo.findById(dto.getIdPersona());
         if (personaEntity.isPresent()) {
+            LOG.debug("hay persona en usuario");
             entity.setPersona(personaEntity.get());
         } else {
             throw new NotFoundException("Persona de Usuario no encontrada");

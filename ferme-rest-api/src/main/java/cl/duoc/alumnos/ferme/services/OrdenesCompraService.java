@@ -75,13 +75,15 @@ public class OrdenesCompraService implements IOrdenesCompraService {
         boolean conversionCompleta = (condicion != null && ordenCompraCount == 1);
         ordenesCompra.forEach((entity) -> {
             OrdenCompraDTO dto = entity.toDTO(conversionCompleta);
-            for (DetalleOrdenCompraDTO detalle : dto.getDetallesOrdenCompra()) {
-                Integer idProducto = detalle.getIdProducto();
-                BooleanBuilder bb = new BooleanBuilder().and(QProducto.producto.id.eq(idProducto));
-                Producto productoEntity = productoRepo.findAll(bb).iterator().next();
-                detalle.setNombreProducto(productoEntity.getNombre());
-                String codigoProducto = funcRepo.getProductoCodigo(idProducto);
-                detalle.setCodigoProducto(Long.valueOf(codigoProducto));
+            if (conversionCompleta) {
+                for (DetalleOrdenCompraDTO detalle : dto.getDetallesOrdenCompra()) {
+                    Integer idProducto = detalle.getIdProducto();
+                    BooleanBuilder bb = new BooleanBuilder().and(QProducto.producto.id.eq(idProducto));
+                    Producto productoEntity = productoRepo.findAll(bb).iterator().next();
+                    detalle.setNombreProducto(productoEntity.getNombre());
+                    String codigoProducto = funcRepo.getProductoCodigo(idProducto);
+                    detalle.setCodigoProducto(Long.valueOf(codigoProducto));
+                }
             }
             pagina.add(dto);
         });
@@ -104,7 +106,13 @@ public class OrdenesCompraService implements IOrdenesCompraService {
             return null;
         } else {
             OrdenCompraDTO dtoReal = entity.toDTO(false);
-            return dtoReal.getDetallesOrdenCompra();
+            List<DetalleOrdenCompraDTO> detalles = dtoReal.getDetallesOrdenCompra();
+            for (Iterator<DetalleOrdenCompraDTO> it = detalles.iterator(); it.hasNext();) {
+                DetalleOrdenCompraDTO next = it.next();
+                Integer prdId = next.getIdProducto();
+                next.setCodigoProducto(Long.valueOf(funcRepo.getProductoCodigo(prdId)));
+            }
+            return detalles;
         }
     }
 

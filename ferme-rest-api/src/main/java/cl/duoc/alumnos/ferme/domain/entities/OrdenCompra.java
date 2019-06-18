@@ -3,9 +3,8 @@ package cl.duoc.alumnos.ferme.domain.entities;
 import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.dto.DetalleOrdenCompraDTO;
 import cl.duoc.alumnos.ferme.dto.OrdenCompraDTO;
+import cl.duoc.alumnos.ferme.util.FermeDates;
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -122,11 +121,10 @@ public class OrdenCompra implements Serializable {
         dto.setIdOrdenCompra(id);
         dto.setIdEmpleado(empleado.getId());
         dto.setEstadoOrdenCompra(estado.toString());
-        dto.setFechaSolicitudOrdenCompra(fechaSolicitud.toString());
+        dto.setFechaSolicitudOrdenCompra(FermeDates.fechaToString(fechaSolicitud));
         
         if (fechaRecepcion != null) {
-            DateFormat formateador = new SimpleDateFormat(Ferme.DEFAULT_DATE_FORMAT);
-            dto.setFechaRecepcionOrdenCompra(formateador.format(fechaRecepcion));
+            dto.setFechaRecepcionOrdenCompra(FermeDates.fechaToString(fechaRecepcion));
         }
         
         if (!simple) {

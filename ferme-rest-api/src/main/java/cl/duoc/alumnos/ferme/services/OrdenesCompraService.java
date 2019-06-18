@@ -74,7 +74,7 @@ public class OrdenesCompraService implements IOrdenesCompraService {
         LOG.info("getOrdenesCompra - Procesando resultados...");
         boolean conversionCompleta = (condicion != null && ordenCompraCount == 1);
         ordenesCompra.forEach((entity) -> {
-            OrdenCompraDTO dto = entity.toDTO(conversionCompleta);
+            OrdenCompraDTO dto = entity.toDTO(!conversionCompleta);
             if (conversionCompleta) {
                 for (DetalleOrdenCompraDTO detalle : dto.getDetallesOrdenCompra()) {
                     Integer idProducto = detalle.getIdProducto();
@@ -107,8 +107,7 @@ public class OrdenesCompraService implements IOrdenesCompraService {
         } else {
             OrdenCompraDTO dtoReal = entity.toDTO(false);
             List<DetalleOrdenCompraDTO> detalles = dtoReal.getDetallesOrdenCompra();
-            for (Iterator<DetalleOrdenCompraDTO> it = detalles.iterator(); it.hasNext();) {
-                DetalleOrdenCompraDTO next = it.next();
+            for (DetalleOrdenCompraDTO next : detalles) {
                 Integer prdId = next.getIdProducto();
                 next.setCodigoProducto(Long.valueOf(funcRepo.getProductoCodigo(prdId)));
             }

@@ -106,7 +106,7 @@ public class ProductosController {
      * @return El ID de la familia de productos.
      */
     @PostMapping("/familias_producto/guardar")
-    public Integer saveFamiliaProducto(@RequestBody FamiliaProductoDTO dto) {
+    public Integer saveFamiliaProducto(@RequestBody FamiliaProductoDTO dto) throws NotFoundException {
         
         if (dto != null) {
             LOG.debug("saveFamiliaProducto - dto="+dto);

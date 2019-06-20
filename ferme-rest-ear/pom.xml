@@ -43,14 +43,14 @@
     <dependencies>
         <dependency>
             <groupId>cl.duoc.alumnos.proyectos</groupId>
-            <artifactId>ferme-ejb</artifactId>
-            <version>1</version>
+            <artifactId>ferme-rest-ejb</artifactId>
+            <version>1.0</version>
             <type>ejb</type>
         </dependency>
         <dependency>
             <groupId>cl.duoc.alumnos.proyectos</groupId>
-            <artifactId>ferme-web</artifactId>
-            <version>1</version>
+            <artifactId>ferme-rest-api</artifactId>
+            <version>1.0</version>
             <type>war</type>
         </dependency>
     </dependencies>

@@ -226,6 +226,10 @@ public class ProductosService implements IProductosService, IFamiliasProductoSer
                         parsedValueI = Integer.valueOf(paramValue);
                         bb.and(qProducto.id.eq(parsedValueI));
                         return bb; //match por id es único
+                    case "codigo":
+                        paramValue = "%" + paramValue + "%";
+                        bb.and(qProducto.codigo.likeIgnoreCase(paramValue));
+                        break;
                     case "nombre":
                         paramValue = "%" + paramValue + "%";
                         bb.and(qProducto.nombre.likeIgnoreCase(paramValue));

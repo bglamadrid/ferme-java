@@ -17,7 +17,8 @@ public class DetalleOrdenCompraDTO {
     private Integer idProducto;
     private Integer cantidadProducto;
     private String nombreProducto;
-    private Long codigoProducto;
+    private long precioProducto;
+    private String codigoProducto;
 
     public DetalleOrdenCompraDTO() {
         super();
@@ -63,12 +64,20 @@ public class DetalleOrdenCompraDTO {
         this.nombreProducto = nombreProducto;
     }
 
-    public Long getCodigoProducto() {
+    public String getCodigoProducto() {
         return codigoProducto;
     }
 
-    public void setCodigoProducto(Long codigoProducto) {
+    public void setCodigoProducto(String codigoProducto) {
         this.codigoProducto = codigoProducto;
+    }
+
+    public long getPrecioProducto() {
+        return precioProducto;
+    }
+
+    public void setPrecioProducto(long precioProducto) {
+        this.precioProducto = precioProducto;
     }
     
     public DetalleOrdenCompra toEntity() {

@@ -125,6 +125,7 @@ public class ProductoDTO {
             LOG.warn("toEntity() - idProducto es null");
         }
         
+        entity.setCodigo(codigoProducto);
         entity.setNombre(nombreProducto);
         entity.setDescripcion(descripcionProducto);
         entity.setPrecio(precioProducto);

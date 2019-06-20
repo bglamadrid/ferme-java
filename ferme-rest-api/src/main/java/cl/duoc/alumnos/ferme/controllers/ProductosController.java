@@ -190,7 +190,7 @@ public class ProductosController {
     public boolean deleteProducto(@RequestBody Integer productoId) {
         
         if (productoId != null && productoId != 0) {
-            LOG.debug("deleteProducto - clienteId="+productoId);
+            LOG.debug("deleteProducto - productoId="+productoId);
             return productoSvc.deleteProducto(productoId);
         }
         return false;

@@ -38,16 +38,16 @@ public class DetalleOrdenCompra implements Serializable {
     protected Integer id;
     
     @JoinColumn(name = "ID_PRODUCTO", referencedColumnName = "ID_PRODUCTO")
-    @ManyToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.LAZY)
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.DETACH, optional = false, fetch = FetchType.LAZY)
+    @Cascade(org.hibernate.annotations.CascadeType.DETACH)
     private Producto producto;
     
     @Column(name = "CANTIDAD")
     private int cantidad;
     
     @JoinColumn(name = "ID_ORDEN_COMPRA", referencedColumnName = "ID_ORDEN_COMPRA")
-    @ManyToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.LAZY)
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.DETACH, optional = false, fetch = FetchType.LAZY)
+    @Cascade(org.hibernate.annotations.CascadeType.DETACH)
     private OrdenCompra ordenCompra;
 
     public DetalleOrdenCompra() {
@@ -88,13 +88,15 @@ public class DetalleOrdenCompra implements Serializable {
     
     public DetalleOrdenCompraDTO toDTO() {
         DetalleOrdenCompraDTO dto = new DetalleOrdenCompraDTO();
-        dto.setIdDetalleOrdenCompra(id);
         dto.setIdOrdenCompra(ordenCompra.getId());
+        dto.setIdDetalleOrdenCompra(id);
+        dto.setCantidadProducto(cantidad);
         
         Producto productoEntity = this.getProducto();
         dto.setIdProducto(productoEntity.getId());
+        dto.setCodigoProducto(productoEntity.getCodigo());
         dto.setNombreProducto(productoEntity.getNombre());
-        dto.setCantidadProducto(cantidad);
+        dto.setPrecioProducto(productoEntity.getPrecio());
         
         return dto;
     }

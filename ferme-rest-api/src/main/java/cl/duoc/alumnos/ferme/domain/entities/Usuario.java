@@ -45,8 +45,8 @@ public class Usuario implements Serializable {
     private Integer id;
     
     @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA")
-    @OneToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.LAZY)
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.DETACH, optional = false, fetch = FetchType.LAZY)
+    @Cascade(org.hibernate.annotations.CascadeType.DETACH)
     private Persona persona;
     
     @Size(min = 1, max = 100)

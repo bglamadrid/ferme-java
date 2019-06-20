@@ -45,13 +45,13 @@ public class Venta implements Serializable {
     private Integer id;
     
     @JoinColumn(name = "ID_EMPLEADO", referencedColumnName = "ID_EMPLEADO", insertable = true, updatable = true)
-    @ManyToOne(cascade = CascadeType.ALL,optional = true, fetch = FetchType.LAZY)
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.DETACH,optional = true, fetch = FetchType.LAZY)
+    @Cascade(org.hibernate.annotations.CascadeType.DETACH)
     private Empleado empleado;
     
     @JoinColumn(name = "ID_CLIENTE", referencedColumnName = "ID_CLIENTE", insertable = true, updatable = true)
-    @ManyToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.LAZY)
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.DETACH, optional = false, fetch = FetchType.LAZY)
+    @Cascade(org.hibernate.annotations.CascadeType.DETACH)
     private Cliente cliente;
     
     @Column(name = "TIPO_VENTA")

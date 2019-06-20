@@ -73,6 +73,24 @@ public class VentasService implements IVentasService {
     }
 
     @Override
+    public Collection<DetalleVentaDTO> getDetallesVenta(Integer ventaId) {
+        
+        Venta entity = null;
+        try {
+            entity = ventaRepo.getOne(ventaId);
+        } catch (Exception e) {
+            LOG.error("getDetallesVenta - No se encontró una venta con el ID " + ventaId, e);
+        }
+        
+        if (entity == null) {
+            return null;
+        } else {
+            VentaDTO dtoReal = entity.toDTO(false);
+            return dtoReal.getDetallesVenta();
+        }
+    }
+
+    @Override
     public Predicate queryParamsMapToVentasFilteringPredicate(Map<String, String> queryParamsMap) {
         
         QVenta qVentas = QVenta.venta;
@@ -112,24 +130,6 @@ public class VentasService implements IVentasService {
         }
         
         return bb;
-    }
-
-    @Override
-    public Collection<DetalleVentaDTO> getDetallesVenta(Integer ventaId) {
-        
-        Venta entity = null;
-        try {
-            entity = ventaRepo.getOne(ventaId);
-        } catch (Exception e) {
-            LOG.error("getDetallesVenta - No se encontró una venta con el ID " + ventaId, e);
-        }
-        
-        if (entity == null) {
-            return null;
-        } else {
-            VentaDTO dtoReal = entity.toDTO(false);
-            return dtoReal.getDetallesVenta();
-        }
     }
 
     @Override

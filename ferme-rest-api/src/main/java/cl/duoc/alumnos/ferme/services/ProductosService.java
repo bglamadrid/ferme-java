@@ -43,7 +43,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class ProductosService implements IProductosService, IFamiliasProductoService, ITiposProductoService {
     
-    @Autowired private IFunctionsRepository funcRepo;
     @Autowired private IProductosRepository productoRepo;
     @Autowired private IFamiliasProductosRepository fmlProductoRepo;
     @Autowired private ITiposProductosRepository tpProductoRepo;
@@ -130,7 +129,6 @@ public class ProductosService implements IProductosService, IFamiliasProductoSer
         LOG.info("getProductos - Procesando resultados...");
         productos.forEach((entity) -> {
             ProductoDTO dto = entity.toDTO();
-            dto.setCodigoProducto(funcRepo.getProductoCodigo(dto.getIdProducto()));
             pagina.add(dto);
         });
         LOG.info("getProductos - Resultados procesados con éxito.");
@@ -223,6 +221,10 @@ public class ProductosService implements IProductosService, IFamiliasProductoSer
                         parsedValueI = Integer.valueOf(paramValue);
                         bb.and(qProducto.id.eq(parsedValueI));
                         return bb; //match por id es único
+                    case "codigo":
+                        paramValue = "%" + paramValue + "%";
+                        bb.and(qProducto.codigo.likeIgnoreCase(paramValue));
+                        break;
                     case "nombre":
                         paramValue = "%" + paramValue + "%";
                         bb.and(qProducto.nombre.likeIgnoreCase(paramValue));

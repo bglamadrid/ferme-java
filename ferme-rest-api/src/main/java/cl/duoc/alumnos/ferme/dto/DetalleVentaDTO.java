@@ -19,7 +19,7 @@ public class DetalleVentaDTO {
     private Integer unidadesProducto;
     private String nombreProducto;
     private Long precioProducto;
-    private Long codigoProducto;
+    private String codigoProducto;
 
     public DetalleVentaDTO() {
         super();
@@ -81,11 +81,11 @@ public class DetalleVentaDTO {
         this.precioProducto = precioProducto;
     }
 
-    public Long getCodigoProducto() {
+    public String getCodigoProducto() {
         return codigoProducto;
     }
 
-    public void setCodigoProducto(Long codigoProducto) {
+    public void setCodigoProducto(String codigoProducto) {
         this.codigoProducto = codigoProducto;
     }
 
@@ -99,10 +99,11 @@ public class DetalleVentaDTO {
             LOG.info("toEntity() - idDetalleVenta es null");
         }
         
+        entity.setUnidades(unidadesProducto);
+        
         Producto entityProducto = new Producto();
         entityProducto.setId(idProducto);
         entity.setProducto(entityProducto);
-        entity.setUnidades(unidadesProducto);
         
         return entity;
     }

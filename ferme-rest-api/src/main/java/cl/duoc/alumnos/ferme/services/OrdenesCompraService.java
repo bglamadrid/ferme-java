@@ -79,9 +79,9 @@ public class OrdenesCompraService implements IOrdenesCompraService {
                 Integer idProducto = detalle.getIdProducto();
                 BooleanBuilder bb = new BooleanBuilder().and(QProducto.producto.id.eq(idProducto));
                 Producto productoEntity = productoRepo.findAll(bb).iterator().next();
+                detalle.setCodigoProducto(productoEntity.getCodigo());
                 detalle.setNombreProducto(productoEntity.getNombre());
-                String codigoProducto = funcRepo.getProductoCodigo(idProducto);
-                detalle.setCodigoProducto(Long.valueOf(codigoProducto));
+                detalle.setPrecioProducto(productoEntity.getPrecio());
             }
             pagina.add(dto);
         });

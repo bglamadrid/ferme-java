@@ -9,7 +9,6 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -89,7 +88,7 @@ public class ClientesController {
      * @param dto Un ClienteDTO representando el Cliente a almacenar/actualizar.
      * @return El ID del cliente, 0 si falla al insertar, null si el JSON viene incorrecto.
      */
-    @PostMapping({"/clientes/guardar", "/clientes/guardar/"})
+    @PostMapping("/clientes/guardar")
     public Integer saveCliente(@RequestBody ClienteDTO dto) {
         if (dto != null) {
             LOG.debug("saveCliente - dto="+dto);
@@ -105,8 +104,8 @@ public class ClientesController {
      * @param clienteId El ID del Cliente a eliminar.
      * @return true si la operación fue exitosa, false si no lo fue
      */
-    @PostMapping({"/clientes/borrar", "/clientes/borrar/"})
-    public boolean deleteCliente(@RequestParam("id") Integer clienteId) {
+    @PostMapping("/clientes/borrar")
+    public boolean deleteCliente(@RequestBody Integer clienteId) {
         
         if (clienteId != null && clienteId != 0) {
             LOG.debug("deleteCliente - clienteId="+clienteId);

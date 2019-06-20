@@ -42,13 +42,13 @@ public class FamiliaProducto implements Serializable {
     private String descripcion;
     
     @JoinColumn(name = "ID_RUBRO", referencedColumnName = "ID_RUBRO")
-    @ManyToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.LAZY)
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.DETACH, optional = false, fetch = FetchType.LAZY)
+    @Cascade(org.hibernate.annotations.CascadeType.DETACH)
     private Rubro rubro;
     
     @JoinColumn(name = "ID_PROVEEDOR", referencedColumnName = "ID_PROVEEDOR")
-    @ManyToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.LAZY)
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.DETACH, optional = false, fetch = FetchType.LAZY)
+    @Cascade(org.hibernate.annotations.CascadeType.DETACH)
     private Proveedor proveedor;
 
     public FamiliaProducto() {

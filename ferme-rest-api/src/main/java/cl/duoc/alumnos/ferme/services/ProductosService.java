@@ -3,13 +3,16 @@ package cl.duoc.alumnos.ferme.services;
 import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.domain.entities.FamiliaProducto;
 import cl.duoc.alumnos.ferme.domain.entities.Producto;
+import cl.duoc.alumnos.ferme.domain.entities.Proveedor;
+import cl.duoc.alumnos.ferme.domain.entities.Rubro;
 import cl.duoc.alumnos.ferme.domain.entities.QFamiliaProducto;
 import cl.duoc.alumnos.ferme.domain.entities.QProducto;
 import cl.duoc.alumnos.ferme.domain.entities.QTipoProducto;
 import cl.duoc.alumnos.ferme.domain.entities.TipoProducto;
 import cl.duoc.alumnos.ferme.domain.repositories.IFamiliasProductosRepository;
-import cl.duoc.alumnos.ferme.domain.repositories.IFunctionsRepository;
 import cl.duoc.alumnos.ferme.domain.repositories.IProductosRepository;
+import cl.duoc.alumnos.ferme.domain.repositories.IProveedoresRepository;
+import cl.duoc.alumnos.ferme.domain.repositories.IRubrosRepository;
 import cl.duoc.alumnos.ferme.domain.repositories.ITiposProductosRepository;
 import cl.duoc.alumnos.ferme.dto.FamiliaProductoDTO;
 import cl.duoc.alumnos.ferme.dto.ProductoDTO;
@@ -43,8 +46,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class ProductosService implements IProductosService, IFamiliasProductoService, ITiposProductoService {
     
-    @Autowired private IFunctionsRepository funcRepo;
     @Autowired private IProductosRepository productoRepo;
+    @Autowired private IRubrosRepository rubroRepo;
+    @Autowired private IProveedoresRepository proveedorRepo;
     @Autowired private IFamiliasProductosRepository fmlProductoRepo;
     @Autowired private ITiposProductosRepository tpProductoRepo;
     private final static Logger LOG = LoggerFactory.getLogger(ProductosService.class);
@@ -130,7 +134,6 @@ public class ProductosService implements IProductosService, IFamiliasProductoSer
         LOG.info("getProductos - Procesando resultados...");
         productos.forEach((entity) -> {
             ProductoDTO dto = entity.toDTO();
-            dto.setCodigoProducto(funcRepo.getProductoCodigo(dto.getIdProducto()));
             pagina.add(dto);
         });
         LOG.info("getProductos - Resultados procesados con éxito.");
@@ -262,9 +265,22 @@ public class ProductosService implements IProductosService, IFamiliasProductoSer
     }
 
     @Override
-    public int saveFamiliaProducto(FamiliaProductoDTO dto) {
+    public int saveFamiliaProducto(FamiliaProductoDTO dto) throws NotFoundException {
         
         FamiliaProducto entity = dto.toEntity();
+        Optional<Rubro> rubroEntity = rubroRepo.findById(dto.getIdRubro());
+        if (rubroEntity.isPresent()) {
+            entity.setRubro(rubroEntity.get());
+        } else {
+            throw new NotFoundException("El rubro asociado a esta familia no existe.");
+        }
+        
+        Optional<Proveedor> proveedorEntity = proveedorRepo.findById(dto.getIdProveedor());
+        if (proveedorEntity.isPresent()) {
+            entity.setProveedor(proveedorEntity.get());
+        } else {
+            throw new NotFoundException("El proveedor asignado a esta familia no existe.");
+        }
         entity = fmlProductoRepo.saveAndFlush(entity);
         return entity.getId();
     }

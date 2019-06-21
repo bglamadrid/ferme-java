@@ -36,14 +36,9 @@ public class CargoDTO {
     
     public Cargo toEntity() {
         Cargo entity = new Cargo();
-        try {
-            if (idCargo != 0) {
-                entity.setId(idCargo);
-            }
-        } catch (NullPointerException exc) {
-            LOG.info("toEntity() - idCliente es null");
+        if (idCargo != null && idCargo != 0) {
+            entity.setId(idCargo);
         }
-        
         entity.setDescripcion(descripcionCargo);
         
         return entity;

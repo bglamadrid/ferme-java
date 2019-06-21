@@ -36,14 +36,9 @@ public class ProveedorDTO extends PersonaDTO {
     
     public Proveedor toEntity() {
         Proveedor entity = new Proveedor();
-        try {
-            if (idProveedor != 0) {
-                entity.setId(idProveedor);
-            }
-        } catch (NullPointerException exc) {
-            LOG.info("toEntity() - idProveedor es null");
+        if (idProveedor != null && idProveedor != 0) {
+            entity.setId(idProveedor);
         }
-        
         entity.setRazonSocial(razonSocialProveedor);
         
         entity.setPersona(this.personaToEntity());

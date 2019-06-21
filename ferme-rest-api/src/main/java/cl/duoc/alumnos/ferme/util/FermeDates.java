@@ -12,18 +12,14 @@ import org.slf4j.LoggerFactory;
  *
  * @author got12
  */
-public class FermeDates {
-    
-    private static final Logger LOG = LoggerFactory.getLogger(FermeDates.class);
-    
+public class FermeDates {    
 
     public static final Date fechaStringToDate(String stringFecha) {
         Date fecha; 
+        DateFormat formateador = new SimpleDateFormat(Ferme.DEFAULT_DATE_FORMAT);
         try {
-            DateFormat formateador = new SimpleDateFormat(Ferme.DEFAULT_DATE_FORMAT);
             fecha = formateador.parse(stringFecha);
-        } catch (Exception exc) {
-            LOG.warn("FermeDates.fechaStringToDate(): La fecha ingresada tiene un formato inválido, no se pudo convertir y es null.", exc);
+        } catch (ParseException exc) {
             fecha = null;
         }
         

@@ -7,17 +7,13 @@ import cl.duoc.alumnos.ferme.domain.entities.Venta;
 import cl.duoc.alumnos.ferme.util.FermeDates;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author Benjamin Guillermo
  */
 public class VentaDTO {
-    private final static Logger LOG = LoggerFactory.getLogger(VentaDTO.class);
     
     private Integer idVenta;
     private String tipoVenta;
@@ -123,20 +119,13 @@ public class VentaDTO {
     
     
     public Venta toEntity() {
-        
         Venta entity = new Venta();
-        try {
-            final Integer _id = idVenta;
-            if (_id != 0) {
-                entity.setId(_id);
-            }
-        } catch (NullPointerException exc) {
-            LOG.info("toEntity - idVenta es null");
+        if (idVenta != null && idVenta != 0) {
+            entity.setId(idVenta);
         }
         
-        Date _fechaVenta = FermeDates.fechaStringToDate(fechaVenta);
-        
-        entity.setFecha(_fechaVenta);
+        Date fVenta = FermeDates.fechaStringToDate(fechaVenta);
+        entity.setFecha(fVenta);
         
         if (tipoVenta != null && !tipoVenta.isEmpty()) {
             entity.setTipoVenta(tipoVenta.charAt(0));

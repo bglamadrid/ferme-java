@@ -36,14 +36,9 @@ public class RubroDTO {
     
     public Rubro toEntity() {
         Rubro entity = new Rubro();
-        try {
-            if (idRubro != 0) {
-                entity.setId(idRubro);
-            }
-        } catch (NullPointerException exc) {
-            LOG.info("toEntity() - idRubro es null");
+        if (idRubro != null && idRubro != 0) {
+            entity.setId(idRubro);
         }
-        
         entity.setDescripcion(descripcionRubro);
         
         return entity;

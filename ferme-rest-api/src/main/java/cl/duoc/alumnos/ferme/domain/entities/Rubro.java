@@ -58,7 +58,6 @@ public class Rubro implements Serializable {
     
     public RubroDTO toDTO() {
         RubroDTO dto = new RubroDTO();
-        
         dto.setIdRubro(id);
         dto.setDescripcionRubro(descripcion);
         

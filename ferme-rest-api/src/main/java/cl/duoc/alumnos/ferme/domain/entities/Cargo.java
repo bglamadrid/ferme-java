@@ -60,6 +60,7 @@ public class Cargo implements Serializable {
         CargoDTO dto = new CargoDTO();
         dto.setIdCargo(id);
         dto.setDescripcionCargo(descripcion);
+        
         return dto;
     }
 

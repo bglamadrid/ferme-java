@@ -103,7 +103,7 @@ public class DetalleVenta implements Serializable {
         dto.setMontoDetalleVenta(monto);
         dto.setUnidadesProducto(unidades);
         
-        Producto productoEntity = this.getProducto();
+        Producto productoEntity = getProducto();
         dto.setIdProducto(productoEntity.getId());
         dto.setCodigoProducto(productoEntity.getCodigo());
         dto.setNombreProducto(productoEntity.getNombre());

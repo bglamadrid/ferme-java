@@ -76,11 +76,12 @@ public class TipoProducto implements Serializable {
 
     public TipoProductoDTO toDTO() {
         TipoProductoDTO dto = new TipoProductoDTO();
-        
         dto.setIdTipoProducto(id);
-        dto.setIdFamiliaProducto(familia.getId());
         dto.setNombreTipoProducto(nombre);
-        dto.setNombreFamiliaProducto(familia.getDescripcion());
+        
+        FamiliaProducto fml = getFamilia();
+        dto.setIdFamiliaProducto(fml.getId());
+        dto.setNombreFamiliaProducto(fml.getDescripcion());
         
         return dto;
     }

@@ -27,12 +27,8 @@ public class ClienteDTO extends PersonaDTO {
     
     public Cliente toEntity() {
         Cliente entity = new Cliente();
-        try {
-            if (idCliente != 0) {
-                entity.setId(idCliente);
-            }
-        } catch (NullPointerException exc) {
-            LOG.info("toEntity() - idCliente es null");
+        if (idCliente != null && idCliente != 0) {
+            entity.setId(idCliente);
         }
         
         entity.setPersona(this.personaToEntity());

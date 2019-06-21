@@ -54,14 +54,9 @@ public class TipoProductoDTO {
     
     public TipoProducto toEntity() {
         TipoProducto entity = new TipoProducto();
-        try {
-            if (idTipoProducto != 0) {
-                entity.setId(idTipoProducto);
-            }
-        } catch (NullPointerException exc) {
-            LOG.info("toEntity() - idTipoProducto es null");
+        if (idTipoProducto != null && idTipoProducto != 0) {
+            entity.setId(idTipoProducto);
         }
-        
         entity.setNombre(nombreTipoProducto);
         
         return entity;

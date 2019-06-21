@@ -91,14 +91,9 @@ public class DetalleVentaDTO {
 
     public DetalleVenta toEntity() {
         DetalleVenta entity = new DetalleVenta();
-        try {
-            if (idDetalleVenta != 0) {
-                entity.setId(idDetalleVenta);
-            }
-        } catch (NullPointerException exc) {
-            LOG.info("toEntity() - idDetalleVenta es null");
+        if (idDetalleVenta != null && idDetalleVenta != 0) {
+            entity.setId(idDetalleVenta);
         }
-        
         entity.setUnidades(unidadesProducto);
         
         Producto entityProducto = new Producto();

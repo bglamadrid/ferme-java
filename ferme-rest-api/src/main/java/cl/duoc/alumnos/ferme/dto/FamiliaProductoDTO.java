@@ -65,19 +65,15 @@ public class FamiliaProductoDTO {
     
     public FamiliaProducto toEntity() {
         FamiliaProducto entity = new FamiliaProducto();
-        try {
-            if (idFamiliaProducto != 0) {
-                entity.setId(idFamiliaProducto);
-            }
-        } catch (NullPointerException exc) {
-            LOG.info("toEntity() - idFamiliaProducto es null");
+        if (idFamiliaProducto != null && idFamiliaProducto != 0) {
+            entity.setId(idFamiliaProducto);
         }
+        entity.setDescripcion(descripcionFamiliaProducto);
         
         Rubro rubroEntity = new Rubro();
         rubroEntity.setId(idRubro);
         entity.setRubro(rubroEntity);
         
-        entity.setDescripcion(descripcionFamiliaProducto);
         
         return entity;
     }

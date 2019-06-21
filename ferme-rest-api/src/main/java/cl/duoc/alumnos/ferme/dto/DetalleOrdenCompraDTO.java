@@ -83,19 +83,15 @@ public class DetalleOrdenCompraDTO {
     public DetalleOrdenCompra toEntity() {
         DetalleOrdenCompra entity = new DetalleOrdenCompra();
         
-        try {
-            if (idDetalleOrdenCompra != 0) { 
-                entity.setId(idDetalleOrdenCompra); 
-            }
-        } catch (NullPointerException exc) {
-            LOG.warn("toEntity() - idDetalleOrdenCompra es null");
+        if (idDetalleOrdenCompra != null && idDetalleOrdenCompra != 0) { 
+            entity.setId(idDetalleOrdenCompra); 
         }
+        entity.setCantidad(cantidadProducto);
         
         Producto productoEntity = new Producto();
         productoEntity.setId(idProducto);
         entity.setProducto(productoEntity);
         
-        entity.setCantidad(cantidadProducto);
         
         return entity;
     }

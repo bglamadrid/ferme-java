@@ -68,7 +68,6 @@ public class Cliente implements Serializable {
     public ClienteDTO toDTO() {
         ClienteDTO dto = new ClienteDTO();
         dto = PersonaConverter.cargarDatosPersonaEnDTO(persona, dto);
-        
         dto.setIdCliente(id);
         
         return dto;

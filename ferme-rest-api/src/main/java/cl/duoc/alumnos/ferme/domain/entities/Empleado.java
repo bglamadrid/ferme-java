@@ -79,7 +79,6 @@ public class Empleado implements Serializable {
     public EmpleadoDTO toDTO() {
         EmpleadoDTO dto = new EmpleadoDTO();
         dto = PersonaConverter.cargarDatosPersonaEnDTO(persona, dto);
-        
         dto.setIdEmpleado(id);
         dto.setIdPersona(persona.getId());
         dto.setIdCargo(cargo.getId());

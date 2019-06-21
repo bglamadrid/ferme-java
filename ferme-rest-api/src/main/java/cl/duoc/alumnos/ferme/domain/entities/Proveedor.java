@@ -2,6 +2,7 @@ package cl.duoc.alumnos.ferme.domain.entities;
 
 import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.dto.ProveedorDTO;
+import cl.duoc.alumnos.ferme.util.PersonaConverter;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.CascadeType;
@@ -76,16 +77,9 @@ public class Proveedor implements Serializable {
 
     public ProveedorDTO toDTO() {
         ProveedorDTO dto = new ProveedorDTO();
+        dto = PersonaConverter.cargarDatosPersonaEnDTO(persona, dto);
         dto.setIdProveedor(id);
         dto.setRazonSocialProveedor(razonSocial);
-        dto.setIdPersona(persona.getId());
-        dto.setRutPersona(persona.getRut());
-        dto.setNombreCompletoPersona(persona.getNombreCompleto());
-        dto.setDireccionPersona(persona.getDireccion());
-        dto.setEmailPersona(persona.getEmail());
-        dto.setFonoPersona1(persona.getFono1());
-        dto.setFonoPersona2(persona.getFono2());
-        dto.setFonoPersona3(persona.getFono3());
         
         return dto;
     }

@@ -3,9 +3,11 @@ package cl.duoc.alumnos.ferme.dto;
 import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.domain.entities.Sesion;
 import cl.duoc.alumnos.ferme.domain.entities.Usuario;
+import cl.duoc.alumnos.ferme.util.FermeDates;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -84,37 +86,26 @@ public class SesionDTO {
     public void setNombreUsuario(String nombreUsuario) {
         this.nombreUsuario = nombreUsuario;
     }
-
     
-    
-    public Sesion toEntity() throws ParseException {
+    public Sesion toEntity() {
         Sesion entity = new Sesion();
-        try {
-            if (idSesion != 0) {
-                entity.setId(idSesion);
-            }
-        } catch (NullPointerException exc) {
-            LOG.info("toEntity() - idSesion es null");
+        if (idSesion != null && idSesion != 0) {
+            entity.setId(idSesion);
+        }
+        entity.setVigente(vigenteSesion);
+        entity.setHash(hashSesion);
+        
+        Date fechaAbierta = FermeDates.fechaStringToDate(abiertaSesion);
+        entity.setAbierta(fechaAbierta);
+        
+        if (cerradaSesion != null && !cerradaSesion.isEmpty()) {
+            Date fechaCerrada = FermeDates.fechaStringToDate(cerradaSesion);
+            entity.setCerrada(fechaCerrada);
         }
         
         Usuario usuarioEntity = new Usuario();
         usuarioEntity.setId(idUsuario);
         entity.setUsuario(usuarioEntity);
-        
-        entity.setVigente(vigenteSesion);
-        
-        if (hashSesion != null && !hashSesion.isEmpty()) {
-            entity.setHash(hashSesion);
-        }
-        
-        DateFormat formateador = new SimpleDateFormat(Ferme.DEFAULT_DATE_FORMAT);
-        
-        if (abiertaSesion != null && !abiertaSesion.isEmpty()) {
-            entity.setAbierta(formateador.parse(abiertaSesion));
-        }
-        if (cerradaSesion != null && !cerradaSesion.isEmpty()) {
-            entity.setCerrada(formateador.parse(cerradaSesion));
-        }
         
         return entity;
     }

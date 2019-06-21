@@ -4,6 +4,7 @@ import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.domain.entities.DetalleOrdenCompra;
 import cl.duoc.alumnos.ferme.domain.entities.Empleado;
 import cl.duoc.alumnos.ferme.domain.entities.OrdenCompra;
+import cl.duoc.alumnos.ferme.util.FermeDates;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,6 +24,7 @@ public class OrdenCompraDTO {
     
     private Integer idOrdenCompra;
     private Integer idEmpleado;
+    private String nombrePersonaEmpleado;
     private String estadoOrdenCompra;
     private String fechaSolicitudOrdenCompra;
     private String fechaRecepcionOrdenCompra;
@@ -46,6 +48,14 @@ public class OrdenCompraDTO {
 
     public void setIdEmpleado(Integer idEmpleado) {
         this.idEmpleado = idEmpleado;
+    }
+
+    public String getNombrePersonaEmpleado() {
+        return nombrePersonaEmpleado;
+    }
+
+    public void setNombrePersonaEmpleado(String nombrePersonaEmpleado) {
+        this.nombrePersonaEmpleado = nombrePersonaEmpleado;
     }
 
     public String getEstadoOrdenCompra() {
@@ -82,12 +92,8 @@ public class OrdenCompraDTO {
     
     public OrdenCompra toEntity() {
         OrdenCompra entity = new OrdenCompra();
-        try {
-            if (idOrdenCompra != 0) {
-                entity.setId(idOrdenCompra);
-            }
-        } catch (NullPointerException exc) {
-            LOG.info("toEntity - idOrdenCompra es null");
+        if (idOrdenCompra != null && idOrdenCompra != 0) {
+            entity.setId(idOrdenCompra);
         }
         
         if (estadoOrdenCompra != null && !estadoOrdenCompra.isEmpty()) {
@@ -96,23 +102,12 @@ public class OrdenCompraDTO {
             entity.setEstado(Ferme.ORDEN_COMPRA_ESTADO_SOLICITADO);
         }
         
+        Date fSolicitud = FermeDates.fechaStringToDate(fechaSolicitudOrdenCompra);
+        entity.setFechaSolicitud(fSolicitud);
         
-        DateFormat formateador = new SimpleDateFormat(Ferme.DEFAULT_DATE_FORMAT);
-        try {
-            Date fechaSolicitud = formateador.parse(fechaSolicitudOrdenCompra);
-            entity.setFechaSolicitud(fechaSolicitud);
-        } catch (Exception exc) {
-            LOG.warn("toEntity - 'fechaSolicitudOrdenCompra' es null o posee un valor inválido", exc);
-            Date fechaActual = Calendar.getInstance().getTime();
-            entity.setFechaSolicitud(fechaActual);
-            LOG.info("toEntity - Se asume fecha y hora actual ("+formateador.format(fechaActual)+") para fecha de solicitud");
-        }
-        
-        try {
-            Date fechaRecepcion = formateador.parse(fechaRecepcionOrdenCompra);
+        if (fechaRecepcionOrdenCompra != null && !fechaRecepcionOrdenCompra.isEmpty()) {
+            Date fechaRecepcion = FermeDates.fechaStringToDate(fechaRecepcionOrdenCompra);
             entity.setFechaRecepcion(fechaRecepcion);
-        } catch (Exception exc) {
-            LOG.warn("toEntity - 'fechaRecepcionOrdenCompra' es null o posee formato incorrecto", exc);
         }
         
         List<DetalleOrdenCompra> _detallesEntities = this.detallesToEntity();

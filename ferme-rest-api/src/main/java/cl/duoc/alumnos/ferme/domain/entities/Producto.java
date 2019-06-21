@@ -19,6 +19,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import org.hibernate.annotations.Cascade;
+import org.springframework.lang.NonNull;
 
 /**
  *
@@ -40,16 +41,20 @@ public class Producto implements Serializable {
     @Column(name = "CODIGO")
     private String codigo;
     
+    @NonNull
     @Size(min = 1, max = 100)
     @Column(name = "NOMBRE")
     private String nombre;
     
+    @NonNull
     @Column(name = "STOCK_ACTUAL")
     private int stockActual;
     
+    @NonNull
     @Column(name = "STOCK_CRITICO")
     private int stockCritico;
     
+    @NonNull
     @Column(name = "PRECIO")
     private long precio;
     
@@ -57,6 +62,7 @@ public class Producto implements Serializable {
     @Column(name = "DESCRIPCION")
     private String descripcion;
     
+    @NonNull
     @JoinColumn(name = "ID_TIPO_PRODUCTO", referencedColumnName = "ID_TIPO_PRODUCTO")
     @ManyToOne(cascade = CascadeType.DETACH, optional = false, fetch = FetchType.LAZY)
     @Cascade(org.hibernate.annotations.CascadeType.DETACH)

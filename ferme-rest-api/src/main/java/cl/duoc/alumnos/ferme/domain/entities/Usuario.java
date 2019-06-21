@@ -26,6 +26,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import org.hibernate.annotations.Cascade;
+import org.springframework.lang.NonNull;
 
 /**
  *
@@ -44,18 +45,19 @@ public class Usuario implements Serializable {
     @GeneratedValue(generator = "usuario_seq", strategy = GenerationType.AUTO)
     private Integer id;
     
+    @NonNull
     @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA")
     @OneToOne(cascade = CascadeType.DETACH, optional = false, fetch = FetchType.LAZY)
     @Cascade(org.hibernate.annotations.CascadeType.DETACH)
     private Persona persona;
     
+    @NonNull
     @Size(min = 1, max = 100)
     @Column(name = "NOMBRE")
     private String nombre;
     
     @Size(min = 1, max = 20)
     @Column(name = "CLAVE")
-    
     private String clave;
     
     @Column(name = "FECHA_CREACION")
@@ -111,21 +113,20 @@ public class Usuario implements Serializable {
         dto.setIdUsuario(id);
         dto.setNombreUsuario(nombre);
         
-        //generar string fecha
-        final String _fechaCreacion = FermeDates.fechaToString(fechaCreacion);
+        String _fechaCreacion = FermeDates.fechaToString(fechaCreacion);
         dto.setFechaCreacionUsuario(_fechaCreacion);
         
-        dto.setIdPersona(persona.getId());
-        dto.setNombreCompletoPersona(persona.getNombreCompleto());
-        dto.setRutPersona(persona.getRut());
+        Persona personaEntity = getPersona();
+        dto.setIdPersona(personaEntity.getId());
         
-        String email = persona.getEmail();
+        /*        
+        dto.setNombreCompletoPersona(personaEntity.getNombreCompleto());
+        dto.setRutPersona(personaEntity.getRut());
         
-        /*
-        String direccion = persona.getDireccion();
-        Long fono1 = persona.getFono1();
-        Long fono2 = persona.getFono2();
-        Long fono3 = persona.getFono3();
+        String direccion = personaEntity.getDireccion();
+        Long fono1 = personaEntity.getFono1();
+        Long fono2 = personaEntity.getFono2();
+        Long fono3 = personaEntity.getFono3();
         
         if (direccion != null) {
           dto.setDireccionPersona(direccion);

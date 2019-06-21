@@ -38,15 +38,15 @@ public class EmpleadoDTO extends PersonaDTO {
     
     public Empleado toEntity() {
         Empleado entity = new Empleado();
-        try {
-            if (idEmpleado != 0) {
-                entity.setId(idEmpleado);
-            }
-        } catch (NullPointerException exc) {
-            LOG.info("toEntity - idEmpleado es null");
+        if (idEmpleado != null && idEmpleado != 0) {
+            entity.setId(idEmpleado);
         }
         
         entity.setPersona(this.personaToEntity());
+        
+        Cargo cargoEntity = new Cargo();
+        cargoEntity.setId(idCargo);
+        entity.setCargo(cargoEntity);
         
         return entity;
     }

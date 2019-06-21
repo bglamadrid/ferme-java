@@ -2,6 +2,7 @@ package cl.duoc.alumnos.ferme.domain.entities;
 
 import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.dto.PersonaDTO;
+import cl.duoc.alumnos.ferme.util.PersonaConverter;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -127,21 +128,9 @@ public class Persona implements Serializable {
         this.fono3 = fono3;
     }
     
-    public PersonaDTO toDTO() {
-        PersonaDTO dto = new PersonaDTO();
-        
-        dto.setIdPersona(id);
-        dto.setRutPersona(rut);
-        dto.setNombreCompletoPersona(nombreCompleto);
-        dto.setDireccionPersona(direccion);
-        dto.setEmailPersona(email);
-        dto.setFonoPersona1(fono1);
-        dto.setFonoPersona2(fono2);
-        dto.setFonoPersona3(fono3);
-        
-        return dto;
+    public PersonaDTO toDTO() {        
+        return PersonaConverter.cargarDatosPersonaEnDTO(this, new PersonaDTO());
     }
-
 
     @Override
     public int hashCode() {

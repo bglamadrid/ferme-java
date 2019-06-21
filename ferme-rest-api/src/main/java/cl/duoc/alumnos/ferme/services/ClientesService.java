@@ -81,6 +81,10 @@ public class ClientesService implements IClientesService {
                         parsedValueI = Integer.valueOf(paramValue);
                         bb.and(qCliente.id.eq(parsedValueI));
                         return bb; //match por id es único
+                    case "personaId":
+                        parsedValueI = Integer.valueOf(paramValue);
+                        bb.and(qCliente.persona.id.eq(parsedValueI));
+                        return bb; //match por id de persona es único
                     case "nombre":
                         paramValue = "%" + paramValue.toUpperCase() + "%";
                         bb.and(qCliente.persona.nombreCompleto.upper().like(paramValue));

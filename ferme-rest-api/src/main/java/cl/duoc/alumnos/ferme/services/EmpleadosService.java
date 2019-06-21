@@ -86,6 +86,10 @@ public class EmpleadosService implements IEmpleadosService {
                         parsedValueI = Integer.valueOf(paramValue);
                         bb.and(qEmpleado.id.eq(parsedValueI));
                         return bb; //match por id es único
+                    case "personaId":
+                        parsedValueI = Integer.valueOf(paramValue);
+                        bb.and(qEmpleado.persona.id.eq(parsedValueI));
+                        return bb; //match por id de persona es único
                     case "nombre":
                         paramValue = "%" + paramValue.toUpperCase() + "%";
                         bb.and(qEmpleado.persona.nombreCompleto.upper().like(paramValue));

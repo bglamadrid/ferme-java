@@ -81,6 +81,10 @@ public class ProveedoresService implements IProveedoresService {
                         parsedValueI = Integer.valueOf(paramValue);
                         bb.and(qProveedor.id.eq(parsedValueI));
                         return bb; //match por id es único
+                    case "personaId":
+                        parsedValueI = Integer.valueOf(paramValue);
+                        bb.and(qProveedor.persona.id.eq(parsedValueI));
+                        return bb; //match por id de persona es único
                     case "nombre":
                         paramValue = "%" + paramValue.toUpperCase() + "%";
                         bb.and(qProveedor.persona.nombreCompleto.upper().like(paramValue));

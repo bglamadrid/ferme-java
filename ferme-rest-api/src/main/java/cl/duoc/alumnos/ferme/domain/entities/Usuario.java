@@ -118,10 +118,10 @@ public class Usuario implements Serializable {
         
         Persona personaEntity = getPersona();
         dto.setIdPersona(personaEntity.getId());
-        
-        /*        
         dto.setNombreCompletoPersona(personaEntity.getNombreCompleto());
         dto.setRutPersona(personaEntity.getRut());
+        
+        /*        
         
         String direccion = personaEntity.getDireccion();
         Long fono1 = personaEntity.getFono1();

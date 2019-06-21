@@ -56,7 +56,8 @@ public class OrdenCompra implements Serializable {
     private Date fechaRecepcion;
     
     @JoinColumn(name = "ID_EMPLEADO", referencedColumnName = "ID_EMPLEADO")
-    @OneToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.DETACH, optional = false, fetch = FetchType.LAZY)
+    @Cascade(org.hibernate.annotations.CascadeType.DETACH)
     private Empleado empleado;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ordenCompra", fetch = FetchType.LAZY)
@@ -117,11 +118,15 @@ public class OrdenCompra implements Serializable {
     
     public OrdenCompraDTO toDTO(boolean simple) {
         OrdenCompraDTO dto = new OrdenCompraDTO();
-        
         dto.setIdOrdenCompra(id);
-        dto.setIdEmpleado(empleado.getId());
         dto.setEstadoOrdenCompra(estado.toString());
         dto.setFechaSolicitudOrdenCompra(FermeDates.fechaToString(fechaSolicitud));
+        
+        Empleado empleadoEntity = getEmpleado();
+        Persona empleadoPersonaEntity = empleadoEntity.getPersona();
+        dto.setIdEmpleado(empleadoEntity.getId());
+        dto.setNombrePersonaEmpleado(empleadoPersonaEntity.getNombreCompleto());
+        dto.setRutPersonaEmpleado(empleadoPersonaEntity.getRut());
         
         if (fechaRecepcion != null) {
             dto.setFechaRecepcionOrdenCompra(FermeDates.fechaToString(fechaRecepcion));

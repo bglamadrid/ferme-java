@@ -25,6 +25,7 @@ public class OrdenCompraDTO {
     private Integer idOrdenCompra;
     private Integer idEmpleado;
     private String nombrePersonaEmpleado;
+    private String rutPersonaEmpleado;
     private String estadoOrdenCompra;
     private String fechaSolicitudOrdenCompra;
     private String fechaRecepcionOrdenCompra;
@@ -56,6 +57,14 @@ public class OrdenCompraDTO {
 
     public void setNombrePersonaEmpleado(String nombrePersonaEmpleado) {
         this.nombrePersonaEmpleado = nombrePersonaEmpleado;
+    }
+
+    public String getRutPersonaEmpleado() {
+        return rutPersonaEmpleado;
+    }
+
+    public void setRutPersonaEmpleado(String rutPersonaEmpleado) {
+        this.rutPersonaEmpleado = rutPersonaEmpleado;
     }
 
     public String getEstadoOrdenCompra() {
@@ -109,6 +118,10 @@ public class OrdenCompraDTO {
             Date fechaRecepcion = FermeDates.fechaStringToDate(fechaRecepcionOrdenCompra);
             entity.setFechaRecepcion(fechaRecepcion);
         }
+        
+        Empleado empleadoEntity = new Empleado();
+        empleadoEntity.setId(idEmpleado);
+        entity.setEmpleado(empleadoEntity);
         
         List<DetalleOrdenCompra> _detallesEntities = this.detallesToEntity();
         _detallesEntities.forEach((dtl) -> {dtl.setOrdenCompra(entity);});

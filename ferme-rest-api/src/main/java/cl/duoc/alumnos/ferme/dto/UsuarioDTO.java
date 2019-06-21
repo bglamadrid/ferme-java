@@ -73,8 +73,10 @@ public class UsuarioDTO extends PersonaDTO {
             entity.setClave(claveUsuario);
         } 
         
-        Date _fechaCreacion = FermeDates.fechaStringToDate(fechaCreacionUsuario);
-        entity.setFechaCreacion(_fechaCreacion);
+        if (fechaCreacionUsuario != null && !fechaCreacionUsuario.isEmpty()) {
+            Date _fechaCreacion = FermeDates.fechaStringToDate(fechaCreacionUsuario);
+            entity.setFechaCreacion(_fechaCreacion);                
+        }
         
         Persona personaEntity = super.personaToEntity();
         entity.setPersona(personaEntity);

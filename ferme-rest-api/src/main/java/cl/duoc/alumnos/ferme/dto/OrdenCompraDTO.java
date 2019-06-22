@@ -5,11 +5,7 @@ import cl.duoc.alumnos.ferme.domain.entities.DetalleOrdenCompra;
 import cl.duoc.alumnos.ferme.domain.entities.Empleado;
 import cl.duoc.alumnos.ferme.domain.entities.OrdenCompra;
 import cl.duoc.alumnos.ferme.util.FermeDates;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import org.slf4j.Logger;
@@ -111,12 +107,14 @@ public class OrdenCompraDTO {
             entity.setEstado(Ferme.ORDEN_COMPRA_ESTADO_SOLICITADO);
         }
         
-        Date fSolicitud = FermeDates.fechaStringToDate(fechaSolicitudOrdenCompra);
-        entity.setFechaSolicitud(fSolicitud);
+        if (fechaSolicitudOrdenCompra != null && !fechaSolicitudOrdenCompra.isEmpty()) {
+            Date fSolicitud = FermeDates.fechaStringToDate(fechaSolicitudOrdenCompra);
+            entity.setFechaSolicitud(fSolicitud);
+        }
         
         if (fechaRecepcionOrdenCompra != null && !fechaRecepcionOrdenCompra.isEmpty()) {
-            Date fechaRecepcion = FermeDates.fechaStringToDate(fechaRecepcionOrdenCompra);
-            entity.setFechaRecepcion(fechaRecepcion);
+            Date fRecepcion = FermeDates.fechaStringToDate(fechaRecepcionOrdenCompra);
+            entity.setFechaRecepcion(fRecepcion);
         }
         
         Empleado empleadoEntity = new Empleado();

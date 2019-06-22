@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author Benjamin Guillermo
+ * @author Benjamin Guillermo <got12g at gmail.com>
  */
 public class DetalleOrdenCompraDTO {
     private final static Logger LOG = LoggerFactory.getLogger(DetalleOrdenCompraDTO.class);
@@ -17,7 +17,8 @@ public class DetalleOrdenCompraDTO {
     private Integer idProducto;
     private Integer cantidadProducto;
     private String nombreProducto;
-    private Long codigoProducto;
+    private long precioProducto;
+    private String codigoProducto;
 
     public DetalleOrdenCompraDTO() {
         super();
@@ -63,30 +64,34 @@ public class DetalleOrdenCompraDTO {
         this.nombreProducto = nombreProducto;
     }
 
-    public Long getCodigoProducto() {
+    public String getCodigoProducto() {
         return codigoProducto;
     }
 
-    public void setCodigoProducto(Long codigoProducto) {
+    public void setCodigoProducto(String codigoProducto) {
         this.codigoProducto = codigoProducto;
+    }
+
+    public long getPrecioProducto() {
+        return precioProducto;
+    }
+
+    public void setPrecioProducto(long precioProducto) {
+        this.precioProducto = precioProducto;
     }
     
     public DetalleOrdenCompra toEntity() {
         DetalleOrdenCompra entity = new DetalleOrdenCompra();
         
-        try {
-            if (idDetalleOrdenCompra != 0) { 
-                entity.setId(idDetalleOrdenCompra); 
-            }
-        } catch (NullPointerException exc) {
-            LOG.warn("toEntity() - idDetalleOrdenCompra es null");
+        if (idDetalleOrdenCompra != null && idDetalleOrdenCompra != 0) { 
+            entity.setId(idDetalleOrdenCompra); 
         }
+        entity.setCantidad(cantidadProducto);
         
         Producto productoEntity = new Producto();
         productoEntity.setId(idProducto);
         entity.setProducto(productoEntity);
         
-        entity.setCantidad(cantidadProducto);
         
         return entity;
     }

@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * Controlador REST que maneja todas las peticiones y obtención de entidades
  * independientes.
- * @author Benjamin Guillermo
+ * @author Benjamin Guillermo <got12g at gmail.com>
  */
 @RestController
 @RequestMapping("/api/gestion")
@@ -41,7 +41,7 @@ public class ComunController {
      * @return Una colección de objetos RubroDTO
      */
     @GetMapping("/rubros")
-    public Collection<RubroDTO> getRubros(@RequestParam Map<String,String> allRequestParams) {
+    public Collection<RubroDTO> obtenerRubros(@RequestParam Map<String,String> allRequestParams) {
         
         Predicate filtros = null;
         if (allRequestParams != null && !allRequestParams.isEmpty()) {
@@ -56,7 +56,7 @@ public class ComunController {
      * @return El ID del rubro.
      */
     @PostMapping("/rubros/guardar")
-    public Integer saveRubro(@RequestBody RubroDTO dto) {
+    public Integer guardarRubro(@RequestBody RubroDTO dto) {
         
         if (dto != null) {
             return rubroSvc.saveRubro(dto);
@@ -70,7 +70,7 @@ public class ComunController {
      * @return true si la operación fue exitosa, false si no lo fue.
      */
     @PostMapping("/rubros/borrar")
-    public boolean deleteRubro(@RequestParam("id") Integer rubroId) {
+    public boolean borrarRubro(@RequestParam("id") Integer rubroId) {
         
         if (rubroId != null && rubroId != 0) {
             return rubroSvc.deleteRubro(rubroId);
@@ -89,7 +89,7 @@ public class ComunController {
      * @return Una colección de objetos CargoDTO
      */
     @GetMapping("/cargos")
-    public Collection<CargoDTO> getCargos(@RequestParam Map<String,String> allRequestParams) {
+    public Collection<CargoDTO> obtenerCargos(@RequestParam Map<String,String> allRequestParams) {
         
         Predicate filtros = null;
         if (allRequestParams != null && !allRequestParams.isEmpty()) {
@@ -104,7 +104,7 @@ public class ComunController {
      * @return El ID del rubro.
      */
     @PostMapping("/cargos/guardar")
-    public Integer saveCargo(@RequestBody CargoDTO dto) {
+    public Integer guardarCargo(@RequestBody CargoDTO dto) {
         
         if (dto != null) {
             return cargoSvc.saveCargo(dto);
@@ -118,7 +118,7 @@ public class ComunController {
      * @return true si la operación fue exitosa, false si no lo fue.
      */
     @PostMapping("/cargos/borrar")
-    public boolean deleteCargo(@RequestParam("id") Integer cargoId) {
+    public boolean borrarCargo(@RequestParam("id") Integer cargoId) {
         
         if (cargoId != null && cargoId != 0) {
             return cargoSvc.deleteCargo(cargoId);

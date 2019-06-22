@@ -1,25 +1,22 @@
 package cl.duoc.alumnos.ferme.dto;
 
-import cl.duoc.alumnos.ferme.Ferme;
+import cl.duoc.alumnos.ferme.domain.entities.Persona;
 import cl.duoc.alumnos.ferme.domain.entities.Usuario;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import cl.duoc.alumnos.ferme.util.FermeDates;
+import java.util.Date;
 
 /**
  *
- * @author Benjamin Guillermo
+ * @author Benjamin Guillermo <got12g at gmail.com>
  */
-public class UsuarioDTO {
-    private final static Logger LOG = LoggerFactory.getLogger(UsuarioDTO.class);
+public class UsuarioDTO extends PersonaDTO {
     
     private Integer idUsuario;
     private String nombreUsuario;
     private String claveUsuario;
     private String fechaCreacionUsuario;
-    private PersonaDTO persona;
+    private String sesion;
+    
 
     public UsuarioDTO() {
         super();
@@ -49,6 +46,14 @@ public class UsuarioDTO {
         this.claveUsuario = claveUsuario;
     }
 
+    public String getSesion() {
+        return sesion;
+    }
+
+    public void setSesion(String sesion) {
+        this.sesion = sesion;
+    }
+
     public String getFechaCreacionUsuario() {
         return fechaCreacionUsuario;
     }
@@ -56,36 +61,32 @@ public class UsuarioDTO {
     public void setFechaCreacionUsuario(String fechaCreacionUsuario) {
         this.fechaCreacionUsuario = fechaCreacionUsuario;
     }
-
-    public PersonaDTO getPersona() {
-        return persona;
-    }
-
-    public void setPersona(PersonaDTO persona) {
-        this.persona = persona;
-    }
     
-    public Usuario toEntity() throws ParseException {
+    public Usuario toEntity() {
         Usuario entity = new Usuario();
-        try {
-            if (idUsuario != 0) {
-                entity.setId(idUsuario);
-            }
-        } catch (NullPointerException exc) {
-            LOG.info("toEntity() - idUsuario es null");
+        if (idUsuario != null && idUsuario != 0) {
+            entity.setId(idUsuario);
         }
-        
         entity.setNombre(nombreUsuario);
         
-        DateFormat formateador = new SimpleDateFormat(Ferme.DEFAULT_DATE_FORMAT);
-        entity.setFechaCreacion(formateador.parse(fechaCreacionUsuario));
+        if (claveUsuario != null && !claveUsuario.isEmpty()) {
+            entity.setClave(claveUsuario);
+        } 
+        
+        if (fechaCreacionUsuario != null && !fechaCreacionUsuario.isEmpty()) {
+            Date _fechaCreacion = FermeDates.fechaStringToDate(fechaCreacionUsuario);
+            entity.setFechaCreacion(_fechaCreacion);                
+        }
+        
+        Persona personaEntity = super.personaToEntity();
+        entity.setPersona(personaEntity);
         
         return entity;
     }
 
     @Override
     public String toString() {
-        return "UsuarioDTO{" + "idUsuario=" + idUsuario + ", nombreUsuario=" + nombreUsuario + ", claveUsuario=" + claveUsuario + ", fechaCreacionUsuario=" + fechaCreacionUsuario + ", persona=" + persona + '}';
+        return "UsuarioDTO{" + "idUsuario=" + idUsuario + ", nombreUsuario=" + nombreUsuario + ", fechaCreacionUsuario=" + fechaCreacionUsuario + ", persona=" + super.toString() + '}';
     }
     
 }

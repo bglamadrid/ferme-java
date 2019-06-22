@@ -1,6 +1,7 @@
 package cl.duoc.alumnos.ferme.util;
 
 import cl.duoc.alumnos.ferme.Ferme;
+import cl.duoc.alumnos.ferme.FermeConfig;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -10,20 +11,16 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author got12
+ * @author Benjamin Guillermo <got12g at gmail.com>
  */
-public class FermeDates {
-    
-    private static final Logger LOG = LoggerFactory.getLogger(FermeDates.class);
-    
+public class FermeDates {    
 
     public static final Date fechaStringToDate(String stringFecha) {
         Date fecha; 
+        DateFormat formateador = new SimpleDateFormat(FermeConfig.DEFAULT_DATE_FORMAT);
         try {
-            DateFormat formateador = new SimpleDateFormat(Ferme.DEFAULT_DATE_FORMAT);
             fecha = formateador.parse(stringFecha);
         } catch (ParseException exc) {
-            LOG.warn("FermeDates.fechaStringToDate(): La fecha ingresada tiene un formato inválido, no se pudo convertir y es null.", exc);
             fecha = null;
         }
         
@@ -31,7 +28,7 @@ public class FermeDates {
     }
     
     public static final String fechaToString(Date fecha) {
-        DateFormat formateador = new SimpleDateFormat(Ferme.DEFAULT_DATE_FORMAT);
+        DateFormat formateador = new SimpleDateFormat(FermeConfig.DEFAULT_DATE_FORMAT);
         final String stringFecha = formateador.format(fecha);
         return stringFecha;
     }

@@ -1,6 +1,7 @@
 package cl.duoc.alumnos.ferme.services;
 
 import cl.duoc.alumnos.ferme.Ferme;
+import cl.duoc.alumnos.ferme.FermeConfig;
 import cl.duoc.alumnos.ferme.domain.entities.Persona;
 import cl.duoc.alumnos.ferme.domain.entities.Proveedor;
 import cl.duoc.alumnos.ferme.domain.entities.QProveedor;
@@ -26,7 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
- * @author got12
+ * @author Benjamin Guillermo <got12g at gmail.com>
  */
 @Service
 @Transactional
@@ -43,7 +44,7 @@ public class ProveedoresService implements IProveedoresService {
         long proveedorCount;
         
         LOG.info("getProveedores - Procesando solicitud...");
-        Sort orden = Sort.by(Ferme.PROVEEDOR_DEFAULT_SORT_COLUMN).ascending();
+        Sort orden = Sort.by(FermeConfig.PROVEEDOR_DEFAULT_SORT_COLUMN).ascending();
         Pageable pgbl = PageRequest.of(pageIndex, pageSize, orden);
         
         LOG.info("getProveedores - Llamando queries...");
@@ -79,15 +80,19 @@ public class ProveedoresService implements IProveedoresService {
                 switch (paramName) {
                     case "id":
                         parsedValueI = Integer.valueOf(paramValue);
-                        bb.and(qProveedor.id.eq(parsedValueI));
+                        bb.and(qProveedor._id.eq(parsedValueI));
                         return bb; //match por id es único
+                    case "personaId":
+                        parsedValueI = Integer.valueOf(paramValue);
+                        bb.and(qProveedor._persona._id.eq(parsedValueI));
+                        return bb; //match por id de persona es único
                     case "nombre":
                         paramValue = "%" + paramValue.toUpperCase() + "%";
-                        bb.and(qProveedor.persona.nombreCompleto.upper().like(paramValue));
+                        bb.and(qProveedor._persona._nombreCompleto.upper().like(paramValue));
                         break;
                     case "rut":
                         paramValue = "%" + paramValue.toUpperCase() + "%";
-                        bb.and(qProveedor.persona.rut.upper().like(paramValue));
+                        bb.and(qProveedor._persona._rut.upper().like(paramValue));
                         break;
                     default: break;
                 }
@@ -109,6 +114,7 @@ public class ProveedoresService implements IProveedoresService {
         entity = proveedorRepo.saveAndFlush(entity);
         return entity.getId();
     }
+    
 
     @Override
     public boolean deleteProveedor(Integer proveedorid) {

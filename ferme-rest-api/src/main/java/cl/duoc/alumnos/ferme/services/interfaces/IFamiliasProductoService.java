@@ -4,10 +4,11 @@ import cl.duoc.alumnos.ferme.dto.FamiliaProductoDTO;
 import com.querydsl.core.types.Predicate;
 import java.util.Collection;
 import java.util.Map;
+import javassist.NotFoundException;
 
 /**
  *
- * @author Benjamin Guillermo La Madrid <got12g at gmail.com>
+ * @author Benjamin Guillermo <got12g at gmail.com>
  */
 public interface IFamiliasProductoService {
     
@@ -35,7 +36,7 @@ public interface IFamiliasProductoService {
      * respectiva a guardar.
      * @return El ID del registro guardado.
      */
-    public int saveFamiliaProducto(FamiliaProductoDTO dto);
+    public int saveFamiliaProducto(FamiliaProductoDTO dto) throws NotFoundException;
     
     /**
      * 

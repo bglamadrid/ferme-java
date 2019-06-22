@@ -1,6 +1,7 @@
 package cl.duoc.alumnos.ferme.domain.entities;
 
 import cl.duoc.alumnos.ferme.Ferme;
+import cl.duoc.alumnos.ferme.FermeConfig;
 import cl.duoc.alumnos.ferme.dto.DetalleVentaDTO;
 import java.io.Serializable;
 import java.util.Objects;
@@ -21,7 +22,7 @@ import org.hibernate.annotations.Cascade;
 
 /**
  *
- * @author Benjamin Guillermo
+ * @author Benjamin Guillermo <got12g at gmail.com>
  */
 @Entity
 @Table(name = "DETALLE_VENTA")
@@ -32,81 +33,82 @@ public class DetalleVenta implements Serializable {
     
     @Id
     @Column(name = "ID_DETALLE_VENTA")
-    @SequenceGenerator(name = "detalle_venta_seq", sequenceName = "SEQ_DETALLE_VENTA", initialValue = 1, allocationSize = Ferme.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
+    @SequenceGenerator(name = "detalle_venta_seq", sequenceName = "SEQ_DETALLE_VENTA", initialValue = 1, allocationSize = FermeConfig.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
     @GeneratedValue(generator = "detalle_venta_seq", strategy = GenerationType.AUTO)
-    private Integer id;
+    private Integer _id;
     
     @JoinColumn(name = "ID_PRODUCTO", referencedColumnName = "ID_PRODUCTO")
-    @ManyToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.LAZY)
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    private Producto producto;
+    @ManyToOne(cascade = CascadeType.DETACH, optional = false, fetch = FetchType.LAZY)
+    @Cascade(org.hibernate.annotations.CascadeType.DETACH)
+    private Producto _producto;
     
     @Column(name = "UNIDADES")
-    private int unidades;
+    private int _unidades;
     
     @Column(name = "MONTO_DETALLE")
-    private int monto;
+    private int _monto;
     
     @JoinColumn(name = "ID_VENTA", referencedColumnName = "ID_VENTA")
-    @ManyToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.LAZY)
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    private Venta venta;
+    @ManyToOne(cascade = CascadeType.DETACH, optional = false, fetch = FetchType.LAZY)
+    @Cascade(org.hibernate.annotations.CascadeType.DETACH)
+    private Venta _venta;
 
     public DetalleVenta() {
         super();
     }
 
     public Integer getId() {
-        return id;
+        return _id;
     }
 
     public void setId(Integer id) {
-        this.id = id;
+        this._id = id;
     }
 
     public int getUnidades() {
-        return unidades;
+        return _unidades;
     }
 
     public void setUnidades(int unidades) {
-        this.unidades = unidades;
+        this._unidades = unidades;
     }
 
     public int getMonto() {
-        return monto;
+        return _monto;
     }
 
     public void setMonto(int monto) {
-        this.monto = monto;
+        this._monto = monto;
     }
 
     public Producto getProducto() {
-        return producto;
+        return _producto;
     }
 
     public void setProducto(Producto producto) {
-        this.producto = producto;
+        this._producto = producto;
     }
 
     public Venta getVenta() {
-        return venta;
+        return _venta;
     }
 
     public void setVenta(Venta venta) {
-        this.venta = venta;
+        this._venta = venta;
     }
 
     public DetalleVentaDTO toDTO() {
         DetalleVentaDTO dto = new DetalleVentaDTO();
-        dto.setIdDetalleVenta(id);
-        dto.setIdVenta(venta.getId());
-        dto.setMontoDetalleVenta(monto);
+        dto.setIdVenta(_venta.getId());
+        dto.setIdDetalleVenta(_id);
+        dto.setMontoDetalleVenta(_monto);
+        dto.setUnidadesProducto(_unidades);
         
-        Producto productoEntity = this.getProducto();
+        Producto productoEntity = getProducto();
         dto.setIdProducto(productoEntity.getId());
+        dto.setCodigoProducto(productoEntity.getCodigo());
         dto.setNombreProducto(productoEntity.getNombre());
         dto.setPrecioProducto(productoEntity.getPrecio());
-        dto.setUnidadesProducto(unidades);
         
         return dto;
     }
@@ -114,7 +116,7 @@ public class DetalleVenta implements Serializable {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 23 * hash + Objects.hashCode(this.id);
+        hash = 23 * hash + Objects.hashCode(this._id);
         return hash;
     }
 
@@ -124,12 +126,12 @@ public class DetalleVenta implements Serializable {
             return false;
         }
         DetalleVenta other = (DetalleVenta) obj;
-        return (Objects.equals(this.id, other.getId()));
+        return (Objects.equals(this._id, other.getId()));
     }
 
     @Override
     public String toString() {
-        return "cl.duoc.alumnos.ferme.entities.domain.DetalleVenta[ id=" + id + " ]";
+        return "cl.duoc.alumnos.ferme.entities.domain.DetalleVenta[ id=" + _id + " ]";
     }
     
 }

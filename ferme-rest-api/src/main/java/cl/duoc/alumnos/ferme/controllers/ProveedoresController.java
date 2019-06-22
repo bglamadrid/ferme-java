@@ -1,6 +1,7 @@
 package cl.duoc.alumnos.ferme.controllers;
 
 import cl.duoc.alumnos.ferme.Ferme;
+import cl.duoc.alumnos.ferme.FermeConfig;
 import cl.duoc.alumnos.ferme.dto.ProveedorDTO;
 import cl.duoc.alumnos.ferme.services.interfaces.IProveedoresService;
 import com.querydsl.core.types.Predicate;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
- * @author Benjamin Guillermo
+ * @author Benjamin Guillermo <got12g at gmail.com>
  */
 @RestController
 @RequestMapping("/api/gestion")
@@ -28,7 +29,7 @@ public class ProveedoresController {
     
     @Autowired private IProveedoresService proveedorSvc;
     
-    @GetMapping({"/proveedores", "/proveedores/"})
+    @GetMapping("/proveedores")
     public Collection<ProveedorDTO> getProveedores(@RequestParam Map<String,String> allRequestParams) {
         
         return this.getProveedores(null, null, allRequestParams);
@@ -60,8 +61,8 @@ public class ProveedoresController {
         @PathVariable Integer pageIndex,
         @RequestParam Map<String,String> allRequestParams) {
         
-        Integer finalPageSize = Ferme.DEFAULT_PAGE_SIZE;
-        Integer finalPageIndex = Ferme.DEFAULT_PAGE_INDEX;
+        Integer finalPageSize = FermeConfig.DEFAULT_PAGE_SIZE;
+        Integer finalPageIndex = FermeConfig.DEFAULT_PAGE_INDEX;
         Predicate filtros = null;
         
         if (pageSize != null && pageSize > 0) {
@@ -87,7 +88,7 @@ public class ProveedoresController {
      * @param dto Un objeto DTO representando el Rubro a almacenar/actualizar.
      * @return El ID del rubro.
      */
-    @PostMapping({"/proveedores/guardar", "/proveedores/guardar/"})
+    @PostMapping("/proveedores/guardar")
     public Integer saveProveedor(@RequestBody ProveedorDTO dto) {
         
         if (dto != null) {
@@ -104,8 +105,8 @@ public class ProveedoresController {
      * @param proveedorId El ID del Rubro a eliminar.
      * @return true si la operación fue exitosa, false si no lo fue.
      */
-    @PostMapping({"/proveedores/borrar", "/proveedores/borrar/"})
-    public boolean deleteProveedor(@RequestParam("id") Integer proveedorId) {
+    @PostMapping("/proveedores/borrar")
+    public boolean deleteProveedor(@RequestBody Integer proveedorId) {
         
         if (proveedorId != null && proveedorId != 0) {
             LOG.debug("deleteProveedor - clienteId="+proveedorId);

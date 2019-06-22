@@ -1,7 +1,9 @@
 package cl.duoc.alumnos.ferme.domain.entities;
 
 import cl.duoc.alumnos.ferme.Ferme;
+import cl.duoc.alumnos.ferme.FermeConfig;
 import cl.duoc.alumnos.ferme.dto.ClienteDTO;
+import cl.duoc.alumnos.ferme.util.PersonaConverter;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.CascadeType;
@@ -23,7 +25,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author Benjamin Guillermo
+ * @author Benjamin Guillermo <got12g at gmail.com>
  */
 @Entity
 @Table(name = "CLIENTE")
@@ -35,68 +37,39 @@ public class Cliente implements Serializable {
     
     @Id
     @Column(name = "ID_CLIENTE")
-    @SequenceGenerator(name = "cliente_seq", sequenceName = "SEQ_CLIENTE", initialValue = 1, allocationSize = Ferme.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
+    @SequenceGenerator(name = "cliente_seq", sequenceName = "SEQ_CLIENTE", initialValue = 1, allocationSize = FermeConfig.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
     @GeneratedValue(generator = "cliente_seq", strategy = GenerationType.AUTO)
-    private Integer id;
+    private Integer _id;
     
     @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA", insertable = true, updatable = true)
     @OneToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.LAZY)
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    private Persona persona;
+    private Persona _persona;
 
     public Cliente() {
         super();
     }
 
     public Integer getId() {
-        return id;
+        return _id;
     }
 
     public void setId(Integer id) {
-        this.id = id;
+        this._id = id;
     }
 
     public Persona getPersona() {
-        return persona;
+        return _persona;
     }
 
     public void setPersona(Persona persona) {
-        this.persona = persona;
+        this._persona = persona;
     }
     
     public ClienteDTO toDTO() {
-        LOG.debug("toDTO");
         ClienteDTO dto = new ClienteDTO();
-        dto.setIdCliente(id);
-        dto.setIdPersona(persona.getId());
-        dto.setNombreCompletoPersona(persona.getNombreCompleto());
-        dto.setRutPersona(persona.getRut());
-        
-        String direccion = persona.getDireccion();
-        String email = persona.getEmail();
-        Long fono1 = persona.getFono1();
-        Long fono2 = persona.getFono2();
-        Long fono3 = persona.getFono3();
-        
-        if (direccion != null) {
-          dto.setDireccionPersona(direccion);
-        }
-        
-        if (email != null) {
-          dto.setEmailPersona(email);
-        }
-        
-        if (fono1 != null) {
-          dto.setFonoPersona1(fono1);
-        }
-        
-        if (fono2 != null) {
-          dto.setFonoPersona2(fono2);
-        }
-        
-        if (fono3 != null) {
-          dto.setFonoPersona3(fono3);
-        }
+        dto = PersonaConverter.cargarDatosPersonaEnDTO(_persona, dto);
+        dto.setIdCliente(_id);
         
         return dto;
     }
@@ -104,7 +77,7 @@ public class Cliente implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 89 * hash + this.id;
+        hash = 89 * hash + this._id;
         return hash;
     }
 
@@ -114,12 +87,12 @@ public class Cliente implements Serializable {
             return false;
         }
         final Cliente other = (Cliente) object;
-        return (Objects.equals(this.id, other.getId()));
+        return (Objects.equals(this._id, other.getId()));
     }
 
     @Override
     public String toString() {
-        return "cl.duoc.alumnos.ferme.entities.domain.Cliente[ id=" + id + " ]";
+        return "cl.duoc.alumnos.ferme.entities.domain.Cliente[ id=" + _id + " ]";
     }
     
 }

@@ -1,14 +1,12 @@
 package cl.duoc.alumnos.ferme.dto;
 
 import cl.duoc.alumnos.ferme.Ferme;
+import cl.duoc.alumnos.ferme.FermeConfig;
 import cl.duoc.alumnos.ferme.domain.entities.DetalleOrdenCompra;
 import cl.duoc.alumnos.ferme.domain.entities.Empleado;
 import cl.duoc.alumnos.ferme.domain.entities.OrdenCompra;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import cl.duoc.alumnos.ferme.util.FermeDates;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import org.slf4j.Logger;
@@ -16,13 +14,15 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author Benjamin Guillermo
+ * @author Benjamin Guillermo <got12g at gmail.com>
  */
 public class OrdenCompraDTO {
     private final static Logger LOG = LoggerFactory.getLogger(OrdenCompraDTO.class);
     
     private Integer idOrdenCompra;
     private Integer idEmpleado;
+    private String nombreEmpleado;
+    private String rutEmpleado;
     private String estadoOrdenCompra;
     private String fechaSolicitudOrdenCompra;
     private String fechaRecepcionOrdenCompra;
@@ -46,6 +46,22 @@ public class OrdenCompraDTO {
 
     public void setIdEmpleado(Integer idEmpleado) {
         this.idEmpleado = idEmpleado;
+    }
+
+    public String getNombreEmpleado() {
+        return nombreEmpleado;
+    }
+
+    public void setNombreEmpleado(String nombreEmpleado) {
+        this.nombreEmpleado = nombreEmpleado;
+    }
+
+    public String getRutEmpleado() {
+        return rutEmpleado;
+    }
+
+    public void setRutEmpleado(String rutEmpleado) {
+        this.rutEmpleado = rutEmpleado;
     }
 
     public String getEstadoOrdenCompra() {
@@ -82,38 +98,29 @@ public class OrdenCompraDTO {
     
     public OrdenCompra toEntity() {
         OrdenCompra entity = new OrdenCompra();
-        try {
-            if (idOrdenCompra != 0) {
-                entity.setId(idOrdenCompra);
-            }
-        } catch (NullPointerException exc) {
-            LOG.info("toEntity() - idOrdenCompra es null");
+        if (idOrdenCompra != null && idOrdenCompra != 0) {
+            entity.setId(idOrdenCompra);
         }
         
         if (estadoOrdenCompra != null && !estadoOrdenCompra.isEmpty()) {
             entity.setEstado(estadoOrdenCompra.charAt(0));
         } else {
-            entity.setEstado(Ferme.ORDEN_COMPRA_ESTADO_SOLICITADO);
+            entity.setEstado(FermeConfig.ORDEN_COMPRA_ESTADO_SOLICITADO);
         }
         
-        
-        DateFormat formateador = new SimpleDateFormat(Ferme.DEFAULT_DATE_FORMAT);
-        try {
-            Date fechaSolicitud = formateador.parse(fechaSolicitudOrdenCompra);
-            entity.setFechaSolicitud(fechaSolicitud);
-        } catch (Exception exc) {
-            LOG.warn("toEntity() - 'fechaSolicitudOrdenCompra' es null o posee un valor inválido", exc);
-            Date fechaActual = Calendar.getInstance().getTime();
-            entity.setFechaSolicitud(fechaActual);
-            LOG.info("toEntity() - Se asume fecha y hora actual ("+formateador.format(fechaActual)+") para fecha de solicitud");
+        if (fechaSolicitudOrdenCompra != null && !fechaSolicitudOrdenCompra.isEmpty()) {
+            Date fSolicitud = FermeDates.fechaStringToDate(fechaSolicitudOrdenCompra);
+            entity.setFechaSolicitud(fSolicitud);
         }
         
-        try {
-            Date fechaRecepcion = formateador.parse(fechaRecepcionOrdenCompra);
-            entity.setFechaRecepcion(fechaRecepcion);
-        } catch (Exception exc) {
-            LOG.warn("toEntity() - 'fechaRecepcionOrdenCompra' es null o posee formato incorrecto", exc);
+        if (fechaRecepcionOrdenCompra != null && !fechaRecepcionOrdenCompra.isEmpty()) {
+            Date fRecepcion = FermeDates.fechaStringToDate(fechaRecepcionOrdenCompra);
+            entity.setFechaRecepcion(fRecepcion);
         }
+        
+        Empleado empleadoEntity = new Empleado();
+        empleadoEntity.setId(idEmpleado);
+        entity.setEmpleado(empleadoEntity);
         
         List<DetalleOrdenCompra> _detallesEntities = this.detallesToEntity();
         _detallesEntities.forEach((dtl) -> {dtl.setOrdenCompra(entity);});

@@ -7,17 +7,13 @@ import cl.duoc.alumnos.ferme.domain.entities.Venta;
 import cl.duoc.alumnos.ferme.util.FermeDates;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author Benjamin Guillermo
+ * @author Benjamin Guillermo <got12g at gmail.com>
  */
 public class VentaDTO {
-    private final static Logger LOG = LoggerFactory.getLogger(VentaDTO.class);
     
     private Integer idVenta;
     private String tipoVenta;
@@ -25,7 +21,11 @@ public class VentaDTO {
     private long subtotalVenta;
     private List<DetalleVentaDTO> detallesVenta;
     private Integer idEmpleado;
+    private String nombreCompletoEmpleado;
+    private String rutEmpleado;
     private Integer idCliente;
+    private String nombreCompletoCliente;
+    private String rutCliente;
 
     public VentaDTO() {}
 
@@ -77,6 +77,22 @@ public class VentaDTO {
         this.idEmpleado = idEmpleado;
     }
 
+    public String getNombreCompletoEmpleado() {
+        return nombreCompletoEmpleado;
+    }
+
+    public void setNombreCompletoEmpleado(String nombreCompletoEmpleado) {
+        this.nombreCompletoEmpleado = nombreCompletoEmpleado;
+    }
+
+    public String getRutEmpleado() {
+        return rutEmpleado;
+    }
+
+    public void setRutEmpleado(String rutEmpleado) {
+        this.rutEmpleado = rutEmpleado;
+    }
+
     public Integer getIdCliente() {
         return idCliente;
     }
@@ -84,22 +100,32 @@ public class VentaDTO {
     public void setIdCliente(Integer idCliente) {
         this.idCliente = idCliente;
     }
+
+    public String getNombreCompletoCliente() {
+        return nombreCompletoCliente;
+    }
+
+    public void setNombreCompletoCliente(String nombreCompletoCliente) {
+        this.nombreCompletoCliente = nombreCompletoCliente;
+    }
+
+    public String getRutCliente() {
+        return rutCliente;
+    }
+
+    public void setRutCliente(String rutCliente) {
+        this.rutCliente = rutCliente;
+    }   
+    
     
     public Venta toEntity() {
-        
         Venta entity = new Venta();
-        try {
-            final Integer _id = idVenta;
-            if (_id != 0) {
-                entity.setId(_id);
-            }
-        } catch (NullPointerException exc) {
-            LOG.info("toEntity() - idVenta es null");
+        if (idVenta != null && idVenta != 0) {
+            entity.setId(idVenta);
         }
         
-        Date _fechaVenta = FermeDates.fechaStringToDate(fechaVenta);
-        
-        entity.setFecha(_fechaVenta);
+        Date fVenta = FermeDates.fechaStringToDate(fechaVenta);
+        entity.setFecha(fVenta);
         
         if (tipoVenta != null && !tipoVenta.isEmpty()) {
             entity.setTipoVenta(tipoVenta.charAt(0));
@@ -117,14 +143,8 @@ public class VentaDTO {
             entity.setEmpleado(entityEmpleado);
         }
         
-        long subtotal = 0;
-        for (DetalleVentaDTO dtl : detallesVenta) {
-            long detalleTotal = dtl.getPrecioProducto() * dtl.getUnidadesProducto();
-            subtotal += detalleTotal;
-        }
-        entity.setSubtotal(subtotal);
-        
         List<DetalleVenta> detallesEntities = this.detallesToEntity();
+        detallesEntities.forEach((dtl) -> {dtl.setVenta(entity);});
         entity.setDetalles(detallesEntities);
         
         return entity;

@@ -1,6 +1,7 @@
 package cl.duoc.alumnos.ferme.controllers;
 
 import cl.duoc.alumnos.ferme.Ferme;
+import cl.duoc.alumnos.ferme.FermeConfig;
 import cl.duoc.alumnos.ferme.dto.PersonaDTO;
 import cl.duoc.alumnos.ferme.services.interfaces.IPersonasService;
 import com.querydsl.core.types.Predicate;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
- * @author Benjamin Guillermo
+ * @author Benjamin Guillermo <got12g at gmail.com>
  */
 @RestController
 @RequestMapping("/api/gestion")
@@ -29,18 +30,18 @@ public class PersonasController {
     @Autowired private IPersonasService personaSvc;    
     
     @GetMapping("/personas")
-    public Collection<PersonaDTO> getPersonas(@RequestParam Map<String,String> allRequestParams) {
+    public Collection<PersonaDTO> obtener(@RequestParam Map<String,String> allRequestParams) {
         
-        return this.getPersonas(null, null, allRequestParams);
+        return this.obtener(null, null, allRequestParams);
     }
     
     @GetMapping("/personas/{pageSize}")
-    public Collection<PersonaDTO> getPersonas(
+    public Collection<PersonaDTO> obtener(
             @PathVariable Integer pageSize,
             @RequestParam Map<String,String> allRequestParams
     ) {
         
-        return this.getPersonas(pageSize, null, allRequestParams);
+        return this.obtener(pageSize, null, allRequestParams);
     }
     
     /**
@@ -55,13 +56,13 @@ public class PersonasController {
      * @return Una colección de objetos PersonaDTO
      */
     @GetMapping("/personas/{pageSize}/{pageIndex}")
-    public Collection<PersonaDTO> getPersonas(
+    public Collection<PersonaDTO> obtener(
         @PathVariable Integer pageSize,
         @PathVariable Integer pageIndex,
         @RequestParam Map<String,String> allRequestParams) {
         
-        Integer finalPageSize = Ferme.DEFAULT_PAGE_SIZE;
-        Integer finalPageIndex = Ferme.DEFAULT_PAGE_INDEX;
+        Integer finalPageSize = FermeConfig.DEFAULT_PAGE_SIZE;
+        Integer finalPageIndex = FermeConfig.DEFAULT_PAGE_INDEX;
         Predicate filtros = null;
         
         if (pageSize != null && pageSize > 0) {

@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author Benjamin Guillermo
+ * @author Benjamin Guillermo <got12g at gmail.com>
  */
 public class CargoDTO {
     private final static Logger LOG = LoggerFactory.getLogger(CargoDTO.class);
@@ -36,14 +36,9 @@ public class CargoDTO {
     
     public Cargo toEntity() {
         Cargo entity = new Cargo();
-        try {
-            if (idCargo != 0) {
-                entity.setId(idCargo);
-            }
-        } catch (NullPointerException exc) {
-            LOG.info("toEntity() - idCliente es null");
+        if (idCargo != null && idCargo != 0) {
+            entity.setId(idCargo);
         }
-        
         entity.setDescripcion(descripcionCargo);
         
         return entity;

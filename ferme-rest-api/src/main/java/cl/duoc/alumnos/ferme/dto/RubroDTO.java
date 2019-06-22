@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author Benjamin Guillermo
+ * @author Benjamin Guillermo <got12g at gmail.com>
  */
 public class RubroDTO {
     private final static Logger LOG = LoggerFactory.getLogger(RubroDTO.class);
@@ -36,14 +36,9 @@ public class RubroDTO {
     
     public Rubro toEntity() {
         Rubro entity = new Rubro();
-        try {
-            if (idRubro != 0) {
-                entity.setId(idRubro);
-            }
-        } catch (NullPointerException exc) {
-            LOG.info("toEntity() - idRubro es null");
+        if (idRubro != null && idRubro != 0) {
+            entity.setId(idRubro);
         }
-        
         entity.setDescripcion(descripcionRubro);
         
         return entity;

@@ -1,6 +1,7 @@
 package cl.duoc.alumnos.ferme.controllers;
 
 import cl.duoc.alumnos.ferme.Ferme;
+import cl.duoc.alumnos.ferme.FermeConfig;
 import cl.duoc.alumnos.ferme.dto.ClienteDTO;
 import cl.duoc.alumnos.ferme.services.interfaces.IClientesService;
 import com.querydsl.core.types.Predicate;
@@ -9,7 +10,6 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
- * @author Benjamin Guillermo
+ * @author Benjamin Guillermo <got12g at gmail.com>
  */
 @RestController
 @RequestMapping("/api/gestion")
@@ -30,18 +30,18 @@ public class ClientesController {
     @Autowired private IClientesService clienteSvc;    
     
     @GetMapping("/clientes")
-    public Collection<ClienteDTO> getClientes(@RequestParam Map<String,String> allRequestParams) {
+    public Collection<ClienteDTO> obtener(@RequestParam Map<String,String> allRequestParams) {
         
-        return this.getClientes(null, null, allRequestParams);
+        return this.obtener(null, null, allRequestParams);
     }
     
     @GetMapping("/clientes/{pageSize}")
-    public Collection<ClienteDTO> getClientes(
+    public Collection<ClienteDTO> obtener(
             @PathVariable Integer pageSize,
             @RequestParam Map<String,String> allRequestParams
     ) {
         
-        return this.getClientes(pageSize, null, allRequestParams);
+        return this.obtener(pageSize, null, allRequestParams);
     }
     
     /**
@@ -56,14 +56,14 @@ public class ClientesController {
      * @return Una colección de objetos ClienteDTO
      */
     @GetMapping("/clientes/{pageSize}/{pageIndex}")
-    public Collection<ClienteDTO> getClientes(
+    public Collection<ClienteDTO> obtener(
         @PathVariable Integer pageSize,
         @PathVariable Integer pageIndex,
         @RequestParam Map<String,String> allRequestParams) {
         
         
-        Integer finalPageSize = Ferme.DEFAULT_PAGE_SIZE;
-        Integer finalPageIndex = Ferme.DEFAULT_PAGE_INDEX;
+        Integer finalPageSize = FermeConfig.DEFAULT_PAGE_SIZE;
+        Integer finalPageIndex = FermeConfig.DEFAULT_PAGE_INDEX;
         Predicate filtros = null;
         
         if (pageSize != null && pageSize > 0) {
@@ -89,8 +89,8 @@ public class ClientesController {
      * @param dto Un ClienteDTO representando el Cliente a almacenar/actualizar.
      * @return El ID del cliente, 0 si falla al insertar, null si el JSON viene incorrecto.
      */
-    @PostMapping({"/clientes/guardar", "/clientes/guardar/"})
-    public Integer saveCliente(@RequestBody ClienteDTO dto) {
+    @PostMapping("/clientes/guardar")
+    public Integer guardar(@RequestBody ClienteDTO dto) {
         if (dto != null) {
             LOG.debug("saveCliente - dto="+dto);
             Integer clienteId = clienteSvc.saveCliente(dto);
@@ -105,8 +105,8 @@ public class ClientesController {
      * @param clienteId El ID del Cliente a eliminar.
      * @return true si la operación fue exitosa, false si no lo fue
      */
-    @PostMapping({"/clientes/borrar", "/clientes/borrar/"})
-    public boolean deleteCliente(@RequestParam("id") Integer clienteId) {
+    @PostMapping("/clientes/borrar")
+    public boolean borrar(@RequestBody Integer clienteId) {
         
         if (clienteId != null && clienteId != 0) {
             LOG.debug("deleteCliente - clienteId="+clienteId);

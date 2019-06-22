@@ -1,10 +1,10 @@
 package cl.duoc.alumnos.ferme.domain.entities;
 
 import cl.duoc.alumnos.ferme.Ferme;
+import cl.duoc.alumnos.ferme.FermeConfig;
 import cl.duoc.alumnos.ferme.dto.UsuarioDTO;
+import cl.duoc.alumnos.ferme.util.FermeDates;
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 import javax.persistence.CascadeType;
@@ -24,10 +24,11 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import org.hibernate.annotations.Cascade;
+import org.springframework.lang.NonNull;
 
 /**
  *
- * @author Benjamin Guillermo
+ * @author Benjamin Guillermo <got12g at gmail.com>
  */
 @Entity
 @Table(name = "USUARIO")
@@ -38,89 +39,122 @@ public class Usuario implements Serializable {
     
     @Id
     @Column(name = "ID_USUARIO")
-    @SequenceGenerator(name = "usuario_seq", sequenceName = "SEQ_USUARIO", initialValue = 1, allocationSize = Ferme.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
+    @SequenceGenerator(name = "usuario_seq", sequenceName = "SEQ_USUARIO", initialValue = 1, allocationSize = FermeConfig.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
     @GeneratedValue(generator = "usuario_seq", strategy = GenerationType.AUTO)
-    private Integer id;
+    private Integer _id;
     
+    @NonNull
     @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA")
-    @OneToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.LAZY)
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    private Persona persona;
+    @OneToOne(cascade = CascadeType.DETACH, optional = false, fetch = FetchType.LAZY)
+    @Cascade(org.hibernate.annotations.CascadeType.DETACH)
+    private Persona _persona;
     
+    @NonNull
     @Size(min = 1, max = 100)
     @Column(name = "NOMBRE")
-    private String nombre;
+    private String _nombre;
     
     @Size(min = 1, max = 20)
     @Column(name = "CLAVE")
-    
-    private String clave;
+    private String _clave;
     
     @Column(name = "FECHA_CREACION")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaCreacion;
+    private Date _fechaCreacion;
 
     public Usuario() {
         super();
     }
 
     public Integer getId() {
-        return id;
+        return _id;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this._id = id;
     }
 
     public String getNombre() {
-        return nombre;
+        return _nombre;
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        this._nombre = nombre;
     }
 
     public String getClave() {
-        return clave;
+        return _clave;
     }
 
     public void setClave(String clave) {
-        this.clave = clave;
+        this._clave = clave;
     }
 
     public Date getFechaCreacion() {
-        return fechaCreacion;
+        return _fechaCreacion;
     }
 
     public void setFechaCreacion(Date fechaCreacion) {
-        this.fechaCreacion = fechaCreacion;
+        this._fechaCreacion = fechaCreacion;
     }
 
     public Persona getPersona() {
-        return persona;
+        return _persona;
     }
 
     public void setPersona(Persona persona) {
-        this.persona = persona;
+        this._persona = persona;
     }
-    
+        
     public UsuarioDTO toDTO() {
         UsuarioDTO dto = new UsuarioDTO();
+        dto.setIdUsuario(_id);
+        dto.setNombreUsuario(_nombre);
         
-        dto.setIdUsuario(id);
-        dto.setNombreUsuario(nombre);
+        String _fechaCreacion = FermeDates.fechaToString(this._fechaCreacion);
+        dto.setFechaCreacionUsuario(_fechaCreacion);
         
-        DateFormat formateador = new SimpleDateFormat(Ferme.DEFAULT_DATE_FORMAT);
-        dto.setFechaCreacionUsuario(formateador.format(fechaCreacion));
-        dto.setPersona(persona.toDTO());
+        Persona personaEntity = getPersona();
+        dto.setIdPersona(personaEntity.getId());
+        dto.setNombreCompletoPersona(personaEntity.getNombreCompleto());
+        dto.setRutPersona(personaEntity.getRut());
+        
+        /*        
+        
+        String direccion = personaEntity.getDireccion();
+        Long fono1 = personaEntity.getFono1();
+        Long fono2 = personaEntity.getFono2();
+        Long fono3 = personaEntity.getFono3();
+        
+        if (direccion != null) {
+          dto.setDireccionPersona(direccion);
+        }
+        
+        if (email != null) {
+          dto.setEmailPersona(email);
+        }
+        
+        if (fono1 != null) {
+          dto.setFonoPersona1(fono1);
+        }
+        
+        if (fono2 != null) {
+          dto.setFonoPersona2(fono2);
+        }
+        
+        if (fono3 != null) {
+          dto.setFonoPersona3(fono3);
+        }
+        */
+        
         
         return dto;
     }
-
+    
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 37 * hash + this.id;
+        hash = 37 * hash + this._id;
         return hash;
     }
 
@@ -130,12 +164,12 @@ public class Usuario implements Serializable {
             return false;
         }
         final Usuario other = (Usuario) object;
-        return (!Objects.equals(this.id, other.getId()));
+        return (!Objects.equals(this._id, other.getId()));
     }
 
     @Override
     public String toString() {
-        return "cl.duoc.alumnos.ferme.entities.domain.Usuario[ idUsuario=" + id + " ]";
+        return "cl.duoc.alumnos.ferme.entities.domain.Usuario[ idUsuario=" + _id + " ]";
     }
-    
+
 }

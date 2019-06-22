@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author Benjamin Guillermo
+ * @author Benjamin Guillermo <got12g at gmail.com>
  */
 public class ProductoDTO {
     private final static Logger LOG = LoggerFactory.getLogger(ProductoDTO.class);
@@ -68,7 +68,7 @@ public class ProductoDTO {
         this.stockCriticoProducto = stockCriticoProducto;
     }
 
-    public long getPrecio() {
+    public long getPrecioProducto() {
         return precioProducto;
     }
 
@@ -118,19 +118,18 @@ public class ProductoDTO {
     
     public Producto toEntity() {
         Producto entity = new Producto();
-        try {
-            if (idProducto != 0) {
-                entity.setId(idProducto);
-            }
-        } catch (NullPointerException exc) {
-            LOG.warn("toEntity() - idProducto es null");
+        if (idProducto != null && idProducto != 0) {
+            entity.setId(idProducto);
         }
-        
+        entity.setCodigo(codigoProducto);
         entity.setNombre(nombreProducto);
-        entity.setDescripcion(descripcionProducto);
         entity.setPrecio(precioProducto);
         entity.setStockActual(stockActualProducto);
         entity.setStockCritico(stockCriticoProducto);
+        
+        if (descripcionProducto != null && !descripcionProducto.isEmpty()) {
+            entity.setDescripcion(descripcionProducto);
+        }
         
         TipoProducto tipoEntity = new TipoProducto();
         tipoEntity.setId(idTipoProducto);

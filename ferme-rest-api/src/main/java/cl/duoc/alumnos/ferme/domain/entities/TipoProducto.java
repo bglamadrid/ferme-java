@@ -1,6 +1,7 @@
 package cl.duoc.alumnos.ferme.domain.entities;
 
 import cl.duoc.alumnos.ferme.Ferme;
+import cl.duoc.alumnos.ferme.FermeConfig;
 import cl.duoc.alumnos.ferme.dto.TipoProductoDTO;
 import java.io.Serializable;
 import java.util.Objects;
@@ -22,7 +23,7 @@ import org.hibernate.annotations.Cascade;
 
 /**
  *
- * @author Benjamin Guillermo
+ * @author Benjamin Guillermo <got12g at gmail.com>
  */
 @Entity
 @Table(name = "TIPO_PRODUCTO")
@@ -33,54 +34,55 @@ public class TipoProducto implements Serializable {
     
     @Id
     @Column(name = "ID_TIPO_PRODUCTO")
-    @SequenceGenerator(name = "tipo_producto_seq", sequenceName = "SEQ_TIPO_PRODUCTO", initialValue = 1, allocationSize = Ferme.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
+    @SequenceGenerator(name = "tipo_producto_seq", sequenceName = "SEQ_TIPO_PRODUCTO", initialValue = 1, allocationSize = FermeConfig.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
     @GeneratedValue(generator = "tipo_producto_seq", strategy = GenerationType.AUTO)
-    private Integer id;
+    private Integer _id;
     
     @Size(min = 1, max = 50)
     @Column(name = "NOMBRE_TIPO")
-    private String nombre;
+    private String _nombre;
     
     @JoinColumn(name = "ID_FAMILIA_PRODUCTO", referencedColumnName = "ID_FAMILIA_PRODUCTO")
-    @ManyToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.LAZY)
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    private FamiliaProducto familia;
+    @ManyToOne(cascade = CascadeType.DETACH, optional = false, fetch = FetchType.LAZY)
+    @Cascade(org.hibernate.annotations.CascadeType.DETACH)
+    private FamiliaProducto _familia;
 
     public TipoProducto() {
         super();
     }
 
     public Integer getId() {
-        return id;
+        return _id;
     }
 
     public void setId(Integer id) {
-        this.id = id;
+        this._id = id;
     }
 
     public String getNombre() {
-        return nombre;
+        return _nombre;
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        this._nombre = nombre;
     }
 
     public FamiliaProducto getFamilia() {
-        return familia;
+        return _familia;
     }
 
     public void setFamilia(FamiliaProducto familia) {
-        this.familia = familia;
+        this._familia = familia;
     }
 
     public TipoProductoDTO toDTO() {
         TipoProductoDTO dto = new TipoProductoDTO();
+        dto.setIdTipoProducto(_id);
+        dto.setNombreTipoProducto(_nombre);
         
-        dto.setIdTipoProducto(id);
-        dto.setIdFamiliaProducto(familia.getId());
-        dto.setNombreTipoProducto(nombre);
-        dto.setNombreFamiliaProducto(familia.getDescripcion());
+        FamiliaProducto fml = getFamilia();
+        dto.setIdFamiliaProducto(fml.getId());
+        dto.setNombreFamiliaProducto(fml.getDescripcion());
         
         return dto;
     }
@@ -88,7 +90,7 @@ public class TipoProducto implements Serializable {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 83 * hash + this.id;
+        hash = 83 * hash + this._id;
         return hash;
     }
 
@@ -98,14 +100,14 @@ public class TipoProducto implements Serializable {
             return false;
         }
         final TipoProducto other = (TipoProducto) object;
-        return (Objects.equals(this.id, other.getId()));
+        return (Objects.equals(this._id, other.getId()));
     }
     
     
 
     @Override
     public String toString() {
-        return "cl.duoc.alumnos.ferme.entities.domain.TipoProducto[ idTipoProducto=" + id + " ]";
+        return "cl.duoc.alumnos.ferme.entities.domain.TipoProducto[ idTipoProducto=" + _id + " ]";
     }
     
 }

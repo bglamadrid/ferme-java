@@ -1,6 +1,7 @@
 package cl.duoc.alumnos.ferme.controllers;
 
 import cl.duoc.alumnos.ferme.Ferme;
+import cl.duoc.alumnos.ferme.FermeConfig;
 import cl.duoc.alumnos.ferme.dto.EmpleadoDTO;
 import cl.duoc.alumnos.ferme.services.interfaces.IEmpleadosService;
 import com.querydsl.core.types.Predicate;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
- * @author Benjamin Guillermo
+ * @author Benjamin Guillermo <got12g at gmail.com>
  */
 @RestController
 @RequestMapping("/api/gestion")
@@ -30,18 +31,18 @@ public class EmpleadosController {
     @Autowired private IEmpleadosService empleadoSvc;    
     
     @GetMapping("/empleados")
-    public Collection<EmpleadoDTO> getEmpleados(@RequestParam Map<String,String> allRequestParams) {
+    public Collection<EmpleadoDTO> obtener(@RequestParam Map<String,String> allRequestParams) {
         
-        return this.getEmpleados(null, null, allRequestParams);
+        return this.obtener(null, null, allRequestParams);
     }
     
     @GetMapping("/empleados/{pageSize}")
-    public Collection<EmpleadoDTO> getEmpleados(
-            @PathVariable Integer pageSize,
-            @RequestParam Map<String,String> allRequestParams
+    public Collection<EmpleadoDTO> obtener(
+        @PathVariable Integer pageSize,
+        @RequestParam Map<String,String> allRequestParams
     ) {
         
-        return this.getEmpleados(pageSize, null, allRequestParams);
+        return this.obtener(pageSize, null, allRequestParams);
     }
     
     /**
@@ -56,13 +57,13 @@ public class EmpleadosController {
      * @return Una colección de objetos EmpleadoDTO
      */
     @GetMapping("/empleados/{pageSize}/{pageIndex}")
-    public Collection<EmpleadoDTO> getEmpleados(
+    public Collection<EmpleadoDTO> obtener(
         @PathVariable Integer pageSize,
         @PathVariable Integer pageIndex,
         @RequestParam Map<String,String> allRequestParams) {
         
-        Integer finalPageSize = Ferme.DEFAULT_PAGE_SIZE;
-        Integer finalPageIndex = Ferme.DEFAULT_PAGE_INDEX;
+        Integer finalPageSize = FermeConfig.DEFAULT_PAGE_SIZE;
+        Integer finalPageIndex = FermeConfig.DEFAULT_PAGE_INDEX;
         Predicate filtros = null;
         
         if (pageSize != null && pageSize > 0) {
@@ -90,7 +91,7 @@ public class EmpleadosController {
      * @throws javassist.NotFoundException
      */
     @PostMapping("/empleados/guardar")
-    public Integer saveEmpleado(@RequestBody EmpleadoDTO dto) throws NotFoundException {
+    public Integer guardar(@RequestBody EmpleadoDTO dto) throws NotFoundException {
         
         if (dto != null) {
             LOG.debug("saveEmpleado - dto="+dto);
@@ -107,7 +108,7 @@ public class EmpleadosController {
      * @return true si la operación fue exitosa, false si no lo fue.
      */
     @PostMapping("/empleados/borrar")
-    public boolean deleteEmpleado(@RequestParam("id") Integer empleadoId) {
+    public boolean borrar(@RequestBody Integer empleadoId) {
         
         if (empleadoId != null && empleadoId != 0) {
             LOG.debug("deleteEmpleado - empleadoId="+empleadoId);

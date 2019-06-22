@@ -1,6 +1,7 @@
 package cl.duoc.alumnos.ferme.controllers;
 
 import cl.duoc.alumnos.ferme.Ferme;
+import cl.duoc.alumnos.ferme.FermeConfig;
 import cl.duoc.alumnos.ferme.dto.DetalleOrdenCompraDTO;
 import cl.duoc.alumnos.ferme.dto.OrdenCompraDTO;
 import cl.duoc.alumnos.ferme.services.interfaces.IOrdenesCompraService;
@@ -11,6 +12,8 @@ import javassist.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
- * @author Benjamin Guillermo
+ * @author Benjamin Guillermo <got12g at gmail.com>
  */
 @RestController
 @RequestMapping("/api/gestion")
@@ -30,28 +33,28 @@ public class OrdenesCompraController {
     @Autowired private IOrdenesCompraService ordenCompraSvc;
     
     @GetMapping("/ordenes_compra")
-    public Collection<OrdenCompraDTO> getOrdenesCompra(
+    public Collection<OrdenCompraDTO> obtener(
         @RequestParam Map<String,String> allRequestParams
     ) {
-        return this.getOrdenesCompra(null, null, allRequestParams);
+        return this.obtener(null, null, allRequestParams);
     }
     
     @GetMapping("/ordenes_compra/{pageSize}")
-    public Collection<OrdenCompraDTO> getOrdenesCompra(
+    public Collection<OrdenCompraDTO> obtener(
         @RequestParam Integer pageSize,
         @RequestParam Map<String, String> allRequestParams
     ) {
-        return this.getOrdenesCompra(pageSize, null, allRequestParams);
+        return this.obtener(pageSize, null, allRequestParams);
     }
     
     @GetMapping("/ordenes_compra/{pageSize}/{pageIndex}")
-    public Collection<OrdenCompraDTO> getOrdenesCompra(
+    public Collection<OrdenCompraDTO> obtener(
         @RequestParam Integer pageSize,
         @RequestParam Integer pageIndex,
         @RequestParam Map<String,String> allRequestParams
     ) {
-        Integer finalPageSize = Ferme.DEFAULT_PAGE_SIZE;
-        Integer finalPageIndex = Ferme.DEFAULT_PAGE_INDEX;
+        Integer finalPageSize = FermeConfig.DEFAULT_PAGE_SIZE;
+        Integer finalPageIndex = FermeConfig.DEFAULT_PAGE_INDEX;
         Predicate filtros = null;
         
         if (pageSize != null && pageSize > 0) {
@@ -78,13 +81,16 @@ public class OrdenesCompraController {
      * @return Una colección de objetos DTO.
      */
     @PostMapping("/ordenes_compra/detalles")
-    public Collection<DetalleOrdenCompraDTO> getDetallesOrdenCompra(@RequestBody OrdenCompraDTO dto) {
+    public ResponseEntity<?> detalles(@RequestBody OrdenCompraDTO dto) {
         
         if (dto != null && dto.getIdOrdenCompra() != null && dto.getIdOrdenCompra() != 0) {
             LOG.debug("getDetallesOrdenCompra - dto="+dto);
-            return ordenCompraSvc.getDetallesOrdenCompra(dto.getIdOrdenCompra());
+            Collection<DetalleOrdenCompraDTO> lista = ordenCompraSvc.getDetallesOrdenCompra(dto.getIdOrdenCompra());
+            return new ResponseEntity<>(lista, HttpStatus.OK);
+        } else {
+            String mensaje = "La orden de compra ingresada no es válida.";
+            return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);
         }
-        return null;
     }
     
     /**
@@ -93,15 +99,21 @@ public class OrdenesCompraController {
      * @return El ID de la venta.
      */
     @PostMapping("/ordenes_compra/guardar")
-    public Integer saveOrdenCompra(@RequestBody OrdenCompraDTO dto) throws NotFoundException {
+    public ResponseEntity<?> guardar(@RequestBody OrdenCompraDTO dto) {
         
         if (dto != null) {
             LOG.debug("saveOrdenCompra - dto="+dto);
-            Integer ordenCompraId = ordenCompraSvc.saveOrdenCompra(dto);
-            LOG.debug("saveOrdenCompra - ordenCompraId="+ordenCompraId);
-            return ordenCompraId;
+            try {
+                Integer ordenCompraId = ordenCompraSvc.saveOrdenCompra(dto);
+                LOG.debug("saveOrdenCompra - ordenCompraId="+ordenCompraId);
+                return new ResponseEntity<>(ordenCompraId, HttpStatus.OK);
+            } catch (NotFoundException exc) {
+                return new ResponseEntity<>(exc.getMessage(), HttpStatus.BAD_REQUEST);
+            }
+        } else {
+            String mensaje = "La orden de compra ingresada no es válida.";
+            return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);
         }
-        return null;
     }
     
     /**
@@ -110,12 +122,15 @@ public class OrdenesCompraController {
      * @return true si la operación fue exitosa, false si no lo fue.
      */
     @PostMapping("/ordenes_compra/borrar")
-    public boolean deleteOrdenCompra(@RequestBody Integer ordenCompraId) {
+    public ResponseEntity<?> borrar(@RequestBody Integer ordenCompraId) {
         
         if (ordenCompraId != null && ordenCompraId != 0) {
             LOG.debug("deleteOrdenCompra - clienteId="+ordenCompraId);
-            return ordenCompraSvc.deleteOrdenCompra(ordenCompraId);
+            boolean result = ordenCompraSvc.deleteOrdenCompra(ordenCompraId);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } else {
+            String mensaje = "La orden de compra ingresada no es válida.";
+            return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);
         }
-        return false;
     }
 }

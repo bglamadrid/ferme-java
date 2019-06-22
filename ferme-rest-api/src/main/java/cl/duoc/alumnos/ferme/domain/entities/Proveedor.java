@@ -1,7 +1,9 @@
 package cl.duoc.alumnos.ferme.domain.entities;
 
 import cl.duoc.alumnos.ferme.Ferme;
+import cl.duoc.alumnos.ferme.FermeConfig;
 import cl.duoc.alumnos.ferme.dto.ProveedorDTO;
+import cl.duoc.alumnos.ferme.util.PersonaConverter;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.CascadeType;
@@ -22,7 +24,7 @@ import org.hibernate.annotations.Cascade;
 
 /**
  *
- * @author Benjamin Guillermo
+ * @author Benjamin Guillermo <got12g at gmail.com>
  */
 @Entity
 @Table(name = "PROVEEDOR")
@@ -33,59 +35,52 @@ public class Proveedor implements Serializable {
     
     @Id
     @Column(name = "ID_PROVEEDOR")
-    @SequenceGenerator(name = "proveedor_seq", sequenceName = "SEQ_PROVEEDOR", initialValue = 1, allocationSize = Ferme.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
+    @SequenceGenerator(name = "proveedor_seq", sequenceName = "SEQ_PROVEEDOR", initialValue = 1, allocationSize = FermeConfig.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
     @GeneratedValue(generator = "proveedor_seq", strategy = GenerationType.AUTO)
-    private Integer id;
+    private Integer _id;
     
     @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA")
     @OneToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.EAGER)
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    private Persona persona;
+    private Persona _persona;
     
     @Size(min = 1, max = 50)
     @Column(name = "RAZON_SOCIAL")
-    private String razonSocial;
+    private String _razonSocial;
 
     public Proveedor() {
         super();
     }
 
     public Integer getId() {
-        return id;
+        return _id;
     }
 
     public void setId(Integer id) {
-        this.id = id;
+        this._id = id;
     }
 
     public String getRazonSocial() {
-        return razonSocial;
+        return _razonSocial;
     }
 
     public void setRazonSocial(String razonSocial) {
-        this.razonSocial = razonSocial;
+        this._razonSocial = razonSocial;
     }
 
     public Persona getPersona() {
-        return persona;
+        return _persona;
     }
 
     public void setPersona(Persona persona) {
-        this.persona = persona;
+        this._persona = persona;
     }
 
     public ProveedorDTO toDTO() {
         ProveedorDTO dto = new ProveedorDTO();
-        dto.setIdProveedor(id);
-        dto.setRazonSocialProveedor(razonSocial);
-        dto.setIdPersona(persona.getId());
-        dto.setRutPersona(persona.getRut());
-        dto.setNombreCompletoPersona(persona.getNombreCompleto());
-        dto.setDireccionPersona(persona.getDireccion());
-        dto.setEmailPersona(persona.getEmail());
-        dto.setFonoPersona1(persona.getFono1());
-        dto.setFonoPersona2(persona.getFono2());
-        dto.setFonoPersona3(persona.getFono3());
+        dto = PersonaConverter.cargarDatosPersonaEnDTO(_persona, dto);
+        dto.setIdProveedor(_id);
+        dto.setRazonSocialProveedor(_razonSocial);
         
         return dto;
     }
@@ -93,7 +88,7 @@ public class Proveedor implements Serializable {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 71 * hash + this.id;
+        hash = 71 * hash + this._id;
         return hash;
     }
 
@@ -103,14 +98,14 @@ public class Proveedor implements Serializable {
             return false;
         }
         final Proveedor other = (Proveedor) object;
-        return (Objects.equals(this.id, other.getId()));
+        return (Objects.equals(this._id, other.getId()));
     }
     
     
 
     @Override
     public String toString() {
-        return "cl.duoc.alumnos.ferme.entities.domain.Proveedor[ idProveedor=" + id + " ]";
+        return "cl.duoc.alumnos.ferme.entities.domain.Proveedor[ idProveedor=" + _id + " ]";
     }
     
 }

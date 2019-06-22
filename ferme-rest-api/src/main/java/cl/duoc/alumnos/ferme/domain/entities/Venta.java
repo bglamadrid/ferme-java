@@ -1,6 +1,7 @@
 package cl.duoc.alumnos.ferme.domain.entities;
 
 import cl.duoc.alumnos.ferme.Ferme;
+import cl.duoc.alumnos.ferme.FermeConfig;
 import cl.duoc.alumnos.ferme.dto.DetalleVentaDTO;
 import cl.duoc.alumnos.ferme.dto.VentaDTO;
 import cl.duoc.alumnos.ferme.util.FermeDates;
@@ -29,7 +30,7 @@ import org.hibernate.annotations.Cascade;
 
 /**
  *
- * @author Benjamin Guillermo
+ * @author Benjamin Guillermo <got12g at gmail.com>
  */
 @Entity
 @Table(name = "VENTA")
@@ -40,18 +41,18 @@ public class Venta implements Serializable {
     
     @Id
     @Column(name = "ID_VENTA")
-    @SequenceGenerator(name = "venta_seq", sequenceName = "SEQ_VENTA", initialValue = 1, allocationSize = Ferme.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
+    @SequenceGenerator(name = "venta_seq", sequenceName = "SEQ_VENTA", initialValue = 1, allocationSize = FermeConfig.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
     @GeneratedValue(generator = "venta_seq", strategy = GenerationType.AUTO)
     private Integer id;
     
-    @JoinColumn(name = "ID_EMPLEADO", referencedColumnName = "ID_EMPLEADO")
-    @ManyToOne(cascade = CascadeType.ALL,optional = false, fetch = FetchType.LAZY)
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @JoinColumn(name = "ID_EMPLEADO", referencedColumnName = "ID_EMPLEADO", insertable = true, updatable = true)
+    @ManyToOne(cascade = CascadeType.DETACH,optional = true, fetch = FetchType.LAZY)
+    @Cascade(org.hibernate.annotations.CascadeType.DETACH)
     private Empleado empleado;
     
     @JoinColumn(name = "ID_CLIENTE", referencedColumnName = "ID_CLIENTE", insertable = true, updatable = true)
-    @ManyToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.LAZY)
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.DETACH, optional = false, fetch = FetchType.LAZY)
+    @Cascade(org.hibernate.annotations.CascadeType.DETACH)
     private Cliente cliente;
     
     @Column(name = "TIPO_VENTA")
@@ -64,7 +65,7 @@ public class Venta implements Serializable {
     @Column(name = "SUBTOTAL")
     private long subtotal;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "venta", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "_venta", fetch = FetchType.LAZY)
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private List<DetalleVenta> detalles;
 
@@ -130,23 +131,29 @@ public class Venta implements Serializable {
     
     public VentaDTO toDTO(boolean simple) {
         VentaDTO dto = new VentaDTO();
+        Cliente clienteEntity = getCliente();
+        Persona clientePersonaEntity = clienteEntity.getPersona();
+        Empleado empleadoEntity = getEmpleado();
+        dto.setIdVenta(id);
+        dto.setTipoVenta(tipoVenta.toString());
+        dto.setSubtotalVenta(subtotal);
         
-        final int _id = id;
-        final int _clienteId = cliente.getId();
-        final int _empleadoId = empleado.getId();
-        final String _tipoVenta = tipoVenta.toString();
-        final long _subtotal = subtotal;
-        final String _fechaVenta = FermeDates.fechaToString(fecha);
+        final String fVenta = FermeDates.fechaToString(fecha);
+        dto.setFechaVenta(fVenta);
         
-        dto.setIdVenta(_id);
-        dto.setIdCliente(_clienteId);
-        dto.setIdEmpleado(_empleadoId);
-        dto.setTipoVenta(_tipoVenta);
-        dto.setSubtotalVenta(_subtotal);
-        dto.setFechaVenta(_fechaVenta);
+        
+        dto.setIdCliente(clienteEntity.getId());
+        dto.setNombreCompletoCliente(clientePersonaEntity.getNombreCompleto());
+        dto.setRutCliente(clientePersonaEntity.getRut());
+        
+        if (empleadoEntity != null) {
+            Persona empleadoPersonaEntity = empleadoEntity.getPersona();
+            dto.setIdEmpleado(empleadoEntity.getId());
+            dto.setNombreCompletoEmpleado(empleadoPersonaEntity.getNombreCompleto());
+        }
         
         if (!simple) {
-            final List<DetalleVentaDTO> _detalles = this.detallesToDTO();
+            List<DetalleVentaDTO> _detalles = this.detallesToDTO();
             dto.setDetallesVenta(_detalles);
         }
         

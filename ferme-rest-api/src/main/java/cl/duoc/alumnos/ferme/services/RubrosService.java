@@ -1,6 +1,7 @@
 package cl.duoc.alumnos.ferme.services;
 
 import cl.duoc.alumnos.ferme.Ferme;
+import cl.duoc.alumnos.ferme.FermeConfig;
 import cl.duoc.alumnos.ferme.domain.entities.QRubro;
 import cl.duoc.alumnos.ferme.domain.entities.Rubro;
 import cl.duoc.alumnos.ferme.domain.repositories.IRubrosRepository;
@@ -22,7 +23,7 @@ import org.springframework.stereotype.Service;
 
 /**
  *
- * @author got12
+ * @author Benjamin Guillermo <got12g at gmail.com>
  */
 @Service
 public class RubrosService implements IRubrosService {
@@ -38,7 +39,7 @@ public class RubrosService implements IRubrosService {
         long rubroCount;
         
         LOG.info("getRubros - Procesando solicitud...");
-        Sort orden = Sort.by(Ferme.RUBRO_DEFAULT_SORT_COLUMN).ascending();
+        Sort orden = Sort.by(FermeConfig.RUBRO_DEFAULT_SORT_COLUMN).ascending();
         
         LOG.info("getRubros - Llamando queries...");
         if (condicion == null) {
@@ -73,11 +74,11 @@ public class RubrosService implements IRubrosService {
                 switch (paramName) {
                     case "id":
                         parsedValueI = Integer.valueOf(paramValue);
-                        bb.and(qRubro.id.eq(parsedValueI));
+                        bb.and(qRubro._id.eq(parsedValueI));
                         return bb; //match por id es único
                     case "descripcion":
-                        paramValue = "%" + paramValue.toUpperCase() + "%";
-                        bb.and(qRubro.descripcion.upper().like(paramValue));
+                        paramValue = "%" + paramValue + "%";
+                        bb.and(qRubro._descripcion.likeIgnoreCase(paramValue));
                         break;
                     default: break;
                 }

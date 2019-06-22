@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author Benjamin Guillermo
+ * @author Benjamin Guillermo <got12g at gmail.com>
  */
 public class PersonaDTO {
     private final static Logger LOG = LoggerFactory.getLogger(PersonaDTO.class);
@@ -90,30 +90,25 @@ public class PersonaDTO {
     
     public Persona personaToEntity() {
         Persona personaEntity = new Persona();
-        try {
-            if (idPersona != 0) {
-                personaEntity.setId(idPersona);
-            }
-        } catch (NullPointerException exc) {
-            LOG.info("personaToEntity() - idPersona es null");
+        if (idPersona != null && idPersona != 0) {
+            personaEntity.setId(idPersona);
         }
-        
         personaEntity.setNombreCompleto(nombreCompletoPersona);
         personaEntity.setRut(rutPersona);
         
-        if (direccionPersona != null) {
+        if (direccionPersona != null && !direccionPersona.isEmpty()) {
             personaEntity.setDireccion(direccionPersona);
         }
-        if (emailPersona != null) {
+        if (emailPersona != null && !emailPersona.isEmpty()) {
             personaEntity.setEmail(emailPersona);
         }
-        if (fonoPersona1 != null) {
+        if (fonoPersona1 != null && fonoPersona1 > 0L) {
             personaEntity.setFono1(fonoPersona1);
         }
-        if (fonoPersona2 != null) {
+        if (fonoPersona2 != null && fonoPersona2 > 0L) {
             personaEntity.setFono2(fonoPersona2);
         }
-        if (fonoPersona3 != null) {
+        if (fonoPersona3 != null && fonoPersona3 > 0L) {
             personaEntity.setFono3(fonoPersona3);
         }
         

@@ -1,5 +1,6 @@
 package cl.duoc.alumnos.ferme.services.interfaces;
 
+import cl.duoc.alumnos.ferme.dto.DetalleVentaDTO;
 import cl.duoc.alumnos.ferme.dto.VentaDTO;
 import com.querydsl.core.types.Predicate;
 import java.util.Collection;
@@ -8,7 +9,7 @@ import javassist.NotFoundException;
 
 /**
  *
- * @author Benjamin Guillermo La Madrid <got12g at gmail.com>
+ * @author Benjamin Guillermo <got12g at gmail.com>
  */
 public interface IVentasService {
     
@@ -30,6 +31,14 @@ public interface IVentasService {
      * @return Un objeto Predicate representando un conjunto de filtros.
      */
     public Predicate queryParamsMapToVentasFilteringPredicate(Map<String,String> queryParamsMap);
+    
+
+    /**
+     * Obtiene los detalles de la venta ingresada.
+     * @param idVenta El ID de la venta de la que se traerán sus detalles.
+     * @return Una colección de objetos DTO.
+     */
+    public Collection<DetalleVentaDTO> getDetallesVenta(Integer idVenta);
     
     /**
      * 

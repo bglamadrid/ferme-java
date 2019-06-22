@@ -1,22 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <parent>
-<<<<<<< HEAD
-        <artifactId>ferme-rest</artifactId>
-=======
->>>>>>> dev
-        <groupId>cl.duoc.alumnos</groupId>
-        <artifactId>ferme-rest</artifactId>
-        <version>1.0</version>
-    </parent>
+
+    <name>ferme-rest-ear</name>
 
     <groupId>cl.duoc.alumnos.proyectos</groupId>
     <artifactId>ferme-rest-ear</artifactId>
     <version>1.0</version>
     <packaging>ear</packaging>
-
-    <name>ferme-rest-ear</name>
+    
+    <parent>
+        <groupId>cl.duoc.alumnos</groupId>
+        <artifactId>ferme-rest</artifactId>
+        <version>1.0</version>
+    </parent>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -48,22 +45,13 @@
         <dependency>
             <groupId>cl.duoc.alumnos.proyectos</groupId>
             <artifactId>ferme-rest-ejb</artifactId>
-<<<<<<< HEAD
-            <version>1</version>
-=======
             <version>1.0</version>
->>>>>>> dev
             <type>ejb</type>
         </dependency>
         <dependency>
             <groupId>cl.duoc.alumnos.proyectos</groupId>
-<<<<<<< HEAD
-            <artifactId>ferme-rest-web</artifactId>
-            <version>1</version>
-=======
             <artifactId>ferme-rest-api</artifactId>
             <version>1.0</version>
->>>>>>> dev
             <type>war</type>
         </dependency>
     </dependencies>

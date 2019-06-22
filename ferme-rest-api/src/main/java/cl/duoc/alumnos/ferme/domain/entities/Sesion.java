@@ -52,10 +52,6 @@ public class Sesion implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date _abierta;
     
-    @Size(min = 1, max = 1)
-    @Column(name = "VIGENTE", columnDefinition = "CHAR")
-    private String _vigente;
-    
     @Column(name = "HASH")
     private String _hash;
     
@@ -94,14 +90,6 @@ public class Sesion implements Serializable {
 
     public void setAbierta(Date abierta) {
         this._abierta = abierta;
-    }
-
-    public String getVigente() {
-        return _vigente;
-    }
-
-    public void setVigente(String vigente) {
-        this._vigente = vigente;
     }
 
     public String getHash() {

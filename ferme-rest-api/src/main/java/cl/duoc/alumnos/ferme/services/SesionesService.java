@@ -79,7 +79,6 @@ public class SesionesService implements ISesionesService {
     @Override
     public SesionDTO abrirSesion(UsuarioDTO usuario) {
         Sesion entity = new Sesion();
-        entity.setVigente("S");
         
         Usuario usuarioEntity = usuario.toEntity();
         entity.setUsuario(usuarioEntity);

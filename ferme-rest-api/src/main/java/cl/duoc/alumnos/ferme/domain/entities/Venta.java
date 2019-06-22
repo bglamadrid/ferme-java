@@ -64,7 +64,7 @@ public class Venta implements Serializable {
     @Column(name = "SUBTOTAL")
     private long subtotal;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "venta", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "_venta", fetch = FetchType.LAZY)
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private List<DetalleVenta> detalles;
 

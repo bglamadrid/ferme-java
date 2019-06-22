@@ -42,28 +42,28 @@ public class Sesion implements Serializable {
     @Column(name = "ID_SESION")
     @SequenceGenerator(name = "sesion_seq", sequenceName = "SEQ_SESION", initialValue = 1, allocationSize = Ferme.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
     @GeneratedValue(generator = "sesion_seq", strategy = GenerationType.AUTO)
-    private Integer id;
+    private Integer _id;
     
     @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO", insertable = true, updatable = true)
     @ManyToOne(cascade = CascadeType.DETACH, optional = false, fetch = FetchType.LAZY)
     @Cascade(org.hibernate.annotations.CascadeType.DETACH)
-    private Usuario usuario;
+    private Usuario _usuario;
     
     @Size(min = 1, max = 1)
     @Column(name = "ABIERTA")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date abierta;
+    private Date _abierta;
     
     @Size(min = 1, max = 1)
     @Column(name = "VIGENTE", columnDefinition = "CHAR")
-    private String vigente;
+    private String _vigente;
     
     @Column(name = "HASH")
-    private String hash;
+    private String _hash;
     
     @Column(name = "CERRADA")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date cerrada;
+    private Date _cerrada;
 
     public Sesion() {
         super();
@@ -71,70 +71,65 @@ public class Sesion implements Serializable {
 
     public Sesion(Integer id) {
         super();
-        this.id = id;
+        this._id = id;
     }
 
     public Integer getId() {
-        return id;
+        return _id;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this._id = id;
     }
 
     public Usuario getUsuario() {
-        return usuario;
+        return _usuario;
     }
 
     public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+        this._usuario = usuario;
     }
 
     public Date getAbierta() {
-        return abierta;
+        return _abierta;
     }
 
     public void setAbierta(Date abierta) {
-        this.abierta = abierta;
+        this._abierta = abierta;
     }
 
     public String getVigente() {
-        return vigente;
+        return _vigente;
     }
 
     public void setVigente(String vigente) {
-        this.vigente = vigente;
+        this._vigente = vigente;
     }
 
     public String getHash() {
-        return hash;
+        return _hash;
     }
 
     public void setHash(String hash) {
-        this.hash = hash;
+        this._hash = hash;
     }
 
     public Date getCerrada() {
-        return cerrada;
+        return _cerrada;
     }
 
     public void setCerrada(Date cerrada) {
-        this.cerrada = cerrada;
+        this._cerrada = cerrada;
     }
 
     public SesionDTO toDTO() {
         SesionDTO dto = new SesionDTO();
-        Usuario usuarioEntity = this.usuario;
+        Usuario usuarioEntity = getUsuario();
         
+        dto.setHashSesion(_hash);
         dto.setIdUsuario(usuarioEntity.getId());
         dto.setNombreUsuario(usuarioEntity.getNombre());
         
-        dto.setHashSesion(hash);
-        dto.setVigenteSesion(vigente);
-        
-        DateFormat formateador = new SimpleDateFormat(Ferme.DEFAULT_DATE_FORMAT);
-        dto.setAbiertaSesion(formateador.format(abierta));
-        if (cerrada != null) { dto.setCerradaSesion(formateador.format(cerrada));  }
         
         return dto;
     }
@@ -142,7 +137,7 @@ public class Sesion implements Serializable {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 37 * hash + this.id;
+        hash = 37 * hash + this._id;
         return hash;
     }
 
@@ -152,12 +147,12 @@ public class Sesion implements Serializable {
             return false;
         }
         final Sesion other = (Sesion) object;
-        return (!Objects.equals(this.id, other.getId()));
+        return (!Objects.equals(this._id, other.getId()));
     }
 
     @Override
     public String toString() {
-        return "cl.duoc.alumnos.ferme.entities.domain.Sesion[ idUsuario=" + id + " ]";
+        return "cl.duoc.alumnos.ferme.entities.domain.Sesion[ idUsuario=" + _id + " ]";
     }
     
 }

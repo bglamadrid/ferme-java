@@ -38,37 +38,37 @@ public class Cliente implements Serializable {
     @Column(name = "ID_CLIENTE")
     @SequenceGenerator(name = "cliente_seq", sequenceName = "SEQ_CLIENTE", initialValue = 1, allocationSize = Ferme.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
     @GeneratedValue(generator = "cliente_seq", strategy = GenerationType.AUTO)
-    private Integer id;
+    private Integer _id;
     
     @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA", insertable = true, updatable = true)
     @OneToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.LAZY)
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    private Persona persona;
+    private Persona _persona;
 
     public Cliente() {
         super();
     }
 
     public Integer getId() {
-        return id;
+        return _id;
     }
 
     public void setId(Integer id) {
-        this.id = id;
+        this._id = id;
     }
 
     public Persona getPersona() {
-        return persona;
+        return _persona;
     }
 
     public void setPersona(Persona persona) {
-        this.persona = persona;
+        this._persona = persona;
     }
     
     public ClienteDTO toDTO() {
         ClienteDTO dto = new ClienteDTO();
-        dto = PersonaConverter.cargarDatosPersonaEnDTO(persona, dto);
-        dto.setIdCliente(id);
+        dto = PersonaConverter.cargarDatosPersonaEnDTO(_persona, dto);
+        dto.setIdCliente(_id);
         
         return dto;
     }
@@ -76,7 +76,7 @@ public class Cliente implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 89 * hash + this.id;
+        hash = 89 * hash + this._id;
         return hash;
     }
 
@@ -86,12 +86,12 @@ public class Cliente implements Serializable {
             return false;
         }
         final Cliente other = (Cliente) object;
-        return (Objects.equals(this.id, other.getId()));
+        return (Objects.equals(this._id, other.getId()));
     }
 
     @Override
     public String toString() {
-        return "cl.duoc.alumnos.ferme.entities.domain.Cliente[ id=" + id + " ]";
+        return "cl.duoc.alumnos.ferme.entities.domain.Cliente[ id=" + _id + " ]";
     }
     
 }

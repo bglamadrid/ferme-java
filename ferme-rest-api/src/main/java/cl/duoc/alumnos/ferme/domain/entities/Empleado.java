@@ -36,52 +36,52 @@ public class Empleado implements Serializable {
     @Column(name = "ID_EMPLEADO")
     @SequenceGenerator(name = "empleado_seq", sequenceName = "SEQ_EMPLEADO", initialValue = 1, allocationSize = Ferme.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
     @GeneratedValue(generator = "empleado_seq", strategy = GenerationType.AUTO)
-    private Integer id;
+    private Integer _id;
     
     @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA")
     @OneToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.EAGER)
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    private Persona persona;
+    private Persona _persona;
     
     @JoinColumn(name = "ID_CARGO", referencedColumnName = "ID_CARGO")
     @ManyToOne(cascade = CascadeType.DETACH, optional = false, fetch = FetchType.LAZY)
     @Cascade(org.hibernate.annotations.CascadeType.DETACH)
-    private Cargo cargo;
+    private Cargo _cargo;
 
     public Empleado() {
         super();
     }
 
     public Integer getId() {
-        return id;
+        return _id;
     }
 
     public void setId(Integer id) {
-        this.id = id;
+        this._id = id;
     }
 
     public Cargo getCargo() {
-        return cargo;
+        return _cargo;
     }
 
     public void setCargo(Cargo cargo) {
-        this.cargo = cargo;
+        this._cargo = cargo;
     }
 
     public Persona getPersona() {
-        return persona;
+        return _persona;
     }
 
     public void setPersona(Persona persona) {
-        this.persona = persona;
+        this._persona = persona;
     }
 
     public EmpleadoDTO toDTO() {
         EmpleadoDTO dto = new EmpleadoDTO();
-        dto = PersonaConverter.cargarDatosPersonaEnDTO(persona, dto);
-        dto.setIdEmpleado(id);
-        dto.setIdPersona(persona.getId());
-        dto.setIdCargo(cargo.getId());
+        dto = PersonaConverter.cargarDatosPersonaEnDTO(_persona, dto);
+        dto.setIdEmpleado(_id);
+        dto.setIdPersona(_persona.getId());
+        dto.setIdCargo(_cargo.getId());
         
         return dto;
     }
@@ -89,8 +89,8 @@ public class Empleado implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 59 * hash + this.id;
-        hash = 59 * hash + Objects.hashCode(this.cargo);
+        hash = 59 * hash + this._id;
+        hash = 59 * hash + Objects.hashCode(this._cargo);
         return hash;
     }
 
@@ -100,12 +100,12 @@ public class Empleado implements Serializable {
             return false;
         }
         final Empleado other = (Empleado) object;
-        return (Objects.equals(this.id, other.id));
+        return (Objects.equals(this._id, other._id));
     }
 
     @Override
     public String toString() {
-        return "cl.duoc.alumnos.ferme.entities.domain.Empleado[ id=" + id + " ]";
+        return "cl.duoc.alumnos.ferme.entities.domain.Empleado[ id=" + _id + " ]";
     }
     
 }

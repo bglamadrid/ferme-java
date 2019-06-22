@@ -30,36 +30,36 @@ public class Cargo implements Serializable {
     @Column(name = "ID_CARGO")
     @SequenceGenerator(name = "cargo_seq", sequenceName = "SEQ_CARGO", initialValue = 1, allocationSize = Ferme.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
     @GeneratedValue(generator = "cargo_seq", strategy = GenerationType.AUTO)
-    private Integer id;
+    private Integer _id;
     
     @Size(min = 1, max = 100)
     @Column(name = "DESCRIPCION")
-    private String descripcion;
+    private String _descripcion;
 
     public Cargo() {
         super();
     }
 
     public Integer getId() {
-        return id;
+        return _id;
     }
 
     public void setId(Integer id) {
-        this.id = id;
+        this._id = id;
     }
 
     public String getDescripcion() {
-        return descripcion;
+        return _descripcion;
     }
 
     public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+        this._descripcion = descripcion;
     }
     
     public CargoDTO toDTO() {
         CargoDTO dto = new CargoDTO();
-        dto.setIdCargo(id);
-        dto.setDescripcionCargo(descripcion);
+        dto.setIdCargo(_id);
+        dto.setDescripcionCargo(_descripcion);
         
         return dto;
     }
@@ -67,7 +67,7 @@ public class Cargo implements Serializable {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 83 * hash + this.id;
+        hash = 83 * hash + this._id;
         return hash;
     }
 
@@ -77,12 +77,12 @@ public class Cargo implements Serializable {
             return false;
         }
         Cargo other = (Cargo) object;
-        return (Objects.equals(this.id, other.getId()));
+        return (Objects.equals(this._id, other.getId()));
     }
 
     @Override
     public String toString() {
-        return "cl.duoc.alumnos.ferme.entities.domain.Cargo[ id=" + id + " ]";
+        return "cl.duoc.alumnos.ferme.entities.domain.Cargo[ id=" + _id + " ]";
     }
     
 }

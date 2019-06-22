@@ -30,36 +30,36 @@ public class Rubro implements Serializable {
     @Column(name = "ID_RUBRO")
     @SequenceGenerator(name = "rubro_seq", sequenceName = "SEQ_RUBRO", initialValue = 1, allocationSize = Ferme.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
     @GeneratedValue(generator = "rubro_seq", strategy = GenerationType.AUTO)
-    private Integer id;
+    private Integer _id;
     
     @Size(min = 1, max = 50)
     @Column(name = "DESCRIPCION")
-    private String descripcion;
+    private String _descripcion;
 
     public Rubro() {
         super();
     }
 
     public Integer getId() {
-        return id;
+        return _id;
     }
 
     public void setId(Integer id) {
-        this.id = id;
+        this._id = id;
     }
 
     public String getDescripcion() {
-        return descripcion;
+        return _descripcion;
     }
 
     public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+        this._descripcion = descripcion;
     }
     
     public RubroDTO toDTO() {
         RubroDTO dto = new RubroDTO();
-        dto.setIdRubro(id);
-        dto.setDescripcionRubro(descripcion);
+        dto.setIdRubro(_id);
+        dto.setDescripcionRubro(_descripcion);
         
         return dto;
     }
@@ -67,7 +67,7 @@ public class Rubro implements Serializable {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 83 * hash + this.id;
+        hash = 83 * hash + this._id;
         return hash;
     }
 
@@ -77,14 +77,14 @@ public class Rubro implements Serializable {
             return false;
         }
         final Rubro other = (Rubro) object;
-        return (Objects.equals(this.id, other.getId()));
+        return (Objects.equals(this._id, other.getId()));
     }
     
     
 
     @Override
     public String toString() {
-        return "cl.duoc.alumnos.ferme.entities.domain.Rubro[ idRubro=" + id + " ]";
+        return "cl.duoc.alumnos.ferme.entities.domain.Rubro[ idRubro=" + _id + " ]";
     }
 
     

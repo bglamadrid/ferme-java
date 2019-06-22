@@ -35,62 +35,62 @@ public class DetalleOrdenCompra implements Serializable {
     @Column(name = "ID_DETALLE_ORDEN_COMPRA")
     @SequenceGenerator(name = "detalle_orden_compra_seq", sequenceName = "SEQ_DETALLE_ORDEN_COMPRA", initialValue = 1, allocationSize = Ferme.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
     @GeneratedValue(generator = "detalle_orden_compra_seq", strategy = GenerationType.AUTO)
-    protected Integer id;
+    protected Integer _id;
     
     @JoinColumn(name = "ID_PRODUCTO", referencedColumnName = "ID_PRODUCTO")
     @ManyToOne(cascade = CascadeType.DETACH, optional = false, fetch = FetchType.LAZY)
     @Cascade(org.hibernate.annotations.CascadeType.DETACH)
-    private Producto producto;
+    private Producto _producto;
     
     @Column(name = "CANTIDAD")
-    private int cantidad;
+    private int _cantidad;
     
     @JoinColumn(name = "ID_ORDEN_COMPRA", referencedColumnName = "ID_ORDEN_COMPRA")
     @ManyToOne(cascade = CascadeType.DETACH, optional = false, fetch = FetchType.LAZY)
     @Cascade(org.hibernate.annotations.CascadeType.DETACH)
-    private OrdenCompra ordenCompra;
+    private OrdenCompra _ordenCompra;
 
     public DetalleOrdenCompra() {
         super();
     }
 
     public Integer getId() {
-        return id;
+        return _id;
     }
 
     public void setId(Integer id) {
-        this.id = id;
+        this._id = id;
     }
 
     public int getCantidad() {
-        return cantidad;
+        return _cantidad;
     }
 
     public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
+        this._cantidad = cantidad;
     }
 
     public Producto getProducto() {
-        return producto;
+        return _producto;
     }
 
     public void setProducto(Producto producto) {
-        this.producto = producto;
+        this._producto = producto;
     }
 
     public OrdenCompra getOrdenCompra() {
-        return ordenCompra;
+        return _ordenCompra;
     }
 
     public void setOrdenCompra(OrdenCompra ordenCompra) {
-        this.ordenCompra = ordenCompra;
+        this._ordenCompra = ordenCompra;
     }
     
     public DetalleOrdenCompraDTO toDTO() {
         DetalleOrdenCompraDTO dto = new DetalleOrdenCompraDTO();
-        dto.setIdOrdenCompra(ordenCompra.getId());
-        dto.setIdDetalleOrdenCompra(id);
-        dto.setCantidadProducto(cantidad);
+        dto.setIdOrdenCompra(_ordenCompra.getId());
+        dto.setIdDetalleOrdenCompra(_id);
+        dto.setCantidadProducto(_cantidad);
         
         Producto productoEntity = this.getProducto();
         dto.setIdProducto(productoEntity.getId());
@@ -104,7 +104,7 @@ public class DetalleOrdenCompra implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 17 * hash + Objects.hashCode(this.id);
+        hash = 17 * hash + Objects.hashCode(this._id);
         return hash;
     }
 
@@ -114,12 +114,12 @@ public class DetalleOrdenCompra implements Serializable {
             return false;
         }
         final DetalleOrdenCompra other = (DetalleOrdenCompra) obj;
-        return (Objects.equals(this.id, other.getId()));
+        return (Objects.equals(this._id, other.getId()));
     }
 
     @Override
     public String toString() {
-        return "cl.duoc.alumnos.ferme.entities.domain.DetalleOrdenCompra[ id=" + id + " ]";
+        return "cl.duoc.alumnos.ferme.entities.domain.DetalleOrdenCompra[ id=" + _id + " ]";
     }
     
 }

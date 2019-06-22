@@ -36,50 +36,50 @@ public class Proveedor implements Serializable {
     @Column(name = "ID_PROVEEDOR")
     @SequenceGenerator(name = "proveedor_seq", sequenceName = "SEQ_PROVEEDOR", initialValue = 1, allocationSize = Ferme.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
     @GeneratedValue(generator = "proveedor_seq", strategy = GenerationType.AUTO)
-    private Integer id;
+    private Integer _id;
     
     @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA")
     @OneToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.EAGER)
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    private Persona persona;
+    private Persona _persona;
     
     @Size(min = 1, max = 50)
     @Column(name = "RAZON_SOCIAL")
-    private String razonSocial;
+    private String _razonSocial;
 
     public Proveedor() {
         super();
     }
 
     public Integer getId() {
-        return id;
+        return _id;
     }
 
     public void setId(Integer id) {
-        this.id = id;
+        this._id = id;
     }
 
     public String getRazonSocial() {
-        return razonSocial;
+        return _razonSocial;
     }
 
     public void setRazonSocial(String razonSocial) {
-        this.razonSocial = razonSocial;
+        this._razonSocial = razonSocial;
     }
 
     public Persona getPersona() {
-        return persona;
+        return _persona;
     }
 
     public void setPersona(Persona persona) {
-        this.persona = persona;
+        this._persona = persona;
     }
 
     public ProveedorDTO toDTO() {
         ProveedorDTO dto = new ProveedorDTO();
-        dto = PersonaConverter.cargarDatosPersonaEnDTO(persona, dto);
-        dto.setIdProveedor(id);
-        dto.setRazonSocialProveedor(razonSocial);
+        dto = PersonaConverter.cargarDatosPersonaEnDTO(_persona, dto);
+        dto.setIdProveedor(_id);
+        dto.setRazonSocialProveedor(_razonSocial);
         
         return dto;
     }
@@ -87,7 +87,7 @@ public class Proveedor implements Serializable {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 71 * hash + this.id;
+        hash = 71 * hash + this._id;
         return hash;
     }
 
@@ -97,14 +97,14 @@ public class Proveedor implements Serializable {
             return false;
         }
         final Proveedor other = (Proveedor) object;
-        return (Objects.equals(this.id, other.getId()));
+        return (Objects.equals(this._id, other.getId()));
     }
     
     
 
     @Override
     public String toString() {
-        return "cl.duoc.alumnos.ferme.entities.domain.Proveedor[ idProveedor=" + id + " ]";
+        return "cl.duoc.alumnos.ferme.entities.domain.Proveedor[ idProveedor=" + _id + " ]";
     }
     
 }

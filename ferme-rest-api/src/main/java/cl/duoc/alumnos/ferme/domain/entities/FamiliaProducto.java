@@ -35,66 +35,66 @@ public class FamiliaProducto implements Serializable {
     @Column(name = "ID_FAMILIA_PRODUCTO")
     @SequenceGenerator(name = "familia_producto_seq", sequenceName = "SEQ_FAMILIA_PRODUCTO", initialValue = 1, allocationSize = Ferme.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
     @GeneratedValue(generator = "familia_producto_seq", strategy = GenerationType.AUTO)
-    private Integer id;
+    private Integer _id;
     
     @Size(min = 1, max = 100)
     @Column(name = "DESCRIPCION")
-    private String descripcion;
+    private String _descripcion;
     
     @JoinColumn(name = "ID_RUBRO", referencedColumnName = "ID_RUBRO")
     @ManyToOne(cascade = CascadeType.DETACH, optional = false, fetch = FetchType.LAZY)
     @Cascade(org.hibernate.annotations.CascadeType.DETACH)
-    private Rubro rubro;
+    private Rubro _rubro;
     
     @JoinColumn(name = "ID_PROVEEDOR", referencedColumnName = "ID_PROVEEDOR")
     @ManyToOne(cascade = CascadeType.DETACH, optional = false, fetch = FetchType.LAZY)
     @Cascade(org.hibernate.annotations.CascadeType.DETACH)
-    private Proveedor proveedor;
+    private Proveedor _proveedor;
 
     public FamiliaProducto() {
         super();
     }
 
     public Integer getId() {
-        return id;
+        return _id;
     }
 
     public void setId(Integer id) {
-        this.id = id;
+        this._id = id;
     }
 
     public String getDescripcion() {
-        return descripcion;
+        return _descripcion;
     }
 
     public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+        this._descripcion = descripcion;
     }
 
     public Rubro getRubro() {
-        return rubro;
+        return _rubro;
     }
 
     public void setRubro(Rubro rubro) {
-        this.rubro = rubro;
+        this._rubro = rubro;
     }
 
     public Proveedor getProveedor() {
-        return proveedor;
+        return _proveedor;
     }
 
     public void setProveedor(Proveedor proveedor) {
-        this.proveedor = proveedor;
+        this._proveedor = proveedor;
     }
 
     public FamiliaProductoDTO toDTO() {
         FamiliaProductoDTO dto = new FamiliaProductoDTO();
         
-        dto.setIdFamiliaProducto(id);
-        dto.setIdRubro(rubro.getId());
-        dto.setIdProveedor(proveedor.getId());
-        dto.setDescripcionFamiliaProducto(descripcion);
-        dto.setDescripcionRubro(rubro.getDescripcion());
+        dto.setIdFamiliaProducto(_id);
+        dto.setIdRubro(_rubro.getId());
+        dto.setIdProveedor(_proveedor.getId());
+        dto.setDescripcionFamiliaProducto(_descripcion);
+        dto.setDescripcionRubro(_rubro.getDescripcion());
         
         return dto;
     }
@@ -103,7 +103,7 @@ public class FamiliaProducto implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 79 * hash + this.id;
+        hash = 79 * hash + this._id;
         return hash;
     }
 
@@ -113,12 +113,12 @@ public class FamiliaProducto implements Serializable {
             return false;
         }
         final FamiliaProducto other = (FamiliaProducto) object;
-        return (Objects.equals(this.id, other.getId()));
+        return (Objects.equals(this._id, other.getId()));
     }
 
     @Override
     public String toString() {
-        return "cl.duoc.alumnos.ferme.entities.domain.FamiliaProducto[ id=" + id + " ]";
+        return "cl.duoc.alumnos.ferme.entities.domain.FamiliaProducto[ id=" + _id + " ]";
     }
     
 }

@@ -60,7 +60,7 @@ public class OrdenCompra implements Serializable {
     @Cascade(org.hibernate.annotations.CascadeType.DETACH)
     private Empleado empleado;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ordenCompra", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "_ordenCompra", fetch = FetchType.LAZY)
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private List<DetalleOrdenCompra> detalles;
 

@@ -112,7 +112,7 @@ public class SesionesService implements ISesionesService {
         
         Calendar calAhora = Calendar.getInstance();
         Date ahora = calAhora.getTime();
-        long alSerCreada = ahora.getTime() - (SESSION_DURATION * 1000);
+        long alSerCreada = ahora.getTime() - SESSION_DURATION;
         boolean unaVigente = false;
         
         Iterable<Sesion> sesiones = sesionRepo.findNotCerradaByHash(sesion.getHashSesion());

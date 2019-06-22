@@ -1,10 +1,13 @@
 package cl.duoc.alumnos.ferme;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.HashMap;
 import java.util.Map;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
@@ -39,8 +42,8 @@ public class FermeConfig {
     /** Parámetros de entidades, no declarados en la base de datos */
     public static char TIPO_VENTA_BOLETA = 'B';
     public static final String DEFAULT_HASHING_ALGORITHM = "SHA-256";
-    /** En segundos. **/
-    public static final long SESSION_DURATION = 600L;
+    /** En milisegundos. **/
+    public static final long SESSION_DURATION = 600000L;
     public static String PROVEEDOR_DEFAULT_SORT_COLUMN = "_id";
     public static String CLIENTE_DEFAULT_SORT_COLUMN = "_id";
     public static String VENTA_DEFAULT_SORT_COLUMN = "_id";
@@ -63,5 +66,12 @@ public class FermeConfig {
     }
     
     @Autowired private DataSource ds;
+    
+    @Bean
+    public ObjectMapper objectMapper() {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        return mapper;
+    }
     
 }

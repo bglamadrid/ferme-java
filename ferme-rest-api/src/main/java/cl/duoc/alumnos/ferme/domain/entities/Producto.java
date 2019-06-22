@@ -24,7 +24,7 @@ import org.springframework.lang.NonNull;
 
 /**
  *
- * @author Benjamin Guillermo
+ * @author Benjamin Guillermo <got12g at gmail.com>
  */
 @Entity
 @Table(name = "PRODUCTO")

@@ -10,7 +10,7 @@ import java.util.Base64;
 
 /**
  *
- * @author 12g
+ * @author Benjamin Guillermo <got12g at gmail.com>
  */
 public final class FermeHashes {
     

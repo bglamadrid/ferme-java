@@ -10,12 +10,12 @@ import org.springframework.stereotype.Repository;
 
 /**
  *
- * @author Benjamin Guillermo La Madrid <got12g at gmail.com>
+ * @author Benjamin Guillermo <got12g at gmail.com>
  */
 @Component
 @Repository
 public interface ISesionesRepository extends JpaRepository<Sesion, Integer>, QuerydslPredicateExecutor<Sesion> {
     
     @Query("SELECT s FROM Sesion s WHERE s._hash = :hash AND s._cerrada IS NULL")
-    public Iterable<Sesion> findNotCerradaByHash(@Param("hash") String hash);
+    public Iterable<Sesion> findByHashWhereNotCerradas(@Param("hash") String hash);
 }

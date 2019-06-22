@@ -7,7 +7,7 @@ import java.util.Date;
 
 /**
  *
- * @author Benjamin Guillermo
+ * @author Benjamin Guillermo <got12g at gmail.com>
  */
 public class UsuarioDTO extends PersonaDTO {
     

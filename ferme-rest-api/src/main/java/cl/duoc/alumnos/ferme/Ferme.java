@@ -9,7 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 /**
  *
- * @author Benjamin Guillermo
+ * @author Benjamin Guillermo <got12g at gmail.com>
  */
 @SpringBootApplication
 @ComponentScan("cl.duoc.alumnos.ferme.*")

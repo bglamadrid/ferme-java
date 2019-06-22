@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 /**
  *
- * @author got12
+ * @author Benjamin Guillermo <got12g at gmail.com>
  */
 @Component
 @Repository

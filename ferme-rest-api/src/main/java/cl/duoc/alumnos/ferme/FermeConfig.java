@@ -17,7 +17,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  *
- * @author Benjamin Guillermo La Madrid <got12g at gmail.com>
+ * @author Benjamin Guillermo <got12g at gmail.com>
  */
 @Configuration
 @EnableAutoConfiguration

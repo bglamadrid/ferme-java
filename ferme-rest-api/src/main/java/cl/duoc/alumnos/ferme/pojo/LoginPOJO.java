@@ -2,7 +2,7 @@ package cl.duoc.alumnos.ferme.pojo;
 
 /**
  *
- * @author 12g
+ * @author Benjamin Guillermo <got12g at gmail.com>
  */
 public class LoginPOJO {
     public String usuario;

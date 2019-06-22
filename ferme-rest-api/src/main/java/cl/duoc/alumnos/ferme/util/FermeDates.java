@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author got12
+ * @author Benjamin Guillermo <got12g at gmail.com>
  */
 public class FermeDates {    
 

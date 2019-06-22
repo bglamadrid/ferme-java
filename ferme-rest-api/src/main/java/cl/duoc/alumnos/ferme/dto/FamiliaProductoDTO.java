@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author Benjamin Guillermo
+ * @author Benjamin Guillermo <got12g at gmail.com>
  */
 public class FamiliaProductoDTO {
     private final static Logger LOG = LoggerFactory.getLogger(FamiliaProductoDTO.class);

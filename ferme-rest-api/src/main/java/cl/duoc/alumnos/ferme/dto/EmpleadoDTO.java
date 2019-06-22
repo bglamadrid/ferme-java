@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author Benjamin Guillermo
+ * @author Benjamin Guillermo <got12g at gmail.com>
  */
 public class EmpleadoDTO extends PersonaDTO {
     private final static Logger LOG = LoggerFactory.getLogger(EmpleadoDTO.class);

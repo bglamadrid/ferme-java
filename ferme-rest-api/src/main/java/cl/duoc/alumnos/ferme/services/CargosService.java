@@ -22,7 +22,7 @@ import org.springframework.stereotype.Service;
 
 /**
  *
- * @author got12
+ * @author Benjamin Guillermo <got12g at gmail.com>
  */
 @Service
 public class CargosService implements ICargosService {

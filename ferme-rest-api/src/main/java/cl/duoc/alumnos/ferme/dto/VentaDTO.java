@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  *
- * @author Benjamin Guillermo
+ * @author Benjamin Guillermo <got12g at gmail.com>
  */
 public class VentaDTO {
     

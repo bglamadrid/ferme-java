@@ -1,6 +1,5 @@
 package cl.duoc.alumnos.ferme.services;
 
-import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.FermeConfig;
 import cl.duoc.alumnos.ferme.domain.entities.Empleado;
 import cl.duoc.alumnos.ferme.domain.entities.DetalleOrdenCompra;
@@ -9,7 +8,6 @@ import cl.duoc.alumnos.ferme.domain.entities.Producto;
 import cl.duoc.alumnos.ferme.domain.entities.QOrdenCompra;
 import cl.duoc.alumnos.ferme.domain.entities.QProducto;
 import cl.duoc.alumnos.ferme.domain.repositories.IEmpleadosRepository;
-import cl.duoc.alumnos.ferme.domain.repositories.IFunctionsRepository;
 import cl.duoc.alumnos.ferme.domain.repositories.IOrdenesCompraRepository;
 import cl.duoc.alumnos.ferme.domain.repositories.IProductosRepository;
 import cl.duoc.alumnos.ferme.dto.DetalleOrdenCompraDTO;
@@ -38,7 +36,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
- * @author got12
+ * @author Benjamin Guillermo <got12g at gmail.com>
  */
 @Service
 @Transactional
@@ -48,7 +46,7 @@ public class OrdenesCompraService implements IOrdenesCompraService {
     //@Autowired private IDetallesOrdenesCompraRepository productoRepo;
     @Autowired private IEmpleadosRepository empleadoRepo;
     @Autowired private IProductosRepository productoRepo;
-    @Autowired private IFunctionsRepository funcRepo;
+    
     private static final Logger LOG = LoggerFactory.getLogger(OrdenesCompraService.class);
 
     @Override

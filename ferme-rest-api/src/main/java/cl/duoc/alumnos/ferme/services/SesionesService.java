@@ -28,7 +28,7 @@ import org.springframework.stereotype.Service;
 
 /**
  *
- * @author 12g
+ * @author Benjamin Guillermo <got12g at gmail.com>
  */
 @Service
 public class SesionesService implements ISesionesService {
@@ -115,7 +115,7 @@ public class SesionesService implements ISesionesService {
         long alSerCreada = ahora.getTime() - SESSION_DURATION;
         boolean unaVigente = false;
         
-        Iterable<Sesion> sesiones = sesionRepo.findNotCerradaByHash(sesion.getHashSesion());
+        Iterable<Sesion> sesiones = sesionRepo.findByHashWhereNotCerradas(sesion.getHashSesion());
         int i = 0;
         for (Sesion ssn : sesiones) {
             if (alSerCreada > ssn.getAbierta().getTime() || unaVigente) {
@@ -135,7 +135,7 @@ public class SesionesService implements ISesionesService {
     public boolean cerrarSesion(SesionDTO sesion) {
         Calendar calAhora = Calendar.getInstance();
         Date ahora = calAhora.getTime();
-        Iterable<Sesion> sesiones = sesionRepo.findNotCerradaByHash(sesion.getHashSesion());
+        Iterable<Sesion> sesiones = sesionRepo.findByHashWhereNotCerradas(sesion.getHashSesion());
         for (Sesion ssn : sesiones) {
             ssn.setCerrada(ahora);
             sesionRepo.save(ssn);

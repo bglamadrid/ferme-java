@@ -41,7 +41,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
- * @author Benjamin Guillermo La Madrid <got12g at gmail.com>
+ * @author Benjamin Guillermo <got12g at gmail.com>
  */
 @Service
 @Transactional

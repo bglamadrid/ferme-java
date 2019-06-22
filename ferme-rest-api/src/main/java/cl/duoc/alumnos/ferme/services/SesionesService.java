@@ -1,6 +1,7 @@
 package cl.duoc.alumnos.ferme.services;
 
 import cl.duoc.alumnos.ferme.Ferme;
+import cl.duoc.alumnos.ferme.FermeConfig;
 import cl.duoc.alumnos.ferme.domain.entities.Empleado;
 import cl.duoc.alumnos.ferme.domain.entities.QEmpleado;
 import cl.duoc.alumnos.ferme.domain.entities.Sesion;
@@ -37,7 +38,7 @@ public class SesionesService implements ISesionesService {
     @Autowired private IEmpleadosRepository empleadoRepo;
     @Autowired private ISesionesRepository sesionRepo;
     
-    private final static long SESSION_DURATION = Ferme.SESSION_DURATION;
+    private final static long SESSION_DURATION = FermeConfig.SESSION_DURATION;
     
     @Override
     public Collection<SesionDTO> getSesiones(int pageSize, int pageIndex, Predicate condicion) 

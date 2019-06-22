@@ -1,6 +1,7 @@
 package cl.duoc.alumnos.ferme.dto;
 
 import cl.duoc.alumnos.ferme.Ferme;
+import cl.duoc.alumnos.ferme.FermeConfig;
 import cl.duoc.alumnos.ferme.domain.entities.DetalleOrdenCompra;
 import cl.duoc.alumnos.ferme.domain.entities.Empleado;
 import cl.duoc.alumnos.ferme.domain.entities.OrdenCompra;
@@ -104,7 +105,7 @@ public class OrdenCompraDTO {
         if (estadoOrdenCompra != null && !estadoOrdenCompra.isEmpty()) {
             entity.setEstado(estadoOrdenCompra.charAt(0));
         } else {
-            entity.setEstado(Ferme.ORDEN_COMPRA_ESTADO_SOLICITADO);
+            entity.setEstado(FermeConfig.ORDEN_COMPRA_ESTADO_SOLICITADO);
         }
         
         if (fechaSolicitudOrdenCompra != null && !fechaSolicitudOrdenCompra.isEmpty()) {

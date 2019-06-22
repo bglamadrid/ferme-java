@@ -1,6 +1,7 @@
 package cl.duoc.alumnos.ferme.domain.entities;
 
 import cl.duoc.alumnos.ferme.Ferme;
+import cl.duoc.alumnos.ferme.FermeConfig;
 import cl.duoc.alumnos.ferme.dto.DetalleOrdenCompraDTO;
 import cl.duoc.alumnos.ferme.dto.OrdenCompraDTO;
 import cl.duoc.alumnos.ferme.util.FermeDates;
@@ -40,7 +41,7 @@ public class OrdenCompra implements Serializable {
     
     @Id
     @Column(name = "ID_ORDEN_COMPRA")
-    @SequenceGenerator(name = "orden_compra_seq", sequenceName = "SEQ_ORDEN_COMPRA", initialValue = 1, allocationSize = Ferme.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
+    @SequenceGenerator(name = "orden_compra_seq", sequenceName = "SEQ_ORDEN_COMPRA", initialValue = 1, allocationSize = FermeConfig.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
     @GeneratedValue(generator = "orden_compra_seq", strategy = GenerationType.AUTO)
     private Integer _id;
     

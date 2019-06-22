@@ -1,6 +1,7 @@
 package cl.duoc.alumnos.ferme.domain.entities;
 
 import cl.duoc.alumnos.ferme.Ferme;
+import cl.duoc.alumnos.ferme.FermeConfig;
 import cl.duoc.alumnos.ferme.dto.DetalleOrdenCompraDTO;
 import java.io.Serializable;
 import java.util.Objects;
@@ -33,7 +34,7 @@ public class DetalleOrdenCompra implements Serializable {
     
     @Id
     @Column(name = "ID_DETALLE_ORDEN_COMPRA")
-    @SequenceGenerator(name = "detalle_orden_compra_seq", sequenceName = "SEQ_DETALLE_ORDEN_COMPRA", initialValue = 1, allocationSize = Ferme.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
+    @SequenceGenerator(name = "detalle_orden_compra_seq", sequenceName = "SEQ_DETALLE_ORDEN_COMPRA", initialValue = 1, allocationSize = FermeConfig.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
     @GeneratedValue(generator = "detalle_orden_compra_seq", strategy = GenerationType.AUTO)
     protected Integer _id;
     

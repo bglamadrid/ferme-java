@@ -1,6 +1,7 @@
 package cl.duoc.alumnos.ferme.domain.entities;
 
 import cl.duoc.alumnos.ferme.Ferme;
+import cl.duoc.alumnos.ferme.FermeConfig;
 import cl.duoc.alumnos.ferme.dto.ProductoDTO;
 import java.io.Serializable;
 import java.util.Objects;
@@ -34,7 +35,7 @@ public class Producto implements Serializable {
     
     @Id
     @Column(name = "ID_PRODUCTO")
-    @SequenceGenerator(name = "producto_seq", sequenceName = "SEQ_PRODUCTO", initialValue = 1, allocationSize = Ferme.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
+    @SequenceGenerator(name = "producto_seq", sequenceName = "SEQ_PRODUCTO", initialValue = 1, allocationSize = FermeConfig.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
     @GeneratedValue(generator = "producto_seq", strategy = GenerationType.AUTO)
     private Integer _id;
     

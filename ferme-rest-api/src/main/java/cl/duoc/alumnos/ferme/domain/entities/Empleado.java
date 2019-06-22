@@ -1,6 +1,7 @@
 package cl.duoc.alumnos.ferme.domain.entities;
 
 import cl.duoc.alumnos.ferme.Ferme;
+import cl.duoc.alumnos.ferme.FermeConfig;
 import cl.duoc.alumnos.ferme.dto.EmpleadoDTO;
 import cl.duoc.alumnos.ferme.util.PersonaConverter;
 import java.io.Serializable;
@@ -34,7 +35,7 @@ public class Empleado implements Serializable {
     
     @Id
     @Column(name = "ID_EMPLEADO")
-    @SequenceGenerator(name = "empleado_seq", sequenceName = "SEQ_EMPLEADO", initialValue = 1, allocationSize = Ferme.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
+    @SequenceGenerator(name = "empleado_seq", sequenceName = "SEQ_EMPLEADO", initialValue = 1, allocationSize = FermeConfig.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
     @GeneratedValue(generator = "empleado_seq", strategy = GenerationType.AUTO)
     private Integer _id;
     

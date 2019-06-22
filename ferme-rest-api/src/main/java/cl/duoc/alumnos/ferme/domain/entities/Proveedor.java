@@ -1,6 +1,7 @@
 package cl.duoc.alumnos.ferme.domain.entities;
 
 import cl.duoc.alumnos.ferme.Ferme;
+import cl.duoc.alumnos.ferme.FermeConfig;
 import cl.duoc.alumnos.ferme.dto.ProveedorDTO;
 import cl.duoc.alumnos.ferme.util.PersonaConverter;
 import java.io.Serializable;
@@ -34,7 +35,7 @@ public class Proveedor implements Serializable {
     
     @Id
     @Column(name = "ID_PROVEEDOR")
-    @SequenceGenerator(name = "proveedor_seq", sequenceName = "SEQ_PROVEEDOR", initialValue = 1, allocationSize = Ferme.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
+    @SequenceGenerator(name = "proveedor_seq", sequenceName = "SEQ_PROVEEDOR", initialValue = 1, allocationSize = FermeConfig.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
     @GeneratedValue(generator = "proveedor_seq", strategy = GenerationType.AUTO)
     private Integer _id;
     

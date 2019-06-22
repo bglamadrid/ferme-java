@@ -1,6 +1,7 @@
 package cl.duoc.alumnos.ferme.services;
 
 import cl.duoc.alumnos.ferme.Ferme;
+import cl.duoc.alumnos.ferme.FermeConfig;
 import cl.duoc.alumnos.ferme.domain.entities.Cargo;
 import cl.duoc.alumnos.ferme.domain.entities.Empleado;
 import cl.duoc.alumnos.ferme.domain.entities.QEmpleado;
@@ -47,7 +48,7 @@ public class EmpleadosService implements IEmpleadosService {
         long empleadoCount;
         
         LOG.info("getEmpleados - Procesando solicitud...");
-        Sort orden = Sort.by(Ferme.EMPLEADO_DEFAULT_SORT_COLUMN).ascending();
+        Sort orden = Sort.by(FermeConfig.EMPLEADO_DEFAULT_SORT_COLUMN).ascending();
         Pageable pgbl = PageRequest.of(pageIndex, pageSize, orden);
         
         LOG.info("getEmpleados - Llamando queries...");

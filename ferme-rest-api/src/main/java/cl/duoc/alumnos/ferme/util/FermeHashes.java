@@ -1,6 +1,7 @@
 package cl.duoc.alumnos.ferme.util;
 
 import cl.duoc.alumnos.ferme.Ferme;
+import cl.duoc.alumnos.ferme.FermeConfig;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -13,7 +14,7 @@ import java.util.Base64;
  */
 public final class FermeHashes {
     
-    private final static String HASHING_ALGORITHM = Ferme.DEFAULT_HASHING_ALGORITHM;
+    private final static String HASHING_ALGORITHM = FermeConfig.DEFAULT_HASHING_ALGORITHM;
     
     /**
      * Rutina simple de generación de hash.<br>

@@ -1,6 +1,7 @@
 package cl.duoc.alumnos.ferme.controllers;
 
 import cl.duoc.alumnos.ferme.Ferme;
+import cl.duoc.alumnos.ferme.FermeConfig;
 import cl.duoc.alumnos.ferme.dto.ProveedorDTO;
 import cl.duoc.alumnos.ferme.services.interfaces.IProveedoresService;
 import com.querydsl.core.types.Predicate;
@@ -60,8 +61,8 @@ public class ProveedoresController {
         @PathVariable Integer pageIndex,
         @RequestParam Map<String,String> allRequestParams) {
         
-        Integer finalPageSize = Ferme.DEFAULT_PAGE_SIZE;
-        Integer finalPageIndex = Ferme.DEFAULT_PAGE_INDEX;
+        Integer finalPageSize = FermeConfig.DEFAULT_PAGE_SIZE;
+        Integer finalPageIndex = FermeConfig.DEFAULT_PAGE_INDEX;
         Predicate filtros = null;
         
         if (pageSize != null && pageSize > 0) {

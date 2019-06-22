@@ -1,6 +1,7 @@
 package cl.duoc.alumnos.ferme.services;
 
 import cl.duoc.alumnos.ferme.Ferme;
+import cl.duoc.alumnos.ferme.FermeConfig;
 import cl.duoc.alumnos.ferme.domain.entities.Cargo;
 import cl.duoc.alumnos.ferme.domain.entities.QCargo;
 import cl.duoc.alumnos.ferme.domain.repositories.ICargosRepository;
@@ -36,7 +37,7 @@ public class CargosService implements ICargosService {
         long cargoCount;
         
         LOG.info("getCargos - Procesando solicitud...");
-        Sort orden = Sort.by(Ferme.CARGO_DEFAULT_SORT_COLUMN).ascending();
+        Sort orden = Sort.by(FermeConfig.CARGO_DEFAULT_SORT_COLUMN).ascending();
         
         LOG.info("getCargos - Llamando queries...");
         if (condicion == null) {

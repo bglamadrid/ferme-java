@@ -1,6 +1,7 @@
 package cl.duoc.alumnos.ferme.services;
 
 import cl.duoc.alumnos.ferme.Ferme;
+import cl.duoc.alumnos.ferme.FermeConfig;
 import cl.duoc.alumnos.ferme.domain.entities.Persona;
 import cl.duoc.alumnos.ferme.domain.entities.Proveedor;
 import cl.duoc.alumnos.ferme.domain.entities.QProveedor;
@@ -43,7 +44,7 @@ public class ProveedoresService implements IProveedoresService {
         long proveedorCount;
         
         LOG.info("getProveedores - Procesando solicitud...");
-        Sort orden = Sort.by(Ferme.PROVEEDOR_DEFAULT_SORT_COLUMN).ascending();
+        Sort orden = Sort.by(FermeConfig.PROVEEDOR_DEFAULT_SORT_COLUMN).ascending();
         Pageable pgbl = PageRequest.of(pageIndex, pageSize, orden);
         
         LOG.info("getProveedores - Llamando queries...");

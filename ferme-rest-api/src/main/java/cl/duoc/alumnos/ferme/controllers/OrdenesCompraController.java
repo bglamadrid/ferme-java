@@ -1,6 +1,7 @@
 package cl.duoc.alumnos.ferme.controllers;
 
 import cl.duoc.alumnos.ferme.Ferme;
+import cl.duoc.alumnos.ferme.FermeConfig;
 import cl.duoc.alumnos.ferme.dto.DetalleOrdenCompraDTO;
 import cl.duoc.alumnos.ferme.dto.OrdenCompraDTO;
 import cl.duoc.alumnos.ferme.services.interfaces.IOrdenesCompraService;
@@ -52,8 +53,8 @@ public class OrdenesCompraController {
         @RequestParam Integer pageIndex,
         @RequestParam Map<String,String> allRequestParams
     ) {
-        Integer finalPageSize = Ferme.DEFAULT_PAGE_SIZE;
-        Integer finalPageIndex = Ferme.DEFAULT_PAGE_INDEX;
+        Integer finalPageSize = FermeConfig.DEFAULT_PAGE_SIZE;
+        Integer finalPageIndex = FermeConfig.DEFAULT_PAGE_INDEX;
         Predicate filtros = null;
         
         if (pageSize != null && pageSize > 0) {

@@ -1,6 +1,7 @@
 package cl.duoc.alumnos.ferme.services;
 
 import cl.duoc.alumnos.ferme.Ferme;
+import cl.duoc.alumnos.ferme.FermeConfig;
 import cl.duoc.alumnos.ferme.domain.entities.QRubro;
 import cl.duoc.alumnos.ferme.domain.entities.Rubro;
 import cl.duoc.alumnos.ferme.domain.repositories.IRubrosRepository;
@@ -38,7 +39,7 @@ public class RubrosService implements IRubrosService {
         long rubroCount;
         
         LOG.info("getRubros - Procesando solicitud...");
-        Sort orden = Sort.by(Ferme.RUBRO_DEFAULT_SORT_COLUMN).ascending();
+        Sort orden = Sort.by(FermeConfig.RUBRO_DEFAULT_SORT_COLUMN).ascending();
         
         LOG.info("getRubros - Llamando queries...");
         if (condicion == null) {

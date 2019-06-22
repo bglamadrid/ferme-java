@@ -1,6 +1,7 @@
 package cl.duoc.alumnos.ferme.services;
 
 import cl.duoc.alumnos.ferme.Ferme;
+import cl.duoc.alumnos.ferme.FermeConfig;
 import cl.duoc.alumnos.ferme.domain.entities.Empleado;
 import cl.duoc.alumnos.ferme.domain.entities.DetalleOrdenCompra;
 import cl.duoc.alumnos.ferme.domain.entities.OrdenCompra;
@@ -57,7 +58,7 @@ public class OrdenesCompraService implements IOrdenesCompraService {
         long ordenCompraCount;
         
         LOG.info("getOrdenesCompra - Procesando solicitud...");
-        Sort orden = Sort.by(Ferme.ORDEN_COMPRA_DEFAULT_SORT_COLUMN).descending();
+        Sort orden = Sort.by(FermeConfig.ORDEN_COMPRA_DEFAULT_SORT_COLUMN).descending();
         Pageable pgbl = PageRequest.of(pageIndex, pageSize, orden);
         
         LOG.info("getOrdenesCompra - Llamando queries...");

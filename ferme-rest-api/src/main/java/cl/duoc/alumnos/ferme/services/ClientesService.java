@@ -1,6 +1,7 @@
 package cl.duoc.alumnos.ferme.services;
 
 import cl.duoc.alumnos.ferme.Ferme;
+import cl.duoc.alumnos.ferme.FermeConfig;
 import cl.duoc.alumnos.ferme.domain.entities.Cliente;
 import cl.duoc.alumnos.ferme.domain.entities.QCliente;
 import cl.duoc.alumnos.ferme.domain.repositories.IClientesRepository;
@@ -42,7 +43,7 @@ public class ClientesService implements IClientesService {
         long clienteCount;
         
         LOG.info("getClientes - Procesando solicitud...");
-        Sort orden = Sort.by(Ferme.CLIENTE_DEFAULT_SORT_COLUMN).ascending();
+        Sort orden = Sort.by(FermeConfig.CLIENTE_DEFAULT_SORT_COLUMN).ascending();
         Pageable pgbl = PageRequest.of(pageIndex, pageSize, orden);
         
         LOG.info("getClientes - Llamando queries...");

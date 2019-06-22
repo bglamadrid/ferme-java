@@ -1,6 +1,7 @@
 package cl.duoc.alumnos.ferme.services;
 
 import cl.duoc.alumnos.ferme.Ferme;
+import cl.duoc.alumnos.ferme.FermeConfig;
 import cl.duoc.alumnos.ferme.domain.entities.QUsuario;
 import cl.duoc.alumnos.ferme.domain.entities.Usuario;
 import cl.duoc.alumnos.ferme.domain.entities.Persona;
@@ -42,7 +43,7 @@ public class UsuariosService implements IUsuariosService {
     
     @Override
     public Collection<UsuarioDTO> getUsuarios(int pageSize, int pageIndex, Predicate condicion) {
-        Sort orden = Sort.by(Ferme.VENTA_DEFAULT_SORT_COLUMN).ascending();
+        Sort orden = Sort.by(FermeConfig.VENTA_DEFAULT_SORT_COLUMN).ascending();
         Pageable pgbl = PageRequest.of(pageIndex, pageSize, orden);
         
         List<UsuarioDTO> pagina = new ArrayList<>();

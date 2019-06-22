@@ -1,6 +1,7 @@
 package cl.duoc.alumnos.ferme.services;
 
 import cl.duoc.alumnos.ferme.Ferme;
+import cl.duoc.alumnos.ferme.FermeConfig;
 import cl.duoc.alumnos.ferme.domain.entities.FamiliaProducto;
 import cl.duoc.alumnos.ferme.domain.entities.Producto;
 import cl.duoc.alumnos.ferme.domain.entities.Proveedor;
@@ -60,7 +61,7 @@ public class ProductosService implements IProductosService, IFamiliasProductoSer
         long familiaCount;
         
         LOG.info("getFamiliasProductos - Procesando solicitud...");
-        Sort orden = Sort.by(Ferme.FAMILIA_PRODUCTO_DEFAULT_SORT_COLUMN).ascending();
+        Sort orden = Sort.by(FermeConfig.FAMILIA_PRODUCTO_DEFAULT_SORT_COLUMN).ascending();
         
         LOG.info("getFamiliasProductos - Llamando queries...");
         if (condicion == null) {
@@ -89,7 +90,7 @@ public class ProductosService implements IProductosService, IFamiliasProductoSer
         Long tipoCount;
         
         LOG.info("getTiposProductos - Procesando solicitud...");
-        Sort orden = Sort.by(Ferme.TIPO_PRODUCTO_DEFAULT_SORT_COLUMN).descending();
+        Sort orden = Sort.by(FermeConfig.TIPO_PRODUCTO_DEFAULT_SORT_COLUMN).descending();
         
         LOG.info("getTiposProductos - Llamando queries...");
         if (condicion == null) {
@@ -118,7 +119,7 @@ public class ProductosService implements IProductosService, IFamiliasProductoSer
         Long productoCount;
         
         LOG.info("getProductos - Procesando solicitud...");
-        Sort orden = Sort.by(Ferme.TIPO_PRODUCTO_DEFAULT_SORT_COLUMN).descending();
+        Sort orden = Sort.by(FermeConfig.TIPO_PRODUCTO_DEFAULT_SORT_COLUMN).descending();
         Pageable pgbl = PageRequest.of(pageIndex, pageSize, orden);
         
         LOG.info("getProductos - Llamando queries...");

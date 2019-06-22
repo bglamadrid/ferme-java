@@ -1,6 +1,7 @@
 package cl.duoc.alumnos.ferme.domain.entities;
 
 import cl.duoc.alumnos.ferme.Ferme;
+import cl.duoc.alumnos.ferme.FermeConfig;
 import cl.duoc.alumnos.ferme.dto.ClienteDTO;
 import cl.duoc.alumnos.ferme.util.PersonaConverter;
 import java.io.Serializable;
@@ -36,7 +37,7 @@ public class Cliente implements Serializable {
     
     @Id
     @Column(name = "ID_CLIENTE")
-    @SequenceGenerator(name = "cliente_seq", sequenceName = "SEQ_CLIENTE", initialValue = 1, allocationSize = Ferme.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
+    @SequenceGenerator(name = "cliente_seq", sequenceName = "SEQ_CLIENTE", initialValue = 1, allocationSize = FermeConfig.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
     @GeneratedValue(generator = "cliente_seq", strategy = GenerationType.AUTO)
     private Integer _id;
     

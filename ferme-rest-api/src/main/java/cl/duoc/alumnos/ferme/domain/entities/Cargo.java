@@ -1,6 +1,7 @@
 package cl.duoc.alumnos.ferme.domain.entities;
 
 import cl.duoc.alumnos.ferme.Ferme;
+import cl.duoc.alumnos.ferme.FermeConfig;
 import cl.duoc.alumnos.ferme.dto.CargoDTO;
 import java.io.Serializable;
 import java.util.Objects;
@@ -28,7 +29,7 @@ public class Cargo implements Serializable {
     
     @Id
     @Column(name = "ID_CARGO")
-    @SequenceGenerator(name = "cargo_seq", sequenceName = "SEQ_CARGO", initialValue = 1, allocationSize = Ferme.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
+    @SequenceGenerator(name = "cargo_seq", sequenceName = "SEQ_CARGO", initialValue = 1, allocationSize = FermeConfig.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
     @GeneratedValue(generator = "cargo_seq", strategy = GenerationType.AUTO)
     private Integer _id;
     

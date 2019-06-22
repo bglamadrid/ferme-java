@@ -1,6 +1,7 @@
 package cl.duoc.alumnos.ferme.services;
 
 import cl.duoc.alumnos.ferme.Ferme;
+import cl.duoc.alumnos.ferme.FermeConfig;
 import cl.duoc.alumnos.ferme.domain.entities.Persona;
 import cl.duoc.alumnos.ferme.domain.entities.QPersona;
 import cl.duoc.alumnos.ferme.domain.repositories.IPersonasRepository;
@@ -37,7 +38,7 @@ public class PersonasService implements IPersonasService {
         long pesonaCount;
         
         LOG.info("getPersonas - Procesando solicitud...");
-        Sort orden = Sort.by(Ferme.PERSONA_DEFAULT_SORT_COLUMN).ascending();
+        Sort orden = Sort.by(FermeConfig.PERSONA_DEFAULT_SORT_COLUMN).ascending();
         Pageable pgbl = PageRequest.of(pageIndex, pageSize, orden);
         
         LOG.info("getPersonas - Llamando queries...");

@@ -36,6 +36,7 @@ public interface IUsuariosService {
      * Guarda (inserta o actualiza) el usuario.
      * @param dto El objeto DTO de usuario con la información respectiva a guardar.
      * @return El ID del registro guardado.
+     * @throws NotFoundException Si no se encuentra la Persona asociada
      */
     public int saveUsuario(UsuarioDTO dto) throws NotFoundException;
     
@@ -47,6 +48,12 @@ public interface IUsuariosService {
      */
     public boolean deleteUsuario(Integer usuarioId);
 
+    /**
+     * Busca un usuario a partir de sus credenciales.
+     * @param username El nombre del usuario
+     * @param password La clave (no encriptada)
+     * @return Un UsuariODTO si el usuario es encontrado, o null
+     */
     public UsuarioDTO getUsuarioFromCredentials(String username, String password);
     
 }

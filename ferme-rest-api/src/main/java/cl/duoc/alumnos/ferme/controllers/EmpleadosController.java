@@ -30,18 +30,18 @@ public class EmpleadosController {
     @Autowired private IEmpleadosService empleadoSvc;    
     
     @GetMapping("/empleados")
-    public Collection<EmpleadoDTO> getEmpleados(@RequestParam Map<String,String> allRequestParams) {
+    public Collection<EmpleadoDTO> obtener(@RequestParam Map<String,String> allRequestParams) {
         
-        return this.getEmpleados(null, null, allRequestParams);
+        return this.obtener(null, null, allRequestParams);
     }
     
     @GetMapping("/empleados/{pageSize}")
-    public Collection<EmpleadoDTO> getEmpleados(
+    public Collection<EmpleadoDTO> obtener(
         @PathVariable Integer pageSize,
         @RequestParam Map<String,String> allRequestParams
     ) {
         
-        return this.getEmpleados(pageSize, null, allRequestParams);
+        return this.obtener(pageSize, null, allRequestParams);
     }
     
     /**
@@ -56,7 +56,7 @@ public class EmpleadosController {
      * @return Una colección de objetos EmpleadoDTO
      */
     @GetMapping("/empleados/{pageSize}/{pageIndex}")
-    public Collection<EmpleadoDTO> getEmpleados(
+    public Collection<EmpleadoDTO> obtener(
         @PathVariable Integer pageSize,
         @PathVariable Integer pageIndex,
         @RequestParam Map<String,String> allRequestParams) {
@@ -90,7 +90,7 @@ public class EmpleadosController {
      * @throws javassist.NotFoundException
      */
     @PostMapping("/empleados/guardar")
-    public Integer saveEmpleado(@RequestBody EmpleadoDTO dto) throws NotFoundException {
+    public Integer guardar(@RequestBody EmpleadoDTO dto) throws NotFoundException {
         
         if (dto != null) {
             LOG.debug("saveEmpleado - dto="+dto);
@@ -107,7 +107,7 @@ public class EmpleadosController {
      * @return true si la operación fue exitosa, false si no lo fue.
      */
     @PostMapping("/empleados/borrar")
-    public boolean deleteEmpleado(@RequestBody Integer empleadoId) {
+    public boolean borrar(@RequestBody Integer empleadoId) {
         
         if (empleadoId != null && empleadoId != 0) {
             LOG.debug("deleteEmpleado - empleadoId="+empleadoId);

@@ -3,7 +3,6 @@ package cl.duoc.alumnos.ferme.services;
 import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.domain.entities.Cargo;
 import cl.duoc.alumnos.ferme.domain.entities.Empleado;
-import cl.duoc.alumnos.ferme.domain.entities.Persona;
 import cl.duoc.alumnos.ferme.domain.entities.QEmpleado;
 import cl.duoc.alumnos.ferme.domain.repositories.ICargosRepository;
 import cl.duoc.alumnos.ferme.domain.repositories.IEmpleadosRepository;
@@ -84,19 +83,19 @@ public class EmpleadosService implements IEmpleadosService {
                 switch (paramName) {
                     case "id":
                         parsedValueI = Integer.valueOf(paramValue);
-                        bb.and(qEmpleado.id.eq(parsedValueI));
+                        bb.and(qEmpleado._id.eq(parsedValueI));
                         return bb; //match por id es único
                     case "personaId":
                         parsedValueI = Integer.valueOf(paramValue);
-                        bb.and(qEmpleado.persona.id.eq(parsedValueI));
+                        bb.and(qEmpleado._persona._id.eq(parsedValueI));
                         return bb; //match por id de persona es único
                     case "nombre":
-                        paramValue = "%" + paramValue.toUpperCase() + "%";
-                        bb.and(qEmpleado.persona.nombreCompleto.upper().like(paramValue));
+                        paramValue = "%" + paramValue + "%";
+                        bb.and(qEmpleado._persona._nombreCompleto.likeIgnoreCase(paramValue));
                         break;
                     case "rut":
-                        paramValue = "%" + paramValue.toUpperCase() + "%";
-                        bb.and(qEmpleado.persona.rut.upper().like(paramValue));
+                        paramValue = "%" + paramValue + "%";
+                        bb.and(qEmpleado._persona._rut.likeIgnoreCase(paramValue));
                         break;
                     default: break;
                 }

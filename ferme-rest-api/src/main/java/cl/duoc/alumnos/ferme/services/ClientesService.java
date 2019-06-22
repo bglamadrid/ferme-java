@@ -2,7 +2,6 @@ package cl.duoc.alumnos.ferme.services;
 
 import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.domain.entities.Cliente;
-import cl.duoc.alumnos.ferme.domain.entities.Persona;
 import cl.duoc.alumnos.ferme.domain.entities.QCliente;
 import cl.duoc.alumnos.ferme.domain.repositories.IClientesRepository;
 import cl.duoc.alumnos.ferme.domain.repositories.IPersonasRepository;
@@ -79,19 +78,19 @@ public class ClientesService implements IClientesService {
                 switch (paramName) {
                     case "id":
                         parsedValueI = Integer.valueOf(paramValue);
-                        bb.and(qCliente.id.eq(parsedValueI));
+                        bb.and(qCliente._id.eq(parsedValueI));
                         return bb; //match por id es único
                     case "personaId":
                         parsedValueI = Integer.valueOf(paramValue);
-                        bb.and(qCliente.persona.id.eq(parsedValueI));
+                        bb.and(qCliente._persona._id.eq(parsedValueI));
                         return bb; //match por id de persona es único
                     case "nombre":
-                        paramValue = "%" + paramValue.toUpperCase() + "%";
-                        bb.and(qCliente.persona.nombreCompleto.upper().like(paramValue));
+                        paramValue = "%" + paramValue + "%";
+                        bb.and(qCliente._persona._nombreCompleto.likeIgnoreCase(paramValue));
                         break;
                     case "rut":
                         paramValue = "%" + paramValue.toUpperCase() + "%";
-                        bb.and(qCliente.persona.rut.upper().like(paramValue));
+                        bb.and(qCliente._persona._rut.likeIgnoreCase(paramValue));
                         break;
                     default: break;
                 }

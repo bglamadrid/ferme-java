@@ -73,11 +73,11 @@ public class RubrosService implements IRubrosService {
                 switch (paramName) {
                     case "id":
                         parsedValueI = Integer.valueOf(paramValue);
-                        bb.and(qRubro.id.eq(parsedValueI));
+                        bb.and(qRubro._id.eq(parsedValueI));
                         return bb; //match por id es único
                     case "descripcion":
-                        paramValue = "%" + paramValue.toUpperCase() + "%";
-                        bb.and(qRubro.descripcion.upper().like(paramValue));
+                        paramValue = "%" + paramValue + "%";
+                        bb.and(qRubro._descripcion.likeIgnoreCase(paramValue));
                         break;
                     default: break;
                 }

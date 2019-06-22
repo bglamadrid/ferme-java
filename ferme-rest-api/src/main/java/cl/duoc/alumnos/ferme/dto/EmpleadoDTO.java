@@ -2,7 +2,6 @@ package cl.duoc.alumnos.ferme.dto;
 
 import cl.duoc.alumnos.ferme.domain.entities.Cargo;
 import cl.duoc.alumnos.ferme.domain.entities.Empleado;
-import javassist.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +14,7 @@ public class EmpleadoDTO extends PersonaDTO {
     
     private Integer idEmpleado;
     private Integer idCargo;
+    private String descripcionCargo;
 
     public EmpleadoDTO() {
         super();
@@ -34,6 +34,14 @@ public class EmpleadoDTO extends PersonaDTO {
 
     public void setIdCargo(Integer idCargo) {
         this.idCargo = idCargo;
+    }
+
+    public String getDescripcionCargo() {
+        return descripcionCargo;
+    }
+
+    public void setDescripcionCargo(String descripcionCargo) {
+        this.descripcionCargo = descripcionCargo;
     }
     
     public Empleado toEntity() {

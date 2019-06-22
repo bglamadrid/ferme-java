@@ -116,11 +116,11 @@ public class VentasService implements IVentasService {
                         break;
                     case "cliente":
                         paramValue = "%" + paramValue.trim() + "%";
-                        bb.and(qVentas.cliente.persona.nombreCompleto.like(paramValue));
+                        bb.and(qVentas.cliente._persona._nombreCompleto.likeIgnoreCase(paramValue));
                         break;
                     case "clienteId":
                         parsedValueI = Integer.valueOf(paramValue);
-                        bb.and(qVentas.cliente.id.eq(parsedValueI));
+                        bb.and(qVentas.cliente._id.eq(parsedValueI));
                         break;
                     default: break;
                 }

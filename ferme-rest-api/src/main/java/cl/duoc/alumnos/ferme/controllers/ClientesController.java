@@ -29,18 +29,18 @@ public class ClientesController {
     @Autowired private IClientesService clienteSvc;    
     
     @GetMapping("/clientes")
-    public Collection<ClienteDTO> getClientes(@RequestParam Map<String,String> allRequestParams) {
+    public Collection<ClienteDTO> obtener(@RequestParam Map<String,String> allRequestParams) {
         
-        return this.getClientes(null, null, allRequestParams);
+        return this.obtener(null, null, allRequestParams);
     }
     
     @GetMapping("/clientes/{pageSize}")
-    public Collection<ClienteDTO> getClientes(
+    public Collection<ClienteDTO> obtener(
             @PathVariable Integer pageSize,
             @RequestParam Map<String,String> allRequestParams
     ) {
         
-        return this.getClientes(pageSize, null, allRequestParams);
+        return this.obtener(pageSize, null, allRequestParams);
     }
     
     /**
@@ -55,7 +55,7 @@ public class ClientesController {
      * @return Una colección de objetos ClienteDTO
      */
     @GetMapping("/clientes/{pageSize}/{pageIndex}")
-    public Collection<ClienteDTO> getClientes(
+    public Collection<ClienteDTO> obtener(
         @PathVariable Integer pageSize,
         @PathVariable Integer pageIndex,
         @RequestParam Map<String,String> allRequestParams) {
@@ -89,7 +89,7 @@ public class ClientesController {
      * @return El ID del cliente, 0 si falla al insertar, null si el JSON viene incorrecto.
      */
     @PostMapping("/clientes/guardar")
-    public Integer saveCliente(@RequestBody ClienteDTO dto) {
+    public Integer guardar(@RequestBody ClienteDTO dto) {
         if (dto != null) {
             LOG.debug("saveCliente - dto="+dto);
             Integer clienteId = clienteSvc.saveCliente(dto);
@@ -105,7 +105,7 @@ public class ClientesController {
      * @return true si la operación fue exitosa, false si no lo fue
      */
     @PostMapping("/clientes/borrar")
-    public boolean deleteCliente(@RequestBody Integer clienteId) {
+    public boolean borrar(@RequestBody Integer clienteId) {
         
         if (clienteId != null && clienteId != 0) {
             LOG.debug("deleteCliente - clienteId="+clienteId);

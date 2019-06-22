@@ -20,8 +20,8 @@ public class OrdenCompraDTO {
     
     private Integer idOrdenCompra;
     private Integer idEmpleado;
-    private String nombrePersonaEmpleado;
-    private String rutPersonaEmpleado;
+    private String nombreEmpleado;
+    private String rutEmpleado;
     private String estadoOrdenCompra;
     private String fechaSolicitudOrdenCompra;
     private String fechaRecepcionOrdenCompra;
@@ -47,20 +47,20 @@ public class OrdenCompraDTO {
         this.idEmpleado = idEmpleado;
     }
 
-    public String getNombrePersonaEmpleado() {
-        return nombrePersonaEmpleado;
+    public String getNombreEmpleado() {
+        return nombreEmpleado;
     }
 
-    public void setNombrePersonaEmpleado(String nombrePersonaEmpleado) {
-        this.nombrePersonaEmpleado = nombrePersonaEmpleado;
+    public void setNombreEmpleado(String nombreEmpleado) {
+        this.nombreEmpleado = nombreEmpleado;
     }
 
-    public String getRutPersonaEmpleado() {
-        return rutPersonaEmpleado;
+    public String getRutEmpleado() {
+        return rutEmpleado;
     }
 
-    public void setRutPersonaEmpleado(String rutPersonaEmpleado) {
-        this.rutPersonaEmpleado = rutPersonaEmpleado;
+    public void setRutEmpleado(String rutEmpleado) {
+        this.rutEmpleado = rutEmpleado;
     }
 
     public String getEstadoOrdenCompra() {

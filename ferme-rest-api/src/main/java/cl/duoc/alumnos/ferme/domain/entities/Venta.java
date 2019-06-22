@@ -130,6 +130,9 @@ public class Venta implements Serializable {
     
     public VentaDTO toDTO(boolean simple) {
         VentaDTO dto = new VentaDTO();
+        Cliente clienteEntity = getCliente();
+        Persona clientePersonaEntity = clienteEntity.getPersona();
+        Empleado empleadoEntity = getEmpleado();
         dto.setIdVenta(id);
         dto.setTipoVenta(tipoVenta.toString());
         dto.setSubtotalVenta(subtotal);
@@ -137,17 +140,15 @@ public class Venta implements Serializable {
         final String fVenta = FermeDates.fechaToString(fecha);
         dto.setFechaVenta(fVenta);
         
-        Cliente clienteEntity = getCliente();
-        Persona clientePersonaEntity = clienteEntity.getPersona();
-        dto.setIdCliente(clienteEntity.getId());
-        dto.setNombreCompletoPersonaCliente(clientePersonaEntity.getNombreCompleto());
-        dto.setRutPersonaCliente(clientePersonaEntity.getRut());
         
-        Empleado empleadoEntity = getEmpleado();
+        dto.setIdCliente(clienteEntity.getId());
+        dto.setNombreCompletoCliente(clientePersonaEntity.getNombreCompleto());
+        dto.setRutCliente(clientePersonaEntity.getRut());
+        
         if (empleadoEntity != null) {
             Persona empleadoPersonaEntity = empleadoEntity.getPersona();
             dto.setIdEmpleado(empleadoEntity.getId());
-            dto.setNombreCompletoPersonaEmpleado(empleadoPersonaEntity.getNombreCompleto());
+            dto.setNombreCompletoEmpleado(empleadoPersonaEntity.getNombreCompleto());
         }
         
         if (!simple) {

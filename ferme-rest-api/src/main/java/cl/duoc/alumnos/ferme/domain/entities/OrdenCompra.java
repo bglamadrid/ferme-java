@@ -42,99 +42,99 @@ public class OrdenCompra implements Serializable {
     @Column(name = "ID_ORDEN_COMPRA")
     @SequenceGenerator(name = "orden_compra_seq", sequenceName = "SEQ_ORDEN_COMPRA", initialValue = 1, allocationSize = Ferme.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
     @GeneratedValue(generator = "orden_compra_seq", strategy = GenerationType.AUTO)
-    private Integer id;
+    private Integer _id;
     
     @Column(name = "ESTADO")
-    private Character estado;
+    private Character _estado;
     
     @Column(name = "FECHA_SOLICITUD")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaSolicitud;
+    private Date _fechaSolicitud;
     
     @Column(name = "FECHA_RECEPCION")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaRecepcion;
+    private Date _fechaRecepcion;
     
     @JoinColumn(name = "ID_EMPLEADO", referencedColumnName = "ID_EMPLEADO")
     @OneToOne(cascade = CascadeType.DETACH, optional = false, fetch = FetchType.LAZY)
     @Cascade(org.hibernate.annotations.CascadeType.DETACH)
-    private Empleado empleado;
+    private Empleado _empleado;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "_ordenCompra", fetch = FetchType.LAZY)
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    private List<DetalleOrdenCompra> detalles;
+    private List<DetalleOrdenCompra> _detalles;
 
     public OrdenCompra() {
         super();
     }
     
     public Integer getId() {
-        return id;
+        return _id;
     }
 
     public void setId(Integer id) {
-        this.id = id;
+        this._id = id;
     }
 
     public Character getEstado() {
-        return estado;
+        return _estado;
     }
 
     public void setEstado(Character estado) {
-        this.estado = estado;
+        this._estado = estado;
     }
 
     public Date getFechaSolicitud() {
-        return fechaSolicitud;
+        return _fechaSolicitud;
     }
 
     public void setFechaSolicitud(Date fechaSolicitud) {
-        this.fechaSolicitud = fechaSolicitud;
+        this._fechaSolicitud = fechaSolicitud;
     }
 
     public Date getFechaRecepcion() {
-        return fechaRecepcion;
+        return _fechaRecepcion;
     }
 
     public void setFechaRecepcion(Date fechaRecepcion) {
-        this.fechaRecepcion = fechaRecepcion;
+        this._fechaRecepcion = fechaRecepcion;
     }
 
     public Empleado getEmpleado() {
-        return empleado;
+        return _empleado;
     }
 
     public void setEmpleado(Empleado empleado) {
-        this.empleado = empleado;
+        this._empleado = empleado;
     }
 
     public List<DetalleOrdenCompra> getDetalles() {
-        return detalles;
+        return _detalles;
     }
 
     public void setDetalles(List<DetalleOrdenCompra> detalles) {
-        this.detalles = detalles;
+        this._detalles = detalles;
     }
     
     public OrdenCompraDTO toDTO(boolean simple) {
         OrdenCompraDTO dto = new OrdenCompraDTO();
-        dto.setIdOrdenCompra(id);
-        dto.setEstadoOrdenCompra(estado.toString());
-        dto.setFechaSolicitudOrdenCompra(FermeDates.fechaToString(fechaSolicitud));
+        dto.setIdOrdenCompra(_id);
+        dto.setEstadoOrdenCompra(_estado.toString());
+        dto.setFechaSolicitudOrdenCompra(FermeDates.fechaToString(_fechaSolicitud));
         
         Empleado empleadoEntity = getEmpleado();
         Persona empleadoPersonaEntity = empleadoEntity.getPersona();
         dto.setIdEmpleado(empleadoEntity.getId());
-        dto.setNombrePersonaEmpleado(empleadoPersonaEntity.getNombreCompleto());
-        dto.setRutPersonaEmpleado(empleadoPersonaEntity.getRut());
+        dto.setNombreEmpleado(empleadoPersonaEntity.getNombreCompleto());
+        dto.setRutEmpleado(empleadoPersonaEntity.getRut());
         
-        if (fechaRecepcion != null) {
-            dto.setFechaRecepcionOrdenCompra(FermeDates.fechaToString(fechaRecepcion));
+        if (_fechaRecepcion != null) {
+            dto.setFechaRecepcionOrdenCompra(FermeDates.fechaToString(_fechaRecepcion));
         }
         
         if (!simple) {
             List<DetalleOrdenCompraDTO> detallesDTO = new ArrayList<>();
-            for (DetalleOrdenCompra detalle : detalles) {
+            for (DetalleOrdenCompra detalle : _detalles) {
                 detallesDTO.add(detalle.toDTO());
             }
             dto.setDetallesOrdenCompra(detallesDTO);
@@ -146,8 +146,8 @@ public class OrdenCompra implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 47 * hash + this.id;
-        hash = 47 * hash + Objects.hashCode(this.fechaSolicitud);
+        hash = 47 * hash + this._id;
+        hash = 47 * hash + Objects.hashCode(this._fechaSolicitud);
         return hash;
     }
 
@@ -157,13 +157,13 @@ public class OrdenCompra implements Serializable {
             return false;
         }
         final OrdenCompra other = (OrdenCompra) object;
-        return (this.id != other.getId());
+        return (this._id != other.getId());
     }
 
    
     @Override
     public String toString() {
-        return "cl.duoc.alumnos.ferme.entities.domain.OrdenCompra[ idOrdenCompra=" + id + " ]";
+        return "cl.duoc.alumnos.ferme.entities.domain.OrdenCompra[ idOrdenCompra=" + _id + " ]";
     }
     
 }

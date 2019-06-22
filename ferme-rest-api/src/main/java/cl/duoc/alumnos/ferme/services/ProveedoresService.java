@@ -79,19 +79,19 @@ public class ProveedoresService implements IProveedoresService {
                 switch (paramName) {
                     case "id":
                         parsedValueI = Integer.valueOf(paramValue);
-                        bb.and(qProveedor.id.eq(parsedValueI));
+                        bb.and(qProveedor._id.eq(parsedValueI));
                         return bb; //match por id es único
                     case "personaId":
                         parsedValueI = Integer.valueOf(paramValue);
-                        bb.and(qProveedor.persona.id.eq(parsedValueI));
+                        bb.and(qProveedor._persona._id.eq(parsedValueI));
                         return bb; //match por id de persona es único
                     case "nombre":
                         paramValue = "%" + paramValue.toUpperCase() + "%";
-                        bb.and(qProveedor.persona.nombreCompleto.upper().like(paramValue));
+                        bb.and(qProveedor._persona._nombreCompleto.upper().like(paramValue));
                         break;
                     case "rut":
                         paramValue = "%" + paramValue.toUpperCase() + "%";
-                        bb.and(qProveedor.persona.rut.upper().like(paramValue));
+                        bb.and(qProveedor._persona._rut.upper().like(paramValue));
                         break;
                     default: break;
                 }
@@ -113,6 +113,7 @@ public class ProveedoresService implements IProveedoresService {
         entity = proveedorRepo.saveAndFlush(entity);
         return entity.getId();
     }
+    
 
     @Override
     public boolean deleteProveedor(Integer proveedorid) {

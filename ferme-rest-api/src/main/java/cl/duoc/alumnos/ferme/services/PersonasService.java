@@ -73,15 +73,15 @@ public class PersonasService implements IPersonasService {
                 switch (paramName) {
                     case "id":
                         parsedValueI = Integer.valueOf(paramValue);
-                        bb.and(qPersona.id.eq(parsedValueI));
+                        bb.and(qPersona._id.eq(parsedValueI));
                         return bb; //match por id es único
                     case "nombre":
-                        paramValue = "%" + paramValue.toUpperCase() + "%";
-                        bb.and(qPersona.nombreCompleto.likeIgnoreCase(paramValue));
+                        paramValue = "%" + paramValue + "%";
+                        bb.and(qPersona._nombreCompleto.likeIgnoreCase(paramValue));
                         break;
                     case "rut":
-                        paramValue = "%" + paramValue.toUpperCase() + "%";
-                        bb.and(qPersona.rut.likeIgnoreCase(paramValue));
+                        paramValue = "%" + paramValue + "%";
+                        bb.and(qPersona._rut.likeIgnoreCase(paramValue));
                         break;
                     default: break;
                 }

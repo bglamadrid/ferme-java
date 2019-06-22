@@ -7,7 +7,6 @@ import cl.duoc.alumnos.ferme.domain.entities.OrdenCompra;
 import cl.duoc.alumnos.ferme.domain.entities.Producto;
 import cl.duoc.alumnos.ferme.domain.entities.QOrdenCompra;
 import cl.duoc.alumnos.ferme.domain.entities.QProducto;
-import cl.duoc.alumnos.ferme.domain.repositories.IDetallesOrdenesCompraRepository;
 import cl.duoc.alumnos.ferme.domain.repositories.IEmpleadosRepository;
 import cl.duoc.alumnos.ferme.domain.repositories.IFunctionsRepository;
 import cl.duoc.alumnos.ferme.domain.repositories.IOrdenesCompraRepository;
@@ -75,13 +74,16 @@ public class OrdenesCompraService implements IOrdenesCompraService {
         boolean conversionCompleta = (condicion != null && ordenCompraCount == 1);
         ordenesCompra.forEach((entity) -> {
             OrdenCompraDTO dto = entity.toDTO(conversionCompleta);
-            for (DetalleOrdenCompraDTO detalle : dto.getDetallesOrdenCompra()) {
-                Integer idProducto = detalle.getIdProducto();
-                BooleanBuilder bb = new BooleanBuilder().and(QProducto.producto.id.eq(idProducto));
-                Producto productoEntity = productoRepo.findAll(bb).iterator().next();
-                detalle.setCodigoProducto(productoEntity.getCodigo());
-                detalle.setNombreProducto(productoEntity.getNombre());
-                detalle.setPrecioProducto(productoEntity.getPrecio());
+            
+            if (conversionCompleta) {
+                for (DetalleOrdenCompraDTO detalle : dto.getDetallesOrdenCompra()) {
+                    Integer idProducto = detalle.getIdProducto();
+                    BooleanBuilder bb = new BooleanBuilder().and(QProducto.producto._id.eq(idProducto));
+                    Producto productoEntity = productoRepo.findAll(bb).iterator().next();
+                    detalle.setCodigoProducto(productoEntity.getCodigo());
+                    detalle.setNombreProducto(productoEntity.getNombre());
+                    detalle.setPrecioProducto(productoEntity.getPrecio());
+                }
             }
             pagina.add(dto);
         });
@@ -122,7 +124,7 @@ public class OrdenesCompraService implements IOrdenesCompraService {
                 switch (paramName) {
                     case "id":
                         parsedValueI = Integer.valueOf(paramValue);
-                        bb.and(qOrdenCompra.id.eq(parsedValueI));
+                        bb.and(qOrdenCompra._id.eq(parsedValueI));
                         return bb;
                     case "fechaSolicitud":
                         paramValue = paramValue.trim();
@@ -130,7 +132,7 @@ public class OrdenesCompraService implements IOrdenesCompraService {
                         if (parsedValueD == null) {
                             LOG.warn("VentasService.queryParamsMapToVentasFilteringPredicate() : El formato de la fecha ingresada no es válida.");
                         } else {
-                            bb.and(qOrdenCompra.fechaSolicitud.eq(parsedValueD));
+                            bb.and(qOrdenCompra._fechaSolicitud.eq(parsedValueD));
                         }
                         break;
                     case "fechaRecepcion":
@@ -139,19 +141,20 @@ public class OrdenesCompraService implements IOrdenesCompraService {
                         if (parsedValueD == null) {
                             LOG.warn("VentasService.queryParamsMapToVentasFilteringPredicate() : El formato de la fecha ingresada no es válida.");
                         } else {
-                            bb.and(qOrdenCompra.fechaRecepcion.eq(parsedValueD));
+                            bb.and(qOrdenCompra._fechaRecepcion.eq(parsedValueD));
                         }
                         break;
                     case "empleadoId":
                         parsedValueI = Integer.valueOf(paramValue);
-                        bb.and(qOrdenCompra.empleado.id.eq(parsedValueI));
+                        bb.and(qOrdenCompra._empleado._id.eq(parsedValueI));
                         break;
                     case "empleado":
-                        bb.and(qOrdenCompra.empleado.persona.nombreCompleto.like(paramValue));
+                        paramValue = "%" + paramValue + "%";
+                        bb.and(qOrdenCompra._empleado._persona._nombreCompleto.likeIgnoreCase(paramValue));
                         break;
                     case "estado":
                         paramValue = paramValue.trim();
-                        bb.and(qOrdenCompra.estado.eq(paramValue.charAt(0)));
+                        bb.and(qOrdenCompra._estado.eq(paramValue.charAt(0)));
                         break;
                     default: break;
                 }

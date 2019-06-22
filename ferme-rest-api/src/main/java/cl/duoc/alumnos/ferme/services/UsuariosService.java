@@ -22,7 +22,6 @@ import javassist.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -78,11 +77,11 @@ public class UsuariosService implements IUsuariosService {
                 switch (paramName) {
                     case "id":
                         parsedValueI = Integer.valueOf(paramValue);
-                        bb.and(qUsuario.id.eq(parsedValueI));
+                        bb.and(qUsuario._id.eq(parsedValueI));
                         return bb;
                     case "nombre":
-                        paramValue = "%" + paramValue.trim() + "%";
-                        bb.and(qUsuario.nombre.like(paramValue));
+                        paramValue = "%" + paramValue + "%";
+                        bb.and(qUsuario._nombre.likeIgnoreCase(paramValue));
                         break;
                     case "fechaCreacion":
                         paramValue = paramValue.trim();
@@ -90,7 +89,7 @@ public class UsuariosService implements IUsuariosService {
                         if (fecha == null) {
                             LOG.warn("UsuariosService.queryParamsMapToUsuariosFilteringPredicate() : El formato de la fecha ingresada no es válida.");
                         } else {
-                            bb.and(qUsuario.fechaCreacion.eq(fecha));
+                            bb.and(qUsuario._fechaCreacion.eq(fecha));
                         }
                         break;
                     default: break;
@@ -135,19 +134,29 @@ public class UsuariosService implements IUsuariosService {
 
     @Override
     public boolean deleteUsuario(Integer usuarioId) {
-        
         try {
             usuarioRepo.deleteById(usuarioId);
             return true;
-        } catch (EmptyResultDataAccessException exc) {
+        } catch (Exception exc) {
             LOG.error("Error al borrar Usuario con id " +usuarioId, exc);
+            return false;
         }
-        return false;
     }
 
     @Override
     public UsuarioDTO getUsuarioFromCredentials(String username, String password) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        QUsuario qUsr = QUsuario.usuario;
+        BooleanBuilder bb = new BooleanBuilder()
+                .and(qUsr._nombre.eq(username))
+                .and(qUsr._clave.eq(password));
+
+        Optional<Usuario> result = usuarioRepo.findOne(bb);
+        
+        if (result.isPresent()) {
+            return result.get().toDTO();
+        } else {
+            return null;
+        }
     }
     
 }

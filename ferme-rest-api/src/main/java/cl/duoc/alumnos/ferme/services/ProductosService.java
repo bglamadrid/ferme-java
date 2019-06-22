@@ -154,15 +154,15 @@ public class ProductosService implements IProductosService, IFamiliasProductoSer
                 switch (paramName) {
                     case "id":
                         parsedValueI = Integer.valueOf(paramValue);
-                        bb.and(qFamilia.id.eq(parsedValueI));
+                        bb.and(qFamilia._id.eq(parsedValueI));
                         return bb; //match por id es único
                     case "descripcion":
                         paramValue = "%" + paramValue + "%";
-                        bb.and(qFamilia.descripcion.likeIgnoreCase(paramValue));
+                        bb.and(qFamilia._descripcion.likeIgnoreCase(paramValue));
                         break;
                     case "proveedor":
                         parsedValueI = Integer.valueOf(paramValue);
-                        bb.and(qFamilia.proveedor.id.eq(parsedValueI));
+                        bb.and(qFamilia._proveedor._id.eq(parsedValueI));
                         break;
                     default: break;
                 }
@@ -187,19 +187,19 @@ public class ProductosService implements IProductosService, IFamiliasProductoSer
                 switch (paramName) {
                     case "id":
                         parsedValueI = Integer.valueOf(paramValue);
-                        bb.and(qTipo.id.eq(parsedValueI));
+                        bb.and(qTipo._id.eq(parsedValueI));
                         return bb; //match por id es único
                     case "nombre":
                         paramValue = "%" + paramValue + "%";
-                        bb.and(qTipo.nombre.likeIgnoreCase(paramValue));
+                        bb.and(qTipo._nombre.likeIgnoreCase(paramValue));
                         break;
                     case "familia":
                         parsedValueI = Integer.valueOf(paramValue);
-                        bb.and(qTipo.familia.id.eq(parsedValueI));
+                        bb.and(qTipo._familia._id.eq(parsedValueI));
                         break;
                     case "proveedor":
                         parsedValueI = Integer.valueOf(paramValue);
-                        bb.and(qTipo.familia.proveedor.id.eq(parsedValueI));
+                        bb.and(qTipo._familia._proveedor._id.eq(parsedValueI));
                         break;
                     default: break;
                 }
@@ -224,39 +224,39 @@ public class ProductosService implements IProductosService, IFamiliasProductoSer
                 switch (paramName) {
                     case "id":
                         parsedValueI = Integer.valueOf(paramValue);
-                        bb.and(qProducto.id.eq(parsedValueI));
+                        bb.and(qProducto._id.eq(parsedValueI));
                         return bb; //match por id es único
                     case "codigo":
                         paramValue = "%" + paramValue + "%";
-                        bb.and(qProducto.codigo.likeIgnoreCase(paramValue));
+                        bb.and(qProducto._codigo.likeIgnoreCase(paramValue));
                         break;
                     case "nombre":
                         paramValue = "%" + paramValue + "%";
-                        bb.and(qProducto.nombre.likeIgnoreCase(paramValue));
+                        bb.and(qProducto._nombre.likeIgnoreCase(paramValue));
                         break;
                     case "descripcion":
                         paramValue = "%" + paramValue + "%";
-                        bb.and(qProducto.descripcion.likeIgnoreCase(paramValue));
+                        bb.and(qProducto._descripcion.likeIgnoreCase(paramValue));
                         break;
                     case "tipo":
                         parsedValueI = Integer.valueOf(paramValue);
-                        bb.and(qProducto.tipo.id.eq(parsedValueI));
+                        bb.and(qProducto._tipo._id.eq(parsedValueI));
                         break;
                     case "familia":
                         parsedValueI = Integer.valueOf(paramValue);
-                        bb.and(qProducto.tipo.familia.id.eq(parsedValueI));
+                        bb.and(qProducto._tipo._familia._id.eq(parsedValueI));
                         break;
                     case "proveedor":
                         parsedValueI = Integer.valueOf(paramValue);
-                        bb.and(qProducto.tipo.familia.proveedor.id.eq(parsedValueI));
+                        bb.and(qProducto._tipo._familia._proveedor._id.eq(parsedValueI));
                         break;
                     case "precio":
                         parsedValueL = Long.valueOf(paramValue);
-                        bb.and(qProducto.precio.eq(parsedValueL));
+                        bb.and(qProducto._precio.eq(parsedValueL));
                         break;
                     case "stock":
                         parsedValueI = Integer.valueOf(paramValue);
-                        bb.and(qProducto.stockActual.eq(parsedValueI));
+                        bb.and(qProducto._stockActual.eq(parsedValueI));
                         break;
                     default: break;
                 }

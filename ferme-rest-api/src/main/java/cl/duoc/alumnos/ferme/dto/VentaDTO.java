@@ -21,11 +21,11 @@ public class VentaDTO {
     private long subtotalVenta;
     private List<DetalleVentaDTO> detallesVenta;
     private Integer idEmpleado;
-    private String nombreCompletoPersonaEmpleado;
-    private String rutPersonaEmpleado;
+    private String nombreCompletoEmpleado;
+    private String rutEmpleado;
     private Integer idCliente;
-    private String nombreCompletoPersonaCliente;
-    private String rutPersonaCliente;
+    private String nombreCompletoCliente;
+    private String rutCliente;
 
     public VentaDTO() {}
 
@@ -77,20 +77,20 @@ public class VentaDTO {
         this.idEmpleado = idEmpleado;
     }
 
-    public String getNombreCompletoPersonaEmpleado() {
-        return nombreCompletoPersonaEmpleado;
+    public String getNombreCompletoEmpleado() {
+        return nombreCompletoEmpleado;
     }
 
-    public void setNombreCompletoPersonaEmpleado(String nombreCompletoPersonaEmpleado) {
-        this.nombreCompletoPersonaEmpleado = nombreCompletoPersonaEmpleado;
+    public void setNombreCompletoEmpleado(String nombreCompletoEmpleado) {
+        this.nombreCompletoEmpleado = nombreCompletoEmpleado;
     }
 
-    public String getRutPersonaEmpleado() {
-        return rutPersonaEmpleado;
+    public String getRutEmpleado() {
+        return rutEmpleado;
     }
 
-    public void setRutPersonaEmpleado(String rutPersonaEmpleado) {
-        this.rutPersonaEmpleado = rutPersonaEmpleado;
+    public void setRutEmpleado(String rutEmpleado) {
+        this.rutEmpleado = rutEmpleado;
     }
 
     public Integer getIdCliente() {
@@ -101,20 +101,20 @@ public class VentaDTO {
         this.idCliente = idCliente;
     }
 
-    public String getNombreCompletoPersonaCliente() {
-        return nombreCompletoPersonaCliente;
+    public String getNombreCompletoCliente() {
+        return nombreCompletoCliente;
     }
 
-    public void setNombreCompletoPersonaCliente(String nombreCompletoPersonaCliente) {
-        this.nombreCompletoPersonaCliente = nombreCompletoPersonaCliente;
+    public void setNombreCompletoCliente(String nombreCompletoCliente) {
+        this.nombreCompletoCliente = nombreCompletoCliente;
     }
 
-    public String getRutPersonaCliente() {
-        return rutPersonaCliente;
+    public String getRutCliente() {
+        return rutCliente;
     }
 
-    public void setRutPersonaCliente(String rutPersonaCliente) {
-        this.rutPersonaCliente = rutPersonaCliente;
+    public void setRutCliente(String rutCliente) {
+        this.rutCliente = rutCliente;
     }   
     
     

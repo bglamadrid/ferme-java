@@ -19,7 +19,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -49,7 +48,6 @@ public class Sesion implements Serializable {
     @Cascade(org.hibernate.annotations.CascadeType.DETACH)
     private Usuario _usuario;
     
-    @Size(min = 1, max = 1)
     @Column(name = "ABIERTA")
     @Temporal(TemporalType.TIMESTAMP)
     private Date _abierta;
@@ -125,11 +123,9 @@ public class Sesion implements Serializable {
     public SesionDTO toDTO() {
         SesionDTO dto = new SesionDTO();
         Usuario usuarioEntity = getUsuario();
-        
         dto.setHashSesion(_hash);
         dto.setIdUsuario(usuarioEntity.getId());
         dto.setNombreUsuario(usuarioEntity.getNombre());
-        
         
         return dto;
     }

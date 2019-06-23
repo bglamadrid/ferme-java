@@ -57,7 +57,7 @@ public class SesionesController {
      * @return El ID de la sesion.
      */
     @PostMapping("/validar")
-    public boolean validarSesion(@RequestBody SesionDTO dto) throws NotFoundException {
+    public boolean validarSesion(@RequestBody SesionDTO dto) {
         LOG.info("validarSesion");
         if (dto != null) {
             return sesionSvc.validarSesion(dto);

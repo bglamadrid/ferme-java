@@ -104,7 +104,7 @@ public class VentasService implements IVentasService {
                 switch (paramName) {
                     case "id":
                         parsedValueI = Integer.valueOf(paramValue);
-                        bb.and(qVentas.id.eq(parsedValueI));
+                        bb.and(qVentas._id.eq(parsedValueI));
                         return bb;
                     case "fecha":
                         paramValue = paramValue.trim();
@@ -112,16 +112,16 @@ public class VentasService implements IVentasService {
                         if (fecha == null) {
                             LOG.warn("queryParamsMapToVentasFilteringPredicate - El formato de la fecha ingresada no es válida.");
                         } else {
-                            bb.and(qVentas.fecha.eq(fecha));
+                            bb.and(qVentas._fecha.eq(fecha));
                         }
                         break;
                     case "cliente":
                         paramValue = "%" + paramValue.trim() + "%";
-                        bb.and(qVentas.cliente._persona._nombreCompleto.likeIgnoreCase(paramValue));
+                        bb.and(qVentas._cliente._persona._nombreCompleto.likeIgnoreCase(paramValue));
                         break;
                     case "clienteId":
                         parsedValueI = Integer.valueOf(paramValue);
-                        bb.and(qVentas.cliente._id.eq(parsedValueI));
+                        bb.and(qVentas._cliente._id.eq(parsedValueI));
                         break;
                     default: break;
                 }

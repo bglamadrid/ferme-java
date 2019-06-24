@@ -44,7 +44,6 @@ public class SesionesController {
             if (usuario != null) {
                 LOG.info("abrirSesion - Las credenciales del usuario fueron autenticadas, abriendo sesion...");
                 SesionDTO sesion = sesionSvc.abrirSesion(usuario);
-                LOG.debug("abrirSesion - Se abrio una sesion con id "+sesion.getIdSesion());
                 LOG.info("abrirSesion - Transaccion completada correctamente");
                 return ResponseEntity.ok(sesion);
             } else {

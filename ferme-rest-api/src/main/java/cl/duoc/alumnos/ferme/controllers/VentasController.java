@@ -24,20 +24,20 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Benjamin Guillermo <got12g at gmail.com>
  */
 @RestController
-@RequestMapping("/api/gestion")
+@RequestMapping("/api/gestion/ventas")
 public class VentasController {
     private final static Logger LOG = LoggerFactory.getLogger(VentasController.class);
     
     @Autowired private IVentasService ventaSvc;
     
-    @GetMapping("/ventas")
+    @GetMapping("")
     public Collection<VentaDTO> getVentas(
         @RequestParam Map<String,String> allRequestParams
     ) {
         return this.getVentas(null, null, allRequestParams);
     }
     
-    @GetMapping("/ventas/{pageSize}")
+    @GetMapping("/{pageSize}")
     public Collection<VentaDTO> getVentas(
         @RequestParam Integer pageSize,
         @RequestParam Map<String, String> allRequestParams
@@ -45,7 +45,7 @@ public class VentasController {
         return this.getVentas(pageSize, null, allRequestParams);
     }
     
-    @GetMapping("/ventas/{pageSize}/{pageIndex}")
+    @GetMapping("/{pageSize}/{pageIndex}")
     public Collection<VentaDTO> getVentas(
         @RequestParam Integer pageSize,
         @RequestParam Integer pageIndex,
@@ -78,7 +78,7 @@ public class VentasController {
      * @param dto Un objeto DTO representando la Orden de Compra a consultar.
      * @return Una colección de objetos DTO.
      */
-    @PostMapping("/ventas/detalles")
+    @PostMapping("/detalles")
     public Collection<DetalleVentaDTO> getDetallesVenta(@RequestBody VentaDTO dto) {
         
         if (dto != null && dto.getIdVenta() != null && dto.getIdVenta() != 0) {
@@ -93,7 +93,7 @@ public class VentasController {
      * @param dto Un objeto DTO representando la Venta a almacenar/actualizar.
      * @return El ID de la venta.
      */
-    @PostMapping("/ventas/guardar")
+    @PostMapping("/guardar")
     public Integer saveVenta(@RequestBody VentaDTO dto) throws NotFoundException {
         
         if (dto != null) {
@@ -110,7 +110,7 @@ public class VentasController {
      * @param ventaId El ID de la Venta a eliminar.
      * @return true si la operación fue exitosa, false si no lo fue.
      */
-    @PostMapping("/ventas/borrar")
+    @PostMapping("/borrar")
     public boolean deleteVenta(@RequestBody Integer ventaId) {
         
         if (ventaId != null && ventaId != 0) {

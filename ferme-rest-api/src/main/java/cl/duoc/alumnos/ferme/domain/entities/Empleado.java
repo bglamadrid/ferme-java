@@ -45,7 +45,7 @@ public class Empleado implements Serializable {
     private Persona _persona;
     
     @JoinColumn(name = "ID_CARGO", referencedColumnName = "ID_CARGO")
-    @ManyToOne(cascade = CascadeType.DETACH, optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.DETACH, optional = false, fetch = FetchType.EAGER)
     @Cascade(org.hibernate.annotations.CascadeType.DETACH)
     private Cargo _cargo;
 
@@ -82,7 +82,6 @@ public class Empleado implements Serializable {
         Cargo cargoEntity = getCargo();
         dto = PersonaConverter.cargarDatosPersonaEnDTO(_persona, dto);
         dto.setIdEmpleado(_id);
-        dto.setIdPersona(_persona.getId());
         
         dto.setIdCargo(cargoEntity.getId());
         dto.setDescripcionCargo(cargoEntity.getDescripcion());

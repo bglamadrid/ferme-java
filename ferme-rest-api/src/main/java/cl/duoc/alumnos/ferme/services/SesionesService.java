@@ -2,6 +2,7 @@ package cl.duoc.alumnos.ferme.services;
 
 import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.FermeConfig;
+import cl.duoc.alumnos.ferme.domain.entities.Cargo;
 import cl.duoc.alumnos.ferme.domain.entities.Empleado;
 import cl.duoc.alumnos.ferme.domain.entities.QEmpleado;
 import cl.duoc.alumnos.ferme.domain.entities.Sesion;
@@ -10,6 +11,7 @@ import cl.duoc.alumnos.ferme.dto.SesionDTO;
 import cl.duoc.alumnos.ferme.dto.UsuarioDTO;
 import cl.duoc.alumnos.ferme.domain.repositories.IEmpleadosRepository;
 import cl.duoc.alumnos.ferme.domain.repositories.ISesionesRepository;
+import cl.duoc.alumnos.ferme.dto.EmpleadoDTO;
 import cl.duoc.alumnos.ferme.services.interfaces.ISesionesService;
 import cl.duoc.alumnos.ferme.util.FermeDates;
 import cl.duoc.alumnos.ferme.util.FermeHashes;
@@ -59,16 +61,18 @@ public class SesionesService implements ISesionesService {
         return sesionData;
     }
 
-    private Integer getIdCargoFromOptionalEmpleadoFromUsuarioPersona(UsuarioDTO usuario) {
+    private Empleado getOptionalEmpleadoFromUsuarioPersona(UsuarioDTO usuario) {
+        LOG.debug("getIdCargoFromOptionalEmpleadoFromUsuarioPersona");
         try {
             QEmpleado qEmp = QEmpleado.empleado;
             
             BooleanBuilder bb = new BooleanBuilder()
                     .and(qEmp._persona._id.eq(usuario.getIdPersona()));
             
+            LOG.debug("getIdCargoFromOptionalEmpleadoFromUsuarioPersona - bb="+bb.toString());
             Optional<Empleado> foundEmpleado = empleadoRepo.findOne(bb);
             if (foundEmpleado.isPresent()) {
-                return foundEmpleado.get().getCargo().getId();
+                return foundEmpleado.get();
             } else {
                 return null;
             }
@@ -96,13 +100,14 @@ public class SesionesService implements ISesionesService {
         }
         LOG.info("abrirSesion - Guardando sesion en la base de datos...");
         entity = sesionRepo.saveAndFlush(entity);
-        LOG.debug("Sesión creada y almacenada: "+entity.toString());
+        LOG.debug("abrirSesion - Sesión creada y almacenada: "+entity.toString());
         
         SesionDTO dto = entity.toDTO();
-        Integer idCargo = this.getIdCargoFromOptionalEmpleadoFromUsuarioPersona(usuario);
-        if (idCargo != null) {
-            LOG.debug("El usuario asociado poseía un empleado con un cargo");
-            dto.setIdCargo(idCargo);
+        Empleado empleadoEntity = this.getOptionalEmpleadoFromUsuarioPersona(usuario);
+        if (empleadoEntity != null) {
+            LOG.debug("abrirSesion - Empleado id "+empleadoEntity.getId());
+            Cargo crg = empleadoEntity.getCargo();
+            dto.setIdCargo(crg.getId());
         }
         
         return dto;

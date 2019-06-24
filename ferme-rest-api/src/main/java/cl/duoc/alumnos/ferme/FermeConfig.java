@@ -91,9 +91,9 @@ public class FermeConfig implements WebMvcConfigurer {
     
     private static Map<String, Integer> createCargosMap() {
         Map<String, Integer> cargosMap = new HashMap<>();
-        cargosMap.put("Vendedor", 1);
-        cargosMap.put("Encargado", 2);
-        cargosMap.put("Administrador", 3);
+        cargosMap.put("Vendedor", 51);
+        cargosMap.put("Encargado", 52);
+        cargosMap.put("Administrador", 53);
         return new HashMap<>();
     }
     

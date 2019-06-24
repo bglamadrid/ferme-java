@@ -34,8 +34,23 @@ public interface ISesionesService {
     
     public SesionDTO abrirSesion(UsuarioDTO usuario);
     
+    /**
+     * Busca sesiones abiertas en base al hash del DTO ingresado, y les pasa 
+     * un algoritmo de validación.
+     * El algoritmo es el siguiente: si a la fecha de apertura de la sesión se 
+     * le suma el tiempo de duración de la sesión, y el resultado excede la 
+     * fecha actual, la sesión pasa esta validación.<br>
+     * Las sesiones que no pasan esta validación son cerradas.
+     * @param sesion Un objeto DTO representando la sesión.
+     * @return Si encuentra al menos una sesión que pase la validación mencionada arriba.
+     */
     public boolean validarSesion(SesionDTO sesion);
     
-    public boolean cerrarSesion(SesionDTO sesion);
+    /**
+     * Busca las sesiones asociadas al hash del DTO ingresado, y las cierra.
+     * @param sesion
+     * @return 
+     */
+    public boolean cerrarSesiones(SesionDTO sesion);
     
 }

@@ -10,6 +10,7 @@ import cl.duoc.alumnos.ferme.domain.repositories.IUsuariosRepository;
 import cl.duoc.alumnos.ferme.dto.UsuarioDTO;
 import cl.duoc.alumnos.ferme.services.interfaces.IUsuariosService;
 import cl.duoc.alumnos.ferme.util.FermeDates;
+import cl.duoc.alumnos.ferme.util.FermeHashes;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import java.util.ArrayList;
@@ -111,6 +112,7 @@ public class UsuariosService implements IUsuariosService {
             entity = dto.toEntity();
             Date fechaAhora = Calendar.getInstance().getTime();
             entity.setFechaCreacion(fechaAhora);
+            LOG.debug(entity.getClave());
         } else {
             Optional<Usuario> entityQuery = usuarioRepo.findById(dto.getIdUsuario());
             if (entityQuery.isPresent()) {
@@ -147,14 +149,17 @@ public class UsuariosService implements IUsuariosService {
     @Override
     public UsuarioDTO getUsuarioFromCredentials(String username, String password) {
         QUsuario qUsr = QUsuario.usuario;
+        String claveUsuarioHash = FermeHashes.encryptData(password);
         BooleanBuilder bb = new BooleanBuilder()
                 .and(qUsr._nombre.eq(username))
-                .and(qUsr._clave.eq(password));
+                .and(qUsr._clave.eq(claveUsuarioHash));
 
         Optional<Usuario> result = usuarioRepo.findOne(bb);
         
         if (result.isPresent()) {
-            return result.get().toDTO();
+            UsuarioDTO usuario = result.get().toDTO();
+            usuario.setClaveUsuario(password);
+            return usuario;
         } else {
             return null;
         }

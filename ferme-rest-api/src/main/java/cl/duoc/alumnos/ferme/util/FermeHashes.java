@@ -26,7 +26,9 @@ public final class FermeHashes {
     public static String encryptData(String data) {
         try{
             MessageDigest digest = MessageDigest.getInstance(HASHING_ALGORITHM);
-            byte[] hashBytes = digest.digest(data.getBytes(StandardCharsets.UTF_8));
+            byte[] hashBytes;
+            hashBytes = data.getBytes(StandardCharsets.UTF_8);
+            hashBytes = digest.digest(hashBytes);
             StringBuilder hexString = new StringBuilder();
 
             for (int i = 0; i < hashBytes.length; i++) {

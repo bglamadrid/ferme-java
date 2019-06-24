@@ -3,6 +3,7 @@ package cl.duoc.alumnos.ferme.dto;
 import cl.duoc.alumnos.ferme.domain.entities.Persona;
 import cl.duoc.alumnos.ferme.domain.entities.Usuario;
 import cl.duoc.alumnos.ferme.util.FermeDates;
+import cl.duoc.alumnos.ferme.util.FermeHashes;
 import java.util.Date;
 
 /**
@@ -69,9 +70,8 @@ public class UsuarioDTO extends PersonaDTO {
         }
         entity.setNombre(nombreUsuario);
         
-        if (claveUsuario != null && !claveUsuario.isEmpty()) {
-            entity.setClave(claveUsuario);
-        } 
+        String claveUsuarioHash = FermeHashes.encryptData(claveUsuario);
+        entity.setClave(claveUsuarioHash);
         
         if (fechaCreacionUsuario != null && !fechaCreacionUsuario.isEmpty()) {
             Date _fechaCreacion = FermeDates.fechaStringToDate(fechaCreacionUsuario);

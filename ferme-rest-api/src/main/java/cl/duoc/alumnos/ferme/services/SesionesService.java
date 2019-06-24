@@ -38,7 +38,7 @@ public class SesionesService implements ISesionesService {
     @Autowired private IEmpleadosRepository empleadoRepo;
     @Autowired private ISesionesRepository sesionRepo;
     
-    private final static long SESSION_DURATION = FermeConfig.SESSION_DURATION;
+    private final static long SESSION_LIFETIME = FermeConfig.SESSION_DURATION;
     
     @Override
     public Collection<SesionDTO> getSesiones(int pageSize, int pageIndex, Predicate condicion) 
@@ -79,23 +79,24 @@ public class SesionesService implements ISesionesService {
     
     @Override
     public SesionDTO abrirSesion(UsuarioDTO usuario) {
+        LOG.info("abrirSesion - Generando datos de sesion...");
         Sesion entity = new Sesion();
-        
+        LOG.debug("abrirSesion - Asignando usuario...");
         Usuario usuarioEntity = usuario.toEntity();
         entity.setUsuario(usuarioEntity);
-        
+        LOG.debug("abrirSesion - Encriptando identificador de sesion...");
         String sesionData = this.constructSesionDataStringFromUsuarioDTO(usuario);
         LOG.debug("abrirSesion - sesionData="+sesionData);
         try {
             String sesionHash = FermeHashes.encryptSessionData(sesionData);
-            LOG.debug("abrirSesion - sesionHash="+sesionHash);
+            LOG.debug("abrirSesion - Asignando hash '"+sesionHash+"'");
             entity.setHash(sesionHash);
         } catch (NoSuchAlgorithmException exc) {
             throw new IllegalStateException("El algoritmo de encriptación configurado en la aplicación no es válido.", exc);
         }
-        
+        LOG.info("abrirSesion - Guardando sesion en la base de datos...");
         entity = sesionRepo.saveAndFlush(entity);
-        LOG.info("Sesión creada y almacenada: "+entity.toString());
+        LOG.debug("Sesión creada y almacenada: "+entity.toString());
         
         SesionDTO dto = entity.toDTO();
         Integer idCargo = this.getIdCargoFromOptionalEmpleadoFromUsuarioPersona(usuario);
@@ -112,32 +113,43 @@ public class SesionesService implements ISesionesService {
         
         Calendar calAhora = Calendar.getInstance();
         Date ahora = calAhora.getTime();
-        long alSerCreada = ahora.getTime() - SESSION_DURATION;
-        boolean unaVigente = false;
+        long msFechaActual = ahora.getTime();
+        boolean yaHayUnaVigente = false;
         
         Iterable<Sesion> sesiones = sesionRepo.findByHashWhereNotCerradas(sesion.getHashSesion());
         int i = 0;
         for (Sesion ssn : sesiones) {
-            if (alSerCreada > ssn.getAbierta().getTime() || unaVigente) {
+            
+            // para que la sesion 'ssn' esté vigente, debe haber pasado menos tiempo que SESSION_LIFETIME desde su creacion
+            long msEstaFechaCreacion = ssn.getAbierta().getTime();
+            long msEstaFechaExpiracion = msEstaFechaCreacion + SESSION_LIFETIME;
+            
+            boolean estaSesionVigente = (msEstaFechaExpiracion < msFechaActual);
+            if (estaSesionVigente) {
                 ssn.setCerrada(ahora);
                 sesionRepo.save(ssn);
             } else {
-                unaVigente = true;
+                if (!yaHayUnaVigente) {
+                    yaHayUnaVigente = true;
+                } else {
+                    ssn.setCerrada(ahora);
+                    sesionRepo.save(ssn);
+                }
             }
             i++;
         }
         LOG.info("validarSesion - Se encontraron "+i+" sesiones con el hash proveído");
         sesionRepo.flush();
-        return false;
+        return yaHayUnaVigente;
     }
 
     @Override
-    public boolean cerrarSesion(SesionDTO sesion) {
-        Calendar calAhora = Calendar.getInstance();
-        Date ahora = calAhora.getTime();
-        Iterable<Sesion> sesiones = sesionRepo.findByHashWhereNotCerradas(sesion.getHashSesion());
+    public boolean cerrarSesiones(SesionDTO sesion) {
+        Date fechaAhora = Calendar.getInstance().getTime();
+        String hashSesion = sesion.getHashSesion();
+        Iterable<Sesion> sesiones = sesionRepo.findByHashWhereNotCerradas(hashSesion);
         for (Sesion ssn : sesiones) {
-            ssn.setCerrada(ahora);
+            ssn.setCerrada(fechaAhora);
             sesionRepo.save(ssn);
         }
         sesionRepo.flush();

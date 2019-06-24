@@ -33,17 +33,17 @@ public class UsuariosController {
     @Autowired private IUsuariosService usuarioSvc;
     
     @GetMapping("/usuarios")
-    public Collection<UsuarioDTO> getUsuarios(@RequestParam Map<String,String> allRequestParams) {
+    public Collection<UsuarioDTO> obtener(@RequestParam Map<String,String> allRequestParams) {
         
-        return this.getUsuarios(null, null, allRequestParams);
+        return this.obtener(null, null, allRequestParams);
     }
     
     @GetMapping("/usuarios/{pageSize}")
-    public Collection<UsuarioDTO> getUsuarios(
+    public Collection<UsuarioDTO> obtener(
         @PathVariable Integer pageSize,
         @RequestParam Map<String,String> allRequestParams
     ) {
-        return this.getUsuarios(pageSize, null, allRequestParams);
+        return this.obtener(pageSize, null, allRequestParams);
     }
     
     /**
@@ -58,7 +58,7 @@ public class UsuariosController {
      * @return Una colección de objetos EmpleadoDTO
      */
     @GetMapping("/usuarios/{pageSize}/{pageIndex}")
-    public Collection<UsuarioDTO> getUsuarios(
+    public Collection<UsuarioDTO> obtener(
         @PathVariable Integer pageSize,
         @PathVariable Integer pageIndex,
         @RequestParam Map<String,String> allRequestParams) {
@@ -92,7 +92,7 @@ public class UsuariosController {
      * @throws javassist.NotFoundException
      */
     @PostMapping("/usuarios/guardar")
-    public Integer saveUsuario(@RequestBody UsuarioDTO dto) throws NotFoundException {
+    public Integer guardar(@RequestBody UsuarioDTO dto) throws NotFoundException {
         
         if (dto != null) {
             LOG.debug("saveUsuario - dto="+dto);
@@ -109,7 +109,7 @@ public class UsuariosController {
      * @return true si la operación fue exitosa, false si no lo fue.
      */
     @PostMapping("/usuarios/borrar")
-    public boolean deleteUsuario(@RequestBody Integer usuarioId) {
+    public boolean borrar(@RequestBody Integer usuarioId) {
         
         if (usuarioId != null && usuarioId != 0) {
             LOG.debug("deleteUsuario - usuarioId="+usuarioId);

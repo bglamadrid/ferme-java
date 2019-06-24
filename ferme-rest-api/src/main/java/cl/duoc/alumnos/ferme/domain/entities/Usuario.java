@@ -6,6 +6,7 @@ import cl.duoc.alumnos.ferme.dto.UsuarioDTO;
 import cl.duoc.alumnos.ferme.util.FermeDates;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -54,13 +56,17 @@ public class Usuario implements Serializable {
     @Column(name = "NOMBRE")
     private String _nombre;
     
-    @Size(min = 1, max = 20)
+    @Size(min = 1, max = 100)
     @Column(name = "CLAVE")
     private String _clave;
     
     @Column(name = "FECHA_CREACION")
     @Temporal(TemporalType.TIMESTAMP)
     private Date _fechaCreacion;
+    
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "_usuario")
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    private List<Sesion> _sesiones;
 
     public Usuario() {
         super();
@@ -104,6 +110,10 @@ public class Usuario implements Serializable {
 
     public void setPersona(Persona persona) {
         this._persona = persona;
+    }
+
+    public List<Sesion> getSesiones() {
+        return _sesiones;
     }
         
     public UsuarioDTO toDTO() {

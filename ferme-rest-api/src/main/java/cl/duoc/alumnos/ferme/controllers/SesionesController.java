@@ -36,18 +36,23 @@ public class SesionesController {
      */
     @PostMapping("/abrir")
     public ResponseEntity<?> abrirSesion(@RequestBody LoginPOJO login) throws NotFoundException {
-        
+        LOG.info("abrirSesion");
         if (login != null) {
             LOG.debug("abrirSesion - login="+login);
+            LOG.info("abrirSesion - Autenticando usuario desde credenciales...");
             UsuarioDTO usuario = usuarioSvc.getUsuarioFromCredentials(login.usuario, login.clave);
             if (usuario != null) {
+                LOG.info("abrirSesion - Las credenciales del usuario fueron autenticadas, abriendo sesion...");
                 SesionDTO sesion = sesionSvc.abrirSesion(usuario);
-                LOG.debug("abrirSesion - sesionId="+sesion.getIdSesion());
+                LOG.debug("abrirSesion - Se abrio una sesion con id "+sesion.getIdSesion());
+                LOG.info("abrirSesion - Transaccion completada correctamente");
                 return ResponseEntity.ok(sesion);
             } else {
+                LOG.info("abrirSesion - Las credenciales ingresadas no pudieron pasar la autenticacion");
                 return ResponseEntity.noContent().build();
             }
         }
+        LOG.info("abrirSesion - Las credenciales ingresadas no son validas");
         return ResponseEntity.badRequest().body(null);
     }
     
@@ -68,14 +73,14 @@ public class SesionesController {
     /**
      * Elimina una Sesion de la base de datos.
      * @param sesion El DTO de la Sesion a cerrar.
-     * @return true si la operación fue exitosa, false si no lo fue.
+     * @return Siempre devuelve true, por motivos de seguridad.
      */
     @PostMapping("/cerrar")
     public boolean cerrarSesion(@RequestBody SesionDTO sesion) {
-        
-        if (sesion != null && sesion.getIdSesion() != 0) {
-            return sesionSvc.cerrarSesion(sesion);
+        LOG.info("cerrarSesion");
+        if (sesion != null) {
+            sesionSvc.cerrarSesiones(sesion);
         }
-        return false;
+        return true;
     }
 }

@@ -14,6 +14,12 @@ import javassist.NotFoundException;
 public interface IVentasService {
     
     /**
+     * Obtiene el ID que para la siguiente venta que se vaya a crear.
+     * @return El ID más alto encontrado, sumado a 1.
+     */
+    public Integer getNextId();
+    
+    /**
      * Obtiene una página (colección) de ventas, con un tamaño determinado 
      * (pudiendo filtrarlos) y los transforma a objetos DTO.
      * @param pageSize El número de resultados que la página mostrará.

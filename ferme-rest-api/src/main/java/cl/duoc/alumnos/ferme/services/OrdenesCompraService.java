@@ -50,6 +50,17 @@ public class OrdenesCompraService implements IOrdenesCompraService {
     private static final Logger LOG = LoggerFactory.getLogger(OrdenesCompraService.class);
 
     @Override
+    public Integer getNextId() {
+        Sort idSort = Sort.by(Sort.Direction.DESC, "_id");
+        Iterator<OrdenCompra> it = ordenCompraRepo.findAll(idSort).iterator();
+        if (it.hasNext()){
+            return it.next().getId() +1 ;
+        } else {
+            return 1;
+        }
+    }
+    
+    @Override
     public Collection<OrdenCompraDTO> getOrdenesCompra(int pageSize, int pageIndex, Predicate condicion) {
         List<OrdenCompraDTO> pagina = new ArrayList<>();
         Iterable<OrdenCompra> ordenesCompra;

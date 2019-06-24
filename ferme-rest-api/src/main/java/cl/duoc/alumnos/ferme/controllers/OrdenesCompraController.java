@@ -32,6 +32,11 @@ public class OrdenesCompraController {
     
     @Autowired private IOrdenesCompraService ordenCompraSvc;
     
+    @GetMapping("/ordenes_compra/next")
+    public Integer obtenerSiguienteId() {
+        return ordenCompraSvc.getNextId();
+    }
+    
     @GetMapping("/ordenes_compra")
     public Collection<OrdenCompraDTO> obtener(
         @RequestParam Map<String,String> allRequestParams

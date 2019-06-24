@@ -14,6 +14,12 @@ import javassist.NotFoundException;
 public interface IOrdenesCompraService {
     
     /**
+     * Obtiene el ID que para la siguiente orden de compra que se vaya a crear.
+     * @return El ID más alto encontrado, sumado a 1.
+     */
+    public Integer getNextId();
+    
+    /**
      * Obtiene una página (colección) de orden de compras, con un tamaño determinado 
      * (pudiendo filtrarlos) y los transforma a objetos DTO.
      * @param pageSize El número de resultados que la página mostrará.

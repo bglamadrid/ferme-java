@@ -30,6 +30,11 @@ public class VentasController {
     
     @Autowired private IVentasService ventaSvc;
     
+    @GetMapping("/next")
+    public Integer obtenerSiguienteId() {
+        return ventaSvc.getNextId();
+    }
+    
     @GetMapping("")
     public Collection<VentaDTO> getVentas(
         @RequestParam Map<String,String> allRequestParams

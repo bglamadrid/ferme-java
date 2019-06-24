@@ -23,19 +23,19 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Benjamin Guillermo <got12g at gmail.com>
  */
 @RestController
-@RequestMapping("/api/gestion")
+@RequestMapping("/api/gestion/personas")
 public class PersonasController {
     private final static Logger LOG = LoggerFactory.getLogger(PersonasController.class);
     
     @Autowired private IPersonasService personaSvc;    
     
-    @GetMapping("/personas")
+    @GetMapping("")
     public Collection<PersonaDTO> obtener(@RequestParam Map<String,String> allRequestParams) {
         
         return this.obtener(null, null, allRequestParams);
     }
     
-    @GetMapping("/personas/{pageSize}")
+    @GetMapping("/{pageSize}")
     public Collection<PersonaDTO> obtener(
             @PathVariable Integer pageSize,
             @RequestParam Map<String,String> allRequestParams
@@ -55,7 +55,7 @@ public class PersonasController {
      * @see Predicate
      * @return Una colección de objetos PersonaDTO
      */
-    @GetMapping("/personas/{pageSize}/{pageIndex}")
+    @GetMapping("/{pageSize}/{pageIndex}")
     public Collection<PersonaDTO> obtener(
         @PathVariable Integer pageSize,
         @PathVariable Integer pageIndex,

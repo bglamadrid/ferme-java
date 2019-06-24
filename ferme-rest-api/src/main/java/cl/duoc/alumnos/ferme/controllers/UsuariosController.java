@@ -1,10 +1,7 @@
 package cl.duoc.alumnos.ferme.controllers;
 
-import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.FermeConfig;
-import cl.duoc.alumnos.ferme.dto.SesionDTO;
 import cl.duoc.alumnos.ferme.dto.UsuarioDTO;
-import cl.duoc.alumnos.ferme.services.interfaces.ISesionesService;
 import cl.duoc.alumnos.ferme.services.interfaces.IUsuariosService;
 import com.querydsl.core.types.Predicate;
 import java.util.Collection;

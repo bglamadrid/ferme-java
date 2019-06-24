@@ -26,25 +26,25 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Benjamin Guillermo <got12g at gmail.com>
  */
 @RestController
-@RequestMapping("/api/gestion")
+@RequestMapping("/api/gestion/ordenes_compra")
 public class OrdenesCompraController {
     private final static Logger LOG = LoggerFactory.getLogger(OrdenesCompraController.class);
     
     @Autowired private IOrdenesCompraService ordenCompraSvc;
     
-    @GetMapping("/ordenes_compra/next")
+    @GetMapping("/next")
     public Integer obtenerSiguienteId() {
         return ordenCompraSvc.getNextId();
     }
     
-    @GetMapping("/ordenes_compra")
+    @GetMapping("")
     public Collection<OrdenCompraDTO> obtener(
         @RequestParam Map<String,String> allRequestParams
     ) {
         return this.obtener(null, null, allRequestParams);
     }
     
-    @GetMapping("/ordenes_compra/{pageSize}")
+    @GetMapping("/{pageSize}")
     public Collection<OrdenCompraDTO> obtener(
         @RequestParam Integer pageSize,
         @RequestParam Map<String, String> allRequestParams
@@ -52,7 +52,7 @@ public class OrdenesCompraController {
         return this.obtener(pageSize, null, allRequestParams);
     }
     
-    @GetMapping("/ordenes_compra/{pageSize}/{pageIndex}")
+    @GetMapping("/{pageSize}/{pageIndex}")
     public Collection<OrdenCompraDTO> obtener(
         @RequestParam Integer pageSize,
         @RequestParam Integer pageIndex,
@@ -85,7 +85,7 @@ public class OrdenesCompraController {
      * @param dto Un objeto DTO representando la Orden de Compra a consultar.
      * @return Una colección de objetos DTO.
      */
-    @PostMapping("/ordenes_compra/detalles")
+    @PostMapping("/detalles")
     public ResponseEntity<?> detalles(@RequestBody OrdenCompraDTO dto) {
         
         if (dto != null && dto.getIdOrdenCompra() != null && dto.getIdOrdenCompra() != 0) {
@@ -103,7 +103,7 @@ public class OrdenesCompraController {
      * @param dto Un objeto DTO representando la Orden de Compra a almacenar/actualizar.
      * @return El ID de la venta.
      */
-    @PostMapping("/ordenes_compra/guardar")
+    @PostMapping("/guardar")
     public ResponseEntity<?> guardar(@RequestBody OrdenCompraDTO dto) {
         
         if (dto != null) {
@@ -126,7 +126,7 @@ public class OrdenesCompraController {
      * @param ordenCompraId El ID de la Orden de Compra a eliminar.
      * @return true si la operación fue exitosa, false si no lo fue.
      */
-    @PostMapping("/ordenes_compra/borrar")
+    @PostMapping("/borrar")
     public ResponseEntity<?> borrar(@RequestBody Integer ordenCompraId) {
         
         if (ordenCompraId != null && ordenCompraId != 0) {

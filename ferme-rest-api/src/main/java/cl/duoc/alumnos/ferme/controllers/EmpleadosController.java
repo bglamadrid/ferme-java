@@ -24,19 +24,19 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Benjamin Guillermo <got12g at gmail.com>
  */
 @RestController
-@RequestMapping("/api/gestion")
+@RequestMapping("/api/gestion/empleados")
 public class EmpleadosController {
     private final static Logger LOG = LoggerFactory.getLogger(EmpleadosController.class);
     
     @Autowired private IEmpleadosService empleadoSvc;    
     
-    @GetMapping("/empleados")
+    @GetMapping("")
     public Collection<EmpleadoDTO> obtener(@RequestParam Map<String,String> allRequestParams) {
         
         return this.obtener(null, null, allRequestParams);
     }
     
-    @GetMapping("/empleados/{pageSize}")
+    @GetMapping("/{pageSize}")
     public Collection<EmpleadoDTO> obtener(
         @PathVariable Integer pageSize,
         @RequestParam Map<String,String> allRequestParams
@@ -56,7 +56,7 @@ public class EmpleadosController {
      * @see Predicate
      * @return Una colección de objetos EmpleadoDTO
      */
-    @GetMapping("/empleados/{pageSize}/{pageIndex}")
+    @GetMapping("/{pageSize}/{pageIndex}")
     public Collection<EmpleadoDTO> obtener(
         @PathVariable Integer pageSize,
         @PathVariable Integer pageIndex,
@@ -90,7 +90,7 @@ public class EmpleadosController {
      * @return El ID del rubro.
      * @throws javassist.NotFoundException
      */
-    @PostMapping("/empleados/guardar")
+    @PostMapping("/guardar")
     public Integer guardar(@RequestBody EmpleadoDTO dto) throws NotFoundException {
         
         if (dto != null) {
@@ -107,7 +107,7 @@ public class EmpleadosController {
      * @param empleadoId El ID del Rubro a eliminar.
      * @return true si la operación fue exitosa, false si no lo fue.
      */
-    @PostMapping("/empleados/borrar")
+    @PostMapping("/borrar")
     public boolean borrar(@RequestBody Integer empleadoId) {
         
         if (empleadoId != null && empleadoId != 0) {

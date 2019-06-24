@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Benjamin Guillermo <got12g at gmail.com>
  */
 @RestController
-@RequestMapping("/api/gestion")
+@RequestMapping("/api/gestion/productos")
 public class ProductosController {
     private final static Logger LOG = LoggerFactory.getLogger(ProductosController.class);
 
@@ -37,14 +37,14 @@ public class ProductosController {
     @Autowired private IFamiliasProductoService fmlProductoSvc;
     @Autowired private IProductosService productoSvc;
     
-    @GetMapping("/productos")
+    @GetMapping("")
     public Collection<ProductoDTO> obtener(
             @RequestParam Map<String, String> allRequestParams
     ) {
         return this.obtener(null, null,  allRequestParams);
     }
     
-    @GetMapping("/productos/{pageSize}")
+    @GetMapping("/{pageSize}")
     public Collection<ProductoDTO> obtener(
             @PathVariable Integer pageSize,
             @RequestParam Map<String, String> allRequestParams
@@ -52,7 +52,7 @@ public class ProductosController {
         return this.obtener(pageSize, null, allRequestParams);
     }
     
-    @GetMapping("/productos/{pageSize}/{pageIndex}")
+    @GetMapping("/{pageSize}/{pageIndex}")
     public Collection<ProductoDTO> obtener(
             @PathVariable Integer pageSize,
             @PathVariable Integer pageIndex,
@@ -85,7 +85,7 @@ public class ProductosController {
      * @param dto Un objeto DTO representando el Producto a almacenar/actualizar.
      * @return El ID del producto.
      */
-    @PostMapping("/productos/guardar")
+    @PostMapping("/guardar")
     public Integer guardar(@RequestBody ProductoDTO dto) throws NotFoundException {
         
         if (dto != null) {
@@ -102,7 +102,7 @@ public class ProductosController {
      * @param productoId El ID del Producto a eliminar.
      * @return true si la operación fue exitosa, false si no lo fue.
      */
-    @PostMapping("/productos/borrar")
+    @PostMapping("/borrar")
     public boolean borrar(@RequestBody Integer productoId) {
         
         if (productoId != null && productoId != 0) {

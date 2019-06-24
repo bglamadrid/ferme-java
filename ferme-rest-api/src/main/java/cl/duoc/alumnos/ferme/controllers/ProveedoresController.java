@@ -23,19 +23,19 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Benjamin Guillermo <got12g at gmail.com>
  */
 @RestController
-@RequestMapping("/api/gestion")
+@RequestMapping("/api/gestion/proveedores")
 public class ProveedoresController {
     private final static Logger LOG = LoggerFactory.getLogger(ProveedoresController.class);
     
     @Autowired private IProveedoresService proveedorSvc;
     
-    @GetMapping("/proveedores")
+    @GetMapping("")
     public Collection<ProveedorDTO> getProveedores(@RequestParam Map<String,String> allRequestParams) {
         
         return this.getProveedores(null, null, allRequestParams);
     }
     
-    @GetMapping("/proveedores/{pageSize}")
+    @GetMapping("/{pageSize}")
     public Collection<ProveedorDTO> getProveedores(
             @PathVariable Integer pageSize,
             @RequestParam Map<String,String> allRequestParams
@@ -55,7 +55,7 @@ public class ProveedoresController {
      * @see Predicate
      * @return Una colección de objetos ProveedorDTO
      */
-    @GetMapping("/proveedores/{pageSize}/{pageIndex}")
+    @GetMapping("/{pageSize}/{pageIndex}")
     public Collection<ProveedorDTO> getProveedores(
         @PathVariable Integer pageSize,
         @PathVariable Integer pageIndex,
@@ -88,7 +88,7 @@ public class ProveedoresController {
      * @param dto Un objeto DTO representando el Rubro a almacenar/actualizar.
      * @return El ID del rubro.
      */
-    @PostMapping("/proveedores/guardar")
+    @PostMapping("/guardar")
     public Integer saveProveedor(@RequestBody ProveedorDTO dto) {
         
         if (dto != null) {
@@ -105,7 +105,7 @@ public class ProveedoresController {
      * @param proveedorId El ID del Rubro a eliminar.
      * @return true si la operación fue exitosa, false si no lo fue.
      */
-    @PostMapping("/proveedores/borrar")
+    @PostMapping("/borrar")
     public boolean deleteProveedor(@RequestBody Integer proveedorId) {
         
         if (proveedorId != null && proveedorId != 0) {

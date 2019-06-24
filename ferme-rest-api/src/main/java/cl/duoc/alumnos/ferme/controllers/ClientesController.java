@@ -23,19 +23,19 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Benjamin Guillermo <got12g at gmail.com>
  */
 @RestController
-@RequestMapping("/api/gestion")
+@RequestMapping("/api/gestion/clientes")
 public class ClientesController {
     private final static Logger LOG = LoggerFactory.getLogger(ClientesController.class);
     
     @Autowired private IClientesService clienteSvc;    
     
-    @GetMapping("/clientes")
+    @GetMapping("")
     public Collection<ClienteDTO> obtener(@RequestParam Map<String,String> allRequestParams) {
         
         return this.obtener(null, null, allRequestParams);
     }
     
-    @GetMapping("/clientes/{pageSize}")
+    @GetMapping("/{pageSize}")
     public Collection<ClienteDTO> obtener(
             @PathVariable Integer pageSize,
             @RequestParam Map<String,String> allRequestParams

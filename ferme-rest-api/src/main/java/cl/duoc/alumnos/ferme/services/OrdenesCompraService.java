@@ -5,8 +5,10 @@ import cl.duoc.alumnos.ferme.domain.entities.Empleado;
 import cl.duoc.alumnos.ferme.domain.entities.DetalleOrdenCompra;
 import cl.duoc.alumnos.ferme.domain.entities.OrdenCompra;
 import cl.duoc.alumnos.ferme.domain.entities.Producto;
+import cl.duoc.alumnos.ferme.domain.entities.QDetalleOrdenCompra;
 import cl.duoc.alumnos.ferme.domain.entities.QOrdenCompra;
 import cl.duoc.alumnos.ferme.domain.entities.QProducto;
+import cl.duoc.alumnos.ferme.domain.repositories.IDetallesOrdenesCompraRepository;
 import cl.duoc.alumnos.ferme.domain.repositories.IEmpleadosRepository;
 import cl.duoc.alumnos.ferme.domain.repositories.IOrdenesCompraRepository;
 import cl.duoc.alumnos.ferme.domain.repositories.IProductosRepository;
@@ -43,6 +45,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class OrdenesCompraService implements IOrdenesCompraService {
     
     @Autowired private IOrdenesCompraRepository ordenCompraRepo;
+    @Autowired private IDetallesOrdenesCompraRepository detalleOrdenCompraRepo;
     //@Autowired private IDetallesOrdenesCompraRepository productoRepo;
     @Autowired private IEmpleadosRepository empleadoRepo;
     @Autowired private IProductosRepository productoRepo;
@@ -202,6 +205,15 @@ public class OrdenesCompraService implements IOrdenesCompraService {
                 } else {
                     throw new NotFoundException("Un producto listado en la orden de compra no existe");
                 }
+            }
+            
+            
+            if (entity.getId() != null && entity.getId() != 0) {
+                BooleanBuilder bb = new BooleanBuilder()
+                        .and(QDetalleOrdenCompra.detalleOrdenCompra._ordenCompra._id.eq(entity.getId()));
+                
+                Iterable<DetalleOrdenCompra> itrbl = detalleOrdenCompraRepo.findAll(bb);
+                detalleOrdenCompraRepo.deleteAll(itrbl);
             }
             
             entity = ordenCompraRepo.saveAndFlush(entity);

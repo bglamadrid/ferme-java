@@ -6,9 +6,11 @@ import cl.duoc.alumnos.ferme.domain.entities.Cliente;
 import cl.duoc.alumnos.ferme.domain.entities.DetalleVenta;
 import cl.duoc.alumnos.ferme.domain.entities.Empleado;
 import cl.duoc.alumnos.ferme.domain.entities.Producto;
+import cl.duoc.alumnos.ferme.domain.entities.QDetalleVenta;
 import cl.duoc.alumnos.ferme.domain.entities.QVenta;
 import cl.duoc.alumnos.ferme.domain.entities.Venta;
 import cl.duoc.alumnos.ferme.domain.repositories.IClientesRepository;
+import cl.duoc.alumnos.ferme.domain.repositories.IDetallesVentasRepository;
 import cl.duoc.alumnos.ferme.domain.repositories.IEmpleadosRepository;
 import cl.duoc.alumnos.ferme.domain.repositories.IProductosRepository;
 import cl.duoc.alumnos.ferme.domain.repositories.IVentasRepository;
@@ -45,6 +47,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class VentasService implements IVentasService {
 
     @Autowired private IVentasRepository ventaRepo;
+    @Autowired private IDetallesVentasRepository detalleVentaRepo;
     @Autowired private IEmpleadosRepository empleadoRepo;
     @Autowired private IClientesRepository clienteRepo;
     @Autowired private IProductosRepository productoRepo;
@@ -180,7 +183,13 @@ public class VentasService implements IVentasService {
                 }
             }
             
-            
+            if (entity.getId() != null && entity.getId() != 0) {
+                BooleanBuilder bb = new BooleanBuilder()
+                        .and(QDetalleVenta.detalleVenta._venta._id.eq(entity.getId()));
+                
+                Iterable<DetalleVenta> itrbl = detalleVentaRepo.findAll(bb);
+                detalleVentaRepo.deleteAll(itrbl);
+            }
             
             entity = ventaRepo.saveAndFlush(entity);
             return entity.getId();

@@ -124,6 +124,10 @@ public class VentaDTO {
             entity.setId(idVenta);
         }
         
+        if (subtotalVenta != 0) {
+            entity.setSubtotal(subtotalVenta);
+        }
+        
         Date fVenta = FermeDates.fechaStringToDate(fechaVenta);
         entity.setFecha(fVenta);
         

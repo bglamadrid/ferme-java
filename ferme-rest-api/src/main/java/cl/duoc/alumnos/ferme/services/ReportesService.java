@@ -98,6 +98,7 @@ public class ReportesService implements IReportesService {
                 return reportesRepo.findUnidadesDeProductoVendidas(prod);
             }
         }*/
+        return 0L;
     }
     
     

@@ -43,7 +43,7 @@ public class ClientesService implements IClientesService {
         long clienteCount;
         
         LOG.info("getClientes - Procesando solicitud...");
-        Sort orden = Sort.by(FermeConfig.CLIENTE_DEFAULT_SORT_COLUMN).ascending();
+        Sort orden = Sort.by(FermeConfig.COLUMNAS_ORDENAMIENTO_MAPA.get(Cliente.class)).ascending();
         Pageable pgbl = PageRequest.of(pageIndex, pageSize, orden);
         
         LOG.info("getClientes - Llamando queries...");

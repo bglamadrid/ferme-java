@@ -44,7 +44,7 @@ public class ProveedoresService implements IProveedoresService {
         long proveedorCount;
         
         LOG.info("getProveedores - Procesando solicitud...");
-        Sort orden = Sort.by(FermeConfig.PROVEEDOR_DEFAULT_SORT_COLUMN).ascending();
+        Sort orden = Sort.by(FermeConfig.COLUMNAS_ORDENAMIENTO_MAPA.get(Proveedor.class)).ascending();
         Pageable pgbl = PageRequest.of(pageIndex, pageSize, orden);
         
         LOG.info("getProveedores - Llamando queries...");

@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Benjamin Guillermo <got12g at gmail.com>
  */
 @RestController
-@RequestMapping("/api/gestion/clientes")
+@RequestMapping(FermeConfig.URI_BASE_REST_API+"/gestion/clientes")
 public class ClientesController {
     private final static Logger LOG = LoggerFactory.getLogger(ClientesController.class);
     
@@ -62,8 +62,8 @@ public class ClientesController {
         @RequestParam Map<String,String> allRequestParams) {
         
         
-        Integer finalPageSize = FermeConfig.DEFAULT_PAGE_SIZE;
-        Integer finalPageIndex = FermeConfig.DEFAULT_PAGE_INDEX;
+        Integer finalPageSize = FermeConfig.PAGINACION_REGISTROS_POR_PAGINA_INICIAL;
+        Integer finalPageIndex = FermeConfig.PAGINACION_INDICE_INICIAL;
         Predicate filtros = null;
         
         if (pageSize != null && pageSize > 0) {

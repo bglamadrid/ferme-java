@@ -1,7 +1,7 @@
 package cl.duoc.alumnos.ferme.domain.repositories;
 
 import cl.duoc.alumnos.ferme.domain.entities.Producto;
-import cl.duoc.alumnos.ferme.util.FermeDates;
+import cl.duoc.alumnos.ferme.util.FormatoFechas;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Optional;
@@ -39,10 +39,10 @@ public class ReportesRepository implements IReportesRepository {
         String sFin = null;
         
         if (inicio != null) {
-            sInicio = FermeDates.fechaToString(inicio);
+            sInicio = FormatoFechas.dateAStringLocal(inicio);
         }
         if (fin != null) {
-            sFin = FermeDates.fechaToString(fin);
+            sFin = FormatoFechas.dateAStringLocal(fin);
         }
         
             

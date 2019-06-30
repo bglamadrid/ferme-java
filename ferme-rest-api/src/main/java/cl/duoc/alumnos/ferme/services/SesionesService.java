@@ -13,8 +13,8 @@ import cl.duoc.alumnos.ferme.domain.repositories.IEmpleadosRepository;
 import cl.duoc.alumnos.ferme.domain.repositories.ISesionesRepository;
 import cl.duoc.alumnos.ferme.dto.EmpleadoDTO;
 import cl.duoc.alumnos.ferme.services.interfaces.ISesionesService;
-import cl.duoc.alumnos.ferme.util.FermeDates;
-import cl.duoc.alumnos.ferme.util.FermeHashes;
+import cl.duoc.alumnos.ferme.util.FormatoFechas;
+import cl.duoc.alumnos.ferme.util.Hashing;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import java.security.NoSuchAlgorithmException;
@@ -40,7 +40,7 @@ public class SesionesService implements ISesionesService {
     @Autowired private IEmpleadosRepository empleadoRepo;
     @Autowired private ISesionesRepository sesionRepo;
     
-    private final static long SESSION_LIFETIME = FermeConfig.SESSION_DURATION;
+    private final static long SESSION_LIFETIME = FermeConfig.DURACION_SESION;
     
     @Override
     public Collection<SesionDTO> getSesiones(int pageSize, int pageIndex, Predicate condicion) 
@@ -56,7 +56,7 @@ public class SesionesService implements ISesionesService {
 
     private String constructSesionDataStringFromUsuarioDTO(UsuarioDTO usuario) {
         String rutPersona = usuario.getRutPersona();
-        String fechaActual = FermeDates.fechaToString(Calendar.getInstance().getTime());
+        String fechaActual = FormatoFechas.dateAStringLocal(Calendar.getInstance().getTime());
         String sesionData = "[" + rutPersona + " conectado en " + fechaActual + "]";
         return sesionData;
     }
@@ -92,7 +92,7 @@ public class SesionesService implements ISesionesService {
         String sesionData = this.constructSesionDataStringFromUsuarioDTO(usuario);
         LOG.debug("abrirSesion - sesionData="+sesionData);
         try {
-            String sesionHash = FermeHashes.encryptSessionData(sesionData);
+            String sesionHash = Hashing.encriptarStringSesion(sesionData);
             LOG.debug("abrirSesion - Asignando hash '"+sesionHash+"'");
             entity.setHash(sesionHash);
         } catch (NoSuchAlgorithmException exc) {

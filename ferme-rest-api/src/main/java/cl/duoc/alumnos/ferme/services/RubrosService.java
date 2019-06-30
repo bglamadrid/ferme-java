@@ -39,7 +39,7 @@ public class RubrosService implements IRubrosService {
         long rubroCount;
         
         LOG.info("getRubros - Procesando solicitud...");
-        Sort orden = Sort.by(FermeConfig.RUBRO_DEFAULT_SORT_COLUMN).ascending();
+        Sort orden = Sort.by(FermeConfig.COLUMNAS_ORDENAMIENTO_MAPA.get(Rubro.class)).ascending();
         
         LOG.info("getRubros - Llamando queries...");
         if (condicion == null) {

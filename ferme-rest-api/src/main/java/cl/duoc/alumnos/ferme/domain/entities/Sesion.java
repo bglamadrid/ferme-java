@@ -1,12 +1,8 @@
 package cl.duoc.alumnos.ferme.domain.entities;
 
-import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.FermeConfig;
 import cl.duoc.alumnos.ferme.dto.SesionDTO;
-import cl.duoc.alumnos.ferme.dto.UsuarioDTO;
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 import javax.persistence.CascadeType;
@@ -24,7 +20,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Size;
 import org.hibernate.annotations.Cascade;
 
 /**
@@ -40,7 +35,7 @@ public class Sesion implements Serializable {
     
     @Id
     @Column(name = "ID_SESION")
-    @SequenceGenerator(name = "sesion_seq", sequenceName = "SEQ_SESION", initialValue = 1, allocationSize = FermeConfig.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
+    @SequenceGenerator(name = "sesion_seq", sequenceName = "SEQ_SESION", initialValue = 1, allocationSize = FermeConfig.ESPACIO_ASIGNACION_SECUENCIAS_HIBERNATE)
     @GeneratedValue(generator = "sesion_seq", strategy = GenerationType.AUTO)
     private Integer _id;
     

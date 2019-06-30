@@ -1,9 +1,8 @@
 package cl.duoc.alumnos.ferme.domain.entities;
 
-import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.FermeConfig;
 import cl.duoc.alumnos.ferme.dto.EmpleadoDTO;
-import cl.duoc.alumnos.ferme.util.PersonaConverter;
+import cl.duoc.alumnos.ferme.services.PersonasService;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.CascadeType;
@@ -35,7 +34,7 @@ public class Empleado implements Serializable {
     
     @Id
     @Column(name = "ID_EMPLEADO")
-    @SequenceGenerator(name = "empleado_seq", sequenceName = "SEQ_EMPLEADO", initialValue = 1, allocationSize = FermeConfig.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
+    @SequenceGenerator(name = "empleado_seq", sequenceName = "SEQ_EMPLEADO", initialValue = 1, allocationSize = FermeConfig.ESPACIO_ASIGNACION_SECUENCIAS_HIBERNATE)
     @GeneratedValue(generator = "empleado_seq", strategy = GenerationType.AUTO)
     private Integer _id;
     
@@ -80,7 +79,7 @@ public class Empleado implements Serializable {
     public EmpleadoDTO toDTO() {
         EmpleadoDTO dto = new EmpleadoDTO();
         Cargo cargoEntity = getCargo();
-        dto = PersonaConverter.cargarDatosPersonaEnDTO(_persona, dto);
+        dto = PersonasService.cargarDatosPersonaEnDTO(_persona, dto);
         dto.setIdEmpleado(_id);
         
         dto.setIdCargo(cargoEntity.getId());

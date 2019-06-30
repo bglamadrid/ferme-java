@@ -34,7 +34,7 @@ public class DetalleOrdenCompra implements Serializable {
     
     @Id
     @Column(name = "ID_DETALLE_ORDEN_COMPRA")
-    @SequenceGenerator(name = "detalle_orden_compra_seq", sequenceName = "SEQ_DETALLE_ORDEN_COMPRA", initialValue = 1, allocationSize = FermeConfig.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
+    @SequenceGenerator(name = "detalle_orden_compra_seq", sequenceName = "SEQ_DETALLE_ORDEN_COMPRA", initialValue = 1, allocationSize = FermeConfig.ESPACIO_ASIGNACION_SECUENCIAS_HIBERNATE)
     @GeneratedValue(generator = "detalle_orden_compra_seq", strategy = GenerationType.AUTO)
     protected Integer _id;
     

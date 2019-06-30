@@ -1,23 +1,20 @@
 package cl.duoc.alumnos.ferme.util;
 
-import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.FermeConfig;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author Benjamin Guillermo <got12g at gmail.com>
  */
-public class FermeDates {    
+public class FormatoFechas {    
 
-    public static final Date fechaStringToDate(String stringFecha) {
+    public static final Date stringADateLocal(String stringFecha) {
         Date fecha; 
-        DateFormat formateador = new SimpleDateFormat(FermeConfig.DEFAULT_DATE_FORMAT);
+        DateFormat formateador = new SimpleDateFormat(FermeConfig.FORMATO_FECHA);
         try {
             fecha = formateador.parse(stringFecha);
         } catch (ParseException exc) {
@@ -27,8 +24,8 @@ public class FermeDates {
         return fecha;
     }
     
-    public static final String fechaToString(Date fecha) {
-        DateFormat formateador = new SimpleDateFormat(FermeConfig.DEFAULT_DATE_FORMAT);
+    public static final String dateAStringLocal(Date fecha) {
+        DateFormat formateador = new SimpleDateFormat(FermeConfig.FORMATO_FECHA);
         final String stringFecha = formateador.format(fecha);
         return stringFecha;
     }

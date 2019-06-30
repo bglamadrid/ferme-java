@@ -1,9 +1,8 @@
 package cl.duoc.alumnos.ferme.domain.entities;
 
-import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.FermeConfig;
 import cl.duoc.alumnos.ferme.dto.UsuarioDTO;
-import cl.duoc.alumnos.ferme.util.FermeDates;
+import cl.duoc.alumnos.ferme.util.FormatoFechas;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -41,7 +40,7 @@ public class Usuario implements Serializable {
     
     @Id
     @Column(name = "ID_USUARIO")
-    @SequenceGenerator(name = "usuario_seq", sequenceName = "SEQ_USUARIO", initialValue = 1, allocationSize = FermeConfig.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
+    @SequenceGenerator(name = "usuario_seq", sequenceName = "SEQ_USUARIO", initialValue = 1, allocationSize = FermeConfig.ESPACIO_ASIGNACION_SECUENCIAS_HIBERNATE)
     @GeneratedValue(generator = "usuario_seq", strategy = GenerationType.AUTO)
     private Integer _id;
     
@@ -121,7 +120,7 @@ public class Usuario implements Serializable {
         dto.setIdUsuario(_id);
         dto.setNombreUsuario(_nombre);
         
-        String _fechaCreacion = FermeDates.fechaToString(this._fechaCreacion);
+        String _fechaCreacion = FormatoFechas.dateAStringLocal(this._fechaCreacion);
         dto.setFechaCreacionUsuario(_fechaCreacion);
         
         Persona personaEntity = getPersona();

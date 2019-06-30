@@ -17,7 +17,10 @@ import org.springframework.context.annotation.ComponentScan;
 public class Ferme {
     private final static Logger LOG = LoggerFactory.getLogger(Ferme.class);
     
-        
+    /**
+     * Inicia la aplicación.
+     * @param args No hay argumentos aceptados aún.
+     */
     public static void main(String[] args) {
         SpringApplication.run(FermeConfig.class, args);
         LOG.info("Aplicación FERME cargada e iniciada exitosamente.");

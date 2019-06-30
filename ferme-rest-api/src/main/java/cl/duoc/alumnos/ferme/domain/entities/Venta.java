@@ -1,10 +1,9 @@
 package cl.duoc.alumnos.ferme.domain.entities;
 
-import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.FermeConfig;
 import cl.duoc.alumnos.ferme.dto.DetalleVentaDTO;
 import cl.duoc.alumnos.ferme.dto.VentaDTO;
-import cl.duoc.alumnos.ferme.util.FermeDates;
+import cl.duoc.alumnos.ferme.util.FormatoFechas;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -41,7 +40,7 @@ public class Venta implements Serializable {
     
     @Id
     @Column(name = "ID_VENTA")
-    @SequenceGenerator(name = "venta_seq", sequenceName = "SEQ_VENTA", initialValue = 1, allocationSize = FermeConfig.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
+    @SequenceGenerator(name = "venta_seq", sequenceName = "SEQ_VENTA", initialValue = 1, allocationSize = FermeConfig.ESPACIO_ASIGNACION_SECUENCIAS_HIBERNATE)
     @GeneratedValue(generator = "venta_seq", strategy = GenerationType.AUTO)
     private Integer _id;
     
@@ -138,7 +137,7 @@ public class Venta implements Serializable {
         dto.setTipoVenta(_tipoVenta.toString());
         dto.setSubtotalVenta(_subtotal);
         
-        final String fVenta = FermeDates.fechaToString(_fecha);
+        final String fVenta = FormatoFechas.dateAStringLocal(_fecha);
         dto.setFechaVenta(fVenta);
         
         

@@ -9,8 +9,8 @@ import cl.duoc.alumnos.ferme.domain.repositories.IPersonasRepository;
 import cl.duoc.alumnos.ferme.domain.repositories.IUsuariosRepository;
 import cl.duoc.alumnos.ferme.dto.UsuarioDTO;
 import cl.duoc.alumnos.ferme.services.interfaces.IUsuariosService;
-import cl.duoc.alumnos.ferme.util.FermeDates;
-import cl.duoc.alumnos.ferme.util.FermeHashes;
+import cl.duoc.alumnos.ferme.util.FormatoFechas;
+import cl.duoc.alumnos.ferme.util.Hashing;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import java.util.ArrayList;
@@ -44,7 +44,7 @@ public class UsuariosService implements IUsuariosService {
     
     @Override
     public Collection<UsuarioDTO> getUsuarios(int pageSize, int pageIndex, Predicate condicion) {
-        Sort orden = Sort.by(FermeConfig.VENTA_DEFAULT_SORT_COLUMN).ascending();
+        Sort orden = Sort.by(FermeConfig.COLUMNAS_ORDENAMIENTO_MAPA.get(Usuario.class)).ascending();
         Pageable pgbl = PageRequest.of(pageIndex, pageSize, orden);
         
         List<UsuarioDTO> pagina = new ArrayList<>();
@@ -87,7 +87,7 @@ public class UsuariosService implements IUsuariosService {
                         break;
                     case "fechaCreacion":
                         paramValue = paramValue.trim();
-                        Date fecha = FermeDates.fechaStringToDate(paramValue);
+                        Date fecha = FormatoFechas.stringADateLocal(paramValue);
                         if (fecha == null) {
                             LOG.warn("UsuariosService.queryParamsMapToUsuariosFilteringPredicate() : El formato de la fecha ingresada no es válida.");
                         } else {
@@ -149,7 +149,7 @@ public class UsuariosService implements IUsuariosService {
     @Override
     public UsuarioDTO getUsuarioFromCredentials(String username, String password) {
         QUsuario qUsr = QUsuario.usuario;
-        String claveUsuarioHash = FermeHashes.encryptData(password);
+        String claveUsuarioHash = Hashing.hashear(password);
         BooleanBuilder bb = new BooleanBuilder()
                 .and(qUsr._nombre.eq(username))
                 .and(qUsr._clave.eq(claveUsuarioHash));

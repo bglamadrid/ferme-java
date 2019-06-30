@@ -5,7 +5,7 @@ import cl.duoc.alumnos.ferme.FermeConfig;
 import cl.duoc.alumnos.ferme.domain.entities.DetalleOrdenCompra;
 import cl.duoc.alumnos.ferme.domain.entities.Empleado;
 import cl.duoc.alumnos.ferme.domain.entities.OrdenCompra;
-import cl.duoc.alumnos.ferme.util.FermeDates;
+import cl.duoc.alumnos.ferme.util.FormatoFechas;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -109,12 +109,12 @@ public class OrdenCompraDTO {
         }
         
         if (fechaSolicitudOrdenCompra != null && !fechaSolicitudOrdenCompra.isEmpty()) {
-            Date fSolicitud = FermeDates.fechaStringToDate(fechaSolicitudOrdenCompra);
+            Date fSolicitud = FormatoFechas.stringADateLocal(fechaSolicitudOrdenCompra);
             entity.setFechaSolicitud(fSolicitud);
         }
         
         if (fechaRecepcionOrdenCompra != null && !fechaRecepcionOrdenCompra.isEmpty()) {
-            Date fRecepcion = FermeDates.fechaStringToDate(fechaRecepcionOrdenCompra);
+            Date fRecepcion = FormatoFechas.stringADateLocal(fechaRecepcionOrdenCompra);
             entity.setFechaRecepcion(fRecepcion);
         }
         

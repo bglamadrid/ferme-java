@@ -4,7 +4,7 @@ import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.FermeConfig;
 import cl.duoc.alumnos.ferme.dto.DetalleOrdenCompraDTO;
 import cl.duoc.alumnos.ferme.dto.OrdenCompraDTO;
-import cl.duoc.alumnos.ferme.util.FermeDates;
+import cl.duoc.alumnos.ferme.util.FormatoFechas;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -41,7 +41,7 @@ public class OrdenCompra implements Serializable {
     
     @Id
     @Column(name = "ID_ORDEN_COMPRA")
-    @SequenceGenerator(name = "orden_compra_seq", sequenceName = "SEQ_ORDEN_COMPRA", initialValue = 1, allocationSize = FermeConfig.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
+    @SequenceGenerator(name = "orden_compra_seq", sequenceName = "SEQ_ORDEN_COMPRA", initialValue = 1, allocationSize = FermeConfig.ESPACIO_ASIGNACION_SECUENCIAS_HIBERNATE)
     @GeneratedValue(generator = "orden_compra_seq", strategy = GenerationType.AUTO)
     private Integer _id;
     
@@ -121,7 +121,7 @@ public class OrdenCompra implements Serializable {
         OrdenCompraDTO dto = new OrdenCompraDTO();
         dto.setIdOrdenCompra(_id);
         dto.setEstadoOrdenCompra(_estado.toString());
-        dto.setFechaSolicitudOrdenCompra(FermeDates.fechaToString(_fechaSolicitud));
+        dto.setFechaSolicitudOrdenCompra(FormatoFechas.dateAStringLocal(_fechaSolicitud));
         
         Empleado empleadoEntity = getEmpleado();
         Persona empleadoPersonaEntity = empleadoEntity.getPersona();
@@ -130,7 +130,7 @@ public class OrdenCompra implements Serializable {
         dto.setRutEmpleado(empleadoPersonaEntity.getRut());
         
         if (_fechaRecepcion != null) {
-            dto.setFechaRecepcionOrdenCompra(FermeDates.fechaToString(_fechaRecepcion));
+            dto.setFechaRecepcionOrdenCompra(FormatoFechas.dateAStringLocal(_fechaRecepcion));
         }
         
         if (!simple) {

@@ -4,7 +4,7 @@ import cl.duoc.alumnos.ferme.domain.entities.Cliente;
 import cl.duoc.alumnos.ferme.domain.entities.DetalleVenta;
 import cl.duoc.alumnos.ferme.domain.entities.Empleado;
 import cl.duoc.alumnos.ferme.domain.entities.Venta;
-import cl.duoc.alumnos.ferme.util.FermeDates;
+import cl.duoc.alumnos.ferme.util.FormatoFechas;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -128,7 +128,7 @@ public class VentaDTO {
             entity.setSubtotal(subtotalVenta);
         }
         
-        Date fVenta = FermeDates.fechaStringToDate(fechaVenta);
+        Date fVenta = FormatoFechas.stringADateLocal(fechaVenta);
         entity.setFecha(fVenta);
         
         if (tipoVenta != null && !tipoVenta.isEmpty()) {

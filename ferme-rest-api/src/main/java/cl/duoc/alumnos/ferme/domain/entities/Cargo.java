@@ -29,7 +29,7 @@ public class Cargo implements Serializable {
     
     @Id
     @Column(name = "ID_CARGO")
-    @SequenceGenerator(name = "cargo_seq", sequenceName = "SEQ_CARGO", initialValue = 1, allocationSize = FermeConfig.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
+    @SequenceGenerator(name = "cargo_seq", sequenceName = "SEQ_CARGO", initialValue = 1, allocationSize = FermeConfig.ESPACIO_ASIGNACION_SECUENCIAS_HIBERNATE)
     @GeneratedValue(generator = "cargo_seq", strategy = GenerationType.AUTO)
     private Integer _id;
     

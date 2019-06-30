@@ -1,6 +1,5 @@
 package cl.duoc.alumnos.ferme.domain.entities;
 
-import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.FermeConfig;
 import cl.duoc.alumnos.ferme.dto.RubroDTO;
 import java.io.Serializable;
@@ -29,7 +28,7 @@ public class Rubro implements Serializable {
     
     @Id
     @Column(name = "ID_RUBRO")
-    @SequenceGenerator(name = "rubro_seq", sequenceName = "SEQ_RUBRO", initialValue = 1, allocationSize = FermeConfig.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
+    @SequenceGenerator(name = "rubro_seq", sequenceName = "SEQ_RUBRO", initialValue = 1, allocationSize = FermeConfig.ESPACIO_ASIGNACION_SECUENCIAS_HIBERNATE)
     @GeneratedValue(generator = "rubro_seq", strategy = GenerationType.AUTO)
     private Integer _id;
     

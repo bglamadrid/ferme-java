@@ -28,6 +28,33 @@ import org.springframework.stereotype.Service;
 @Service
 public class PersonasService implements IPersonasService {
     private final static Logger LOG = LoggerFactory.getLogger(PersonasService.class);
+
+    public static final <T extends PersonaDTO> T cargarDatosPersonaEnDTO(Persona personaEntity, T dto) {
+        dto.setIdPersona(personaEntity.getId());
+        dto.setNombreCompletoPersona(personaEntity.getNombreCompleto());
+        dto.setRutPersona(personaEntity.getRut());
+        String direccion = personaEntity.getDireccion();
+        String email = personaEntity.getEmail();
+        Long fono1 = personaEntity.getFono1();
+        Long fono2 = personaEntity.getFono2();
+        Long fono3 = personaEntity.getFono3();
+        if (direccion != null) {
+            dto.setDireccionPersona(direccion);
+        }
+        if (email != null) {
+            dto.setEmailPersona(email);
+        }
+        if (fono1 != null) {
+            dto.setFonoPersona1(fono1);
+        }
+        if (fono2 != null) {
+            dto.setFonoPersona2(fono2);
+        }
+        if (fono3 != null) {
+            dto.setFonoPersona3(fono3);
+        }
+        return dto;
+    }
     
     @Autowired IPersonasRepository personaRepo;
 
@@ -38,7 +65,7 @@ public class PersonasService implements IPersonasService {
         long pesonaCount;
         
         LOG.info("getPersonas - Procesando solicitud...");
-        Sort orden = Sort.by(FermeConfig.PERSONA_DEFAULT_SORT_COLUMN).ascending();
+        Sort orden = Sort.by(FermeConfig.COLUMNAS_ORDENAMIENTO_MAPA.get(Persona.class)).ascending();
         Pageable pgbl = PageRequest.of(pageIndex, pageSize, orden);
         
         LOG.info("getPersonas - Llamando queries...");

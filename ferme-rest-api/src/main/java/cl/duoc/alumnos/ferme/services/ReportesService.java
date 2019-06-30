@@ -11,7 +11,7 @@ import cl.duoc.alumnos.ferme.domain.repositories.IReportesRepository;
 import cl.duoc.alumnos.ferme.dto.CargoDTO;
 import cl.duoc.alumnos.ferme.services.interfaces.ICargosService;
 import cl.duoc.alumnos.ferme.services.interfaces.IReportesService;
-import cl.duoc.alumnos.ferme.util.FermeDates;
+import cl.duoc.alumnos.ferme.util.FormatoFechas;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import java.util.ArrayList;
@@ -47,12 +47,12 @@ public class ReportesService implements IReportesService {
             
             if (allRequestParams.containsKey("inicio")) {
                 String sFechaInicio = allRequestParams.get("inicio");
-                fechaInicio = FermeDates.fechaStringToDate(sFechaInicio);   
+                fechaInicio = FormatoFechas.stringADateLocal(sFechaInicio);   
             }
             
             if (allRequestParams.containsKey("fin")) {
                 String sFechaFin = allRequestParams.get("fin");
-                fechaFin = FermeDates.fechaStringToDate(sFechaFin);
+                fechaFin = FormatoFechas.stringADateLocal(sFechaFin);
             }
             
             return reportesRepo.findVentasRealizadas(fechaInicio, fechaFin);

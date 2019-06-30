@@ -15,7 +15,7 @@ import cl.duoc.alumnos.ferme.domain.repositories.IProductosRepository;
 import cl.duoc.alumnos.ferme.dto.DetalleOrdenCompraDTO;
 import cl.duoc.alumnos.ferme.dto.OrdenCompraDTO;
 import cl.duoc.alumnos.ferme.services.interfaces.IOrdenesCompraService;
-import cl.duoc.alumnos.ferme.util.FermeDates;
+import cl.duoc.alumnos.ferme.util.FormatoFechas;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import java.util.ArrayList;
@@ -70,7 +70,7 @@ public class OrdenesCompraService implements IOrdenesCompraService {
         long ordenCompraCount;
         
         LOG.info("getOrdenesCompra - Procesando solicitud...");
-        Sort orden = Sort.by(FermeConfig.ORDEN_COMPRA_DEFAULT_SORT_COLUMN).descending();
+        Sort orden = Sort.by(FermeConfig.COLUMNAS_ORDENAMIENTO_MAPA.get(OrdenCompra.class)).descending();
         Pageable pgbl = PageRequest.of(pageIndex, pageSize, orden);
         
         LOG.info("getOrdenesCompra - Llamando queries...");
@@ -141,7 +141,7 @@ public class OrdenesCompraService implements IOrdenesCompraService {
                         return bb;
                     case "fechaSolicitud":
                         paramValue = paramValue.trim();
-                        parsedValueD = FermeDates.fechaStringToDate(paramValue);
+                        parsedValueD = FormatoFechas.stringADateLocal(paramValue);
                         if (parsedValueD == null) {
                             LOG.warn("VentasService.queryParamsMapToVentasFilteringPredicate() : El formato de la fecha ingresada no es válida.");
                         } else {
@@ -150,7 +150,7 @@ public class OrdenesCompraService implements IOrdenesCompraService {
                         break;
                     case "fechaRecepcion":
                         paramValue = paramValue.trim();
-                        parsedValueD = FermeDates.fechaStringToDate(paramValue);
+                        parsedValueD = FormatoFechas.stringADateLocal(paramValue);
                         if (parsedValueD == null) {
                             LOG.warn("VentasService.queryParamsMapToVentasFilteringPredicate() : El formato de la fecha ingresada no es válida.");
                         } else {

@@ -17,7 +17,7 @@ import cl.duoc.alumnos.ferme.domain.repositories.IVentasRepository;
 import cl.duoc.alumnos.ferme.dto.DetalleVentaDTO;
 import cl.duoc.alumnos.ferme.dto.VentaDTO;
 import cl.duoc.alumnos.ferme.services.interfaces.IVentasService;
-import cl.duoc.alumnos.ferme.util.FermeDates;
+import cl.duoc.alumnos.ferme.util.FormatoFechas;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import java.util.ArrayList;
@@ -66,7 +66,7 @@ public class VentasService implements IVentasService {
     
     @Override
     public Collection<VentaDTO> getVentas(int pageSize, int pageIndex, Predicate condicion) {
-        Sort orden = Sort.by(FermeConfig.VENTA_DEFAULT_SORT_COLUMN).ascending();
+        Sort orden = Sort.by(FermeConfig.COLUMNAS_ORDENAMIENTO_MAPA.get(Venta.class)).ascending();
         Pageable pgbl = PageRequest.of(pageIndex, pageSize, orden);
         
         List<VentaDTO> pagina = new ArrayList<>();
@@ -122,7 +122,7 @@ public class VentasService implements IVentasService {
                         return bb;
                     case "fecha":
                         paramValue = paramValue.trim();
-                        Date fecha = FermeDates.fechaStringToDate(paramValue);
+                        Date fecha = FormatoFechas.stringADateLocal(paramValue);
                         if (fecha == null) {
                             LOG.warn("queryParamsMapToVentasFilteringPredicate - El formato de la fecha ingresada no es válida.");
                         } else {

@@ -61,7 +61,7 @@ public class ProductosService implements IProductosService, IFamiliasProductoSer
         long familiaCount;
         
         LOG.info("getFamiliasProductos - Procesando solicitud...");
-        Sort orden = Sort.by(FermeConfig.FAMILIA_PRODUCTO_DEFAULT_SORT_COLUMN).ascending();
+        Sort orden = Sort.by(FermeConfig.COLUMNAS_ORDENAMIENTO_MAPA.get(FamiliaProducto.class)).ascending();
         
         LOG.info("getFamiliasProductos - Llamando queries...");
         if (condicion == null) {
@@ -90,7 +90,7 @@ public class ProductosService implements IProductosService, IFamiliasProductoSer
         Long tipoCount;
         
         LOG.info("getTiposProductos - Procesando solicitud...");
-        Sort orden = Sort.by(FermeConfig.TIPO_PRODUCTO_DEFAULT_SORT_COLUMN).descending();
+        Sort orden = Sort.by(FermeConfig.COLUMNAS_ORDENAMIENTO_MAPA.get(TipoProducto.class)).descending();
         
         LOG.info("getTiposProductos - Llamando queries...");
         if (condicion == null) {
@@ -119,7 +119,7 @@ public class ProductosService implements IProductosService, IFamiliasProductoSer
         Long productoCount;
         
         LOG.info("getProductos - Procesando solicitud...");
-        Sort orden = Sort.by(FermeConfig.TIPO_PRODUCTO_DEFAULT_SORT_COLUMN).descending();
+        Sort orden = Sort.by(FermeConfig.COLUMNAS_ORDENAMIENTO_MAPA.get(Producto.class)).descending();
         Pageable pgbl = PageRequest.of(pageIndex, pageSize, orden);
         
         LOG.info("getProductos - Llamando queries...");

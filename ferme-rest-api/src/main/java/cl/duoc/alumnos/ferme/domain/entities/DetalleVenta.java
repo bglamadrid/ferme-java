@@ -33,7 +33,7 @@ public class DetalleVenta implements Serializable {
     
     @Id
     @Column(name = "ID_DETALLE_VENTA")
-    @SequenceGenerator(name = "detalle_venta_seq", sequenceName = "SEQ_DETALLE_VENTA", initialValue = 1, allocationSize = FermeConfig.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
+    @SequenceGenerator(name = "detalle_venta_seq", sequenceName = "SEQ_DETALLE_VENTA", initialValue = 1, allocationSize = FermeConfig.ESPACIO_ASIGNACION_SECUENCIAS_HIBERNATE)
     @GeneratedValue(generator = "detalle_venta_seq", strategy = GenerationType.AUTO)
     private Integer _id;
     

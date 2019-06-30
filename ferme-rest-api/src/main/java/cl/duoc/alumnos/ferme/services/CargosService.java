@@ -37,7 +37,7 @@ public class CargosService implements ICargosService {
         long cargoCount;
         
         LOG.info("getCargos - Procesando solicitud...");
-        Sort orden = Sort.by(FermeConfig.CARGO_DEFAULT_SORT_COLUMN).ascending();
+        Sort orden = Sort.by(FermeConfig.COLUMNAS_ORDENAMIENTO_MAPA.get(Cargo.class)).ascending();
         
         LOG.info("getCargos - Llamando queries...");
         if (condicion == null) {

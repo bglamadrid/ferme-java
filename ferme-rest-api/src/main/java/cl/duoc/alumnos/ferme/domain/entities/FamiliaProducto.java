@@ -34,7 +34,7 @@ public class FamiliaProducto implements Serializable {
     
     @Id
     @Column(name = "ID_FAMILIA_PRODUCTO")
-    @SequenceGenerator(name = "familia_producto_seq", sequenceName = "SEQ_FAMILIA_PRODUCTO", initialValue = 1, allocationSize = FermeConfig.DEFAULT_HIBERNATE_SEQUENCES_ALLOCATION_SIZE)
+    @SequenceGenerator(name = "familia_producto_seq", sequenceName = "SEQ_FAMILIA_PRODUCTO", initialValue = 1, allocationSize = FermeConfig.ESPACIO_ASIGNACION_SECUENCIAS_HIBERNATE)
     @GeneratedValue(generator = "familia_producto_seq", strategy = GenerationType.AUTO)
     private Integer _id;
     

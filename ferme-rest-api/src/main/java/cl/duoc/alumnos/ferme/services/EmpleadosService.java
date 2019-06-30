@@ -48,7 +48,7 @@ public class EmpleadosService implements IEmpleadosService {
         long empleadoCount;
         
         LOG.info("getEmpleados - Procesando solicitud...");
-        Sort orden = Sort.by(FermeConfig.EMPLEADO_DEFAULT_SORT_COLUMN).ascending();
+        Sort orden = Sort.by(FermeConfig.COLUMNAS_ORDENAMIENTO_MAPA.get(Empleado.class)).ascending();
         Pageable pgbl = PageRequest.of(pageIndex, pageSize, orden);
         
         LOG.info("getEmpleados - Llamando queries...");

@@ -56,8 +56,8 @@ public class VentasController {
         @RequestParam Integer pageIndex,
         @RequestParam Map<String,String> allRequestParams
     ) {
-        Integer finalPageSize = FermeConfig.DEFAULT_PAGE_SIZE;
-        Integer finalPageIndex = FermeConfig.DEFAULT_PAGE_INDEX;
+        Integer finalPageSize = FermeConfig.PAGINACION_REGISTROS_POR_PAGINA_INICIAL;
+        Integer finalPageIndex = FermeConfig.PAGINACION_INDICE_INICIAL;
         Predicate filtros = null;
         
         if (pageSize != null && pageSize > 0) {

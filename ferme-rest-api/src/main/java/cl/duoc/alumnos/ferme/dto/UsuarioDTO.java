@@ -5,12 +5,15 @@ import cl.duoc.alumnos.ferme.domain.entities.Usuario;
 import cl.duoc.alumnos.ferme.util.FormatoFechas;
 import cl.duoc.alumnos.ferme.util.Hashing;
 import java.util.Date;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author Benjamin Guillermo <got12g at gmail.com>
  */
 public class UsuarioDTO extends PersonaDTO {
+    private final static Logger LOG = LoggerFactory.getLogger(PersonaDTO.class);
     
     private Integer idUsuario;
     private String nombreUsuario;

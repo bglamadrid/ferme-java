@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(FermeConfig.URI_BASE_REST_API+"/gestion/reportes")
 public class ReportesController {
+    private final static Logger LOG = LoggerFactory.getLogger(ReportesController.class);
     
     @Autowired private IReportesService reporteSvc;
-    private final static Logger LOG = LoggerFactory.getLogger(ReportesController.class);
     
     @GetMapping("/ventas_realizadas")
     public Long obtenerVentasRealizadas(

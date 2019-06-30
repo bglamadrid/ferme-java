@@ -43,6 +43,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class OrdenesCompraService implements IOrdenesCompraService {
+    private static final Logger LOG = LoggerFactory.getLogger(OrdenesCompraService.class);
     
     @Autowired private IOrdenesCompraRepository ordenCompraRepo;
     @Autowired private IDetallesOrdenesCompraRepository detalleOrdenCompraRepo;
@@ -50,7 +51,6 @@ public class OrdenesCompraService implements IOrdenesCompraService {
     @Autowired private IEmpleadosRepository empleadoRepo;
     @Autowired private IProductosRepository productoRepo;
     
-    private static final Logger LOG = LoggerFactory.getLogger(OrdenesCompraService.class);
 
     @Override
     public Integer getNextId() {

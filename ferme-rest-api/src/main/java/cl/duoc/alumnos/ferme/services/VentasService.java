@@ -45,13 +45,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class VentasService implements IVentasService {
+    private static final Logger LOG = LoggerFactory.getLogger(VentasService.class);
 
     @Autowired private IVentasRepository ventaRepo;
     @Autowired private IDetallesVentasRepository detalleVentaRepo;
     @Autowired private IEmpleadosRepository empleadoRepo;
     @Autowired private IClientesRepository clienteRepo;
     @Autowired private IProductosRepository productoRepo;
-    private static final Logger LOG = LoggerFactory.getLogger(VentasService.class);
 
     @Override
     public Integer getNextId() {

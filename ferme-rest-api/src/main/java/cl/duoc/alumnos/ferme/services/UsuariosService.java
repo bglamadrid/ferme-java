@@ -37,10 +37,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class UsuariosService implements IUsuariosService {
+    private static final Logger LOG = LoggerFactory.getLogger(UsuariosService.class);
 
     @Autowired private IUsuariosRepository usuarioRepo;
     @Autowired private IPersonasRepository personaRepo;
-    private static final Logger LOG = LoggerFactory.getLogger(UsuariosService.class);
     
     @Override
     public Collection<UsuarioDTO> getUsuarios(int pageSize, int pageIndex, Predicate condicion) {

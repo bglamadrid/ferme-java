@@ -34,7 +34,6 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class SesionesService implements ISesionesService {
-    
     private Logger LOG = LoggerFactory.getLogger(SesionesService.class);
 
     @Autowired private IEmpleadosRepository empleadoRepo;

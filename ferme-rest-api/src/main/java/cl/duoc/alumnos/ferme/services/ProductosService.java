@@ -46,13 +46,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class ProductosService implements IProductosService, IFamiliasProductoService, ITiposProductoService {
+    private final static Logger LOG = LoggerFactory.getLogger(ProductosService.class);
     
     @Autowired private IProductosRepository productoRepo;
     @Autowired private IRubrosRepository rubroRepo;
     @Autowired private IProveedoresRepository proveedorRepo;
     @Autowired private IFamiliasProductosRepository fmlProductoRepo;
     @Autowired private ITiposProductosRepository tpProductoRepo;
-    private final static Logger LOG = LoggerFactory.getLogger(ProductosService.class);
 
     @Override
     public Collection<FamiliaProductoDTO> getFamiliasProductos(Predicate condicion) {

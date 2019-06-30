@@ -8,12 +8,15 @@ import cl.duoc.alumnos.ferme.util.FormatoFechas;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author Benjamin Guillermo <got12g at gmail.com>
  */
 public class VentaDTO {
+    private final static Logger LOG = LoggerFactory.getLogger(VentaDTO.class);
     
     private Integer idVenta;
     private String tipoVenta;

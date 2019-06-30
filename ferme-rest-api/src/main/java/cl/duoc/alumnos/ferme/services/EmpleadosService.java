@@ -35,11 +35,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class EmpleadosService implements IEmpleadosService {
+    private final static Logger LOG = LoggerFactory.getLogger(EmpleadosService.class);
     
     @Autowired IEmpleadosRepository empleadoRepo;
     @Autowired IPersonasRepository personaRepo;
     @Autowired ICargosRepository cargoRepo;
-    private final static Logger LOG = LoggerFactory.getLogger(ProductosService.class);
 
     @Override
     public Collection<EmpleadoDTO> getEmpleados(int pageSize, int pageIndex, Predicate condicion) {

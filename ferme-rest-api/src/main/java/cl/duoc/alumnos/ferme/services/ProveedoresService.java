@@ -32,10 +32,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class ProveedoresService implements IProveedoresService {
+    private final static Logger LOG = LoggerFactory.getLogger(ProveedoresService.class);
     
     @Autowired IProveedoresRepository proveedorRepo;
     @Autowired IPersonasRepository personaRepo;
-    private final static Logger LOG = LoggerFactory.getLogger(ProductosService.class);
 
     @Override
     public Collection<ProveedorDTO> getProveedores(int pageSize, int pageIndex, Predicate condicion) {

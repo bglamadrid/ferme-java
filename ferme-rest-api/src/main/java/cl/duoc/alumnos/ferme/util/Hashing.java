@@ -4,13 +4,15 @@ import cl.duoc.alumnos.ferme.FermeConfig;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author Benjamin Guillermo <got12g at gmail.com>
  */
 public final class Hashing {
-    
+    private final static Logger LOG = LoggerFactory.getLogger(Hashing.class);
     private final static String HASHING_ALGORITHM = FermeConfig.ALGORITMO_CRIPTOGRAFICO_GLOBAL;
     
     /**
@@ -21,6 +23,7 @@ public final class Hashing {
      * @return El hash, resultando de la encriptación.
      */
     public static String hashear(String data) {
+        LOG.info("hashear");
         try{
             MessageDigest procesador = MessageDigest.getInstance(HASHING_ALGORITHM);
             byte[] hashBytes;
@@ -33,7 +36,7 @@ public final class Hashing {
                 if(hex.length() == 1) hexString.append('0');
                 hexString.append(hex);
             }
-
+            
             return hexString.toString();
         } catch(Exception ex){
            throw new RuntimeException(ex);
@@ -49,11 +52,11 @@ public final class Hashing {
      * 'DEFAULT_HASHING_ALGORITHM' es inválido.
      */
     public static String encriptarStringSesion(String sessionData) throws NoSuchAlgorithmException {
+        LOG.info("encriptarStringSesion");
+        
         String salt = "Wendy Sulca canta mejor que Shakira"; // :O
         String msg = salt + sessionData;
         
-        String hash = hashear(msg);
-        
-        return hash;
+        return hashear(msg);
     }
 }

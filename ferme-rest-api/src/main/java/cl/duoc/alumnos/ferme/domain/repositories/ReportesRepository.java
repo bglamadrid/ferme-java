@@ -17,7 +17,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class ReportesRepository implements IReportesRepository {
-    
     private Logger LOG = LoggerFactory.getLogger(ReportesRepository.class);
 
     @Autowired private EntityManager entityManager;

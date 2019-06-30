@@ -27,10 +27,10 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class RubrosService implements IRubrosService {
+    private final static Logger LOG = LoggerFactory.getLogger(RubrosService.class);
     
     @Autowired IRubrosRepository rubroRepo;
     @Autowired EntityManager em;
-    private final static Logger LOG = LoggerFactory.getLogger(ProductosService.class);
 
     @Override
     public Collection<RubroDTO> getRubros(Predicate condicion) {

@@ -26,9 +26,9 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class CargosService implements ICargosService {
+    private final static Logger LOG = LoggerFactory.getLogger(CargosService.class);
     
     @Autowired ICargosRepository cargoRepo;
-    private final static Logger LOG = LoggerFactory.getLogger(ProductosService.class);
 
     @Override
     public Collection<CargoDTO> getCargos(Predicate condicion) {

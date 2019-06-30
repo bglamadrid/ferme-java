@@ -26,10 +26,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(FermeConfig.URI_BASE_REST_API+"/gestion")
 public class ComunController {
+    private final static Logger LOG = LoggerFactory.getLogger(ComunController.class);
     
     @Autowired private IRubrosService rubroSvc;
     @Autowired private ICargosService cargoSvc;
-    private final static Logger LOG = LoggerFactory.getLogger(ComunController.class);
     
     
     /**

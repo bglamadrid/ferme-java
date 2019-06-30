@@ -1,6 +1,5 @@
 package cl.duoc.alumnos.ferme.domain.entities;
 
-import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.FermeConfig;
 import cl.duoc.alumnos.ferme.dto.ProductoDTO;
 import java.io.Serializable;
@@ -22,8 +21,7 @@ import javax.validation.constraints.Size;
 import org.hibernate.annotations.Cascade;
 import org.springframework.lang.NonNull;
 
-/**
- *
+/** Representa un registro de la tabla PRODUCTO.
  * @author Benjamin Guillermo <got12g at gmail.com>
  */
 @Entity

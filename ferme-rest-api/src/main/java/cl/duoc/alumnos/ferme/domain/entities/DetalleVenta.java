@@ -1,6 +1,5 @@
 package cl.duoc.alumnos.ferme.domain.entities;
 
-import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.FermeConfig;
 import cl.duoc.alumnos.ferme.dto.DetalleVentaDTO;
 import java.io.Serializable;
@@ -20,8 +19,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import org.hibernate.annotations.Cascade;
 
-/**
- *
+/** Representa un registro de la tabla DETALLE_VENTA.
  * @author Benjamin Guillermo <got12g at gmail.com>
  */
 @Entity

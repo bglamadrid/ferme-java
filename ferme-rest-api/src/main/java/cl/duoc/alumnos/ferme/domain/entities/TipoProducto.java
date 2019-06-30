@@ -20,8 +20,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import org.hibernate.annotations.Cascade;
 
-/**
- *
+/** Representa un registro de la tabla TIPO_PRODUCTO.
  * @author Benjamin Guillermo <got12g at gmail.com>
  */
 @Entity

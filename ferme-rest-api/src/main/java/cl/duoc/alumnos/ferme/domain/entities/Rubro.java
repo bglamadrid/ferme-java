@@ -15,8 +15,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
-/**
- *
+/** Representa un registro de la tabla RUBRO.
  * @author Benjamin Guillermo <got12g at gmail.com>
  */
 @Entity

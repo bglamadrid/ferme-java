@@ -27,8 +27,7 @@ import javax.validation.constraints.Size;
 import org.hibernate.annotations.Cascade;
 import org.springframework.lang.NonNull;
 
-/**
- *
+/** Representa un registro de la tabla USUARIO.
  * @author Benjamin Guillermo <got12g at gmail.com>
  */
 @Entity

@@ -1,6 +1,5 @@
 package cl.duoc.alumnos.ferme.domain.entities;
 
-import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.FermeConfig;
 import cl.duoc.alumnos.ferme.dto.CargoDTO;
 import java.io.Serializable;
@@ -16,8 +15,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
-/**
- *
+/** Representa un registro de la tabla CARGO.
  * @author Benjamin Guillermo <got12g at gmail.com>
  */
 @Entity

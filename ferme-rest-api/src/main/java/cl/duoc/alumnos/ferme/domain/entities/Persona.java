@@ -17,8 +17,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-/**
- *
+/** Representa un registro de la tabla PERSONA.
  * @author Benjamin Guillermo <got12g at gmail.com>
  */
 @Entity

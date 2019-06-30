@@ -22,8 +22,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.hibernate.annotations.Cascade;
 
-/**
- *
+/** Representa un registro de la tabla SESION.
  * @author Benjamin Guillermo <got12g at gmail.com>
  */
 @Entity

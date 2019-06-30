@@ -92,7 +92,9 @@ public class ClientesController {
      * @return El ID del cliente, 0 si falla al insertar, null si el JSON viene incorrecto.
      */
     @PostMapping("/guardar")
-    public Integer guardar(@RequestBody ClienteDTO dto) {
+    public Integer guardar(
+        @RequestBody ClienteDTO dto
+    ) {
         LOG.info("guardar");
         if (dto != null) {
             LOG.debug("guardar - dto="+dto);
@@ -109,7 +111,9 @@ public class ClientesController {
      * @return true si la operación fue exitosa, false si no lo fue
      */
     @PostMapping("/borrar")
-    public boolean borrar(@RequestBody Integer clienteId) {
+    public boolean borrar(
+        @RequestBody Integer clienteId
+    ) {
         LOG.info("borrar");
         if (clienteId != null && clienteId != 0) {
             LOG.debug("borrar - clienteId="+clienteId);

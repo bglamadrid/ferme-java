@@ -36,6 +36,7 @@ public interface IEmpleadosService {
      * Guarda (inserta o actualiza) el empleado.
      * @param dto El objeto DTO de empleado con la información respectiva a guardar.
      * @return El ID del registro guardado.
+     * @throws NotFoundException si el cargo asociado no existe
      */
     public int saveEmpleado(EmpleadoDTO dto) throws NotFoundException;
     

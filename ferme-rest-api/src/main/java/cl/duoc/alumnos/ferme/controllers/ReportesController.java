@@ -19,8 +19,10 @@ public class ReportesController {
     private final static Logger LOG = LoggerFactory.getLogger(ReportesController.class);
     
     @GetMapping("/ventas_realizadas")
-    public Long obtenerVentasRealizadas(@RequestParam Map<String,String> allRequestParams) {
-        
+    public Long obtenerVentasRealizadas(
+        @RequestParam Map<String,String> allRequestParams
+    ) {
+        LOG.info("obtenerVentasRealizadas");  
         return this.reporteSvc.obtenerTotalVentasRealizadas(allRequestParams);
     }
     

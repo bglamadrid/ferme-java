@@ -39,25 +39,29 @@ public class ProductosController {
     
     @GetMapping("/productos")
     public Collection<ProductoDTO> obtener(
-            @RequestParam Map<String, String> allRequestParams
+        @RequestParam Map<String, String> allRequestParams
     ) {
+        LOG.info("obtener sin pagina ni cantidad determinada");
         return this.obtener(null, null,  allRequestParams);
     }
     
     @GetMapping("/productos/{pageSize}")
     public Collection<ProductoDTO> obtener(
-            @PathVariable Integer pageSize,
-            @RequestParam Map<String, String> allRequestParams
+        @PathVariable Integer pageSize,
+        @RequestParam Map<String, String> allRequestParams
     ) {
+        LOG.info("obtener sin pagina determinada");
         return this.obtener(pageSize, null, allRequestParams);
     }
     
     @GetMapping("/productos/{pageSize}/{pageIndex}")
     public Collection<ProductoDTO> obtener(
-            @PathVariable Integer pageSize,
-            @PathVariable Integer pageIndex,
-            @RequestParam Map<String, String> allRequestParams
+        @PathVariable Integer pageSize,
+        @PathVariable Integer pageIndex,
+        @RequestParam Map<String, String> allRequestParams
     ) {
+        LOG.info("obtener");
+        
         Integer finalPageSize = FermeConfig.PAGINACION_REGISTROS_POR_PAGINA_INICIAL;
         Integer finalPageIndex = FermeConfig.PAGINACION_INDICE_INICIAL;
         Predicate filtros = null;
@@ -72,11 +76,11 @@ public class ProductosController {
             filtros = productoSvc.queryParamsMapToProductosFilteringPredicate(allRequestParams);
         }
         
-        LOG.info("getProductos - "+finalPageSize+" registros; página "+finalPageIndex);
-        LOG.debug("getProductos - Filtros solicitados: "+filtros);
+        LOG.info("obtener - "+finalPageSize+" registros; página "+finalPageIndex);
+        LOG.debug("obtener - Filtros solicitados: "+filtros);
         Collection<ProductoDTO> productos = this.productoSvc.getProductos(finalPageSize, finalPageIndex, filtros);
-        LOG.debug("getProductos - productos.size()="+productos.size());
-        LOG.info("getProductos - Solicitud completa. Enviando respuesta al cliente.");
+        LOG.debug("obtener - productos.size()="+productos.size());
+        LOG.info("obtener - Solicitud completa. Enviando respuesta al cliente.");
         return productos;
     }
     
@@ -84,14 +88,17 @@ public class ProductosController {
      * Almacena un Producto nuevo o actualiza uno existente.
      * @param dto Un objeto DTO representando el Producto a almacenar/actualizar.
      * @return El ID del producto.
+     * @throws NotFoundException Si no encuentra el tipo de producto
      */
     @PostMapping("/productos/guardar")
-    public Integer guardar(@RequestBody ProductoDTO dto) throws NotFoundException {
-        
+    public Integer guardar(
+        @RequestBody ProductoDTO dto
+    ) throws NotFoundException {
+        LOG.info("guardar");
         if (dto != null) {
-            LOG.debug("saveProducto - dto="+dto);
+            LOG.debug("guardar - dto="+dto);
             Integer productoId =  productoSvc.saveProducto(dto);
-            LOG.debug("saveFamiliaProducto - productoId="+productoId);
+            LOG.debug("guardar - productoId="+productoId);
             return productoId;
         }
         return null;
@@ -103,17 +110,21 @@ public class ProductosController {
      * @return true si la operación fue exitosa, false si no lo fue.
      */
     @PostMapping("/productos/borrar")
-    public boolean borrar(@RequestBody Integer productoId) {
-        
+    public boolean borrar(
+        @RequestBody Integer productoId
+    ) {
+        LOG.info("borrar");
         if (productoId != null && productoId != 0) {
-            LOG.debug("deleteProducto - productoId="+productoId);
+            LOG.debug("borrar - productoId="+productoId);
             return productoSvc.deleteProducto(productoId);
         }
         return false;
     }
     
     @GetMapping("/tipos_producto")
-    public Collection<TipoProductoDTO> tipos(@RequestParam Map<String,String> allRequestParams) {
+    public Collection<TipoProductoDTO> tipos(
+        @RequestParam Map<String,String> allRequestParams
+    ) {
         LOG.info("tipos");
         Predicate filtros = null;
         if (allRequestParams != null && !allRequestParams.isEmpty()) {
@@ -126,14 +137,17 @@ public class ProductosController {
      * Almacena un TipoProducto nuevo o actualiza uno existente.
      * @param dto Un objeto DTO representando el TipoProducto a almacenar/actualizar.
      * @return El ID del tipo de producto.
+     * @throws NotFoundException Si no se encuentra la familia de producto asociada
      */
     @PostMapping("/tipos_producto/guardar")
-    public Integer guardarTipo(@RequestBody TipoProductoDTO dto) throws NotFoundException {
-        
+    public Integer guardarTipo(
+        @RequestBody TipoProductoDTO dto
+    ) throws NotFoundException {
+        LOG.info("guardarTipo");
         if (dto != null) {
-            LOG.debug("saveTipoProducto - dto="+dto);
+            LOG.debug("guardarTipo - dto="+dto);
             Integer tipoProductoId = tpProductoSvc.saveTipoProducto(dto);
-            LOG.debug("saveFamiliaProducto - tipoProductoId="+tipoProductoId);
+            LOG.debug("guardarTipo - tipoProductoId="+tipoProductoId);
             return tipoProductoId;
         }
         return null;
@@ -145,18 +159,22 @@ public class ProductosController {
      * @return true si la operación fue exitosa, false si no lo fue.
      */
     @DeleteMapping("/tipos_producto/borrar")
-    public boolean borrarTipo(@RequestParam("id") Integer tipoProductoId) {
-        
+    public boolean borrarTipo(
+        @RequestParam("id") Integer tipoProductoId
+    ) {
+        LOG.info("borrarTipo");
         if (tipoProductoId != null && tipoProductoId != 0) {
-            LOG.debug("deleteTipoProducto - clienteId="+tipoProductoId);
+            LOG.debug("borrarTipo - clienteId="+tipoProductoId);
             return tpProductoSvc.deleteTipoProducto(tipoProductoId);
         }
         return false;
     }
     
     @GetMapping("/familias_producto")
-    public Collection<FamiliaProductoDTO> familias(@RequestParam Map<String,String> allRequestParams) {
-        
+    public Collection<FamiliaProductoDTO> familias(
+        @RequestParam Map<String,String> allRequestParams
+    ) {
+        LOG.info("familias");
         Predicate filtros = null;
         if (allRequestParams != null && !allRequestParams.isEmpty()) {
             filtros = this.fmlProductoSvc.queryParamsMapToFamiliasProductosFilteringPredicate(allRequestParams);
@@ -169,14 +187,17 @@ public class ProductosController {
      * Almacena un FamiliaProducto nuevo o actualiza uno existente.
      * @param dto Un objeto DTO representando la FamiliaProducto a almacenar/actualizar.
      * @return El ID de la familia de productos.
+     * @throws NotFoundException Si no encuentra el rubro asociado.
      */
     @PostMapping("/familias_producto/guardar")
-    public Integer guardarFamilia(@RequestBody FamiliaProductoDTO dto) throws NotFoundException {
-        
+    public Integer guardarFamilia(
+        @RequestBody FamiliaProductoDTO dto
+    ) throws NotFoundException {
+        LOG.info("guardarFamilia");
         if (dto != null) {
-            LOG.debug("saveFamiliaProducto - dto="+dto);
+            LOG.debug("guardarFamilia - dto="+dto);
             Integer familiaProductoId = fmlProductoSvc.saveFamiliaProducto(dto);
-            LOG.debug("saveFamiliaProducto - familiaProductoId="+familiaProductoId);
+            LOG.debug("guardarFamilia - familiaProductoId="+familiaProductoId);
             return familiaProductoId;
         }
         return null;
@@ -188,8 +209,10 @@ public class ProductosController {
      * @return true si la operación fue exitosa, false si no lo fue.
      */
     @DeleteMapping("/familias_producto/borrar")
-    public boolean borrarFamilia(@RequestParam("id") Integer familiaProductoId) {
-        
+    public boolean borrarFamilia(
+        @RequestParam("id") Integer familiaProductoId
+    ) {
+        LOG.info("borrarFamilia");
         if (familiaProductoId != null && familiaProductoId != 0) {
             LOG.debug("deleteFamiliaProducto - clienteId="+familiaProductoId);
             return tpProductoSvc.deleteTipoProducto(familiaProductoId);

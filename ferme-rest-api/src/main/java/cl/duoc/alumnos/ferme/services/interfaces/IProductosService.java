@@ -36,6 +36,7 @@ public interface IProductosService {
      * Guarda (inserta o actualiza) el producto.
      * @param dto El objeto DTO de producto con la información respectiva a guardar.
      * @return El ID del registro guardado.
+     * @throws NotFoundException si el tipo de producto asociado no existe
      */
     public int saveProducto(ProductoDTO dto) throws NotFoundException;
     

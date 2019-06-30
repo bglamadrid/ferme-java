@@ -30,17 +30,19 @@ public class PersonasController {
     @Autowired private IPersonasService personaSvc;    
     
     @GetMapping("")
-    public Collection<PersonaDTO> obtener(@RequestParam Map<String,String> allRequestParams) {
-        
+    public Collection<PersonaDTO> obtener(
+        @RequestParam Map<String,String> allRequestParams
+    ) {
+        LOG.info("obtener sin pagina ni cantidad determinada");
         return this.obtener(null, null, allRequestParams);
     }
     
     @GetMapping("/{pageSize}")
     public Collection<PersonaDTO> obtener(
-            @PathVariable Integer pageSize,
-            @RequestParam Map<String,String> allRequestParams
+        @PathVariable Integer pageSize,
+        @RequestParam Map<String,String> allRequestParams
     ) {
-        
+        LOG.info("obtener sin pagina determinada");
         return this.obtener(pageSize, null, allRequestParams);
     }
     
@@ -59,7 +61,9 @@ public class PersonasController {
     public Collection<PersonaDTO> obtener(
         @PathVariable Integer pageSize,
         @PathVariable Integer pageIndex,
-        @RequestParam Map<String,String> allRequestParams) {
+        @RequestParam Map<String,String> allRequestParams
+    ) {
+        LOG.info("obtener");
         
         Integer finalPageSize = FermeConfig.PAGINACION_REGISTROS_POR_PAGINA_INICIAL;
         Integer finalPageIndex = FermeConfig.PAGINACION_INDICE_INICIAL;
@@ -75,11 +79,11 @@ public class PersonasController {
             filtros = this.personaSvc.queryParamsMapToPersonasFilteringPredicate(allRequestParams);
         }        
         
-        LOG.info("getPersonas - "+finalPageSize+" registros; página "+finalPageIndex);
-        LOG.debug("getPersonas - Filtros solicitados: "+filtros);
+        LOG.info("obtener - "+finalPageSize+" registros; página "+finalPageIndex);
+        LOG.debug("obtener - Filtros solicitados: "+filtros);
         Collection<PersonaDTO> personas = personaSvc.getPersonas(finalPageSize, finalPageIndex, filtros);
-        LOG.debug("getPersonas - personas.size()="+personas.size());
-        LOG.info("getPersonas - Solicitud completa. Enviando respuesta al cliente.");
+        LOG.debug("obtener - personas.size()="+personas.size());
+        LOG.info("obtener - Solicitud completa. Enviando respuesta al cliente.");
         return personas;
     }
 }

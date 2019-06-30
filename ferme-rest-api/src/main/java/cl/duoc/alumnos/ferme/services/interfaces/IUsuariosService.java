@@ -36,7 +36,7 @@ public interface IUsuariosService {
      * Guarda (inserta o actualiza) el usuario.
      * @param dto El objeto DTO de usuario con la información respectiva a guardar.
      * @return El ID del registro guardado.
-     * @throws NotFoundException Si no se encuentra la Persona asociada
+     * @throws NotFoundException si la persona asociada no existe
      */
     public int saveUsuario(UsuarioDTO dto) throws NotFoundException;
     

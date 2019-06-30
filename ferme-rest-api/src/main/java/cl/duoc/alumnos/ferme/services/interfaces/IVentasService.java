@@ -51,6 +51,7 @@ public interface IVentasService {
      * Guarda (inserta o actualiza) la venta.
      * @param dto El objeto DTO de venta con la información respectiva a guardar.
      * @return El ID del registro guardado.
+     * @throws NotFoundException si el cliente asociado no existe, o alguno de los productos vendidos no existe
      */
     public int saveVenta(VentaDTO dto) throws NotFoundException;
     

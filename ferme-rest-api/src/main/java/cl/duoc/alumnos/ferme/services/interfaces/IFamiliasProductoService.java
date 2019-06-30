@@ -35,6 +35,7 @@ public interface IFamiliasProductoService {
      * @param dto El objeto DTO de familia de productos con la información 
      * respectiva a guardar.
      * @return El ID del registro guardado.
+     * @throws NotFoundException si el rubro o el proveedor asociado no existen
      */
     public int saveFamiliaProducto(FamiliaProductoDTO dto) throws NotFoundException;
     

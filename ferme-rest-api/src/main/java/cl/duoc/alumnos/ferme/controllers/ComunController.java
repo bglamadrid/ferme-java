@@ -42,8 +42,10 @@ public class ComunController {
      * @return Una colección de objetos RubroDTO
      */
     @GetMapping("/rubros")
-    public Collection<RubroDTO> obtenerRubros(@RequestParam Map<String,String> allRequestParams) {
-        
+    public Collection<RubroDTO> obtenerRubros(
+        @RequestParam Map<String,String> allRequestParams
+    ) {
+        LOG.info("obtenerRubros");
         Predicate filtros = null;
         if (allRequestParams != null && !allRequestParams.isEmpty()) {
             filtros = this.rubroSvc.queryParamsMapToRubrosFilteringPredicate(allRequestParams);
@@ -57,9 +59,12 @@ public class ComunController {
      * @return El ID del rubro.
      */
     @PostMapping("/rubros/guardar")
-    public Integer guardarRubro(@RequestBody RubroDTO dto) {
-        
+    public Integer guardarRubro(
+        @RequestBody RubroDTO dto
+    ) {
+        LOG.info("guardarRubro");
         if (dto != null) {
+            LOG.debug("guardarRubro - dto="+dto);
             return rubroSvc.saveRubro(dto);
         }
         return null;
@@ -71,9 +76,12 @@ public class ComunController {
      * @return true si la operación fue exitosa, false si no lo fue.
      */
     @PostMapping("/rubros/borrar")
-    public boolean borrarRubro(@RequestParam("id") Integer rubroId) {
-        
+    public boolean borrarRubro(
+        @RequestParam("id") Integer rubroId
+    ) {
+        LOG.info("borrarRubro");
         if (rubroId != null && rubroId != 0) {
+            LOG.debug("borrarRubro - rubroId="+rubroId);
             return rubroSvc.deleteRubro(rubroId);
         }
         return false;
@@ -90,8 +98,10 @@ public class ComunController {
      * @return Una colección de objetos CargoDTO
      */
     @GetMapping("/cargos")
-    public Collection<CargoDTO> obtenerCargos(@RequestParam Map<String,String> allRequestParams) {
-        
+    public Collection<CargoDTO> obtenerCargos(
+        @RequestParam Map<String,String> allRequestParams
+    ) {
+        LOG.info("obtenerCargos");
         Predicate filtros = null;
         if (allRequestParams != null && !allRequestParams.isEmpty()) {
             filtros = this.cargoSvc.queryParamsMapToCargosFilteringPredicate(allRequestParams);
@@ -105,9 +115,12 @@ public class ComunController {
      * @return El ID del rubro.
      */
     @PostMapping("/cargos/guardar")
-    public Integer guardarCargo(@RequestBody CargoDTO dto) {
-        
+    public Integer guardarCargo(
+        @RequestBody CargoDTO dto
+    ) {
+        LOG.info("guardarCargo");
         if (dto != null) {
+            LOG.debug("guardarCargo - dto="+dto);
             return cargoSvc.saveCargo(dto);
         }
         return null;
@@ -119,9 +132,12 @@ public class ComunController {
      * @return true si la operación fue exitosa, false si no lo fue.
      */
     @PostMapping("/cargos/borrar")
-    public boolean borrarCargo(@RequestParam("id") Integer cargoId) {
-        
+    public boolean borrarCargo(
+        @RequestParam("id") Integer cargoId
+    ) {
+        LOG.info("borrarCargo");
         if (cargoId != null && cargoId != 0) {
+            LOG.debug("borrarCargo - cargoId="+cargoId);
             return cargoSvc.deleteCargo(cargoId);
         }
         return false;

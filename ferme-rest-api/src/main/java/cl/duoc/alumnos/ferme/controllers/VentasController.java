@@ -36,26 +36,30 @@ public class VentasController {
     }
     
     @GetMapping("")
-    public Collection<VentaDTO> getVentas(
+    public Collection<VentaDTO> obtener(
         @RequestParam Map<String,String> allRequestParams
     ) {
-        return this.getVentas(null, null, allRequestParams);
+        LOG.info("obtener sin pagina ni cantidad determinada");  
+        return this.obtener(null, null, allRequestParams);
     }
     
     @GetMapping("/{pageSize}")
-    public Collection<VentaDTO> getVentas(
+    public Collection<VentaDTO> obtener(
         @RequestParam Integer pageSize,
         @RequestParam Map<String, String> allRequestParams
     ) {
-        return this.getVentas(pageSize, null, allRequestParams);
+        LOG.info("obtener sin pagina determinada"); 
+        return this.obtener(pageSize, null, allRequestParams);
     }
     
     @GetMapping("/{pageSize}/{pageIndex}")
-    public Collection<VentaDTO> getVentas(
+    public Collection<VentaDTO> obtener(
         @RequestParam Integer pageSize,
         @RequestParam Integer pageIndex,
         @RequestParam Map<String,String> allRequestParams
     ) {
+        LOG.info("obtener"); 
+        
         Integer finalPageSize = FermeConfig.PAGINACION_REGISTROS_POR_PAGINA_INICIAL;
         Integer finalPageIndex = FermeConfig.PAGINACION_INDICE_INICIAL;
         Predicate filtros = null;
@@ -70,11 +74,11 @@ public class VentasController {
             filtros = ventaSvc.queryParamsMapToVentasFilteringPredicate(allRequestParams);
         }
         
-        LOG.info("getVentas - "+finalPageSize+" registros; página "+finalPageIndex);
-        LOG.debug("getVentas - Filtros solicitados: "+filtros);
+        LOG.info("obtener - "+finalPageSize+" registros; página "+finalPageIndex);
+        LOG.debug("obtener - Filtros solicitados: "+filtros);
         Collection<VentaDTO> ventas = this.ventaSvc.getVentas(finalPageSize, finalPageIndex, filtros);
-        LOG.debug("getVentas - ventas.size()="+ventas.size());
-        LOG.info("getVentas - Solicitud completa. Enviando respuesta al cliente.");
+        LOG.debug("obtener - ventas.size()="+ventas.size());
+        LOG.info("obtener - Solicitud completa. Enviando respuesta al cliente.");
         return ventas;
     }
     
@@ -84,8 +88,10 @@ public class VentasController {
      * @return Una colección de objetos DTO.
      */
     @PostMapping("/detalles")
-    public Collection<DetalleVentaDTO> getDetallesVenta(@RequestBody VentaDTO dto) {
-        
+    public Collection<DetalleVentaDTO> detalles(
+        @RequestBody VentaDTO dto
+    ) {
+        LOG.info("detalles"); 
         if (dto != null && dto.getIdVenta() != null && dto.getIdVenta() != 0) {
             LOG.debug("getDetallesVenta - dto="+dto.toString());
             return ventaSvc.getDetallesVenta(dto.getIdVenta());
@@ -97,14 +103,17 @@ public class VentasController {
      * Almacena una Venta nueva o actualiza una existente.
      * @param dto Un objeto DTO representando la Venta a almacenar/actualizar.
      * @return El ID de la venta.
+     * @throws NotFoundException si el cliente asociado a la venta no existe, o alguno de los productos vendidos no existe
      */
     @PostMapping("/guardar")
-    public Integer saveVenta(@RequestBody VentaDTO dto) throws NotFoundException {
-        
+    public Integer guardar(
+        @RequestBody VentaDTO dto
+    ) throws NotFoundException {
+        LOG.info("guardar"); 
         if (dto != null) {
-            LOG.debug("saveVenta - dto="+dto);
+            LOG.debug("guardar - dto="+dto);
             Integer ventaId = ventaSvc.saveVenta(dto);
-            LOG.debug("saveVenta - ventaId="+ventaId);
+            LOG.debug("guardar - ventaId="+ventaId);
             return ventaId;
         }
         return null;
@@ -116,10 +125,12 @@ public class VentasController {
      * @return true si la operación fue exitosa, false si no lo fue.
      */
     @PostMapping("/borrar")
-    public boolean deleteVenta(@RequestBody Integer ventaId) {
-        
+    public boolean borrar(
+        @RequestBody Integer ventaId
+    ) {
+        LOG.info("borrar"); 
         if (ventaId != null && ventaId != 0) {
-            LOG.debug("deleteVenta - clienteId="+ventaId);
+            LOG.debug("borrar - ventaId="+ventaId);
             return ventaSvc.deleteVenta(ventaId);
         }
         return false;

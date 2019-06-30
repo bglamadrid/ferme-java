@@ -56,6 +56,7 @@ public interface IOrdenesCompraService {
      * Guarda (inserta o actualiza) la orden de compra.
      * @param dto El objeto DTO de orden de compra con la información respectiva a guardar.
      * @return El ID del registro guardado.
+     * @throws NotFoundException si el empleado asociado no existe, o algun producto solicitado no existe
      */
     public int saveOrdenCompra(OrdenCompraDTO dto) throws NotFoundException;
     

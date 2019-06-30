@@ -30,8 +30,10 @@ public class UsuariosController {
     @Autowired private IUsuariosService usuarioSvc;
     
     @GetMapping("")
-    public Collection<UsuarioDTO> obtener(@RequestParam Map<String,String> allRequestParams) {
-        
+    public Collection<UsuarioDTO> obtener(
+        @RequestParam Map<String,String> allRequestParams
+    ) {
+        LOG.info("obtener sin pagina ni cantidad determinada");  
         return this.obtener(null, null, allRequestParams);
     }
     
@@ -40,6 +42,7 @@ public class UsuariosController {
         @PathVariable Integer pageSize,
         @RequestParam Map<String,String> allRequestParams
     ) {
+        LOG.info("obtener sin pagina determinada");  
         return this.obtener(pageSize, null, allRequestParams);
     }
     
@@ -58,7 +61,9 @@ public class UsuariosController {
     public Collection<UsuarioDTO> obtener(
         @PathVariable Integer pageSize,
         @PathVariable Integer pageIndex,
-        @RequestParam Map<String,String> allRequestParams) {
+        @RequestParam Map<String,String> allRequestParams
+    ) {
+        LOG.info("obtener");  
         
         Integer finalPageSize = FermeConfig.PAGINACION_REGISTROS_POR_PAGINA_INICIAL;
         Integer finalPageIndex = FermeConfig.PAGINACION_INDICE_INICIAL;
@@ -74,11 +79,11 @@ public class UsuariosController {
             filtros = this.usuarioSvc.queryParamsMapToUsuariosFilteringPredicate(allRequestParams);
         }
         
-        LOG.info("getUsuarios - "+finalPageSize+" registros; página "+finalPageIndex);
-        LOG.debug("getUsuarios - Filtros solicitados: "+filtros);
+        LOG.info("obtener - "+finalPageSize+" registros; página "+finalPageIndex);
+        LOG.debug("obtener - Filtros solicitados: "+filtros);
         Collection<UsuarioDTO> usuarios = this.usuarioSvc.getUsuarios(finalPageSize, finalPageIndex, filtros);
-        LOG.debug("getUsuarios - usuarios.size()="+usuarios.size());
-        LOG.info("getUsuarios - Solicitud completa. Enviando respuesta al cliente.");
+        LOG.debug("obtener - usuarios.size()="+usuarios.size());
+        LOG.info("obtener - Solicitud completa. Enviando respuesta al cliente.");
         return usuarios;
     }
     
@@ -89,12 +94,14 @@ public class UsuariosController {
      * @throws javassist.NotFoundException
      */
     @PostMapping("/guardar")
-    public Integer guardar(@RequestBody UsuarioDTO dto) throws NotFoundException {
-        
+    public Integer guardar(
+        @RequestBody UsuarioDTO dto
+    ) throws NotFoundException {
+        LOG.info("guardar");
         if (dto != null) {
-            LOG.debug("saveUsuario - dto="+dto);
+            LOG.debug("guardar - dto="+dto);
             Integer usuarioId = usuarioSvc.saveUsuario(dto);
-            LOG.debug("saveUsuario - usuarioId="+usuarioId);
+            LOG.debug("guardar - usuarioId="+usuarioId);
             return usuarioId;
         }
         return null;
@@ -106,10 +113,12 @@ public class UsuariosController {
      * @return true si la operación fue exitosa, false si no lo fue.
      */
     @PostMapping("/borrar")
-    public boolean borrar(@RequestBody Integer usuarioId) {
-        
+    public boolean borrar(
+        @RequestBody Integer usuarioId
+    ) {
+        LOG.info("borrar");
         if (usuarioId != null && usuarioId != 0) {
-            LOG.debug("deleteUsuario - usuarioId="+usuarioId);
+            LOG.debug("borrar - usuarioId="+usuarioId);
             return usuarioSvc.deleteUsuario(usuarioId);
         }
         return false;

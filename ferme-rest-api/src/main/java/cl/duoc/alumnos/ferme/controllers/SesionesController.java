@@ -36,7 +36,9 @@ public class SesionesController {
      * @throws NotFoundException Si algún ID referenciado no existe en la base de datos
      */
     @PostMapping("/abrir")
-    public ResponseEntity<?> abrirSesion(@RequestBody LoginPOJO login) throws NotFoundException {
+    public ResponseEntity<?> abrirSesion(
+        @RequestBody LoginPOJO login
+    ) throws NotFoundException {
         LOG.info("abrirSesion");
         if (login != null) {
             LOG.debug("abrirSesion - login="+login);
@@ -62,24 +64,31 @@ public class SesionesController {
      * @return El ID de la sesion.
      */
     @PostMapping("/validar")
-    public boolean validarSesion(@RequestBody SesionDTO dto) {
+    public boolean validarSesion(
+        @RequestBody SesionDTO dto
+    ) {
         LOG.info("validarSesion");
         if (dto != null) {
+            LOG.debug("validarSesion - dto="+dto);
             return sesionSvc.validarSesion(dto);
         }
+        LOG.info("validarSesion - La sesion ingresada ha caducado o no es valida");
         return false;
     }
     
     /**
      * Elimina una Sesion de la base de datos.
-     * @param sesion El DTO de la Sesion a cerrar.
+     * @param dto El DTO de la Sesion a cerrar.
      * @return Siempre devuelve true, por motivos de seguridad.
      */
     @PostMapping("/cerrar")
-    public boolean cerrarSesion(@RequestBody SesionDTO sesion) {
+    public boolean cerrarSesion(
+        @RequestBody SesionDTO dto
+    ) {
         LOG.info("cerrarSesion");
-        if (sesion != null) {
-            sesionSvc.cerrarSesiones(sesion);
+        if (dto != null) {
+            LOG.info("cerrarSesion - dto="+dto);
+            sesionSvc.cerrarSesiones(dto);
         }
         return true;
     }

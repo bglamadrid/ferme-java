@@ -29,7 +29,10 @@ public class ClientesController {
     @Autowired private IClientesService clienteSvc;    
     
     @GetMapping("")
-    public Collection<ClienteDTO> obtener(@RequestParam Map<String,String> allRequestParams) {
+    public Collection<ClienteDTO> obtener(
+        @RequestParam Map<String,String> allRequestParams
+    ) {
+        LOG.info("obtener sin pagina ni cantidad determinada");
         return this.obtener(null, null, allRequestParams);
     }
     
@@ -38,6 +41,7 @@ public class ClientesController {
             @PathVariable Integer pageSize,
             @RequestParam Map<String,String> allRequestParams
     ) {
+        LOG.info("obtener sin pagina determinada");
         return this.obtener(pageSize, null, allRequestParams);
     }
     
@@ -74,11 +78,11 @@ public class ClientesController {
             filtros = this.clienteSvc.queryParamsMapToClientesFilteringPredicate(allRequestParams);
         }
         
-        LOG.info("getClientes - "+finalPageSize+" registros; página "+finalPageIndex);
-        LOG.debug("getClientes - Filtros solicitados: "+filtros);
+        LOG.info("obtener - "+finalPageSize+" registros; página "+finalPageIndex);
+        LOG.debug("obtener - Filtros solicitados: "+filtros);
         Collection<ClienteDTO> clientes = this.clienteSvc.getClientes(finalPageSize, finalPageIndex, filtros);
-        LOG.debug("getClientes - clientes.size()="+clientes.size());
-        LOG.info("getClientes - Solicitud completa. Enviando respuesta al cliente.");
+        LOG.debug("obtener - clientes.size()="+clientes.size());
+        LOG.info("obtener - Solicitud completa. Enviando respuesta al cliente.");
         return clientes;
     }
     
@@ -90,7 +94,6 @@ public class ClientesController {
     @PostMapping("/guardar")
     public Integer guardar(@RequestBody ClienteDTO dto) {
         LOG.info("guardar");
-        
         if (dto != null) {
             LOG.debug("guardar - dto="+dto);
             Integer clienteId = clienteSvc.saveCliente(dto);
@@ -107,9 +110,9 @@ public class ClientesController {
      */
     @PostMapping("/borrar")
     public boolean borrar(@RequestBody Integer clienteId) {
-        
+        LOG.info("borrar");
         if (clienteId != null && clienteId != 0) {
-            LOG.debug("deleteCliente - clienteId="+clienteId);
+            LOG.debug("borrar - clienteId="+clienteId);
             return clienteSvc.deleteCliente(clienteId);
         }
         return false;

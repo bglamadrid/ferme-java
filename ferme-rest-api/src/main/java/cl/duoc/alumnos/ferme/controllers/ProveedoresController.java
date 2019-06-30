@@ -30,17 +30,19 @@ public class ProveedoresController {
     @Autowired private IProveedoresService proveedorSvc;
     
     @GetMapping("")
-    public Collection<ProveedorDTO> getProveedores(@RequestParam Map<String,String> allRequestParams) {
-        
+    public Collection<ProveedorDTO> getProveedores(
+        @RequestParam Map<String,String> allRequestParams
+    ) {
+        LOG.info("obtener sin pagina ni cantidad determinada");        
         return this.getProveedores(null, null, allRequestParams);
     }
     
     @GetMapping("/{pageSize}")
     public Collection<ProveedorDTO> getProveedores(
-            @PathVariable Integer pageSize,
-            @RequestParam Map<String,String> allRequestParams
+        @PathVariable Integer pageSize,
+        @RequestParam Map<String,String> allRequestParams
     ) {
-        
+        LOG.info("obtener sin pagina determinada");
         return this.getProveedores(pageSize, null, allRequestParams);
     }
     
@@ -59,7 +61,9 @@ public class ProveedoresController {
     public Collection<ProveedorDTO> getProveedores(
         @PathVariable Integer pageSize,
         @PathVariable Integer pageIndex,
-        @RequestParam Map<String,String> allRequestParams) {
+        @RequestParam Map<String,String> allRequestParams
+    ) {
+        LOG.info("obtener");
         
         Integer finalPageSize = FermeConfig.PAGINACION_REGISTROS_POR_PAGINA_INICIAL;
         Integer finalPageIndex = FermeConfig.PAGINACION_INDICE_INICIAL;
@@ -75,11 +79,11 @@ public class ProveedoresController {
             filtros = this.proveedorSvc.queryParamsMapToProveedoresFilteringPredicate(allRequestParams);
         }
         
-        LOG.info("getProveedores - "+finalPageSize+" registros; página "+finalPageIndex);
-        LOG.debug("getProveedores - Filtros solicitados: "+filtros);
+        LOG.info("obtener - "+finalPageSize+" registros; página "+finalPageIndex);
+        LOG.debug("obtener - Filtros solicitados: "+filtros);
         Collection<ProveedorDTO> proveedores = this.proveedorSvc.getProveedores(finalPageSize, finalPageIndex, filtros);
-        LOG.debug("getProveedores - proveedores.size()="+proveedores.size());
-        LOG.info("getProveedores - Solicitud completa. Enviando respuesta al cliente.");
+        LOG.debug("obtener - proveedores.size()="+proveedores.size());
+        LOG.info("obtener - Solicitud completa. Enviando respuesta al cliente.");
         return proveedores;
     }
     
@@ -89,12 +93,14 @@ public class ProveedoresController {
      * @return El ID del rubro.
      */
     @PostMapping("/guardar")
-    public Integer saveProveedor(@RequestBody ProveedorDTO dto) {
-        
+    public Integer guardar(
+        @RequestBody ProveedorDTO dto
+    ) {
+        LOG.info("guardar");
         if (dto != null) {
-            LOG.debug("saveProveedor - dto="+dto);
+            LOG.debug("guardar - dto="+dto);
             Integer proveedorId = proveedorSvc.saveProveedor(dto);
-            LOG.debug("saveProveedor - proveedorId="+proveedorId);
+            LOG.debug("guardar - proveedorId="+proveedorId);
             return proveedorId;
         }
         return null;
@@ -106,10 +112,12 @@ public class ProveedoresController {
      * @return true si la operación fue exitosa, false si no lo fue.
      */
     @PostMapping("/borrar")
-    public boolean deleteProveedor(@RequestBody Integer proveedorId) {
-        
+    public boolean borrar(
+        @RequestBody Integer proveedorId
+    ) {
+        LOG.info("borrar");
         if (proveedorId != null && proveedorId != 0) {
-            LOG.debug("deleteProveedor - clienteId="+proveedorId);
+            LOG.debug("borrar - proveedorId="+proveedorId);
             return proveedorSvc.deleteProveedor(proveedorId);
         }
         return false;

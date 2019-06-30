@@ -31,8 +31,10 @@ public class EmpleadosController {
     @Autowired private IEmpleadosService empleadoSvc;    
     
     @GetMapping("")
-    public Collection<EmpleadoDTO> obtener(@RequestParam Map<String,String> allRequestParams) {
-        
+    public Collection<EmpleadoDTO> obtener(
+        @RequestParam Map<String,String> allRequestParams
+    ) {
+        LOG.info("obtener sin pagina ni cantidad determinada");
         return this.obtener(null, null, allRequestParams);
     }
     
@@ -41,7 +43,7 @@ public class EmpleadosController {
         @PathVariable Integer pageSize,
         @RequestParam Map<String,String> allRequestParams
     ) {
-        
+        LOG.info("obtener sin pagina determinada");
         return this.obtener(pageSize, null, allRequestParams);
     }
     
@@ -60,7 +62,9 @@ public class EmpleadosController {
     public Collection<EmpleadoDTO> obtener(
         @PathVariable Integer pageSize,
         @PathVariable Integer pageIndex,
-        @RequestParam Map<String,String> allRequestParams) {
+        @RequestParam Map<String,String> allRequestParams
+    ) {
+        LOG.info("obtener");
         
         Integer finalPageSize = FermeConfig.PAGINACION_REGISTROS_POR_PAGINA_INICIAL;
         Integer finalPageIndex = FermeConfig.PAGINACION_INDICE_INICIAL;
@@ -76,11 +80,11 @@ public class EmpleadosController {
             filtros = this.empleadoSvc.queryParamsMapToEmpleadosFilteringPredicate(allRequestParams);
         }
         
-        LOG.info("getEmpleados - "+finalPageSize+" registros; página "+finalPageIndex);
-        LOG.debug("getEmpleados - Filtros solicitados: "+filtros);
+        LOG.info("obtener - "+finalPageSize+" registros; página "+finalPageIndex);
+        LOG.debug("obtener - Filtros solicitados: "+filtros);
         Collection<EmpleadoDTO> empleados = this.empleadoSvc.getEmpleados(finalPageSize, finalPageIndex, filtros);
-        LOG.debug("getEmpleados - empleados.size()="+empleados.size());
-        LOG.info("getEmpleados - Solicitud completa. Enviando respuesta al cliente.");
+        LOG.debug("obtener - empleados.size()="+empleados.size());
+        LOG.info("obtener - Solicitud completa. Enviando respuesta al cliente.");
         return empleados;
     }
     
@@ -91,12 +95,14 @@ public class EmpleadosController {
      * @throws javassist.NotFoundException
      */
     @PostMapping("/guardar")
-    public Integer guardar(@RequestBody EmpleadoDTO dto) throws NotFoundException {
-        
+    public Integer guardar(
+        @RequestBody EmpleadoDTO dto
+    ) throws NotFoundException {
+        LOG.info("guardar");
         if (dto != null) {
-            LOG.debug("saveEmpleado - dto="+dto);
+            LOG.debug("guardar - dto="+dto);
             Integer empleadoId = empleadoSvc.saveEmpleado(dto);
-            LOG.debug("saveEmpleado - empleadoId="+empleadoId);
+            LOG.debug("guardar - empleadoId="+empleadoId);
             return empleadoId;
         }
         return null;
@@ -108,10 +114,12 @@ public class EmpleadosController {
      * @return true si la operación fue exitosa, false si no lo fue.
      */
     @PostMapping("/borrar")
-    public boolean borrar(@RequestBody Integer empleadoId) {
-        
+    public boolean borrar(
+        @RequestBody Integer empleadoId
+    ) {
+        LOG.info("borrar");
         if (empleadoId != null && empleadoId != 0) {
-            LOG.debug("deleteEmpleado - empleadoId="+empleadoId);
+            LOG.debug("borrar - empleadoId="+empleadoId);
             return empleadoSvc.deleteEmpleado(empleadoId);
         }
         return false;

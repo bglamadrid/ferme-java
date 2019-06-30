@@ -34,6 +34,7 @@ public class OrdenesCompraController {
     
     @GetMapping("/next")
     public Integer obtenerSiguienteId() {
+        LOG.info("obtenerSiguienteId");
         return ordenCompraSvc.getNextId();
     }
     
@@ -41,6 +42,7 @@ public class OrdenesCompraController {
     public Collection<OrdenCompraDTO> obtener(
         @RequestParam Map<String,String> allRequestParams
     ) {
+        LOG.info("obtener sin pagina ni cantidad determinada");
         return this.obtener(null, null, allRequestParams);
     }
     
@@ -49,6 +51,7 @@ public class OrdenesCompraController {
         @RequestParam Integer pageSize,
         @RequestParam Map<String, String> allRequestParams
     ) {
+        LOG.info("obtener sin pagina determinada");
         return this.obtener(pageSize, null, allRequestParams);
     }
     
@@ -58,6 +61,8 @@ public class OrdenesCompraController {
         @RequestParam Integer pageIndex,
         @RequestParam Map<String,String> allRequestParams
     ) {
+        LOG.info("obtener");
+        
         Integer finalPageSize = FermeConfig.PAGINACION_REGISTROS_POR_PAGINA_INICIAL;
         Integer finalPageIndex = FermeConfig.PAGINACION_INDICE_INICIAL;
         Predicate filtros = null;
@@ -72,11 +77,11 @@ public class OrdenesCompraController {
             filtros = ordenCompraSvc.queryParamsMapToOrdenesCompraFilteringPredicate(allRequestParams);
         }
         
-        LOG.info("getOrdenesCompra - "+finalPageSize+" registros; página "+finalPageIndex);
-        LOG.debug("getOrdenesCompra - Filtros solicitados: "+filtros);
+        LOG.info("obtener - "+finalPageSize+" registros; página "+finalPageIndex);
+        LOG.debug("obtener - Filtros solicitados: "+filtros);
         Collection<OrdenCompraDTO> ordenesCompra = ordenCompraSvc.getOrdenesCompra(finalPageSize, finalPageIndex, filtros);
-        LOG.debug("getOrdenesCompra - ordenesCompra.size()="+ordenesCompra.size());
-        LOG.info("getOrdenesCompra - Solicitud completa. Enviando respuesta al cliente.");
+        LOG.debug("obtener - ordenesCompra.size()="+ordenesCompra.size());
+        LOG.info("obtener - Solicitud completa. Enviando respuesta al cliente.");
         return ordenesCompra;
     }
     
@@ -86,10 +91,13 @@ public class OrdenesCompraController {
      * @return Una colección de objetos DTO.
      */
     @PostMapping("/detalles")
-    public ResponseEntity<?> detalles(@RequestBody OrdenCompraDTO dto) {
+    public ResponseEntity<?> detalles(
+        @RequestBody OrdenCompraDTO dto
+    ) {
+        LOG.info("detalles");
         
         if (dto != null && dto.getIdOrdenCompra() != null && dto.getIdOrdenCompra() != 0) {
-            LOG.debug("getDetallesOrdenCompra - dto="+dto);
+            LOG.debug("detalles - dto="+dto);
             Collection<DetalleOrdenCompraDTO> lista = ordenCompraSvc.getDetallesOrdenCompra(dto.getIdOrdenCompra());
             return new ResponseEntity<>(lista, HttpStatus.OK);
         } else {
@@ -104,13 +112,16 @@ public class OrdenesCompraController {
      * @return El ID de la venta.
      */
     @PostMapping("/guardar")
-    public ResponseEntity<?> guardar(@RequestBody OrdenCompraDTO dto) {
+    public ResponseEntity<?> guardar(
+        @RequestBody OrdenCompraDTO dto
+    ) {
+        LOG.info("guardar");
         
         if (dto != null) {
-            LOG.debug("saveOrdenCompra - dto="+dto);
+            LOG.debug("guardar - dto="+dto);
             try {
                 Integer ordenCompraId = ordenCompraSvc.saveOrdenCompra(dto);
-                LOG.debug("saveOrdenCompra - ordenCompraId="+ordenCompraId);
+                LOG.debug("guardar - ordenCompraId="+ordenCompraId);
                 return new ResponseEntity<>(ordenCompraId, HttpStatus.OK);
             } catch (NotFoundException exc) {
                 return new ResponseEntity<>(exc.getMessage(), HttpStatus.BAD_REQUEST);
@@ -127,10 +138,13 @@ public class OrdenesCompraController {
      * @return true si la operación fue exitosa, false si no lo fue.
      */
     @PostMapping("/borrar")
-    public ResponseEntity<?> borrar(@RequestBody Integer ordenCompraId) {
+    public ResponseEntity<?> borrar(
+        @RequestBody Integer ordenCompraId
+    ) {
+        LOG.info("borrar");
         
         if (ordenCompraId != null && ordenCompraId != 0) {
-            LOG.debug("deleteOrdenCompra - clienteId="+ordenCompraId);
+            LOG.debug("borrar - ordenCompraId="+ordenCompraId);
             boolean result = ordenCompraSvc.deleteOrdenCompra(ordenCompraId);
             return new ResponseEntity<>(result, HttpStatus.OK);
         } else {

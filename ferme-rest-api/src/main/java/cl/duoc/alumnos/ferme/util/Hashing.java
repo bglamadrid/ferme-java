@@ -15,7 +15,7 @@ public final class Hashing {
     
     /**
      * Rutina simple de generación de hash.<br>
-     * Obtiene el algoritmo a usar de la constante 'DEFAULT_HASHING_ALGORITHM'
+     * Obtiene el algoritmo a usar de la constante 'HASHING_ALGORITHM'
      * Créditos a 'user1452273' (stackoverflow.com)
      * @param data Los datos a encriptar.
      * @return El hash, resultando de la encriptación.

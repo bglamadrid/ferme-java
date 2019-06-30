@@ -1,6 +1,5 @@
 package cl.duoc.alumnos.ferme.controllers;
 
-import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.FermeConfig;
 import cl.duoc.alumnos.ferme.dto.ClienteDTO;
 import cl.duoc.alumnos.ferme.services.interfaces.IClientesService;
@@ -31,7 +30,6 @@ public class ClientesController {
     
     @GetMapping("")
     public Collection<ClienteDTO> obtener(@RequestParam Map<String,String> allRequestParams) {
-        
         return this.obtener(null, null, allRequestParams);
     }
     
@@ -40,7 +38,6 @@ public class ClientesController {
             @PathVariable Integer pageSize,
             @RequestParam Map<String,String> allRequestParams
     ) {
-        
         return this.obtener(pageSize, null, allRequestParams);
     }
     
@@ -55,12 +52,13 @@ public class ClientesController {
      * @see Predicate
      * @return Una colección de objetos ClienteDTO
      */
-    @GetMapping("/clientes/{pageSize}/{pageIndex}")
+    @GetMapping("/{pageSize}/{pageIndex}")
     public Collection<ClienteDTO> obtener(
         @PathVariable Integer pageSize,
         @PathVariable Integer pageIndex,
-        @RequestParam Map<String,String> allRequestParams) {
-        
+        @RequestParam Map<String,String> allRequestParams
+    ) {
+        LOG.info("obtener");
         
         Integer finalPageSize = FermeConfig.PAGINACION_REGISTROS_POR_PAGINA_INICIAL;
         Integer finalPageIndex = FermeConfig.PAGINACION_INDICE_INICIAL;
@@ -89,12 +87,14 @@ public class ClientesController {
      * @param dto Un ClienteDTO representando el Cliente a almacenar/actualizar.
      * @return El ID del cliente, 0 si falla al insertar, null si el JSON viene incorrecto.
      */
-    @PostMapping("/clientes/guardar")
+    @PostMapping("/guardar")
     public Integer guardar(@RequestBody ClienteDTO dto) {
+        LOG.info("guardar");
+        
         if (dto != null) {
-            LOG.debug("saveCliente - dto="+dto);
+            LOG.debug("guardar - dto="+dto);
             Integer clienteId = clienteSvc.saveCliente(dto);
-            LOG.debug("saveCliente - clienteId="+clienteId);
+            LOG.debug("guardar - clienteId="+clienteId);
             return clienteId;
         }
         return null;
@@ -105,7 +105,7 @@ public class ClientesController {
      * @param clienteId El ID del Cliente a eliminar.
      * @return true si la operación fue exitosa, false si no lo fue
      */
-    @PostMapping("/clientes/borrar")
+    @PostMapping("/borrar")
     public boolean borrar(@RequestBody Integer clienteId) {
         
         if (clienteId != null && clienteId != 0) {

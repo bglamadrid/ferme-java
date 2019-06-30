@@ -1,5 +1,6 @@
 package cl.duoc.alumnos.ferme.controllers;
 
+import cl.duoc.alumnos.ferme.FermeConfig;
 import cl.duoc.alumnos.ferme.dto.CargoDTO;
 import cl.duoc.alumnos.ferme.dto.RubroDTO;
 import cl.duoc.alumnos.ferme.services.interfaces.ICargosService;
@@ -23,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Benjamin Guillermo <got12g at gmail.com>
  */
 @RestController
-@RequestMapping("/api/gestion")
+@RequestMapping(FermeConfig.URI_BASE_REST_API+"/gestion")
 public class ComunController {
     
     @Autowired private IRubrosService rubroSvc;

@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Benjamin Guillermo <got12g at gmail.com>
  */
 @RestController
-@RequestMapping("/api/gestion")
+@RequestMapping(FermeConfig.URI_BASE_REST_API+"/gestion")
 public class ProductosController {
     private final static Logger LOG = LoggerFactory.getLogger(ProductosController.class);
 

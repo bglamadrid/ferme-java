@@ -31,7 +31,7 @@ public class FermeConfig implements WebMvcConfigurer {
     /** URI base para el consumo de la API REST. 
      * Se requiere reiniciar la aplicación para que esta variable surta efecto.
      **/
-    public static final String URI_BASE_REST_API = "/api/";
+    public static final String URI_BASE_REST_API = "/api";
     
     /** Formato de fecha estándar a nivel de aplicación.
      * Se requiere reiniciar la aplicación para que esta variable surta efecto.
@@ -120,7 +120,7 @@ public class FermeConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         
-        registry.addMapping(URI_BASE_REST_API+"*") // permitimos que la API se pueda consumir...
+        registry.addMapping(URI_BASE_REST_API+"/*") // permitimos que la API se pueda consumir...
                 .allowedOrigins("http://localhost:4200") // desde app Angular local
                 .allowedMethods("*");
     }

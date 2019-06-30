@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Benjamin Guillermo <got12g at gmail.com>
  */
 @RestController
-@RequestMapping("/api/gestion/usuarios")
+@RequestMapping(FermeConfig.URI_BASE_REST_API+"/gestion/usuarios")
 public class UsuariosController {
     private final static Logger LOG = LoggerFactory.getLogger(UsuariosController.class);
     

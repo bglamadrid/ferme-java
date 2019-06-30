@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Benjamin Guillermo <got12g at gmail.com>
  */
 @RestController
-@RequestMapping("/api/gestion/ordenes_compra")
+@RequestMapping(FermeConfig.URI_BASE_REST_API+"/gestion/ordenes_compra")
 public class OrdenesCompraController {
     private final static Logger LOG = LoggerFactory.getLogger(OrdenesCompraController.class);
     

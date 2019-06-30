@@ -1,5 +1,6 @@
 package cl.duoc.alumnos.ferme.controllers;
 
+import cl.duoc.alumnos.ferme.FermeConfig;
 import cl.duoc.alumnos.ferme.services.interfaces.IReportesService;
 import java.util.Map;
 import org.slf4j.Logger;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/gestion/reportes")
+@RequestMapping(FermeConfig.URI_BASE_REST_API+"/gestion/reportes")
 public class ReportesController {
     
     @Autowired private IReportesService reporteSvc;

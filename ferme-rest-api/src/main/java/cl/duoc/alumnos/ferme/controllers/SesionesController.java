@@ -1,5 +1,6 @@
 package cl.duoc.alumnos.ferme.controllers;
 
+import cl.duoc.alumnos.ferme.FermeConfig;
 import cl.duoc.alumnos.ferme.dto.SesionDTO;
 import cl.duoc.alumnos.ferme.dto.UsuarioDTO;
 import cl.duoc.alumnos.ferme.pojo.LoginPOJO;
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Benjamin Guillermo <got12g at gmail.com>
  */
 @RestController
-@RequestMapping("/api/sesiones")
+@RequestMapping(FermeConfig.URI_BASE_REST_API+"/sesiones")
 public class SesionesController {
     private final static Logger LOG = LoggerFactory.getLogger(SesionesController.class);
     

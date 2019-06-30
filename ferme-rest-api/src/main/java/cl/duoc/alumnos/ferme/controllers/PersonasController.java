@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Benjamin Guillermo <got12g at gmail.com>
  */
 @RestController
-@RequestMapping("/api/gestion/personas")
+@RequestMapping(FermeConfig.URI_BASE_REST_API+"/gestion/personas")
 public class PersonasController {
     private final static Logger LOG = LoggerFactory.getLogger(PersonasController.class);
     

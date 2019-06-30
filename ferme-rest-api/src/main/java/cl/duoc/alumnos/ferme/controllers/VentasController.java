@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Benjamin Guillermo <got12g at gmail.com>
  */
 @RestController
-@RequestMapping("/api/gestion/ventas")
+@RequestMapping(FermeConfig.URI_BASE_REST_API+"/gestion/ventas")
 public class VentasController {
     private final static Logger LOG = LoggerFactory.getLogger(VentasController.class);
     

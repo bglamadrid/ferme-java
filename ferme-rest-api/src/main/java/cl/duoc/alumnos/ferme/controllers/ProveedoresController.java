@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Benjamin Guillermo <got12g at gmail.com>
  */
 @RestController
-@RequestMapping("/api/gestion/proveedores")
+@RequestMapping(FermeConfig.URI_BASE_REST_API+"/gestion/proveedores")
 public class ProveedoresController {
     private final static Logger LOG = LoggerFactory.getLogger(ProveedoresController.class);
     

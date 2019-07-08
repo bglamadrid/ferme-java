@@ -177,7 +177,10 @@ public class VentasService implements IVentasService {
                 Optional<Producto> productoEntityFromId = productoRepo.findById(productoId);
                 LOG.debug("saveVenta - productoId="+productoId);
                 if (productoEntityFromId.isPresent()) {
-                    detalleEntity.setProducto(productoEntityFromId.get());
+                    Producto productoEntity = productoEntityFromId.get();
+                    detalleEntity.setProducto(productoEntity);
+                    Long montoDetalle = productoEntity.getPrecio() * detalleEntity.getUnidades();
+                    detalleEntity.setMonto(montoDetalle.intValue());    
                 } else {
                     throw new NotFoundException("Un producto listado en la venta no existe");
                 }

@@ -5,17 +5,23 @@ import cl.duoc.alumnos.ferme.dto.PersonaDTO;
 import cl.duoc.alumnos.ferme.services.PersonasService;
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.Optional;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import org.hibernate.annotations.Cascade;
 
 /** Representa un registro de la tabla PERSONA.
  * @author Benjamin Guillermo <got12g at gmail.com>
@@ -58,6 +64,15 @@ public class Persona implements Serializable {
     
     @Column(name = "FONO3")
     private Long _fono3;
+    
+    @OneToOne(optional = true, fetch = FetchType.LAZY, mappedBy = "_persona")
+    private Cliente _cliente;
+    
+    @OneToOne(optional = true, fetch = FetchType.LAZY, mappedBy = "_persona")
+    private Empleado _empleado;
+    
+    @OneToOne(optional = true, fetch = FetchType.LAZY, mappedBy = "_persona")
+    private Proveedor _proveedor;
 
     public Persona() {
         super();
@@ -125,6 +140,31 @@ public class Persona implements Serializable {
 
     public void setFono3(Long fono3) {
         this._fono3 = fono3;
+    }
+    
+    
+    public boolean hasCliente() {
+        return (this._cliente != null);
+    }
+
+    public boolean hasEmpleado() {
+        return (this._empleado != null);
+    }
+
+    public boolean hasProveedor() {
+        return (this._proveedor != null);
+    }
+    
+    public Cliente getCliente() {
+        return this._cliente;
+    }
+
+    public Empleado getEmpleado() {
+        return this._empleado;
+    }
+
+    public Proveedor getProveedor() {
+        return this._proveedor;
     }
     
     public PersonaDTO toDTO() {        

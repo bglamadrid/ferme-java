@@ -16,7 +16,11 @@ public class SesionDTO {
     private String hashSesion;
     private Integer idUsuario;
     private String nombreUsuario;
+    
     private Integer idCargo;
+    private Integer idPersona;
+    private Integer idCliente;
+    private Integer idEmpleado;
     
 
     public SesionDTO() {
@@ -61,6 +65,30 @@ public class SesionDTO {
 
     public void setIdCargo(Integer idCargo) {
         this.idCargo = idCargo;
+    }
+
+    public Integer getIdPersona() {
+        return idPersona;
+    }
+
+    public void setIdPersona(Integer idPersona) {
+        this.idPersona = idPersona;
+    }
+
+    public Integer getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(Integer idCliente) {
+        this.idCliente = idCliente;
+    }
+
+    public Integer getIdEmpleado() {
+        return idEmpleado;
+    }
+
+    public void setIdEmpleado(Integer idEmpleado) {
+        this.idEmpleado = idEmpleado;
     }
     
     public Sesion toEntity() {

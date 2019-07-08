@@ -27,6 +27,7 @@ public class OrdenCompraDTO {
     private String fechaSolicitudOrdenCompra;
     private String fechaRecepcionOrdenCompra;
     private List<DetalleOrdenCompraDTO> detallesOrdenCompra;
+    private Integer idProveedor;
 
     public OrdenCompraDTO() {
         super();
@@ -94,6 +95,14 @@ public class OrdenCompraDTO {
 
     public void setDetallesOrdenCompra(List<DetalleOrdenCompraDTO> detallesOrdenCompra) {
         this.detallesOrdenCompra = detallesOrdenCompra;
+    }
+
+    public Integer getIdProveedor() {
+        return idProveedor;
+    }
+
+    public void setIdProveedor(Integer idProveedor) {
+        this.idProveedor = idProveedor;
     }
     
     public OrdenCompra toEntity() {

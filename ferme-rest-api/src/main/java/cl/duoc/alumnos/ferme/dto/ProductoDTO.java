@@ -121,12 +121,14 @@ public class ProductoDTO {
         if (idProducto != null && idProducto != 0) {
             entity.setId(idProducto);
         }
-        entity.setCodigo(codigoProducto);
         entity.setNombre(nombreProducto);
         entity.setPrecio(precioProducto);
         entity.setStockActual(stockActualProducto);
         entity.setStockCritico(stockCriticoProducto);
         
+        if (codigoProducto != null && !codigoProducto.isEmpty()) {
+            entity.setCodigo(codigoProducto);
+        }
         if (descripcionProducto != null && !descripcionProducto.isEmpty()) {
             entity.setDescripcion(descripcionProducto);
         }

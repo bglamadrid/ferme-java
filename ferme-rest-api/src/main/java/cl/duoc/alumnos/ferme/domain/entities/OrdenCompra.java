@@ -127,6 +127,9 @@ public class OrdenCompra implements Serializable {
         dto.setNombreEmpleado(empleadoPersonaEntity.getNombreCompleto());
         dto.setRutEmpleado(empleadoPersonaEntity.getRut());
         
+        Proveedor proveedorEntity = getDetalles().iterator().next().getProducto().getTipo().getFamilia().getProveedor();
+        dto.setIdProveedor(proveedorEntity.getId());
+        
         if (_fechaRecepcion != null) {
             dto.setFechaRecepcionOrdenCompra(FormatoFechas.dateAStringLocal(_fechaRecepcion));
         }

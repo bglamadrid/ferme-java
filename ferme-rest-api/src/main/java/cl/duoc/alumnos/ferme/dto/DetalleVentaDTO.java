@@ -95,7 +95,6 @@ public class DetalleVentaDTO {
             entity.setId(idDetalleVenta);
         }
         entity.setUnidades(unidadesProducto);
-        entity.setMonto(montoDetalleVenta);
         
         Producto entityProducto = new Producto();
         entityProducto.setId(idProducto);

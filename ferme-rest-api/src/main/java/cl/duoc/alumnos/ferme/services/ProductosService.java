@@ -308,9 +308,17 @@ public class ProductosService implements IProductosService, IFamiliasProductoSer
     public int saveProducto(ProductoDTO dto) throws NotFoundException {
         
         Producto entity = dto.toEntity();
-        Optional<TipoProducto> tipoEntity = tpProductoRepo.findById(dto.getIdTipoProducto());
-        if (tipoEntity.isPresent()) {
-            entity.setTipo(tipoEntity.get());
+        if (entity.getId() != null) {
+            Optional<Producto> entityQuery = productoRepo.findById(dto.getIdProducto());
+            if (entityQuery.isPresent()) {
+                Producto entityFound = entityQuery.get();
+                entity.setCodigo(entityFound.getCodigo());
+            }
+        }
+        
+        Optional<TipoProducto> tipoEntityQuery = tpProductoRepo.findById(dto.getIdTipoProducto());
+        if (tipoEntityQuery.isPresent()) {
+            entity.setTipo(tipoEntityQuery.get());
         } else {
             throw new NotFoundException("El tipo asignado a este producto no existe.");
         }

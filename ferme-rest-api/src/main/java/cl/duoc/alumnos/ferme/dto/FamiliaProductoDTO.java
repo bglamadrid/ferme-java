@@ -74,6 +74,9 @@ public class FamiliaProductoDTO {
         rubroEntity.setId(idRubro);
         entity.setRubro(rubroEntity);
         
+        Proveedor proveedorEntity = new Proveedor();
+        proveedorEntity.setId(idProveedor);
+        entity.setProveedor(proveedorEntity);
         
         return entity;
     }

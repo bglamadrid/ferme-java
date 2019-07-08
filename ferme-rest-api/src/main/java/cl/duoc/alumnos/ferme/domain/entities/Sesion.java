@@ -110,6 +110,19 @@ public class Sesion implements Serializable {
         dto.setIdUsuario(usuarioEntity.getId());
         dto.setNombreUsuario(usuarioEntity.getNombre());
         
+        Persona personaEntity = usuarioEntity.getPersona();
+        dto.setIdPersona(personaEntity.getId());
+        
+        if (personaEntity.hasCliente()) {
+            Cliente clienteEntity = personaEntity.getCliente();
+            dto.setIdCliente(clienteEntity.getId());
+        }
+        
+        if (personaEntity.hasEmpleado()) {
+            Empleado empleadoEntity = personaEntity.getEmpleado();
+            dto.setIdEmpleado(empleadoEntity.getId());
+        }
+        
         return dto;
     }
 

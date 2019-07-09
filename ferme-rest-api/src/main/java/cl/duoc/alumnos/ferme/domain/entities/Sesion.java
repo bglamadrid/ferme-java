@@ -21,6 +21,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.hibernate.annotations.Cascade;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /** Representa un registro de la tabla SESION.
  * @author Benjamin Guillermo <got12g at gmail.com>
@@ -31,6 +33,7 @@ import org.hibernate.annotations.Cascade;
     @NamedQuery(name = "Sesion.findAll", query = "SELECT u FROM Sesion u")})
 public class Sesion implements Serializable {
     private static final long serialVersionUID = 1L;
+    private static final Logger LOG = LoggerFactory.getLogger(Sesion.class);
     
     @Id
     @Column(name = "ID_SESION")
@@ -112,16 +115,6 @@ public class Sesion implements Serializable {
         
         Persona personaEntity = usuarioEntity.getPersona();
         dto.setIdPersona(personaEntity.getId());
-        
-        if (personaEntity.hasCliente()) {
-            Cliente clienteEntity = personaEntity.getCliente();
-            dto.setIdCliente(clienteEntity.getId());
-        }
-        
-        if (personaEntity.hasEmpleado()) {
-            Empleado empleadoEntity = personaEntity.getEmpleado();
-            dto.setIdEmpleado(empleadoEntity.getId());
-        }
         
         return dto;
     }

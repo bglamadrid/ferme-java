@@ -3,7 +3,9 @@ package cl.duoc.alumnos.ferme.services;
 import cl.duoc.alumnos.ferme.Ferme;
 import cl.duoc.alumnos.ferme.FermeConfig;
 import cl.duoc.alumnos.ferme.domain.entities.Cargo;
+import cl.duoc.alumnos.ferme.domain.entities.Cliente;
 import cl.duoc.alumnos.ferme.domain.entities.Empleado;
+import cl.duoc.alumnos.ferme.domain.entities.Proveedor;
 import cl.duoc.alumnos.ferme.domain.entities.QEmpleado;
 import cl.duoc.alumnos.ferme.domain.entities.Sesion;
 import cl.duoc.alumnos.ferme.domain.entities.Usuario;
@@ -12,6 +14,7 @@ import cl.duoc.alumnos.ferme.dto.UsuarioDTO;
 import cl.duoc.alumnos.ferme.domain.repositories.IEmpleadosRepository;
 import cl.duoc.alumnos.ferme.domain.repositories.ISesionesRepository;
 import cl.duoc.alumnos.ferme.dto.EmpleadoDTO;
+import cl.duoc.alumnos.ferme.services.interfaces.IPersonasService;
 import cl.duoc.alumnos.ferme.services.interfaces.ISesionesService;
 import cl.duoc.alumnos.ferme.util.FormatoFechas;
 import cl.duoc.alumnos.ferme.util.Hashing;
@@ -36,7 +39,7 @@ import org.springframework.stereotype.Service;
 public class SesionesService implements ISesionesService {
     private Logger LOG = LoggerFactory.getLogger(SesionesService.class);
 
-    @Autowired private IEmpleadosRepository empleadoRepo;
+    @Autowired private IPersonasService personasRepo;
     @Autowired private ISesionesRepository sesionRepo;
     
     private final static long SESSION_LIFETIME = FermeConfig.DURACION_SESION;
@@ -61,23 +64,27 @@ public class SesionesService implements ISesionesService {
     }
 
     private Empleado getOptionalEmpleadoFromUsuarioPersona(UsuarioDTO usuario) {
-        LOG.debug("getIdCargoFromOptionalEmpleadoFromUsuarioPersona");
-        try {
-            QEmpleado qEmp = QEmpleado.empleado;
-            
-            BooleanBuilder bb = new BooleanBuilder()
-                    .and(qEmp._persona._id.eq(usuario.getIdPersona()));
-            
-            LOG.debug("getIdCargoFromOptionalEmpleadoFromUsuarioPersona - bb="+bb.toString());
-            Optional<Empleado> foundEmpleado = empleadoRepo.findOne(bb);
-            if (foundEmpleado.isPresent()) {
-                return foundEmpleado.get();
-            } else {
-                return null;
-            }
-        } catch (Exception exc) {
-            return null;
-        }
+        LOG.debug("getOptionalEmpleadoFromUsuarioPersona");
+        
+        Integer idPersona = usuario.getIdPersona();
+        Empleado foundEmpleado = personasRepo.getNullableEmpleadoFromIdPersona(idPersona);
+        return foundEmpleado;
+    }
+
+    private Cliente getOptionalClienteFromUsuarioPersona(UsuarioDTO usuario) {
+        LOG.debug("getOptionalClienteFromUsuarioPersona");
+        
+        Integer idPersona = usuario.getIdPersona();
+        Cliente foundEmpleado = personasRepo.getNullableClienteFromIdPersona(idPersona);
+        return foundEmpleado;
+    }
+
+    private Proveedor getOptionalProveedorFromUsuarioPersona(UsuarioDTO usuario) {
+        LOG.debug("getOptionalProveedorFromUsuarioPersona");
+        
+        Integer idPersona = usuario.getIdPersona();
+        Proveedor foundEmpleado = personasRepo.getNullableProveedorFromIdPersona(idPersona);
+        return foundEmpleado;
     }
     
     @Override
@@ -105,8 +112,15 @@ public class SesionesService implements ISesionesService {
         Empleado empleadoEntity = this.getOptionalEmpleadoFromUsuarioPersona(usuario);
         if (empleadoEntity != null) {
             LOG.debug("abrirSesion - Empleado id "+empleadoEntity.getId());
-            Cargo crg = empleadoEntity.getCargo();
-            dto.setIdCargo(crg.getId());
+            Cargo cargoEntity = empleadoEntity.getCargo();
+            dto.setIdEmpleado(empleadoEntity.getId());
+            dto.setIdCargo(cargoEntity.getId());
+        }
+        
+        Cliente clienteEntity = this.getOptionalClienteFromUsuarioPersona(usuario);
+        if (clienteEntity != null) {
+            LOG.debug("abrirSesion - Cliente id "+clienteEntity.getId());
+            dto.setIdCliente(clienteEntity.getId());
         }
         
         return dto;

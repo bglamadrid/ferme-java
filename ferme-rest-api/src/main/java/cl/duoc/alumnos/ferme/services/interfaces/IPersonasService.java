@@ -1,5 +1,8 @@
 package cl.duoc.alumnos.ferme.services.interfaces;
 
+import cl.duoc.alumnos.ferme.domain.entities.Cliente;
+import cl.duoc.alumnos.ferme.domain.entities.Empleado;
+import cl.duoc.alumnos.ferme.domain.entities.Proveedor;
 import cl.duoc.alumnos.ferme.dto.PersonaDTO;
 import com.querydsl.core.types.Predicate;
 import java.util.Collection;
@@ -29,4 +32,10 @@ public interface IPersonasService {
      * @return Un objeto Predicate representando un conjunto de filtros.
      */
     public Predicate queryParamsMapToPersonasFilteringPredicate(Map<String,String> queryParamsMap);
+    
+    public Empleado getNullableEmpleadoFromIdPersona(Integer idPersona);
+    
+    public Cliente getNullableClienteFromIdPersona(Integer idPersona);
+    
+    public Proveedor getNullableProveedorFromIdPersona(Integer idPersona);
 }

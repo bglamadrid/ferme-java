@@ -1,21 +1,33 @@
 package cl.duoc.alumnos.ferme;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.HashMap;
 import java.util.Map;
-import javax.sql.DataSource;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.ImportResource;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import cl.duoc.alumnos.ferme.domain.entities.*;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import cl.duoc.alumnos.ferme.domain.entities.Cargo;
+import cl.duoc.alumnos.ferme.domain.entities.Cliente;
+import cl.duoc.alumnos.ferme.domain.entities.DetalleOrdenCompra;
+import cl.duoc.alumnos.ferme.domain.entities.DetalleVenta;
+import cl.duoc.alumnos.ferme.domain.entities.Empleado;
+import cl.duoc.alumnos.ferme.domain.entities.FamiliaProducto;
+import cl.duoc.alumnos.ferme.domain.entities.OrdenCompra;
+import cl.duoc.alumnos.ferme.domain.entities.Persona;
+import cl.duoc.alumnos.ferme.domain.entities.Producto;
+import cl.duoc.alumnos.ferme.domain.entities.Proveedor;
+import cl.duoc.alumnos.ferme.domain.entities.Rubro;
+import cl.duoc.alumnos.ferme.domain.entities.TipoProducto;
+import cl.duoc.alumnos.ferme.domain.entities.Usuario;
+import cl.duoc.alumnos.ferme.domain.entities.Venta;
 
 /**
  *
@@ -23,31 +35,13 @@ import cl.duoc.alumnos.ferme.domain.entities.*;
  */
 @Configuration
 @EnableAutoConfiguration
-@EnableJpaRepositories
 @ComponentScan
-@ImportResource("beans.xml")
 public class FermeConfig implements WebMvcConfigurer { 
     
     /** URI base para el consumo de la API REST. 
      * Se requiere reiniciar la aplicación para que esta variable surta efecto.
      **/
     public static final String URI_BASE_REST_API = "/api";
-    
-    /** Formato de fecha estándar a nivel de aplicación.
-     * Se requiere reiniciar la aplicación para que esta variable surta efecto.
-     **/
-    public static final String FORMATO_FECHA = "dd/MM/yyyy";
-    
-    /** Frecuencia de transacciones tras las cuales Hibernate 
-     * sincroniza su caché de IDs contra las secuencias de la BD.
-     * Se requiere reiniciar la aplicación para que esta variable surta efecto.
-     **/
-    public static final int ESPACIO_ASIGNACION_SECUENCIAS_HIBERNATE = 1;
-    
-    /** Verificar disponibilidad de algoritmos según servidor de despliegue.
-     * Se requiere reiniciar la aplicación para que esta variable surta efecto.
-     **/
-    public static final String ALGORITMO_CRIPTOGRAFICO_GLOBAL = "SHA-256";
     
     /** Tiempo de vigencia de las sesiones, en milisegundos.
      * Se requiere reiniciar la aplicación para que esta variable surta efecto.
@@ -66,21 +60,15 @@ public class FermeConfig implements WebMvcConfigurer {
     
     /** Columnas por defecto a usar como criterio de orden en los mantenedores.
      **/
-    public final static Map<Class, String> COLUMNAS_ORDENAMIENTO_MAPA = generarMapaDeColumnasDeOrdenPorDefecto();
+    @SuppressWarnings("rawtypes")
+	public final static Map<Class, String> COLUMNAS_ORDENAMIENTO_MAPA = generarMapaDeColumnasDeOrdenPorDefecto();
     
     /** Cargos que existen en la aplicación.
      */
     public final static Map<String, Integer> CARGOS_MAP = createCargosMap();
     
-    
-    /* Parámetros de entidades, no declarados en la base de datos */
-    public static char ORDEN_COMPRA_ESTADO_SOLICITADO = 'S';
-    public static char ORDEN_COMPRA_ESTADO_RECEPCIONADO = 'R';
-    public static char TIPO_VENTA_FACTURA = 'F';
-    public static char TIPO_VENTA_BOLETA = 'B';
 
     
-    @Autowired private DataSource ds;
     
     @Bean
     public ObjectMapper objectMapper() {
@@ -90,7 +78,8 @@ public class FermeConfig implements WebMvcConfigurer {
         return mapper;
     }
     
-    private static Map<Class, String> generarMapaDeColumnasDeOrdenPorDefecto() {
+    @SuppressWarnings("rawtypes")
+	private static Map<Class, String> generarMapaDeColumnasDeOrdenPorDefecto() {
         Map<Class, String> columnasOrdenPorDefecto = new HashMap<>();
         columnasOrdenPorDefecto.put(Producto.class, "_id");
         columnasOrdenPorDefecto.put(DetalleOrdenCompra.class, "_id");

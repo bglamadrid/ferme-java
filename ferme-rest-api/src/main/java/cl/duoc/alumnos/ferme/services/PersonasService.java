@@ -1,6 +1,22 @@
 package cl.duoc.alumnos.ferme.services;
 
-import cl.duoc.alumnos.ferme.Ferme;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Predicate;
+
 import cl.duoc.alumnos.ferme.FermeConfig;
 import cl.duoc.alumnos.ferme.domain.entities.Cliente;
 import cl.duoc.alumnos.ferme.domain.entities.Empleado;
@@ -16,20 +32,6 @@ import cl.duoc.alumnos.ferme.domain.repositories.IPersonasRepository;
 import cl.duoc.alumnos.ferme.domain.repositories.IProveedoresRepository;
 import cl.duoc.alumnos.ferme.dto.PersonaDTO;
 import cl.duoc.alumnos.ferme.services.interfaces.IPersonasService;
-import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.types.Predicate;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Service;
 
 /**
  *
@@ -43,33 +45,6 @@ public class PersonasService implements IPersonasService {
     @Autowired IEmpleadosRepository empleadoRepo;
     @Autowired IClientesRepository clienteRepo;
     @Autowired IProveedoresRepository proveedorRepo;
-
-    public static final <T extends PersonaDTO> T cargarDatosPersonaEnDTO(Persona personaEntity, T dto) {
-        dto.setIdPersona(personaEntity.getId());
-        dto.setNombreCompletoPersona(personaEntity.getNombreCompleto());
-        dto.setRutPersona(personaEntity.getRut());
-        String direccion = personaEntity.getDireccion();
-        String email = personaEntity.getEmail();
-        Long fono1 = personaEntity.getFono1();
-        Long fono2 = personaEntity.getFono2();
-        Long fono3 = personaEntity.getFono3();
-        if (direccion != null) {
-            dto.setDireccionPersona(direccion);
-        }
-        if (email != null) {
-            dto.setEmailPersona(email);
-        }
-        if (fono1 != null) {
-            dto.setFonoPersona1(fono1);
-        }
-        if (fono2 != null) {
-            dto.setFonoPersona2(fono2);
-        }
-        if (fono3 != null) {
-            dto.setFonoPersona3(fono3);
-        }
-        return dto;
-    }
 
     @Override
     public Collection<PersonaDTO> getPersonas(int pageSize, int pageIndex, Predicate condicion) {

@@ -1,35 +1,31 @@
 package cl.duoc.alumnos.ferme.services;
 
-import cl.duoc.alumnos.ferme.Ferme;
-import cl.duoc.alumnos.ferme.FermeConfig;
-import cl.duoc.alumnos.ferme.domain.entities.Cargo;
-import cl.duoc.alumnos.ferme.domain.entities.Cliente;
-import cl.duoc.alumnos.ferme.domain.entities.Empleado;
-import cl.duoc.alumnos.ferme.domain.entities.Proveedor;
-import cl.duoc.alumnos.ferme.domain.entities.QEmpleado;
-import cl.duoc.alumnos.ferme.domain.entities.Sesion;
-import cl.duoc.alumnos.ferme.domain.entities.Usuario;
-import cl.duoc.alumnos.ferme.dto.SesionDTO;
-import cl.duoc.alumnos.ferme.dto.UsuarioDTO;
-import cl.duoc.alumnos.ferme.domain.repositories.IEmpleadosRepository;
-import cl.duoc.alumnos.ferme.domain.repositories.ISesionesRepository;
-import cl.duoc.alumnos.ferme.dto.EmpleadoDTO;
-import cl.duoc.alumnos.ferme.services.interfaces.IPersonasService;
-import cl.duoc.alumnos.ferme.services.interfaces.ISesionesService;
-import cl.duoc.alumnos.ferme.util.FormatoFechas;
-import cl.duoc.alumnos.ferme.util.Hashing;
-import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.types.Predicate;
 import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
-import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.querydsl.core.types.Predicate;
+
+import cl.duoc.alumnos.ferme.FermeConfig;
+import cl.duoc.alumnos.ferme.domain.entities.Cargo;
+import cl.duoc.alumnos.ferme.domain.entities.Cliente;
+import cl.duoc.alumnos.ferme.domain.entities.Empleado;
+import cl.duoc.alumnos.ferme.domain.entities.Sesion;
+import cl.duoc.alumnos.ferme.domain.entities.Usuario;
+import cl.duoc.alumnos.ferme.domain.repositories.ISesionesRepository;
+import cl.duoc.alumnos.ferme.dto.SesionDTO;
+import cl.duoc.alumnos.ferme.dto.UsuarioDTO;
+import cl.duoc.alumnos.ferme.services.interfaces.IPersonasService;
+import cl.duoc.alumnos.ferme.services.interfaces.ISesionesService;
+import cl.duoc.alumnos.ferme.util.FormatoFechas;
+import cl.duoc.alumnos.ferme.util.Hashing;
 
 /**
  *
@@ -79,14 +75,6 @@ public class SesionesService implements ISesionesService {
         return foundEmpleado;
     }
 
-    private Proveedor getOptionalProveedorFromUsuarioPersona(UsuarioDTO usuario) {
-        LOG.debug("getOptionalProveedorFromUsuarioPersona");
-        
-        Integer idPersona = usuario.getIdPersona();
-        Proveedor foundEmpleado = personasRepo.getNullableProveedorFromIdPersona(idPersona);
-        return foundEmpleado;
-    }
-    
     @Override
     public SesionDTO abrirSesion(UsuarioDTO usuario) {
         LOG.info("abrirSesion - Generando datos de sesion...");

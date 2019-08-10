@@ -17,7 +17,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ReportesService implements IReportesService {   
-    private final static Logger LOG = LoggerFactory.getLogger(ReportesService.class); 
+    @SuppressWarnings("unused")
+	private final static Logger LOG = LoggerFactory.getLogger(ReportesService.class); 
     
     @Autowired IReportesRepository reportesRepo;
     @Autowired IProductosRepository productosRepo;

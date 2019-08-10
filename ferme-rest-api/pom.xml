@@ -7,13 +7,12 @@
 
     <groupId>cl.duoc.alumnos.proyectos</groupId>
     <artifactId>ferme-rest-api</artifactId>
-    <version>1.0</version>
     <packaging>war</packaging>
     
     <parent>
         <groupId>cl.duoc.alumnos</groupId>
         <artifactId>ferme-rest</artifactId>
-        <version>1.0</version>
+        <version>1.0.1</version>
     </parent>
 
     <properties>
@@ -126,7 +125,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <version>2.6</version>
                 <executions>
                     <execution>
                         <phase>validate</phase>

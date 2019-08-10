@@ -4,21 +4,15 @@
 
 * JDK 7
 * Maven
-* [Oracle JDBC](https://blogs.oracle.com/dev2dev/get-oracle-jdbc-drivers-and-ucp-from-oracle-maven-repository-without-ides)
-* Una base de datos con las mismas tablas que entities se han configurado (ver package **cl.duoc.alumnos.ferme.domain.entities**)
+* Una base de datos Oracle y los [Drivers JDBC](https://blogs.oracle.com/dev2dev/get-oracle-jdbc-drivers-and-ucp-from-oracle-maven-repository-without-ides). El proyecto se ejecutó pensando en la versión 11g.
+* Si se opta por otra base de datos, se debe reconfigurar el dialecto de Hibernate en el archivo `src/main/java/resources/application.properties`. Se recomienda Revisar también cualquier cambio que sea necesario hacer en las clases del package **cl.duoc.alumnos.ferme.domain.entities** 
 
-## Cómo usar
+## Compilar
 
-1) Posicionarse en directorio raíz de la aplicación, donde reside el archivo *pom.xml*
-2) Asegurarse que Maven provea todas las dependencias y el proyecto compile bien. Se recomienda ejecutar el comando:
-```
-mvn clean generate-sources install package
-```
-3) De estar todo correcto, el servicio se puede levantar de dos maneras:
-  a) Levantar un Tomcat embebido, dirigiéndose al directorio de los fuentes de la API *ferme-rest-api/* usando el comando:
-```
-mvn spring-boot:run
-```
-  b) Desplegar en un servidor, usando el EAR generado en la carpeta */ferme-ear/target/*
+1. Posicionarse en directorio raíz de la aplicación, donde reside el archivo *pom.xml*
+2. Ejecutar `mvn clean compile`
 
-También se pueden configurar objetivos de ejecuciión de Maven (parámetros del comando *mvn* mostrado arriba) que sean ambivalentes a esta guía, con los plugins del IDE de preferencia.
+## Desplegar
+
+* `mvn spring-boot:run` - Levanta un Tomcat embebido. Éste se puede configurar en el archivo *src/main/java/resources/application.properties*
+* `mvn package` - Genera un EAR en la carpeta ``ferme-ear/target/``, que puede ser instalado en un servidor de aplicaciones a elección.

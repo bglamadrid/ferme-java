@@ -10,6 +10,7 @@
 		<version>1.0.1</version>
 	</parent>
 	<artifactId>ferme-rest-data</artifactId>
+	<packaging>jar</packaging>
 
 	<name>FERME REST - Capa de Datos</name>
 
@@ -71,6 +72,10 @@
 	</dependencies>
 
 	<repositories>
+		<repository>
+			<id>localhost</id>
+			<url>https://localhost</url>
+		</repository>
 		<repository>
 			<id>maven.oracle.com</id>
 			<releases>

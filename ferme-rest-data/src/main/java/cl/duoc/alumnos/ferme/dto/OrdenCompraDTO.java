@@ -1,15 +1,16 @@
 package cl.duoc.alumnos.ferme.dto;
 
-import cl.duoc.alumnos.ferme.domain.FermeDomainConfig;
-import cl.duoc.alumnos.ferme.domain.entities.DetalleOrdenCompra;
-import cl.duoc.alumnos.ferme.domain.entities.Empleado;
-import cl.duoc.alumnos.ferme.domain.entities.OrdenCompra;
-import cl.duoc.alumnos.ferme.util.FormatoFechas;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import cl.duoc.alumnos.ferme.entities.DetalleOrdenCompra;
+import cl.duoc.alumnos.ferme.entities.Empleado;
+import cl.duoc.alumnos.ferme.entities.OrdenCompra;
+import cl.duoc.alumnos.ferme.util.FormatoFechas;
 
 /**
  *
@@ -113,8 +114,6 @@ public class OrdenCompraDTO {
         
         if (estadoOrdenCompra != null && !estadoOrdenCompra.isEmpty()) {
             entity.setEstado(estadoOrdenCompra.charAt(0));
-        } else {
-            entity.setEstado(FermeDomainConfig.ORDEN_COMPRA_ESTADO_SOLICITADO);
         }
         
         if (fechaSolicitudOrdenCompra != null && !fechaSolicitudOrdenCompra.isEmpty()) {

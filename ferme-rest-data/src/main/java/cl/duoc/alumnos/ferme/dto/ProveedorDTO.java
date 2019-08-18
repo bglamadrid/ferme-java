@@ -1,8 +1,9 @@
 package cl.duoc.alumnos.ferme.dto;
 
-import cl.duoc.alumnos.ferme.domain.entities.Proveedor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import cl.duoc.alumnos.ferme.entities.Proveedor;
 
 /**
  *
@@ -19,7 +20,22 @@ public class ProveedorDTO extends PersonaDTO {
         super();
     }
 
-    public Integer getIdProveedor() {
+    public ProveedorDTO(Integer idPersona, String nombreCompletoPersona, String rutPersona, String direccionPersona,
+			String emailPersona, Long fonoPersona1, Long fonoPersona2, Long fonoPersona3) {
+		super(idPersona, nombreCompletoPersona, rutPersona, direccionPersona, emailPersona, fonoPersona1, fonoPersona2,
+				fonoPersona3);
+	}
+
+	public ProveedorDTO(Integer idPersona, String nombreCompletoPersona, String rutPersona, String direccionPersona,
+			String emailPersona, Long fonoPersona1, Long fonoPersona2, Long fonoPersona3, Integer idProveedor,
+			String razonSocialProveedor) {
+		super(idPersona, nombreCompletoPersona, rutPersona, direccionPersona, emailPersona, fonoPersona1, fonoPersona2,
+				fonoPersona3);
+		this.idProveedor = idProveedor;
+		this.razonSocialProveedor = razonSocialProveedor;
+	}
+
+	public Integer getIdProveedor() {
         return idProveedor;
     }
 

@@ -14,20 +14,20 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import cl.duoc.alumnos.ferme.domain.entities.Cargo;
-import cl.duoc.alumnos.ferme.domain.entities.Cliente;
-import cl.duoc.alumnos.ferme.domain.entities.DetalleOrdenCompra;
-import cl.duoc.alumnos.ferme.domain.entities.DetalleVenta;
-import cl.duoc.alumnos.ferme.domain.entities.Empleado;
-import cl.duoc.alumnos.ferme.domain.entities.FamiliaProducto;
-import cl.duoc.alumnos.ferme.domain.entities.OrdenCompra;
-import cl.duoc.alumnos.ferme.domain.entities.Persona;
-import cl.duoc.alumnos.ferme.domain.entities.Producto;
-import cl.duoc.alumnos.ferme.domain.entities.Proveedor;
-import cl.duoc.alumnos.ferme.domain.entities.Rubro;
-import cl.duoc.alumnos.ferme.domain.entities.TipoProducto;
-import cl.duoc.alumnos.ferme.domain.entities.Usuario;
-import cl.duoc.alumnos.ferme.domain.entities.Venta;
+import cl.duoc.alumnos.ferme.entities.Cargo;
+import cl.duoc.alumnos.ferme.entities.Cliente;
+import cl.duoc.alumnos.ferme.entities.DetalleOrdenCompra;
+import cl.duoc.alumnos.ferme.entities.DetalleVenta;
+import cl.duoc.alumnos.ferme.entities.Empleado;
+import cl.duoc.alumnos.ferme.entities.FamiliaProducto;
+import cl.duoc.alumnos.ferme.entities.OrdenCompra;
+import cl.duoc.alumnos.ferme.entities.Persona;
+import cl.duoc.alumnos.ferme.entities.Producto;
+import cl.duoc.alumnos.ferme.entities.Proveedor;
+import cl.duoc.alumnos.ferme.entities.Rubro;
+import cl.duoc.alumnos.ferme.entities.TipoProducto;
+import cl.duoc.alumnos.ferme.entities.Usuario;
+import cl.duoc.alumnos.ferme.entities.Venta;
 
 /**
  *

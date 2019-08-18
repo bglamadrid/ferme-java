@@ -1,9 +1,10 @@
 package cl.duoc.alumnos.ferme.services.interfaces;
 
-import cl.duoc.alumnos.ferme.domain.entities.Cliente;
-import cl.duoc.alumnos.ferme.domain.entities.Empleado;
-import cl.duoc.alumnos.ferme.domain.entities.Proveedor;
 import cl.duoc.alumnos.ferme.dto.PersonaDTO;
+import cl.duoc.alumnos.ferme.entities.Cliente;
+import cl.duoc.alumnos.ferme.entities.Empleado;
+import cl.duoc.alumnos.ferme.entities.Proveedor;
+
 import com.querydsl.core.types.Predicate;
 import java.util.Collection;
 import java.util.Map;

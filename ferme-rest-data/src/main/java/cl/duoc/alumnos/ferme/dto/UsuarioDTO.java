@@ -1,7 +1,7 @@
 package cl.duoc.alumnos.ferme.dto;
 
-import cl.duoc.alumnos.ferme.domain.entities.Persona;
-import cl.duoc.alumnos.ferme.domain.entities.Usuario;
+import cl.duoc.alumnos.ferme.entities.Persona;
+import cl.duoc.alumnos.ferme.entities.Usuario;
 import cl.duoc.alumnos.ferme.util.FormatoFechas;
 import cl.duoc.alumnos.ferme.util.Hashing;
 import java.util.Date;

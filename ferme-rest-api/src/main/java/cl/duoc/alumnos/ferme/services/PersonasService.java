@@ -18,19 +18,19 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 
 import cl.duoc.alumnos.ferme.FermeConfig;
-import cl.duoc.alumnos.ferme.domain.entities.Cliente;
-import cl.duoc.alumnos.ferme.domain.entities.Empleado;
-import cl.duoc.alumnos.ferme.domain.entities.Persona;
-import cl.duoc.alumnos.ferme.domain.entities.Proveedor;
-import cl.duoc.alumnos.ferme.domain.entities.QCliente;
-import cl.duoc.alumnos.ferme.domain.entities.QEmpleado;
-import cl.duoc.alumnos.ferme.domain.entities.QPersona;
-import cl.duoc.alumnos.ferme.domain.entities.QProveedor;
-import cl.duoc.alumnos.ferme.domain.repositories.IClientesRepository;
-import cl.duoc.alumnos.ferme.domain.repositories.IEmpleadosRepository;
-import cl.duoc.alumnos.ferme.domain.repositories.IPersonasRepository;
-import cl.duoc.alumnos.ferme.domain.repositories.IProveedoresRepository;
 import cl.duoc.alumnos.ferme.dto.PersonaDTO;
+import cl.duoc.alumnos.ferme.entities.Cliente;
+import cl.duoc.alumnos.ferme.entities.Empleado;
+import cl.duoc.alumnos.ferme.entities.Persona;
+import cl.duoc.alumnos.ferme.entities.Proveedor;
+import cl.duoc.alumnos.ferme.entities.QCliente;
+import cl.duoc.alumnos.ferme.entities.QEmpleado;
+import cl.duoc.alumnos.ferme.entities.QPersona;
+import cl.duoc.alumnos.ferme.entities.QProveedor;
+import cl.duoc.alumnos.ferme.jpa.repositories.IClientesRepository;
+import cl.duoc.alumnos.ferme.jpa.repositories.IEmpleadosRepository;
+import cl.duoc.alumnos.ferme.jpa.repositories.IPersonasRepository;
+import cl.duoc.alumnos.ferme.jpa.repositories.IProveedoresRepository;
 import cl.duoc.alumnos.ferme.services.interfaces.IPersonasService;
 
 /**

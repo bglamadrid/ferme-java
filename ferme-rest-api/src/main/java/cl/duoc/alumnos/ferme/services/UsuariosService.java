@@ -21,12 +21,12 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 
 import cl.duoc.alumnos.ferme.FermeConfig;
-import cl.duoc.alumnos.ferme.domain.entities.Persona;
-import cl.duoc.alumnos.ferme.domain.entities.QUsuario;
-import cl.duoc.alumnos.ferme.domain.entities.Usuario;
-import cl.duoc.alumnos.ferme.domain.repositories.IPersonasRepository;
-import cl.duoc.alumnos.ferme.domain.repositories.IUsuariosRepository;
 import cl.duoc.alumnos.ferme.dto.UsuarioDTO;
+import cl.duoc.alumnos.ferme.entities.Persona;
+import cl.duoc.alumnos.ferme.entities.QUsuario;
+import cl.duoc.alumnos.ferme.entities.Usuario;
+import cl.duoc.alumnos.ferme.jpa.repositories.IPersonasRepository;
+import cl.duoc.alumnos.ferme.jpa.repositories.IUsuariosRepository;
 import cl.duoc.alumnos.ferme.services.interfaces.IUsuariosService;
 import cl.duoc.alumnos.ferme.util.FormatoFechas;
 import cl.duoc.alumnos.ferme.util.Hashing;
@@ -110,7 +110,7 @@ public class UsuariosService implements IUsuariosService {
     public int saveUsuario(UsuarioDTO dto) throws NotFoundException {
         
         Usuario entity;
-        if (dto.getIdUsuario()== null || dto.getIdUsuario() == 0) {
+        if (dto.getIdUsuario() == null || dto.getIdUsuario() == 0) {
             entity = dto.toEntity();
             Date fechaAhora = Calendar.getInstance().getTime();
             entity.setFechaCreacion(fechaAhora);

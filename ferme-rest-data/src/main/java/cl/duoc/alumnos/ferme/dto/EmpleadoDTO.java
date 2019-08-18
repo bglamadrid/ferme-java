@@ -1,9 +1,10 @@
 package cl.duoc.alumnos.ferme.dto;
 
-import cl.duoc.alumnos.ferme.domain.entities.Cargo;
-import cl.duoc.alumnos.ferme.domain.entities.Empleado;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import cl.duoc.alumnos.ferme.entities.Cargo;
+import cl.duoc.alumnos.ferme.entities.Empleado;
 
 /**
  *
@@ -21,7 +22,23 @@ public class EmpleadoDTO extends PersonaDTO {
         super();
     }
 
-    public Integer getIdEmpleado() {
+    public EmpleadoDTO(Integer idPersona, String nombreCompletoPersona, String rutPersona, String direccionPersona,
+			String emailPersona, Long fonoPersona1, Long fonoPersona2, Long fonoPersona3) {
+		super(idPersona, nombreCompletoPersona, rutPersona, direccionPersona, emailPersona, fonoPersona1, fonoPersona2,
+				fonoPersona3);
+	}
+
+	public EmpleadoDTO(Integer idPersona, String nombreCompletoPersona, String rutPersona, String direccionPersona,
+			String emailPersona, Long fonoPersona1, Long fonoPersona2, Long fonoPersona3, Integer idEmpleado,
+			Integer idCargo, String descripcionCargo) {
+		super(idPersona, nombreCompletoPersona, rutPersona, direccionPersona, emailPersona, fonoPersona1, fonoPersona2,
+				fonoPersona3);
+		this.idEmpleado = idEmpleado;
+		this.idCargo = idCargo;
+		this.descripcionCargo = descripcionCargo;
+	}
+
+	public Integer getIdEmpleado() {
         return idEmpleado;
     }
 

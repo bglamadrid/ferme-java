@@ -1,9 +1,10 @@
 package cl.duoc.alumnos.ferme.dto;
 
-import cl.duoc.alumnos.ferme.domain.entities.DetalleVenta;
-import cl.duoc.alumnos.ferme.domain.entities.Producto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import cl.duoc.alumnos.ferme.entities.DetalleVenta;
+import cl.duoc.alumnos.ferme.entities.Producto;
 
 /**
  *

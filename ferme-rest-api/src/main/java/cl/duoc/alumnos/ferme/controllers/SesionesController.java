@@ -50,7 +50,7 @@ public class SesionesController {
                 LOG.info("abrirSesion - Transaccion completada correctamente");
                 return ResponseEntity.ok(sesion);
             } else {
-                LOG.info("abrirSesion - Las credenciales ingresadas no pudieron pasar la autenticacion");
+                LOG.info("abrirSesion - Las credenciales ingresadas son incorrectas");
                 return ResponseEntity.noContent().build();
             }
         }

@@ -1,9 +1,9 @@
 package cl.duoc.alumnos.ferme.dto;
 
-import cl.duoc.alumnos.ferme.domain.entities.Cliente;
-import cl.duoc.alumnos.ferme.domain.entities.DetalleVenta;
-import cl.duoc.alumnos.ferme.domain.entities.Empleado;
-import cl.duoc.alumnos.ferme.domain.entities.Venta;
+import cl.duoc.alumnos.ferme.entities.Cliente;
+import cl.duoc.alumnos.ferme.entities.DetalleVenta;
+import cl.duoc.alumnos.ferme.entities.Empleado;
+import cl.duoc.alumnos.ferme.entities.Venta;
 import cl.duoc.alumnos.ferme.util.FormatoFechas;
 import java.util.ArrayList;
 import java.util.Date;
@@ -137,8 +137,6 @@ public class VentaDTO {
         
         if (tipoVenta != null && !tipoVenta.isEmpty()) {
             entity.setTipoVenta(tipoVenta.charAt(0));
-        } else {
-            entity.setTipoVenta('B');
         }
         
         Cliente entityCliente = new Cliente();

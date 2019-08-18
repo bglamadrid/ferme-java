@@ -18,10 +18,10 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 
 import cl.duoc.alumnos.ferme.FermeConfig;
-import cl.duoc.alumnos.ferme.domain.entities.QRubro;
-import cl.duoc.alumnos.ferme.domain.entities.Rubro;
-import cl.duoc.alumnos.ferme.domain.repositories.IRubrosRepository;
 import cl.duoc.alumnos.ferme.dto.RubroDTO;
+import cl.duoc.alumnos.ferme.entities.QRubro;
+import cl.duoc.alumnos.ferme.entities.Rubro;
+import cl.duoc.alumnos.ferme.jpa.repositories.IRubrosRepository;
 import cl.duoc.alumnos.ferme.services.interfaces.IRubrosService;
 
 /**

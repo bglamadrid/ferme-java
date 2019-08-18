@@ -19,12 +19,12 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 
 import cl.duoc.alumnos.ferme.FermeConfig;
-import cl.duoc.alumnos.ferme.domain.entities.Persona;
-import cl.duoc.alumnos.ferme.domain.entities.Proveedor;
-import cl.duoc.alumnos.ferme.domain.entities.QProveedor;
-import cl.duoc.alumnos.ferme.domain.repositories.IPersonasRepository;
-import cl.duoc.alumnos.ferme.domain.repositories.IProveedoresRepository;
 import cl.duoc.alumnos.ferme.dto.ProveedorDTO;
+import cl.duoc.alumnos.ferme.entities.Persona;
+import cl.duoc.alumnos.ferme.entities.Proveedor;
+import cl.duoc.alumnos.ferme.entities.QProveedor;
+import cl.duoc.alumnos.ferme.jpa.repositories.IPersonasRepository;
+import cl.duoc.alumnos.ferme.jpa.repositories.IProveedoresRepository;
 import cl.duoc.alumnos.ferme.services.interfaces.IProveedoresService;
 
 /**

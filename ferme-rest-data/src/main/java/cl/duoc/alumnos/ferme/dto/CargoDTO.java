@@ -3,7 +3,7 @@ package cl.duoc.alumnos.ferme.dto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cl.duoc.alumnos.ferme.domain.entities.Cargo;
+import cl.duoc.alumnos.ferme.entities.Cargo;
 
 /**
  *

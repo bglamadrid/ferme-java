@@ -1,8 +1,9 @@
 package cl.duoc.alumnos.ferme.dto;
 
-import cl.duoc.alumnos.ferme.domain.entities.Persona;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import cl.duoc.alumnos.ferme.entities.Persona;
 
 /**
  *
@@ -25,7 +26,19 @@ public class PersonaDTO {
         super();
     }
 
-    public Integer getIdPersona() {
+    public PersonaDTO(Integer idPersona, String nombreCompletoPersona, String rutPersona, String direccionPersona,
+			String emailPersona, Long fonoPersona1, Long fonoPersona2, Long fonoPersona3) {
+		this.idPersona = idPersona;
+		this.nombreCompletoPersona = nombreCompletoPersona;
+		this.rutPersona = rutPersona;
+		this.direccionPersona = direccionPersona;
+		this.emailPersona = emailPersona;
+		this.fonoPersona1 = fonoPersona1;
+		this.fonoPersona2 = fonoPersona2;
+		this.fonoPersona3 = fonoPersona3;
+	}
+
+	public Integer getIdPersona() {
         return idPersona;
     }
 

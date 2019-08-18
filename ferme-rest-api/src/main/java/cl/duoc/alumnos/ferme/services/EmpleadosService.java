@@ -20,13 +20,13 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 
 import cl.duoc.alumnos.ferme.FermeConfig;
-import cl.duoc.alumnos.ferme.domain.entities.Cargo;
-import cl.duoc.alumnos.ferme.domain.entities.Empleado;
-import cl.duoc.alumnos.ferme.domain.entities.QEmpleado;
-import cl.duoc.alumnos.ferme.domain.repositories.ICargosRepository;
-import cl.duoc.alumnos.ferme.domain.repositories.IEmpleadosRepository;
-import cl.duoc.alumnos.ferme.domain.repositories.IPersonasRepository;
+import cl.duoc.alumnos.ferme.entities.QEmpleado;
 import cl.duoc.alumnos.ferme.dto.EmpleadoDTO;
+import cl.duoc.alumnos.ferme.entities.Cargo;
+import cl.duoc.alumnos.ferme.entities.Empleado;
+import cl.duoc.alumnos.ferme.jpa.repositories.ICargosRepository;
+import cl.duoc.alumnos.ferme.jpa.repositories.IEmpleadosRepository;
+import cl.duoc.alumnos.ferme.jpa.repositories.IPersonasRepository;
 import cl.duoc.alumnos.ferme.services.interfaces.IEmpleadosService;
 import javassist.NotFoundException;
 

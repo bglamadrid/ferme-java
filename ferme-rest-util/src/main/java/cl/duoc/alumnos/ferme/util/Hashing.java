@@ -12,8 +12,8 @@ public abstract class Hashing {
     
     /**
      * Rutina simple de generacion de hash.<br>
-     * Obtiene el algoritmo a usar de la constante 'HASHING_ALGORITHM'
-     * Créditos a 'user1452273' (stackoverflow.com)
+     * Revisar clase Constantes por la variable 'ALGORITMO_CRIPTOGRAFICO_GLOBAL'
+     * @author user1452273 (stackoverflow.com)
      * @param data Los datos a encriptar.
      * @return El hash, resultando de la encriptacion.
      */

@@ -3,7 +3,6 @@ package cl.duoc.alumnos.ferme;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -34,7 +33,6 @@ import cl.duoc.alumnos.ferme.entities.Venta;
  * @author Benjamin Guillermo <got12g at gmail.com>
  */
 @Configuration
-@EnableAutoConfiguration
 @ComponentScan
 public class FermeConfig implements WebMvcConfigurer { 
     

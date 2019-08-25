@@ -14,5 +14,5 @@
 
 ## Desplegar
 
-* `mvn spring-boot:run` - Levanta un Tomcat embebido. Éste se puede configurar en el archivo *src/main/java/resources/application.properties*
+* `mvn spring-boot:run` (en directorio `/ferme-rest-api/`) - Levanta un Tomcat embebido. Éste se puede configurar en el archivo *src/main/java/resources/application.properties*
 * `mvn package` - Genera un EAR en la carpeta ``ferme-ear/target/``, que puede ser instalado en un servidor de aplicaciones a elección.

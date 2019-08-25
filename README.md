@@ -10,7 +10,7 @@
 ## Compilar
 
 1. Posicionarse en directorio raíz de la aplicación, donde reside el archivo *pom.xml*
-2. Ejecutar `mvn clean compile`
+2. Ejecutar `mvn clean install`
 
 ## Desplegar
 

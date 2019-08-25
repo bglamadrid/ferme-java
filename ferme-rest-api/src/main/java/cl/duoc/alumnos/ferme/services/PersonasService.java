@@ -32,6 +32,7 @@ import cl.duoc.alumnos.ferme.jpa.repositories.IEmpleadosRepository;
 import cl.duoc.alumnos.ferme.jpa.repositories.IPersonasRepository;
 import cl.duoc.alumnos.ferme.jpa.repositories.IProveedoresRepository;
 import cl.duoc.alumnos.ferme.services.interfaces.IPersonasService;
+import javassist.NotFoundException;
 
 /**
  *
@@ -169,6 +170,21 @@ public class PersonasService implements IPersonasService {
         } catch (Exception exc) {
             return null;
         }
+    }
+
+    @Override
+    public int savePersona(PersonaDTO dto) throws NotFoundException {
+        
+        Persona entity = dto.personaToEntity();
+        if (dto.getIdPersona() != null && dto.getIdPersona() != 0) {
+            Optional<Persona> entityQuery = personaRepo.findById(dto.getIdPersona());
+            if (!entityQuery.isPresent()) {
+                throw new NotFoundException("Perfil no encontrado");
+            }
+        }
+        
+        entity = personaRepo.saveAndFlush(entity);
+        return entity.getId();
     }
     
 }

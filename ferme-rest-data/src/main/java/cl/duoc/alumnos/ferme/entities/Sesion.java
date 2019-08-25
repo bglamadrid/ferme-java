@@ -46,7 +46,7 @@ public class Sesion implements Serializable {
     private Integer _id;
     
     @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO", insertable = true, updatable = true)
-    @ManyToOne(cascade = CascadeType.DETACH, optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.DETACH, optional = false, fetch = FetchType.EAGER)
     @Cascade(org.hibernate.annotations.CascadeType.DETACH)
     private Usuario _usuario;
     

@@ -48,7 +48,7 @@ public class Usuario implements Serializable {
     
     @NonNull
     @JoinColumn(name = "ID_PERSONA", referencedColumnName = "ID_PERSONA")
-    @OneToOne(cascade = CascadeType.DETACH, optional = false, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.DETACH, optional = false, fetch = FetchType.EAGER)
     @Cascade(org.hibernate.annotations.CascadeType.DETACH)
     private Persona _persona;
     
@@ -128,36 +128,7 @@ public class Usuario implements Serializable {
         Persona personaEntity = getPersona();
         dto.setIdPersona(personaEntity.getId());
         dto.setNombreCompletoPersona(personaEntity.getNombreCompleto());
-        dto.setRutPersona(personaEntity.getRut());
-        
-        /*        
-        
-        String direccion = personaEntity.getDireccion();
-        Long fono1 = personaEntity.getFono1();
-        Long fono2 = personaEntity.getFono2();
-        Long fono3 = personaEntity.getFono3();
-        
-        if (direccion != null) {
-          dto.setDireccionPersona(direccion);
-        }
-        
-        if (email != null) {
-          dto.setEmailPersona(email);
-        }
-        
-        if (fono1 != null) {
-          dto.setFonoPersona1(fono1);
-        }
-        
-        if (fono2 != null) {
-          dto.setFonoPersona2(fono2);
-        }
-        
-        if (fono3 != null) {
-          dto.setFonoPersona3(fono3);
-        }
-        */
-        
+        dto.setRutPersona(personaEntity.getRut());        
         
         return dto;
     }

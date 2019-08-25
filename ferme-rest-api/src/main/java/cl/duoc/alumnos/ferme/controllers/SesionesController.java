@@ -4,15 +4,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import cl.duoc.alumnos.ferme.FermeConfig;
+import cl.duoc.alumnos.ferme.dto.PersonaDTO;
 import cl.duoc.alumnos.ferme.dto.SesionDTO;
 import cl.duoc.alumnos.ferme.dto.UsuarioDTO;
 import cl.duoc.alumnos.ferme.pojo.LoginPOJO;
+import cl.duoc.alumnos.ferme.services.interfaces.IPersonasService;
 import cl.duoc.alumnos.ferme.services.interfaces.ISesionesService;
 import cl.duoc.alumnos.ferme.services.interfaces.IUsuariosService;
 import javassist.NotFoundException;
@@ -28,6 +33,7 @@ public class SesionesController {
     
     @Autowired private ISesionesService sesionSvc;
     @Autowired private IUsuariosService usuarioSvc;
+    @Autowired private IPersonasService personaSvc;
     
     /**
      * Almacena una Sesion nueva o actualiza una existente.
@@ -75,6 +81,44 @@ public class SesionesController {
         LOG.info("validarSesion - La sesion ingresada ha caducado o no es valida");
         return false;
     }
+    
+    /**
+     * Obtiene un Usuario de la cuenta obtenida por un hash de sesion vigente.
+     * @param dto Un objeto DTO representando la Sesion a almacenar/actualizar.
+     * @return El ID de la sesion.
+     */
+    @GetMapping("/perfil/obtener")
+    public PersonaDTO obtenerPerfil(
+        @RequestParam("sesion") String hashSesion
+    ) {
+        LOG.info("obtenerPerfil");
+        if (hashSesion != null && !hashSesion.isEmpty()) {
+            LOG.debug("obtenerPerfil - hashSesion="+hashSesion);
+            return sesionSvc.recuperarUsuarioDesdeHashSesion(hashSesion);
+        }
+        LOG.info("obtenerPerfil - La sesion ingresada ha caducado o no es valida");
+        return null;
+    }
+    
+    /**
+     * Obtiene un Usuario de la cuenta obtenida por un hash de sesion vigente.
+     * @param dto Un objeto DTO representando la Sesion a almacenar/actualizar.
+     * @return El ID de la sesion.
+     */
+    @PutMapping("/perfil/actualizar")
+    public int actualizarPerfil(
+        @RequestBody PersonaDTO datosPerfil
+    ) throws NotFoundException {
+        LOG.info("actualizarPerfil");
+        if (datosPerfil != null) {
+            LOG.debug("actualizarPerfil - usuario="+datosPerfil);
+        	return personaSvc.savePersona(datosPerfil);
+        }
+        LOG.info("actualizarPerfil - La sesion ingresada ha caducado o no es valida");
+        return 0;
+    }
+    
+    
     
     /**
      * Elimina una Sesion de la base de datos.

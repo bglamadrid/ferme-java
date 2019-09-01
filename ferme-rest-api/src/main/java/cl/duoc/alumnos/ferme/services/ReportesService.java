@@ -1,15 +1,17 @@
 package cl.duoc.alumnos.ferme.services;
 
-import cl.duoc.alumnos.ferme.domain.repositories.IProductosRepository;
-import cl.duoc.alumnos.ferme.domain.repositories.IReportesRepository;
-import cl.duoc.alumnos.ferme.services.interfaces.IReportesService;
-import cl.duoc.alumnos.ferme.util.FormatoFechas;
 import java.util.Date;
 import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import cl.duoc.alumnos.ferme.jpa.repositories.IProductosRepository;
+import cl.duoc.alumnos.ferme.jpa.repositories.IReportesRepository;
+import cl.duoc.alumnos.ferme.services.interfaces.IReportesService;
+import cl.duoc.alumnos.ferme.util.FormatoFechas;
 
 /**
  *
@@ -17,7 +19,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ReportesService implements IReportesService {   
-    private final static Logger LOG = LoggerFactory.getLogger(ReportesService.class); 
+    @SuppressWarnings("unused")
+	private final static Logger LOG = LoggerFactory.getLogger(ReportesService.class); 
     
     @Autowired IReportesRepository reportesRepo;
     @Autowired IProductosRepository productosRepo;

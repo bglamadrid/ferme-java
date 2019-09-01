@@ -1,19 +1,10 @@
 package cl.duoc.alumnos.ferme.services;
 
-import cl.duoc.alumnos.ferme.Ferme;
-import cl.duoc.alumnos.ferme.FermeConfig;
-import cl.duoc.alumnos.ferme.domain.entities.Cliente;
-import cl.duoc.alumnos.ferme.domain.entities.QCliente;
-import cl.duoc.alumnos.ferme.domain.repositories.IClientesRepository;
-import cl.duoc.alumnos.ferme.domain.repositories.IPersonasRepository;
-import cl.duoc.alumnos.ferme.dto.ClienteDTO;
-import cl.duoc.alumnos.ferme.services.interfaces.IClientesService;
-import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.types.Predicate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +14,17 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Predicate;
+
+import cl.duoc.alumnos.ferme.FermeConfig;
+import cl.duoc.alumnos.ferme.entities.QCliente;
+import cl.duoc.alumnos.ferme.dto.ClienteDTO;
+import cl.duoc.alumnos.ferme.entities.Cliente;
+import cl.duoc.alumnos.ferme.jpa.repositories.IClientesRepository;
+import cl.duoc.alumnos.ferme.jpa.repositories.IPersonasRepository;
+import cl.duoc.alumnos.ferme.services.interfaces.IClientesService;
 
 /**
  *

@@ -1,35 +1,33 @@
 package cl.duoc.alumnos.ferme.services;
 
-import cl.duoc.alumnos.ferme.Ferme;
-import cl.duoc.alumnos.ferme.FermeConfig;
-import cl.duoc.alumnos.ferme.domain.entities.Cargo;
-import cl.duoc.alumnos.ferme.domain.entities.Cliente;
-import cl.duoc.alumnos.ferme.domain.entities.Empleado;
-import cl.duoc.alumnos.ferme.domain.entities.Proveedor;
-import cl.duoc.alumnos.ferme.domain.entities.QEmpleado;
-import cl.duoc.alumnos.ferme.domain.entities.Sesion;
-import cl.duoc.alumnos.ferme.domain.entities.Usuario;
-import cl.duoc.alumnos.ferme.dto.SesionDTO;
-import cl.duoc.alumnos.ferme.dto.UsuarioDTO;
-import cl.duoc.alumnos.ferme.domain.repositories.IEmpleadosRepository;
-import cl.duoc.alumnos.ferme.domain.repositories.ISesionesRepository;
-import cl.duoc.alumnos.ferme.dto.EmpleadoDTO;
-import cl.duoc.alumnos.ferme.services.interfaces.IPersonasService;
-import cl.duoc.alumnos.ferme.services.interfaces.ISesionesService;
-import cl.duoc.alumnos.ferme.util.FormatoFechas;
-import cl.duoc.alumnos.ferme.util.Hashing;
-import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.types.Predicate;
 import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
-import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.querydsl.core.types.Predicate;
+
+import cl.duoc.alumnos.ferme.FermeConfig;
+import cl.duoc.alumnos.ferme.dto.SesionDTO;
+import cl.duoc.alumnos.ferme.dto.UsuarioDTO;
+import cl.duoc.alumnos.ferme.entities.Cargo;
+import cl.duoc.alumnos.ferme.entities.Cliente;
+import cl.duoc.alumnos.ferme.entities.Empleado;
+import cl.duoc.alumnos.ferme.entities.Persona;
+import cl.duoc.alumnos.ferme.entities.Sesion;
+import cl.duoc.alumnos.ferme.entities.Usuario;
+import cl.duoc.alumnos.ferme.jpa.repositories.IPersonasRepository;
+import cl.duoc.alumnos.ferme.jpa.repositories.ISesionesRepository;
+import cl.duoc.alumnos.ferme.services.interfaces.IPersonasService;
+import cl.duoc.alumnos.ferme.services.interfaces.ISesionesService;
+import cl.duoc.alumnos.ferme.util.FormatoFechas;
+import cl.duoc.alumnos.ferme.util.Hashing;
 
 /**
  *
@@ -39,7 +37,8 @@ import org.springframework.stereotype.Service;
 public class SesionesService implements ISesionesService {
     private Logger LOG = LoggerFactory.getLogger(SesionesService.class);
 
-    @Autowired private IPersonasService personasRepo;
+    @Autowired private IPersonasService personasSvc;
+    @Autowired private IPersonasRepository personaRepo;
     @Autowired private ISesionesRepository sesionRepo;
     
     private final static long SESSION_LIFETIME = FermeConfig.DURACION_SESION;
@@ -67,7 +66,7 @@ public class SesionesService implements ISesionesService {
         LOG.debug("getOptionalEmpleadoFromUsuarioPersona");
         
         Integer idPersona = usuario.getIdPersona();
-        Empleado foundEmpleado = personasRepo.getNullableEmpleadoFromIdPersona(idPersona);
+        Empleado foundEmpleado = personasSvc.getNullableEmpleadoFromIdPersona(idPersona);
         return foundEmpleado;
     }
 
@@ -75,18 +74,10 @@ public class SesionesService implements ISesionesService {
         LOG.debug("getOptionalClienteFromUsuarioPersona");
         
         Integer idPersona = usuario.getIdPersona();
-        Cliente foundEmpleado = personasRepo.getNullableClienteFromIdPersona(idPersona);
+        Cliente foundEmpleado = personasSvc.getNullableClienteFromIdPersona(idPersona);
         return foundEmpleado;
     }
 
-    private Proveedor getOptionalProveedorFromUsuarioPersona(UsuarioDTO usuario) {
-        LOG.debug("getOptionalProveedorFromUsuarioPersona");
-        
-        Integer idPersona = usuario.getIdPersona();
-        Proveedor foundEmpleado = personasRepo.getNullableProveedorFromIdPersona(idPersona);
-        return foundEmpleado;
-    }
-    
     @Override
     public SesionDTO abrirSesion(UsuarioDTO usuario) {
         LOG.info("abrirSesion - Generando datos de sesion...");
@@ -173,5 +164,44 @@ public class SesionesService implements ISesionesService {
         sesionRepo.flush();
         return true;
     }
+
+	@Override
+	public UsuarioDTO recuperarUsuarioDesdeHashSesion(String hashSesion) {
+		Iterable<Sesion> sesiones = sesionRepo.findByHashWhereNotCerradas(hashSesion);
+        for (Sesion ssn : sesiones) {
+            Usuario usr = ssn.getUsuario();
+            UsuarioDTO dto = usr.toDTO();
+            Persona prs = personaRepo.findById(dto.getIdPersona()).get();
+            
+            String direccion = prs.getDireccion();
+            String email = prs.getEmail();
+            Long fono1 = prs.getFono1();
+            Long fono2 = prs.getFono2();
+            Long fono3 = prs.getFono3();
+            
+            if (direccion != null) {
+              dto.setDireccionPersona(direccion);
+            }
+            
+            if (email != null) {
+              dto.setEmailPersona(email);
+            }
+            
+            if (fono1 != null) {
+              dto.setFonoPersona1(fono1);
+            }
+            
+            if (fono2 != null) {
+              dto.setFonoPersona2(fono2);
+            }
+            
+            if (fono3 != null) {
+              dto.setFonoPersona3(fono3);
+            }
+            
+            return dto;
+        }
+		return null;
+	}
     
 }

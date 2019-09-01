@@ -1,25 +1,5 @@
 package cl.duoc.alumnos.ferme.services;
 
-import cl.duoc.alumnos.ferme.Ferme;
-import cl.duoc.alumnos.ferme.FermeConfig;
-import cl.duoc.alumnos.ferme.domain.entities.Cliente;
-import cl.duoc.alumnos.ferme.domain.entities.DetalleVenta;
-import cl.duoc.alumnos.ferme.domain.entities.Empleado;
-import cl.duoc.alumnos.ferme.domain.entities.Producto;
-import cl.duoc.alumnos.ferme.domain.entities.QDetalleVenta;
-import cl.duoc.alumnos.ferme.domain.entities.QVenta;
-import cl.duoc.alumnos.ferme.domain.entities.Venta;
-import cl.duoc.alumnos.ferme.domain.repositories.IClientesRepository;
-import cl.duoc.alumnos.ferme.domain.repositories.IDetallesVentasRepository;
-import cl.duoc.alumnos.ferme.domain.repositories.IEmpleadosRepository;
-import cl.duoc.alumnos.ferme.domain.repositories.IProductosRepository;
-import cl.duoc.alumnos.ferme.domain.repositories.IVentasRepository;
-import cl.duoc.alumnos.ferme.dto.DetalleVentaDTO;
-import cl.duoc.alumnos.ferme.dto.VentaDTO;
-import cl.duoc.alumnos.ferme.services.interfaces.IVentasService;
-import cl.duoc.alumnos.ferme.util.FormatoFechas;
-import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.types.Predicate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -27,7 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import javassist.NotFoundException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +17,28 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Predicate;
+
+import cl.duoc.alumnos.ferme.FermeConfig;
+import cl.duoc.alumnos.ferme.dto.DetalleVentaDTO;
+import cl.duoc.alumnos.ferme.dto.VentaDTO;
+import cl.duoc.alumnos.ferme.entities.Cliente;
+import cl.duoc.alumnos.ferme.entities.DetalleVenta;
+import cl.duoc.alumnos.ferme.entities.Empleado;
+import cl.duoc.alumnos.ferme.entities.Producto;
+import cl.duoc.alumnos.ferme.entities.QDetalleVenta;
+import cl.duoc.alumnos.ferme.entities.QVenta;
+import cl.duoc.alumnos.ferme.entities.Venta;
+import cl.duoc.alumnos.ferme.jpa.repositories.IClientesRepository;
+import cl.duoc.alumnos.ferme.jpa.repositories.IDetallesVentasRepository;
+import cl.duoc.alumnos.ferme.jpa.repositories.IEmpleadosRepository;
+import cl.duoc.alumnos.ferme.jpa.repositories.IProductosRepository;
+import cl.duoc.alumnos.ferme.jpa.repositories.IVentasRepository;
+import cl.duoc.alumnos.ferme.services.interfaces.IVentasService;
+import cl.duoc.alumnos.ferme.util.FormatoFechas;
+import javassist.NotFoundException;
 
 /**
  *

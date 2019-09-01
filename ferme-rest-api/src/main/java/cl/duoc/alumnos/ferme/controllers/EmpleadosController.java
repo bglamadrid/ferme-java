@@ -1,16 +1,14 @@
 package cl.duoc.alumnos.ferme.controllers;
 
-import cl.duoc.alumnos.ferme.Ferme;
-import cl.duoc.alumnos.ferme.FermeConfig;
-import cl.duoc.alumnos.ferme.dto.EmpleadoDTO;
-import cl.duoc.alumnos.ferme.services.interfaces.IEmpleadosService;
-import com.querydsl.core.types.Predicate;
 import java.util.Collection;
 import java.util.Map;
-import javassist.NotFoundException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +16,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.querydsl.core.types.Predicate;
+
+import cl.duoc.alumnos.ferme.FermeConfig;
+import cl.duoc.alumnos.ferme.dto.EmpleadoDTO;
+import cl.duoc.alumnos.ferme.services.interfaces.IEmpleadosService;
+import javassist.NotFoundException;
 
 /**
  *
@@ -123,5 +128,10 @@ public class EmpleadosController {
             return empleadoSvc.deleteEmpleado(empleadoId);
         }
         return false;
+    }
+    
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleException(Exception exc) {
+    	return new ResponseEntity<>(exc.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

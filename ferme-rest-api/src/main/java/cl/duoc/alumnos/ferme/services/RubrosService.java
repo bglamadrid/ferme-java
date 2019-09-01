@@ -1,25 +1,28 @@
 package cl.duoc.alumnos.ferme.services;
 
-import cl.duoc.alumnos.ferme.Ferme;
-import cl.duoc.alumnos.ferme.FermeConfig;
-import cl.duoc.alumnos.ferme.domain.entities.QRubro;
-import cl.duoc.alumnos.ferme.domain.entities.Rubro;
-import cl.duoc.alumnos.ferme.domain.repositories.IRubrosRepository;
-import cl.duoc.alumnos.ferme.dto.RubroDTO;
-import cl.duoc.alumnos.ferme.services.interfaces.IRubrosService;
-import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.types.Predicate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+
 import javax.persistence.EntityManager;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Predicate;
+
+import cl.duoc.alumnos.ferme.FermeConfig;
+import cl.duoc.alumnos.ferme.dto.RubroDTO;
+import cl.duoc.alumnos.ferme.entities.QRubro;
+import cl.duoc.alumnos.ferme.entities.Rubro;
+import cl.duoc.alumnos.ferme.jpa.repositories.IRubrosRepository;
+import cl.duoc.alumnos.ferme.services.interfaces.IRubrosService;
 
 /**
  *

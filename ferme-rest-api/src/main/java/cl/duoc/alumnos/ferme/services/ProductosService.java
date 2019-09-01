@@ -1,34 +1,11 @@
 package cl.duoc.alumnos.ferme.services;
 
-import cl.duoc.alumnos.ferme.Ferme;
-import cl.duoc.alumnos.ferme.FermeConfig;
-import cl.duoc.alumnos.ferme.domain.entities.FamiliaProducto;
-import cl.duoc.alumnos.ferme.domain.entities.Producto;
-import cl.duoc.alumnos.ferme.domain.entities.Proveedor;
-import cl.duoc.alumnos.ferme.domain.entities.Rubro;
-import cl.duoc.alumnos.ferme.domain.entities.QFamiliaProducto;
-import cl.duoc.alumnos.ferme.domain.entities.QProducto;
-import cl.duoc.alumnos.ferme.domain.entities.QTipoProducto;
-import cl.duoc.alumnos.ferme.domain.entities.TipoProducto;
-import cl.duoc.alumnos.ferme.domain.repositories.IFamiliasProductosRepository;
-import cl.duoc.alumnos.ferme.domain.repositories.IProductosRepository;
-import cl.duoc.alumnos.ferme.domain.repositories.IProveedoresRepository;
-import cl.duoc.alumnos.ferme.domain.repositories.IRubrosRepository;
-import cl.duoc.alumnos.ferme.domain.repositories.ITiposProductosRepository;
-import cl.duoc.alumnos.ferme.dto.FamiliaProductoDTO;
-import cl.duoc.alumnos.ferme.dto.ProductoDTO;
-import cl.duoc.alumnos.ferme.dto.TipoProductoDTO;
-import cl.duoc.alumnos.ferme.services.interfaces.IFamiliasProductoService;
-import cl.duoc.alumnos.ferme.services.interfaces.IProductosService;
-import cl.duoc.alumnos.ferme.services.interfaces.ITiposProductoService;
-import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.types.Predicate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import javassist.NotFoundException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +15,31 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Predicate;
+
+import cl.duoc.alumnos.ferme.FermeConfig;
+import cl.duoc.alumnos.ferme.dto.FamiliaProductoDTO;
+import cl.duoc.alumnos.ferme.dto.ProductoDTO;
+import cl.duoc.alumnos.ferme.dto.TipoProductoDTO;
+import cl.duoc.alumnos.ferme.entities.FamiliaProducto;
+import cl.duoc.alumnos.ferme.entities.Producto;
+import cl.duoc.alumnos.ferme.entities.Proveedor;
+import cl.duoc.alumnos.ferme.entities.QFamiliaProducto;
+import cl.duoc.alumnos.ferme.entities.QProducto;
+import cl.duoc.alumnos.ferme.entities.QTipoProducto;
+import cl.duoc.alumnos.ferme.entities.Rubro;
+import cl.duoc.alumnos.ferme.entities.TipoProducto;
+import cl.duoc.alumnos.ferme.jpa.repositories.IFamiliasProductosRepository;
+import cl.duoc.alumnos.ferme.jpa.repositories.IProductosRepository;
+import cl.duoc.alumnos.ferme.jpa.repositories.IProveedoresRepository;
+import cl.duoc.alumnos.ferme.jpa.repositories.IRubrosRepository;
+import cl.duoc.alumnos.ferme.jpa.repositories.ITiposProductosRepository;
+import cl.duoc.alumnos.ferme.services.interfaces.IFamiliasProductoService;
+import cl.duoc.alumnos.ferme.services.interfaces.IProductosService;
+import cl.duoc.alumnos.ferme.services.interfaces.ITiposProductoService;
+import javassist.NotFoundException;
 
 /**
  *

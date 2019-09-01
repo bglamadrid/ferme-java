@@ -1,18 +1,5 @@
 package cl.duoc.alumnos.ferme.services;
 
-import cl.duoc.alumnos.ferme.Ferme;
-import cl.duoc.alumnos.ferme.FermeConfig;
-import cl.duoc.alumnos.ferme.domain.entities.QUsuario;
-import cl.duoc.alumnos.ferme.domain.entities.Usuario;
-import cl.duoc.alumnos.ferme.domain.entities.Persona;
-import cl.duoc.alumnos.ferme.domain.repositories.IPersonasRepository;
-import cl.duoc.alumnos.ferme.domain.repositories.IUsuariosRepository;
-import cl.duoc.alumnos.ferme.dto.UsuarioDTO;
-import cl.duoc.alumnos.ferme.services.interfaces.IUsuariosService;
-import cl.duoc.alumnos.ferme.util.FormatoFechas;
-import cl.duoc.alumnos.ferme.util.Hashing;
-import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.types.Predicate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -20,7 +7,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import javassist.NotFoundException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +16,21 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Predicate;
+
+import cl.duoc.alumnos.ferme.FermeConfig;
+import cl.duoc.alumnos.ferme.dto.UsuarioDTO;
+import cl.duoc.alumnos.ferme.entities.Persona;
+import cl.duoc.alumnos.ferme.entities.QUsuario;
+import cl.duoc.alumnos.ferme.entities.Usuario;
+import cl.duoc.alumnos.ferme.jpa.repositories.IPersonasRepository;
+import cl.duoc.alumnos.ferme.jpa.repositories.IUsuariosRepository;
+import cl.duoc.alumnos.ferme.services.interfaces.IUsuariosService;
+import cl.duoc.alumnos.ferme.util.FormatoFechas;
+import cl.duoc.alumnos.ferme.util.Hashing;
+import javassist.NotFoundException;
 
 /**
  *
@@ -108,7 +110,7 @@ public class UsuariosService implements IUsuariosService {
     public int saveUsuario(UsuarioDTO dto) throws NotFoundException {
         
         Usuario entity;
-        if (dto.getIdUsuario()== null || dto.getIdUsuario() == 0) {
+        if (dto.getIdUsuario() == null || dto.getIdUsuario() == 0) {
             entity = dto.toEntity();
             Date fechaAhora = Calendar.getInstance().getTime();
             entity.setFechaCreacion(fechaAhora);

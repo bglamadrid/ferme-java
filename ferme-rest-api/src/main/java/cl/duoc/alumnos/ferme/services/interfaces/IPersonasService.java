@@ -1,9 +1,11 @@
 package cl.duoc.alumnos.ferme.services.interfaces;
 
-import cl.duoc.alumnos.ferme.domain.entities.Cliente;
-import cl.duoc.alumnos.ferme.domain.entities.Empleado;
-import cl.duoc.alumnos.ferme.domain.entities.Proveedor;
 import cl.duoc.alumnos.ferme.dto.PersonaDTO;
+import cl.duoc.alumnos.ferme.entities.Cliente;
+import cl.duoc.alumnos.ferme.entities.Empleado;
+import cl.duoc.alumnos.ferme.entities.Proveedor;
+import javassist.NotFoundException;
+
 import com.querydsl.core.types.Predicate;
 import java.util.Collection;
 import java.util.Map;
@@ -38,4 +40,6 @@ public interface IPersonasService {
     public Cliente getNullableClienteFromIdPersona(Integer idPersona);
     
     public Proveedor getNullableProveedorFromIdPersona(Integer idPersona);
+
+	int savePersona(PersonaDTO dto) throws NotFoundException;
 }

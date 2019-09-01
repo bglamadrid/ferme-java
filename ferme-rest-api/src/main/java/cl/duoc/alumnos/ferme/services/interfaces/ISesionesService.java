@@ -14,7 +14,7 @@ public interface ISesionesService {
     
     /**
      * Obtiene una página (colección) de sesiones, con un tamaño determinado 
-     * (pudiendo filtrarlos) y los transforma a objetos DTO.
+     * (pudiendo filtrarlas) y las transforma a objetos DTO.
      * @param pageSize El número de resultados que la página mostrará.
      * @param pageIndex El número de página (la primera es 0).
      * @param condicion El objeto Predicate con los filtros a aplicar. Nulable.
@@ -52,5 +52,12 @@ public interface ISesionesService {
      * @return 
      */
     public boolean cerrarSesiones(SesionDTO sesion);
+
+    /**
+     * 
+     * @param hashSesion
+     * @return
+     */
+	public UsuarioDTO recuperarUsuarioDesdeHashSesion(String hashSesion);
     
 }
